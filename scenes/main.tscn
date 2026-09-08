@@ -3,6 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://bu28ecb8jyof2" path="res://scenes/player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/test_interactable.tscn" id="2_test_interactable"]
 [ext_resource type="PackedScene" path="res://scenes/example_npc.tscn" id="3_example_npc"]
+[ext_resource type="PackedScene" path="res://scenes/npc.tscn" id="4_tbgi4"]
+[ext_resource type="Script" uid="uid://dv3sig1sv8u2u" path="res://scripts/dialogue_data.gd" id="5_tefeu"]
+[ext_resource type="PackedScene" uid="uid://by3o77onquenk" path="res://assets/knight_mouse.glb" id="6_tefeu"]
 
 [sub_resource type="Environment" id="Environment_main"]
 background_mode = 1
@@ -19,6 +22,12 @@ albedo_color = Color(0.3867973, 0.21992746, 0.1879411, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_ground"]
 size = Vector3(20, 1, 20)
+
+[sub_resource type="Resource" id="Resource_dyuxv"]
+script = ExtResource("5_tefeu")
+lines = ["Smells like cheese in here!", "Hand your cheese!!
+"]
+metadata/_custom_type_script = "uid://dv3sig1sv8u2u"
 
 [node name="Main" type="Node3D" unique_id=1532754735]
 
@@ -46,8 +55,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 transform = Transform3D(1, 0, 0, 0, 0.8910065, 0.4539905, 0, -0.4539905, 0.8910065, 0, 5, 8)
 current = true
 
-[node name="TestInteractable" parent="." instance=ExtResource("2_test_interactable")]
-position = Vector3(0, 0.5, -3)
+[node name="TestInteractable" parent="." unique_id=2019253119 instance=ExtResource("2_test_interactable")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -3)
 
-[node name="ExampleNpc" parent="." instance=ExtResource("3_example_npc")]
-position = Vector3(3, 0.9, -3)
+[node name="ExampleNpc" parent="." unique_id=1511190966 instance=ExtResource("3_example_npc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.9, -3)
+
+[node name="Npc" parent="." unique_id=1381639427 instance=ExtResource("4_tbgi4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.714643, 0.61779404, -0.84727335)
+display_name = "Momouse"
+dialogue_data = SubResource("Resource_dyuxv")
+visual_scene = ExtResource("6_tefeu")
