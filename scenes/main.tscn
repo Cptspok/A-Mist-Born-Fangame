@@ -6,6 +6,9 @@
 [ext_resource type="PackedScene" path="res://scenes/npc.tscn" id="4_tbgi4"]
 [ext_resource type="Script" uid="uid://dv3sig1sv8u2u" path="res://scripts/dialogue_data.gd" id="5_tefeu"]
 [ext_resource type="PackedScene" uid="uid://by3o77onquenk" path="res://assets/knight_mouse.glb" id="6_tefeu"]
+[ext_resource type="PackedScene" path="res://scenes/world_item.tscn" id="7_world"]
+[ext_resource type="Resource" path="res://resources/red_item/red_item.tres" id="8_red"]
+[ext_resource type="Resource" path="res://resources/blue_item/blue_item.tres" id="9_blue"]
 
 [sub_resource type="Environment" id="Environment_main"]
 background_mode = 1
@@ -66,3 +69,26 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.714643, 0.61779404, -0.8472
 display_name = "Momouse"
 dialogue_data = SubResource("Resource_dyuxv")
 visual_scene = ExtResource("6_tefeu")
+metadata/_edit_group_ = true
+
+[node name="RedWorldItem" parent="." unique_id=1364395878 instance=ExtResource("7_world")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.45, -2)
+item_definition = ExtResource("8_red")
+quantity = 2
+
+[node name="RedWorldItem2" parent="." unique_id=526653211 instance=ExtResource("7_world")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.45, -0.30972743)
+item_definition = ExtResource("8_red")
+quantity = 2
+
+[node name="BlueWorldItem" parent="." unique_id=438299378 instance=ExtResource("7_world")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.45, -2)
+item_definition = ExtResource("9_blue")
+
+[node name="BlueWorldItem2" parent="." unique_id=2119322264 instance=ExtResource("7_world")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.45, -0.7755629)
+item_definition = ExtResource("9_blue")
+
+[node name="BlueWorldItem3" parent="." unique_id=843365009 instance=ExtResource("7_world")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.45, 1.757866)
+item_definition = ExtResource("9_blue")
