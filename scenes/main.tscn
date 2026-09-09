@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" path="res://scenes/world_item.tscn" id="7_world"]
 [ext_resource type="Resource" path="res://resources/red_item/red_item.tres" id="8_red"]
 [ext_resource type="Resource" uid="uid://cg8yca0q0hgft" path="res://resources/blue_item/blue_item.tres" id="9_blue"]
+[ext_resource type="PackedScene" path="res://scenes/example_enemy.tscn" id="10_enemy"]
 
 [sub_resource type="Environment" id="Environment_main"]
 background_mode = 1
@@ -54,10 +55,6 @@ mesh = SubResource("BoxMesh_ground")
 [node name="Player" parent="." unique_id=2143874241 instance=ExtResource("1_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 
-[node name="Camera3D" type="Camera3D" parent="Player" unique_id=1888946680]
-transform = Transform3D(1, 0, 0, 0, 0.8910065, 0.4539905, 0, -0.4539905, 0.8910065, 0, 5, 8)
-current = true
-
 [node name="TestInteractable" parent="." unique_id=2019253119 instance=ExtResource("2_test_interactable")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -3)
 
@@ -92,6 +89,9 @@ item_definition = ExtResource("9_blue")
 [node name="BlueWorldItem3" parent="." unique_id=843365009 instance=ExtResource("7_world")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.45, 1.757866)
 item_definition = ExtResource("9_blue")
+
+[node name="ExampleEnemy" parent="." instance=ExtResource("10_enemy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.9, -5)
 
 [node name="House_Test" parent="." unique_id=1908661377]
 transform = Transform3D(203.5406, 0, 0, 0, 203.5406, 0, 0, 0, 203.5406, -8.0813675, -0.5111134, -4.4933357)

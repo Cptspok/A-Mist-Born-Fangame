@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://bu28ecb8jyof2"]
+[gd_scene load_steps=10 format=3 uid="uid://bu28ecb8jyof2"]
 
 [ext_resource type="Script" uid="uid://bg1qyq53c7xaf" path="res://scripts/player.gd" id="1_player"]
 [ext_resource type="Script" uid="uid://dbcboo7f7n2yk" path="res://scripts/inventory_component.gd" id="2_inventory"]
 [ext_resource type="Script" path="res://scripts/inventory_dropper.gd" id="3_dropper"]
 [ext_resource type="PackedScene" path="res://scenes/world_item.tscn" id="4_world_item"]
 [ext_resource type="Script" path="res://scripts/health_component.gd" id="5_health"]
+[ext_resource type="PackedScene" path="res://scenes/hurtbox_component.tscn" id="6_hurtbox"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
 radius = 0.4
@@ -22,7 +23,14 @@ script = ExtResource("1_player")
 shape = SubResource("CapsuleShape3D_player")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1088396109]
+visible = false
 mesh = SubResource("BoxMesh_k4r0y")
+
+[node name="CameraPivot" type="Node3D" parent="."]
+position = Vector3(0, 0.7, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+current = true
 
 [node name="InteractionArea" type="Area3D" parent="." unique_id=1370787926]
 collision_layer = 0
@@ -41,3 +49,5 @@ world_item_scene = ExtResource("4_world_item")
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("5_health")
+
+[node name="HurtboxComponent" parent="." instance=ExtResource("6_hurtbox")]

@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_enemy"]
+albedo_color = Color(0.8, 0.18, 0.12, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_enemy"]
+material = SubResource("StandardMaterial3D_enemy")
+radius = 0.4
+height = 1.8
+
+[node name="ExampleEnemyVisual" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_enemy")

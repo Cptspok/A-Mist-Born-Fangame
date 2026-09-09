@@ -10,6 +10,7 @@ var tooltip: Label
 var selected_stack: ItemStack
 var cursor_dot: InventoryCursor
 var close_button: Button
+var _previous_mouse_mode: Input.MouseMode = Input.MOUSE_MODE_VISIBLE
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -33,8 +34,10 @@ func toggle() -> void:
 	if visible: close()
 	else: open()
 func open() -> void:
+	if visible: return
 	var inventory := get_tree().get_first_node_in_group("inventory_components") as InventoryComponent
 	if inventory == null: return
+	_previous_mouse_mode = Input.mouse_mode
 	grid.configure(inventory, cell_size, cell_gap)
 	var viewport_size := get_viewport().get_visible_rect().size
 	panel.size = viewport_size * panel_screen_ratio
@@ -42,7 +45,9 @@ func open() -> void:
 	close_button.position = Vector2(panel.size.x - 58, 14)
 	show(); Input.mouse_mode = Input.MOUSE_MODE_VISIBLE; get_tree().paused = true
 func close() -> void:
+	if not visible: return
 	menu.hide(); tooltip.hide(); hide(); get_tree().paused = false
+	Input.mouse_mode = _previous_mouse_mode
 
 func _build_ui() -> void:
 	panel = PanelContainer.new(); panel.set_anchors_preset(Control.PRESET_CENTER); panel.size = Vector2(900,650); panel.position = -panel.size * 0.5
