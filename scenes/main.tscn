@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://by3o77onquenk" path="res://assets/knight_mouse.glb" id="6_tefeu"]
 [ext_resource type="PackedScene" path="res://scenes/world_item.tscn" id="7_world"]
 [ext_resource type="Resource" path="res://resources/red_item/red_item.tres" id="8_red"]
-[ext_resource type="Resource" path="res://resources/blue_item/blue_item.tres" id="9_blue"]
+[ext_resource type="Resource" uid="uid://cg8yca0q0hgft" path="res://resources/blue_item/blue_item.tres" id="9_blue"]
 
 [sub_resource type="Environment" id="Environment_main"]
 background_mode = 1
@@ -42,7 +42,7 @@ transform = Transform3D(0.8660254, 0.40957603, -0.28678823, 0, 0.57357645, 0.819
 shadow_enabled = true
 
 [node name="Ground" type="StaticBody3D" parent="." unique_id=152488756]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+transform = Transform3D(3.0556035, 0, 0, 0, 1.0000008, 0, 0, 0, 2.2297194, 0, -0.5, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=204999868]
 shape = SubResource("BoxShape3D_ground")
@@ -62,7 +62,7 @@ current = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -3)
 
 [node name="ExampleNpc" parent="." unique_id=1511190966 instance=ExtResource("3_example_npc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.9, -3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.629652, 0.9, -3)
 
 [node name="Npc" parent="." unique_id=1381639427 instance=ExtResource("4_tbgi4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.714643, 0.61779404, -0.84727335)
@@ -86,9 +86,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.45, -2)
 item_definition = ExtResource("9_blue")
 
 [node name="BlueWorldItem2" parent="." unique_id=2119322264 instance=ExtResource("7_world")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.45, -0.7755629)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.086434, 0.45, -0.7755629)
 item_definition = ExtResource("9_blue")
 
 [node name="BlueWorldItem3" parent="." unique_id=843365009 instance=ExtResource("7_world")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.45, 1.757866)
 item_definition = ExtResource("9_blue")
+
+[node name="House_Test" parent="." unique_id=1908661377]
+transform = Transform3D(203.5406, 0, 0, 0, 203.5406, 0, 0, 0, 203.5406, -8.0813675, -0.5111134, -4.4933357)

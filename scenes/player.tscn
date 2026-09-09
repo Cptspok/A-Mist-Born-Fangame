@@ -1,9 +1,10 @@
-[gd_scene format=3 uid="uid://bu28ecb8jyof2"]
+[gd_scene load_steps=9 format=3 uid="uid://bu28ecb8jyof2"]
 
 [ext_resource type="Script" uid="uid://bg1qyq53c7xaf" path="res://scripts/player.gd" id="1_player"]
 [ext_resource type="Script" uid="uid://dbcboo7f7n2yk" path="res://scripts/inventory_component.gd" id="2_inventory"]
 [ext_resource type="Script" path="res://scripts/inventory_dropper.gd" id="3_dropper"]
 [ext_resource type="PackedScene" path="res://scenes/world_item.tscn" id="4_world_item"]
+[ext_resource type="Script" path="res://scripts/health_component.gd" id="5_health"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
 radius = 0.4
@@ -37,3 +38,6 @@ grid_width = 5
 [node name="InventoryDropper" type="Node" parent="."]
 script = ExtResource("3_dropper")
 world_item_scene = ExtResource("4_world_item")
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("5_health")
