@@ -1,7 +1,12 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/enemy.tscn" id="1_enemy"]
 [ext_resource type="PackedScene" path="res://scenes/example_enemy_visual.tscn" id="2_visual"]
+[ext_resource type="Script" path="res://scripts/enemy_sensing.gd" id="3_sensing"]
+[ext_resource type="Script" path="res://scripts/enemy_movement.gd" id="4_movement"]
+[ext_resource type="Script" path="res://scripts/enemy_melee_attack.gd" id="5_attack"]
+[ext_resource type="Script" path="res://scripts/damage_source_component.gd" id="6_damage"]
+[ext_resource type="Script" path="res://scripts/enemy_melee_behaviour.gd" id="7_behaviour"]
 
 [node name="ExampleEnemy" instance=ExtResource("1_enemy")]
 display_name = "Training Enemy"
@@ -9,3 +14,20 @@ visual_scene = ExtResource("2_visual")
 
 [node name="HealthComponent" parent="." index="2"]
 max_health = 60.0
+
+[node name="Sensing" type="Node" parent="."]
+script = ExtResource("3_sensing")
+
+[node name="Movement" type="Node" parent="."]
+script = ExtResource("4_movement")
+
+[node name="MeleeAttack" type="Node" parent="."]
+script = ExtResource("5_attack")
+
+[node name="DamageSourceComponent" type="Area3D" parent="MeleeAttack"]
+script = ExtResource("6_damage")
+monitoring = false
+monitorable = false
+
+[node name="MeleeBehaviour" type="Node" parent="."]
+script = ExtResource("7_behaviour")

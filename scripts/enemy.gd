@@ -18,6 +18,9 @@ var is_active: bool:
 		return _is_active
 
 var _is_active: bool = true
+signal state_changed(state: StringName)
+var state: StringName = &"Idle"
+var spawn_position: Vector3
 
 @onready var collision_shape: CollisionShape3D = $CollisionShape3D
 @onready var visual_root: Node3D = $VisualRoot
@@ -25,10 +28,20 @@ var _is_active: bool = true
 
 
 func _ready() -> void:
+	spawn_position = global_position
 	_configure_collision()
 	_instantiate_visual()
 	_play_idle_animation()
 	health_component.died.connect(_on_died)
+	if health_component.is_dead():
+		_on_died()
+
+
+func set_state(value: StringName) -> void:
+	if state == &"Dead" or state == value:
+		return
+	state = value
+	state_changed.emit(state)
 
 
 func _configure_collision() -> void:
@@ -60,3 +73,5 @@ func _play_idle_animation() -> void:
 
 func _on_died() -> void:
 	_is_active = false
+	velocity = Vector3.ZERO
+	set_state(&"Dead")
