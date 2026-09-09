@@ -1,0 +1,30 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/enemy.tscn" id="1_enemy"]
+[ext_resource type="PackedScene" path="res://scenes/ranged_enemy_visual.tscn" id="2_visual"]
+[ext_resource type="Script" path="res://scripts/enemy_sensing.gd" id="3_sensing"]
+[ext_resource type="Script" path="res://scripts/enemy_movement.gd" id="4_movement"]
+[ext_resource type="Script" path="res://scripts/enemy_ranged_attack.gd" id="5_attack"]
+[ext_resource type="Script" path="res://scripts/enemy_ranged_behaviour.gd" id="6_behaviour"]
+
+[node name="RangedEnemy" instance=ExtResource("1_enemy")]
+display_name = "Ranged Enemy"
+visual_scene = ExtResource("2_visual")
+
+[node name="Sensing" type="Node" parent="."]
+script = ExtResource("3_sensing")
+detection_range = 10.0
+
+[node name="Movement" type="Node" parent="."]
+script = ExtResource("4_movement")
+chase_speed = 2.5
+reposition_speed = 2.5
+
+[node name="ProjectileOrigin" type="Marker3D" parent="."]
+position = Vector3(0, 0.4, -0.65)
+
+[node name="RangedAttack" type="Node" parent="."]
+script = ExtResource("5_attack")
+
+[node name="RangedBehaviour" type="Node" parent="."]
+script = ExtResource("6_behaviour")

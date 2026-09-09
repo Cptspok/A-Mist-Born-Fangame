@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3]
+
+[sub_resource type="StandardMaterial3D" id="RangedMaterial"]
+albedo_color = Color(0.18, 0.7, 0.65, 1)
+
+[sub_resource type="CylinderMesh" id="RangedMesh"]
+material = SubResource("RangedMaterial")
+top_radius = 0.25
+bottom_radius = 0.4
+height = 1.8
+radial_segments = 12
+
+[node name="RangedEnemyVisual" type="Node3D"]
+
+[node name="Body" type="MeshInstance3D" parent="."]
+mesh = SubResource("RangedMesh")

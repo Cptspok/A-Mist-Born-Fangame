@@ -10,6 +10,7 @@
 [ext_resource type="Resource" path="res://resources/red_item/red_item.tres" id="8_red"]
 [ext_resource type="Resource" uid="uid://cg8yca0q0hgft" path="res://resources/blue_item/blue_item.tres" id="9_blue"]
 [ext_resource type="PackedScene" path="res://scenes/example_enemy.tscn" id="10_enemy"]
+[ext_resource type="PackedScene" path="res://scenes/ranged_enemy.tscn" id="13_ranged"]
 [ext_resource type="PackedScene" path="res://scenes/player_health_hud.tscn" id="11_health_hud"]
 [ext_resource type="PackedScene" path="res://scenes/prototype_environment.tscn" id="12_environment"]
 
@@ -96,3 +97,6 @@ item_definition = ExtResource("9_blue")
 
 [node name="ExampleEnemy" parent="." unique_id=1089710274 instance=ExtResource("10_enemy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.9, -4)
+
+[node name="RangedEnemy" parent="." instance=ExtResource("13_ranged")]
+position = Vector3(5, 0.9, 9)
