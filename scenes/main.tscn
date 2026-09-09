@@ -11,6 +11,8 @@
 [ext_resource type="Resource" uid="uid://cg8yca0q0hgft" path="res://resources/blue_item/blue_item.tres" id="9_blue"]
 [ext_resource type="PackedScene" path="res://scenes/example_enemy.tscn" id="10_enemy"]
 [ext_resource type="PackedScene" path="res://scenes/ranged_enemy.tscn" id="13_ranged"]
+[ext_resource type="Resource" path="res://resources/sword.tres" id="14_sword"]
+[ext_resource type="PackedScene" path="res://scenes/equipment_feedback.tscn" id="15_feedback"]
 [ext_resource type="PackedScene" path="res://scenes/player_health_hud.tscn" id="11_health_hud"]
 [ext_resource type="PackedScene" path="res://scenes/prototype_environment.tscn" id="12_environment"]
 
@@ -46,6 +48,8 @@ navigation_mesh = SubResource("NavigationMesh_3s2qq")
 
 [node name="GameplayHUD" type="CanvasLayer" parent="." unique_id=475399014]
 layer = 0
+
+[node name="EquipmentFeedback" parent="GameplayHUD" instance=ExtResource("15_feedback")]
 
 [node name="PlayerHealthHUD" parent="GameplayHUD" unique_id=1437172500 instance=ExtResource("11_health_hud")]
 layout_mode = 3
@@ -100,3 +104,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.9, -4)
 
 [node name="RangedEnemy" parent="." instance=ExtResource("13_ranged")]
 position = Vector3(5, 0.9, 9)
+
+[node name="SwordWorldItem" parent="." instance=ExtResource("7_world")]
+position = Vector3(-7, 0.45, 6.5)
+item_definition = ExtResource("14_sword")

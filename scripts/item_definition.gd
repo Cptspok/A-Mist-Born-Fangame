@@ -10,3 +10,4 @@ extends Resource
 @export_range(1, 10, 1) var grid_width := 1
 @export_range(1, 10, 1) var grid_height := 1
 @export var world_visual: PackedScene
+@export var combat_definition: CombatItemDefinition

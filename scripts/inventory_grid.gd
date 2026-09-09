@@ -2,6 +2,7 @@ class_name InventoryGrid
 extends Control
 
 var inventory: InventoryComponent
+var equipment: PlayerCombat
 var cell_size := 72.0
 var gap := 4.0
 var dragging: ItemStack
@@ -11,11 +12,19 @@ signal stack_clicked(stack: ItemStack, position: Vector2)
 signal stack_hovered(stack: ItemStack, position: Vector2)
 
 func configure(component: InventoryComponent, size_per_cell: float, cell_gap: float) -> void:
+	if is_instance_valid(inventory) and inventory.contents_changed.is_connected(queue_redraw):
+		inventory.contents_changed.disconnect(queue_redraw)
+	if is_instance_valid(equipment) and equipment.equipment_changed.is_connected(queue_redraw):
+		equipment.equipment_changed.disconnect(queue_redraw)
 	inventory = component
+	equipment = inventory.get_parent().get_node_or_null("CombatEquipment") as PlayerCombat
+	if equipment != null:
+		equipment.equipment_changed.connect(queue_redraw)
 	cell_size = size_per_cell
 	gap = cell_gap
 	custom_minimum_size = Vector2(inventory.grid_width, inventory.grid_height) * (cell_size + gap)
 	inventory.contents_changed.connect(queue_redraw)
+	queue_redraw()
 
 func _draw() -> void:
 	if inventory == null: return
@@ -35,6 +44,13 @@ func _draw_stack(stack: ItemStack, pos: Vector2i, tint: Color) -> void:
 	draw_rect(rect, Color("20252d"), true)
 	if stack.definition.inventory_sprite: draw_texture_rect(stack.definition.inventory_sprite, rect.grow(-6), false, tint)
 	draw_string(get_theme_default_font(), rect.position + Vector2(5,18), stack.definition.display_name, HORIZONTAL_ALIGNMENT_LEFT, -1, 13, Color.WHITE)
+	if equipment != null:
+		for slot in [PlayerCombat.Slot.MAIN, PlayerCombat.Slot.SECONDARY]:
+			if equipment.get_equipped_stack(slot) == stack:
+				var badge := Rect2(Vector2(rect.position.x, rect.end.y - 34), Vector2(rect.size.x, 34))
+				draw_rect(badge, Color("21483e"))
+				draw_string(get_theme_default_font(), badge.position + Vector2(3, 13), "Equipped", HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Color.WHITE)
+				draw_string(get_theme_default_font(), badge.position + Vector2(3, 28), "Main" if slot == PlayerCombat.Slot.MAIN else "Secondary", HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Color.WHITE)
 
 func _gui_input(event: InputEvent) -> void:
 	if inventory == null: return

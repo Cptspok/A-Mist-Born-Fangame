@@ -5,6 +5,7 @@ extends Node
 @export_range(1, 20, 1) var grid_height := 3
 var stacks: Array[ItemStack] = []
 signal contents_changed
+signal item_added(definition: ItemDefinition)
 signal pickup_rejected(definition: ItemDefinition)
 signal throw_requested(stack: ItemStack)
 
@@ -28,6 +29,7 @@ func try_add(definition: ItemDefinition, quantity := 1) -> bool:
 			if can_place(definition, position):
 				stacks.append(ItemStack.new(definition, quantity, position))
 				contents_changed.emit()
+				item_added.emit(definition)
 				return true
 	pickup_rejected.emit(definition)
 	return false

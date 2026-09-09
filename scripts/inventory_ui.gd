@@ -58,7 +58,7 @@ func _build_ui() -> void:
 	close_button = Button.new(); close_button.text="X"; close_button.position=Vector2(842,14); close_button.size=Vector2(42,42); close_button.pressed.connect(close); panel.add_child(close_button)
 	grid = InventoryGrid.new(); grid.position=Vector2(40,90); grid.mouse_filter=Control.MOUSE_FILTER_STOP; grid.stack_clicked.connect(_show_menu); grid.stack_hovered.connect(_show_tooltip); panel.add_child(grid)
 	menu=PopupPanel.new(); var menu_box:=VBoxContainer.new(); menu.add_child(menu_box)
-	for action in ["Equip","Use","Throw","Read"]:
+	for action in ["Equip","Equip Secondary","Use","Throw","Read"]:
 		var button:=Button.new(); button.text=action; button.custom_minimum_size=Vector2(120,32); button.pressed.connect(_menu_action.bind(action)); menu_box.add_child(button)
 	panel.add_child(menu)
 	tooltip=Label.new(); tooltip.mouse_filter=Control.MOUSE_FILTER_IGNORE; tooltip.add_theme_color_override("font_color",Color.WHITE); var tip_style:=StyleBoxFlat.new(); tip_style.bg_color=Color("111111"); tip_style.content_margin_left=8; tip_style.content_margin_right=8; tip_style.content_margin_top=6; tip_style.content_margin_bottom=6; tooltip.add_theme_stylebox_override("normal",tip_style); panel.add_child(tooltip); tooltip.hide()
@@ -67,7 +67,12 @@ func _build_ui() -> void:
 func _show_menu(stack: ItemStack, position: Vector2) -> void:
 	selected_stack=stack; menu.position=Vector2i(panel.get_local_mouse_position()); menu.popup()
 func _menu_action(action: String) -> void:
-	if action == "Throw" and selected_stack != null: grid.inventory.request_throw(selected_stack)
+	if action in ["Equip", "Equip Secondary"] and selected_stack != null:
+		var equipment := grid.inventory.get_parent().get_node_or_null("CombatEquipment") as PlayerCombat
+		var slot := PlayerCombat.Slot.SECONDARY if action == "Equip Secondary" else PlayerCombat.Slot.MAIN
+		if equipment == null or not equipment.equip(selected_stack, slot):
+			print("This item cannot be equipped.")
+	elif action == "Throw" and selected_stack != null: grid.inventory.request_throw(selected_stack)
 	else: print(action + " is not implemented yet.")
 	menu.hide()
 func _show_tooltip(stack: ItemStack, position: Vector2) -> void:

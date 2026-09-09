@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bu28ecb8jyof2"]
+[gd_scene load_steps=11 format=3 uid="uid://bu28ecb8jyof2"]
 
 [ext_resource type="Script" uid="uid://bg1qyq53c7xaf" path="res://scripts/player.gd" id="1_player"]
 [ext_resource type="Script" uid="uid://dbcboo7f7n2yk" path="res://scripts/inventory_component.gd" id="2_inventory"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" path="res://scenes/world_item.tscn" id="4_world_item"]
 [ext_resource type="Script" path="res://scripts/health_component.gd" id="5_health"]
 [ext_resource type="PackedScene" path="res://scenes/hurtbox_component.tscn" id="6_hurtbox"]
+[ext_resource type="Script" path="res://scripts/player_combat.gd" id="7_combat"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
 radius = 0.4
@@ -32,6 +33,8 @@ position = Vector3(0, 0.7, 0)
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
 current = true
 
+[node name="WeaponMount" type="Node3D" parent="CameraPivot/Camera3D"]
+
 [node name="InteractionArea" type="Area3D" parent="." unique_id=1370787926]
 collision_layer = 0
 collision_mask = 2
@@ -51,3 +54,6 @@ world_item_scene = ExtResource("4_world_item")
 script = ExtResource("5_health")
 
 [node name="HurtboxComponent" parent="." instance=ExtResource("6_hurtbox")]
+
+[node name="CombatEquipment" type="Node" parent="."]
+script = ExtResource("7_combat")
