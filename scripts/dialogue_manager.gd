@@ -21,6 +21,7 @@ func start_dialogue(speaker_name: String, dialogue: DialogueData) -> void:
 		return
 
 	active_speaker_name = speaker_name
+	GameplayLocks.acquire(&"dialogue")
 	active_dialogue = dialogue
 	line_index = 0
 	_show_current_line()
@@ -33,6 +34,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func advance_dialogue() -> void:
+	if active_dialogue == null:
+		return
 	line_index += 1
 	if line_index >= active_dialogue.lines.size():
 		end_dialogue()
@@ -46,6 +49,7 @@ func end_dialogue() -> void:
 	active_speaker_name = ""
 	line_index = 0
 	dialogue_panel.hide_dialogue()
+	GameplayLocks.release(&"dialogue")
 
 
 func _show_current_line() -> void:

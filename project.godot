@@ -17,6 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+GameplayLocks="*res://scripts/gameplay_locks.gd"
 DialogueManager="*res://scripts/dialogue_manager.gd"
 InventoryUI="*res://scripts/inventory_ui.gd"
 

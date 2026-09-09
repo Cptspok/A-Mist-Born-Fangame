@@ -38,6 +38,7 @@ func open() -> void:
 	var inventory := get_tree().get_first_node_in_group("inventory_components") as InventoryComponent
 	if inventory == null: return
 	_previous_mouse_mode = Input.mouse_mode
+	GameplayLocks.acquire(&"inventory")
 	grid.configure(inventory, cell_size, cell_gap)
 	var viewport_size := get_viewport().get_visible_rect().size
 	panel.size = viewport_size * panel_screen_ratio
@@ -48,6 +49,7 @@ func close() -> void:
 	if not visible: return
 	menu.hide(); tooltip.hide(); hide(); get_tree().paused = false
 	Input.mouse_mode = _previous_mouse_mode
+	GameplayLocks.release(&"inventory")
 
 func _build_ui() -> void:
 	panel = PanelContainer.new(); panel.set_anchors_preset(Control.PRESET_CENTER); panel.size = Vector2(900,650); panel.position = -panel.size * 0.5

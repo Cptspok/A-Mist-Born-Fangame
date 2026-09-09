@@ -25,6 +25,7 @@ var nearby_interactions: Array[InteractionComponent] = []
 
 
 func _ready() -> void:
+	GameplayLocks.lock_changed.connect(_on_gameplay_lock_changed)
 	camera_pivot.position.y = eye_height
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	var collision_shape := interaction_area.get_node("CollisionShape3D") as CollisionShape3D
@@ -35,6 +36,9 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	# Yield locomotion ownership to future cinematic/scripted controllers.
+	if GameplayLocks.is_locked():
+		return
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 	else:
@@ -49,6 +53,8 @@ func _physics_process(delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if GameplayLocks.is_locked():
+		return
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		rotate_y(deg_to_rad(-event.relative.x * mouse_sensitivity))
 		camera_pivot.rotation.x = clampf(
@@ -76,6 +82,11 @@ func _get_nearest_interaction() -> InteractionComponent:
 			nearest_distance_squared = distance_squared
 
 	return nearest
+
+
+func _on_gameplay_lock_changed(locked: bool) -> void:
+	if locked:
+		velocity = Vector3.ZERO
 
 
 func _on_interaction_area_entered(area: Area3D) -> void:

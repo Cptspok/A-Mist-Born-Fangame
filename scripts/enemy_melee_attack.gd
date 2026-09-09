@@ -12,7 +12,7 @@ func tick(delta: float) -> void:
 
 
 func execute(target: Node3D) -> bool:
-	if not actor.is_active or _remaining > 0.0 or not is_instance_valid(target):
+	if GameplayLocks.is_locked() or not actor.is_active or _remaining > 0.0 or not is_instance_valid(target):
 		return false
 	if actor.global_position.distance_to(target.global_position) > attack_range:
 		return false

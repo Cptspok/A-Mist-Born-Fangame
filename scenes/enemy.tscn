@@ -24,3 +24,13 @@ script = ExtResource("2_health")
 
 [node name="DeathFade" type="Node" parent="."]
 script = ExtResource("4_death")
+
+[node name="NavigationOrigin" type="Node3D" parent="."]
+position = Vector3(0, -0.4, 0)
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="NavigationOrigin"]
+path_desired_distance = 0.2
+target_desired_distance = 0.15
+radius = 0.4
+height = 1.8
+avoidance_enabled = false

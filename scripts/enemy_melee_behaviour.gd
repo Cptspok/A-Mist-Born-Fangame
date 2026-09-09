@@ -15,8 +15,17 @@ var _elapsed: float = 0.0
 var _reposition_offset: Vector3
 
 
+func _ready() -> void:
+	GameplayLocks.lock_changed.connect(_on_gameplay_lock_changed)
+
+
+func _on_gameplay_lock_changed(locked: bool) -> void:
+	if locked:
+		actor.velocity = Vector3.ZERO
+
+
 func _physics_process(delta: float) -> void:
-	if not actor.is_active:
+	if not actor.is_active or GameplayLocks.is_locked():
 		return
 	attack.tick(delta)
 	sensing.sample(delta)
