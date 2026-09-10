@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3]
+[ext_resource type="Script" path="res://scripts/metal_tether_component.gd" id="tether"]
+
+[sub_resource type="BoxShape3D" id="body_shape"]
+size = Vector3(1.0, 1.0, 1.0)
+[sub_resource type="BoxShape3D" id="tether_shape"]
+resource_local_to_scene = true
+size = Vector3(1.20, 1.20, 1.20)
+[sub_resource type="StandardMaterial3D" id="material"]
+albedo_color = Color(0.9, 0.6, 0.3, 1)
+[sub_resource type="BoxMesh" id="mesh"]
+size = Vector3(1.0, 1.0, 1.0)
+material = SubResource("material")
+[sub_resource type="PhysicsMaterial" id="physics"]
+friction = 0.15
+[node name="allomancy_heavy" type="RigidBody3D"]
+mass = 1.0
+physics_material_override = SubResource("physics")
+linear_damp = 0.15
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+continuous_cd = true
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("body_shape")
+[node name="Mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("mesh")
+[node name="Label" type="Label3D" parent="."]
+position = Vector3(0, 1, 0)
+text = "HEAVY loose metal"
+font_size = 24
+billboard = 1
+[node name="MetalTether" type="Area3D" parent="."]
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+script = ExtResource("tether")
+allomancy_class = 2
+physical_owner_path = NodePath("..")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MetalTether"]
+shape = SubResource("tether_shape")

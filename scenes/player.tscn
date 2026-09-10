@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bu28ecb8jyof2"]
+[gd_scene load_steps=18 format=3 uid="uid://bu28ecb8jyof2"]
 
 [ext_resource type="Script" uid="uid://bg1qyq53c7xaf" path="res://scripts/player.gd" id="1_player"]
 [ext_resource type="Script" uid="uid://dbcboo7f7n2yk" path="res://scripts/inventory_component.gd" id="2_inventory"]
@@ -9,6 +9,14 @@
 [ext_resource type="Script" path="res://scripts/player_combat.gd" id="7_combat"]
 
 [ext_resource type="Script" path="res://scripts/equipment_component.gd" id="8_equipment"]
+
+[ext_resource type="Script" path="res://scripts/stat_component.gd" id="9_stats"]
+[ext_resource type="Script" path="res://scripts/equipment_stats_bridge.gd" id="10_stats_bridge"]
+
+[ext_resource type="Script" path="res://scripts/allomancy_controller.gd" id="11_allomancy"]
+[ext_resource type="Script" path="res://scripts/allomancy_targeting.gd" id="12_targeting"]
+[ext_resource type="Script" path="res://scripts/allomancy_debug.gd" id="13_debug"]
+[ext_resource type="Resource" path="res://resources/allomancy_tuning.tres" id="14_tuning"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
 radius = 0.4
@@ -52,8 +60,12 @@ grid_width = 5
 script = ExtResource("3_dropper")
 world_item_scene = ExtResource("4_world_item")
 
+[node name="StatComponent" type="Node" parent="."]
+script = ExtResource("9_stats")
+
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("5_health")
+stat_component_path = NodePath("../StatComponent")
 
 [node name="HurtboxComponent" parent="." instance=ExtResource("6_hurtbox")]
 
@@ -62,3 +74,19 @@ script = ExtResource("8_equipment")
 
 [node name="CombatEquipment" type="Node" parent="."]
 script = ExtResource("7_combat")
+
+[node name="EquipmentStatsBridge" type="Node" parent="."]
+script = ExtResource("10_stats_bridge")
+
+[node name="Allomancy" type="Node" parent="."]
+script = ExtResource("11_allomancy")
+tuning = ExtResource("14_tuning")
+
+[node name="Targeting" type="Area3D" parent="Allomancy"]
+collision_layer = 0
+collision_mask = 16
+monitorable = false
+script = ExtResource("12_targeting")
+
+[node name="Debug" type="Node3D" parent="Allomancy"]
+script = ExtResource("13_debug")

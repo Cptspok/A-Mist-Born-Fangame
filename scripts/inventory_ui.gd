@@ -6,6 +6,7 @@ var panel: PanelContainer
 var grid: InventoryGrid
 var slots_box: GridContainer
 var slot_controls: Array[EquipmentSlotUI] = []
+var stat_display: StatDebugDisplay
 var tooltip: Label
 var status: Label
 var menu: PopupMenu
@@ -40,6 +41,10 @@ func _ready() -> void:
 	inventory_title.text = "INVENTORY"
 	inventory_column.add_child(inventory_title)
 	inventory_column.add_child(grid)
+	stat_display = StatDebugDisplay.new()
+	stat_display.add_theme_font_size_override("font_size", 14)
+	stat_display.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	inventory_column.add_child(stat_display)
 	var divider := VSeparator.new()
 	row.add_child(divider)
 	var equipment_column := VBoxContainer.new()
@@ -107,6 +112,7 @@ func open() -> void:
 	if inventory == null: return
 	equipment = inventory.get_parent().get_node("Equipment") as EquipmentComponent
 	grid.configure(inventory, cell_size, cell_gap)
+	stat_display.configure(inventory.get_parent().get_node("StatComponent") as StatComponent)
 	var dropper := inventory.get_parent().get_node("InventoryDropper") as InventoryDropper
 	if not dropper.drop_rejected.is_connected(_rejected):
 		dropper.drop_rejected.connect(_rejected)

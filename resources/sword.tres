@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemDefinition" load_steps=9 format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://scripts/item_definition.gd" id="1_item"]
 [ext_resource type="Script" path="res://scripts/melee_weapon_definition.gd" id="2_weapon"]
@@ -8,6 +8,7 @@
 
 [ext_resource type="Script" path="res://scripts/equipment_profile.gd" id="6_profile"]
 
+[ext_resource type="Script" path="res://scripts/stat_modifier.gd" id="stat_modifier_script"]
 [sub_resource type="Resource" id="SwordEquipment"]
 script = ExtResource("6_profile")
 allowed_slots = Array[int]([0, 1])
@@ -23,12 +24,18 @@ attack_cooldown = 0.6
 attack_reach = 2.5
 hit_width = 1.0
 
+[sub_resource type="Resource" id="stat_contribution"]
+script = ExtResource("stat_modifier_script")
+stat = 3
+operation = 0
+value = 5
+
 [resource]
 script = ExtResource("1_item")
 item_id = "prototype_sword"
 display_name = "Prototype Sword"
 description = "Equip from inventory. Primary action swings; secondary action is reserved."
-characteristics = "1 x 3 | Melee weapon"
+characteristics = "1 x 3 | Melee weapon | +5 Physical Damage"
 item_type = "Weapon"
 inventory_sprite = ExtResource("5_icon")
 grid_width = 1
@@ -37,3 +44,5 @@ world_visual = ExtResource("4_visual")
 combat_definition = SubResource("SwordCombat")
 
 equipment_profile = SubResource("SwordEquipment")
+
+stat_modifiers = Array[ExtResource("stat_modifier_script")]([SubResource("stat_contribution")])

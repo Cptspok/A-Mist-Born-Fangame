@@ -1,17 +1,24 @@
-[gd_resource type="Resource" script_class="ItemDefinition" load_steps=6 format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" load_steps=8 format=3]
 [ext_resource type="Script" path="res://scripts/item_definition.gd" id="item"]
 [ext_resource type="Script" path="res://scripts/equipment_profile.gd" id="profile_script"]
 [ext_resource type="Texture2D" path="res://resources/helmet.svg" id="icon"]
 [ext_resource type="PackedScene" path="res://scenes/helmet_visual.tscn" id="visual"]
+[ext_resource type="Script" path="res://scripts/stat_modifier.gd" id="stat_modifier_script"]
 [sub_resource type="Resource" id="profile"]
 script = ExtResource("profile_script")
 allowed_categories = Array[int]([2])
+[sub_resource type="Resource" id="stat_contribution"]
+script = ExtResource("stat_modifier_script")
+stat = 0
+operation = 0
+value = 20
+
 [resource]
 script = ExtResource("item")
 item_id = "prototype_helmet"
 display_name = "Helmet"
-description = "Prototype equipment. No stats or worn character appearance."
-characteristics = "2 x 2 | Helmet"
+description = "Prototype equipment. Test modifiers; no worn character appearance."
+characteristics = "2 x 2 | Helmet | +20 Max Health"
 item_type = "Armor"
 grid_width = 2
 grid_height = 2
@@ -19,3 +26,5 @@ inventory_sprite = ExtResource("icon")
 world_visual = ExtResource("visual")
 equipment_profile = SubResource("profile")
 
+
+stat_modifiers = Array[ExtResource("stat_modifier_script")]([SubResource("stat_contribution")])

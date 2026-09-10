@@ -1,12 +1,15 @@
 extends CombatItemRuntime
 
 var _cooldown: float = 0.0
+var _stats: StatComponent
 var _excluded: Array[RID] = []
 @onready var source: DamageSourceComponent = $DamageSourceComponent
 @onready var presentation: Node3D = $Presentation
 
 
 func _ready() -> void:
+	if wielder is PlayerController:
+		_stats = wielder.get_node_or_null("StatComponent") as StatComponent
 	if wielder is CollisionObject3D:
 		_excluded.append(wielder.get_rid())
 	for node in wielder.find_children("*", "CollisionObject3D", true, false):
@@ -24,8 +27,8 @@ func handle_action(action: StringName, pressed: bool) -> void:
 	var data := definition as MeleeWeaponDefinition
 	if data == null:
 		return
-	_cooldown = data.attack_cooldown
-	source.damage_amount = data.damage
+	_cooldown = data.attack_cooldown / (_stats.get_value(StatIds.Stat.ATTACK_SPEED) if _stats != null else 1.0)
+	source.damage_amount = data.damage + (_stats.get_value(StatIds.Stat.PHYSICAL_DAMAGE) if _stats != null else 0.0)
 	presentation.call("swing")
 	var shape := BoxShape3D.new()
 	shape.size = Vector3(data.hit_width, data.hit_width, data.attack_reach)

@@ -13,3 +13,5 @@ extends Resource
 @export var combat_definition: CombatItemDefinition
 
 @export var equipment_profile: EquipmentProfile
+
+@export var stat_modifiers: Array[StatModifier] = []
