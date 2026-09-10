@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bu28ecb8jyof2"]
+[gd_scene load_steps=12 format=3 uid="uid://bu28ecb8jyof2"]
 
 [ext_resource type="Script" uid="uid://bg1qyq53c7xaf" path="res://scripts/player.gd" id="1_player"]
 [ext_resource type="Script" uid="uid://dbcboo7f7n2yk" path="res://scripts/inventory_component.gd" id="2_inventory"]
@@ -7,6 +7,8 @@
 [ext_resource type="Script" path="res://scripts/health_component.gd" id="5_health"]
 [ext_resource type="PackedScene" path="res://scenes/hurtbox_component.tscn" id="6_hurtbox"]
 [ext_resource type="Script" path="res://scripts/player_combat.gd" id="7_combat"]
+
+[ext_resource type="Script" path="res://scripts/equipment_component.gd" id="8_equipment"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
 radius = 0.4
@@ -54,6 +56,9 @@ world_item_scene = ExtResource("4_world_item")
 script = ExtResource("5_health")
 
 [node name="HurtboxComponent" parent="." instance=ExtResource("6_hurtbox")]
+
+[node name="Equipment" type="Node" parent="."]
+script = ExtResource("8_equipment")
 
 [node name="CombatEquipment" type="Node" parent="."]
 script = ExtResource("7_combat")

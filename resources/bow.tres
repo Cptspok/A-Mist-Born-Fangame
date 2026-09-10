@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="ItemDefinition" load_steps=6 format=3]
+[ext_resource type="Script" path="res://scripts/item_definition.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/equipment_profile.gd" id="2"]
+[ext_resource type="Texture2D" path="res://resources/bow.svg" id="3"]
+[ext_resource type="PackedScene" path="res://scenes/bow_visual.tscn" id="4"]
+[sub_resource type="Resource" id="profile"]
+script = ExtResource("2")
+allowed_slots = Array[int]([0])
+traits = Array[int]([2])
+family = &"archery"
+restricts_slot = 1
+permitted_traits = Array[int]([3])
+permitted_families = Array[StringName]([&"archery"])
+[resource]
+script = ExtResource("1")
+item_id = "prototype_bow"
+display_name = "Bow"
+description = "Equipment compatibility prototype; no ranged attacks or bonuses."
+characteristics = "2 x 3 | Archery equipment"
+grid_width = 2
+grid_height = 3
+inventory_sprite = ExtResource("3")
+world_visual = ExtResource("4")
+equipment_profile = SubResource("profile")

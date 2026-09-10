@@ -3,35 +3,36 @@
 [ext_resource type="Script" path="res://scripts/item_definition.gd" id="1_item"]
 [ext_resource type="Script" path="res://scripts/melee_weapon_definition.gd" id="2_weapon"]
 [ext_resource type="PackedScene" path="res://scenes/melee_weapon.tscn" id="3_runtime"]
-[ext_resource type="PackedScene" path="res://scenes/sword_visual.tscn" id="4_visual"]
-[ext_resource type="Texture2D" path="res://resources/sword.svg" id="5_icon"]
+[ext_resource type="PackedScene" path="res://scenes/greatsword_visual.tscn" id="4_visual"]
+[ext_resource type="Texture2D" path="res://resources/greatsword.svg" id="5_icon"]
 
 [ext_resource type="Script" path="res://scripts/equipment_profile.gd" id="6_profile"]
 
 [sub_resource type="Resource" id="SwordEquipment"]
 script = ExtResource("6_profile")
-allowed_slots = Array[int]([0, 1])
-traits = Array[int]([0])
-family = &"sword"
+allowed_slots = Array[int]([0])
+traits = Array[int]([0, 1])
+restricts_slot = 1
+family = &"greatsword"
 
 [sub_resource type="Resource" id="SwordCombat"]
 script = ExtResource("2_weapon")
 runtime_scene = ExtResource("3_runtime")
 primary_action_label = "Attack"
-damage = 25.0
-attack_cooldown = 0.6
+damage = 45.0
+attack_cooldown = 1.0
 attack_reach = 2.5
 hit_width = 1.0
 
 [resource]
 script = ExtResource("1_item")
-item_id = "prototype_sword"
-display_name = "Prototype Sword"
+item_id = "prototype_greatsword"
+display_name = "Greatsword"
 description = "Equip from inventory. Primary action swings; secondary action is reserved."
-characteristics = "1 x 3 | Melee weapon"
+characteristics = "2 x 3 | Melee weapon"
 item_type = "Weapon"
 inventory_sprite = ExtResource("5_icon")
-grid_width = 1
+grid_width = 2
 grid_height = 3
 world_visual = ExtResource("4_visual")
 combat_definition = SubResource("SwordCombat")

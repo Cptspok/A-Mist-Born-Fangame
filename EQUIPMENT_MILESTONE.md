@@ -1,0 +1,95 @@
+# Equipment milestone
+
+Implemented in C:/Users/CptSp/Documents/Codex/ai-game-framework-test.
+
+## Architecture and configuration
+
+- Player/Equipment (EquipmentComponent) is the sole equipment owner. InventoryComponent.stacks contains only unequipped ItemStacks. Transfers preserve each ItemStack object and quantity.
+- EquipmentSlots.Slot defines MAIN_HAND, OFF_HAND, HEAD, CHEST, BELT, GLOVES, BOOTS, TRINKET_1, TRINKET_2. Equipment.enabled_slots exposes only the first two by default. UI enumerates that list.
+- ItemDefinition.equipment_profile is an EquipmentProfile Resource. Configure allowed_slots independently from traits, family, compatible_weapon_families, restricts_slot/permitted_traits/permitted_families, and requires_slot/required_traits/required_families.
+- Restriction traits are conjunctive; family lists allow any listed family. Empty permitted_traits blocks the restricted slot. A requirement needs an actual item even when its trait list is empty.
+- For future weapon pairs, BOTH profiles must have WEAPON and DUAL_WIELD and explicitly list each other's family. Ordinary Sword does not opt in.
+- Query get_equipped_stack(slot) or get_equipped_items() (a dictionary snapshot) for future stat aggregation. No bonuses are implemented.
+- preview() builds the proposed slot map, resolves displaced equipment and dependencies, then uses a detached scratch grid to reserve space. It never changes live positions or ownership. transfer() recalculates the plan, rejects all failures, or commits all ownership/positions before emitting signals.
+- Automatic displacement uses deterministic first-fit in inventory, counting the incoming item's freed footprint. This is not an optimal packing solver.
+- CombatEquipment/PlayerCombat holds runtime instances only. It derives combat-capable items from Equipment; weapon switching indexes that filtered list, not physical Off Hand. Quiver/Bow never become melee runtimes.
+- Equipment and inventory changes drive UI/HUD signals. Drag preview validation runs on drag events. No new frame polling.
+
+## Interaction
+
+I opens inventory; drag inventory items to slots. Green is valid, red invalid, amber means displacement. Red X overlays mark occupied slots whose items will return before the drop is completed, including when inventory capacity makes the overall drop invalid. Release confirms.
+Drag equipped items to an exact grid cell (top-left anchor). An invalid cell rejects; there is no fallback. Dependent items use first fit.
+Drag between equipment slots to move or swap. Both resulting placements must validate; a failed swap never displaces either participant.
+Right-click inventory items for named slot Equip actions or Throw. Throw uses the existing WorldItem dropper. Releasing a drag outside the entire panel drops the item through the shared world dropper; invalid targets inside the panel still reject.
+Esc/Close cancels an ongoing drag without transferring ownership.
+
+## Items
+
+| Item | Grid size | Allowed slots | Rules |
+|---|---|---|---|
+| Sword | 1 x 3 | Main / Off | Standalone melee weapon; no automatic dual wield |
+| Greatsword | 2 x 3 | Main | TWO_HANDED; blocks Off; existing melee runtime at 45 damage / 1 second cooldown |
+| Bow | 2 x 3 | Main | Off accepts QUIVER with archery family; empty Off allowed |
+| Quiver | 1 x 2 | Off | Requires BOW with archery family in Main |
+
+Sword remains near (-7, 0.45, 6.5). Greatsword, Bow, Quiver are at (-6, 0.6, 7.6), (-5, 0.6, 7.6), (-4, 0.6, 7.6), beside spawn, through existing WorldItem instances. New visuals are colored labeled primitives with distinct icons. Greatsword currently shares Sword's first-person mesh and swing.
+
+## Manual tests (detailed gameplay testing is left to the user)
+
+A. Pick up Sword with E, open I, drag to Main: grid footprint disappears. Close I, primary action attacks and HUD names Sword.
+B. Drag Sword Main to an empty 1 x 3 inventory region: footprint returns, weapon presentation clears and HUD is Unarmed.
+C. Move Sword Main to empty Off: succeeds; Sword remains usable as the sole combat-capable weapon.
+D. With Sword Off, collect Greatsword; hover Greatsword over Main: Off shows X. Release: Sword returns to inventory, Greatsword occupies Main and Off reads Unavailable.
+E. Capacity failure: use Bow Main + Quiver Off, collect Greatsword and fill remaining cells with existing world items. Hover Greatsword over Main: replacing Bow plus Quiver requires more than the freed 2 x 3 region. Red target / X indicators; release leaves all items unchanged. Note: Greatsword replacing ONLY Off Sword frees enough space for that smaller Sword even in an otherwise full grid, so that operation correctly succeeds.
+F. Bow Main accepts Quiver Off. Sword Off is rejected; Greatsword Off is rejected by allowed-slot data.
+G. With Bow Main + Quiver Off and space for both, drag Bow to a valid 2 x 3 region: Bow goes to the chosen cell and Quiver goes to first fit.
+H. Leave exactly a 2 x 3 region for Bow, with no remaining 1 x 2 region for Quiver. Drag Bow there: red preview, both remain equipped.
+I. With no Bow Main, drag Quiver Off: red preview, Quiver stays at its original grid cell.
+J. Drag inventory/equipment items to overlapping cells, out-of-bounds cells, or forbidden slots inside the panel. Ownership and position remain unchanged. Esc mid-drag also cancels.
+K. Valid occupied swap requires compatible test profiles: temporarily set Sword traits to WEAPON + DUAL_WIELD and compatible_weapon_families to [sword], and duplicate the existing SwordWorldItem in main.tscn using the Inspector. Pick up both Swords, equip Main/Off, then drag Main to Off: identities exchange with no grid occupancy. Revert those temporary test changes afterward. No default dual-wield combat example is enabled.
+L. Equip Bow Main + Quiver Off, then drag Bow onto occupied Off: the swap is rejected and both stay equipped. Also move Greatsword Main to empty Off: rejected.
+Also verify Throw/pickup, dialogue locks, enemy combat, player HP, and semantic bindings still behave as before.
+
+## Validation and limitations
+
+Godot 4.7.2 headless editor import/parser checks passed. Main-scene startup and opening/closing the real inventory UI passed after fixing early HUD access to CombatEquipment before its _ready. No isolated scene/project or broad automated suite was added.
+Detailed drag/gameplay verification remains manual. Bow is equipment-only (no active combat runtime, so HUD says Unarmed if it is the only equipped weapon). Quiver has no bonuses. No shields, armor, stats, ranged player attacks, or dual-wield combat were added. UI is a fixed-size prototype suited to the current desktop viewport; responsive small-screen layout is not included.
+
+## File manifest
+
+Added:
+- scripts/equipment_slots.gd, equipment_profile.gd, equipment_component.gd, equipment_slot_ui.gd (plus Godot UID files)
+- resources/greatsword.tres, bow.tres, quiver.tres; corresponding SVG icons/import metadata
+- scenes/greatsword_visual.tscn, bow_visual.tscn, quiver_visual.tscn
+- EQUIPMENT_MILESTONE.md
+
+Modified:
+- scripts/item_definition.gd, inventory_grid.gd, inventory_ui.gd, player_combat.gd, equipment_feedback.gd
+- resources/sword.tres
+- scenes/player.tscn, main.tscn
+
+Existing user-provided assets/P_*.glb files were left untouched.
+
+## World-drop regression fix
+
+Root cause: the native drag refactor removed outside-panel release handling. InventoryDropper also only knew how to remove inventory-owned stacks.
+
+Changed files for this fix: scripts/inventory_ui.gd, inventory_grid.gd, equipment_slot_ui.gd, equipment_component.gd, inventory_dropper.gd, world_item.gd, and this report.
+
+Drag payloads explicitly carry source_slot (-1 for inventory; equipment slot ID otherwise). On a left-button release outside the whole panel, the UI cancels the native drag, then requests inventory Throw or EquipmentComponent.drop_to_world. Invalid targets inside the panel still reject normally; Esc/Close cancels without dropping. No equipped-item context menu was added. Existing inventory context Throw reaches the same shared InventoryDropper.try_drop pathway.
+
+Equipment WORLD_DROP previews reuse removal/dependency validation and first-fit reservations, excluding the world-bound item from inventory placement. The dropper stages the original definition/quantity in a hidden, unpickable WorldItem and verifies scene attachment. Only then does the silent ownership callback revalidate and commit. Failure discards the staged item without removing ownership. Success enables the pickup and emits the existing inventory/equipment signals, updating combat, WeaponMount, and HUD. No asynchronous wait occurs inside the transaction.
+
+Manual regression tests:
+A. Pick up Sword, open I, drag it from the grid beyond the panel border, release: exactly one WorldItem appears; inventory footprint disappears.
+B. Equip Sword Main, drag outside: Main clears, WeaponMount clears, HUD updates, one Sword appears.
+C. Equip Greatsword, drag outside even with a full inventory: it drops, Main clears, Off becomes available.
+D. Equip Bow Main + Quiver Off, leave a free 1 x 2 inventory region, drag Bow outside: only Bow spawns; Quiver returns to the grid.
+E. Repeat D with no 1 x 2 region: rejection text, both remain equipped, no WorldItem spawns.
+F. With Bow + Quiver equipped, drag Quiver outside: Quiver spawns, Bow stays equipped.
+G. Close I, pick up the dropped item with E, reopen I, re-equip: definition, quantity and compatibility remain correct.
+H. Repeat equip/drop/pickup several times: one item throughout; no ghost slot or leftover first-person weapon.
+Also right-click a grid stack and Throw: same result and preserved quantity. Release over an invalid target inside the panel, or press Esc mid-drag: no world drop.
+Failure check: temporarily clear Player/InventoryDropper.world_item_scene in the Inspector, run and attempt both inventory and equipped drops. They reject without ownership changes; restore the scene afterward.
+
+Validation: Godot 4.7.2 headless parser/import and main-scene startup passed. Detailed mouse/gameplay tests above remain manual. The existing fixed drop offset is unchanged; this task does not add throwing physics or collision-aware placement. Spawn success means the configured WorldItem entered the scene and survived synchronous initialization; arbitrary custom asynchronous scene failures are outside this synchronous transaction.

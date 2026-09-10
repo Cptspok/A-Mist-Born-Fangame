@@ -53,5 +53,5 @@ func _on_item_added(definition: ItemDefinition) -> void:
 
 func _update_toast() -> void:
 	toast.text = "%s added to inventory" % _pickup.display_name
-	if _pickup.combat_definition != null and _pickup.combat_definition.runtime_scene != null:
+	if _pickup.equipment_profile != null:
 		toast.text += "\nOpen Inventory [%s] to equip" % InputHint.binding(&"toggle_inventory")

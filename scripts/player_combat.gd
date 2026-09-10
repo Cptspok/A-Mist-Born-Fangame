@@ -2,108 +2,79 @@ class_name PlayerCombat
 extends Node
 
 signal equipment_changed
-## Independent hook for future abilities, never forwarded to weapon slots.
 signal ability_requested(action: StringName, pressed: bool)
-
-enum Slot { MAIN, SECONDARY }
-var active_slot: int = Slot.MAIN
-var _stacks: Array[ItemStack] = [null, null]
-var _runtimes: Array[CombatItemRuntime] = [null, null]
-@onready var inventory: InventoryComponent = $"../InventoryComponent"
+var active_slot: int = -1
+var _runtimes: Dictionary = {}
+@onready var equipment: EquipmentComponent = $"../Equipment"
 @onready var camera: Camera3D = $"../CameraPivot/Camera3D"
 @onready var mount: Node3D = $"../CameraPivot/Camera3D/WeaponMount"
 @onready var health: HealthComponent = $"../HealthComponent"
 
-
 func _ready() -> void:
-	inventory.contents_changed.connect(_validate_ownership)
+	equipment.equipment_changed.connect(_sync_equipment)
 	GameplayLocks.lock_changed.connect(_on_lock_changed)
 	health.died.connect(_cancel_actions)
-
-
-func equip(stack: ItemStack, slot: int = Slot.MAIN) -> bool:
-	# Inventory UI may equip while paused; gameplay input remains locked.
-	if slot < 0 or slot >= _stacks.size() or stack == null or stack not in inventory.stacks or stack.definition.combat_definition == null:
-		return false
-	var data := stack.definition.combat_definition
-	if data.runtime_scene == null:
-		return false
-	if _stacks[slot] == stack:
-		select_slot(slot)
-		return true
-	var instance := data.runtime_scene.instantiate()
-	var runtime := instance as CombatItemRuntime
-	if runtime == null:
-		instance.free()
-		return false
-	for i in _stacks.size():
-		if _stacks[i] == stack or i == slot:
-			_clear_slot(i)
-	_stacks[slot] = stack
-	_runtimes[slot] = runtime
-	runtime.configure(data, get_parent() as Node3D, camera)
-	mount.add_child(runtime)
-	select_slot(slot)
-	return true
-
+	_sync_equipment()
 
 func get_equipped_stack(slot: int) -> ItemStack:
-	return _stacks[slot] if slot >= 0 and slot < _stacks.size() else null
+	return equipment.get_equipped_stack(slot) if is_instance_valid(equipment) else null
 
+func _sync_equipment() -> void:
+	for runtime in _runtimes.values():
+		runtime.set_active(false)
+		runtime.queue_free()
+	_runtimes.clear()
+	for slot in equipment.enabled_slots:
+		var stack := equipment.get_equipped_stack(slot)
+		if stack == null: continue
+		var data := stack.definition.combat_definition
+		if data == null or data.runtime_scene == null: continue
+		var instance := data.runtime_scene.instantiate()
+		var runtime := instance as CombatItemRuntime
+		if runtime == null:
+			instance.free()
+			continue
+		runtime.configure(data, get_parent() as Node3D, camera)
+		mount.add_child(runtime)
+		_runtimes[slot] = runtime
+	if not _runtimes.has(active_slot):
+		active_slot = -1 if _runtimes.is_empty() else int(_runtimes.keys()[0])
+	select_slot(active_slot)
 
 func select_slot(slot: int) -> void:
-	if slot < 0 or slot >= _stacks.size():
-		return
+	if slot != -1 and not _runtimes.has(slot): return
 	active_slot = slot
-	for i in _runtimes.size():
-		if is_instance_valid(_runtimes[i]):
-			_runtimes[i].set_active(i == active_slot)
+	for key in _runtimes:
+		_runtimes[key].set_active(key == slot)
 	equipment_changed.emit()
 
-
 func _unhandled_input(event: InputEvent) -> void:
-	if GameplayLocks.is_locked() or health.is_dead() or get_tree().paused:
-		return
+	if GameplayLocks.is_locked() or health.is_dead() or get_tree().paused: return
 	for action in [&"primary_action", &"secondary_action", &"ability_1", &"ability_2"]:
 		if event.is_action_pressed(action) or event.is_action_released(action):
 			var pressed := event.is_action_pressed(action)
 			if action in [&"ability_1", &"ability_2"]:
 				ability_requested.emit(action, pressed)
-			elif is_instance_valid(_runtimes[active_slot]):
+			elif _runtimes.has(active_slot):
 				_runtimes[active_slot].handle_action(action, pressed)
 			get_viewport().set_input_as_handled()
 			return
+	# Bindings index combat-capable items, never physical Off Hand directly.
+	var available := _runtimes.keys()
 	for action in [&"weapon_slot_1", &"weapon_slot_2", &"weapon_next", &"weapon_previous"]:
-		if event.is_action_pressed(action):
+		if event.is_action_pressed(action) and not available.is_empty():
+			var index := 0
 			match action:
-				&"weapon_slot_1": select_slot(Slot.MAIN)
-				&"weapon_slot_2": select_slot(Slot.SECONDARY)
-				_: select_slot(1 - active_slot)
+				&"weapon_slot_1": index = 0
+				&"weapon_slot_2": index = 1
+				_: index = posmod(available.find(active_slot) + (-1 if action == &"weapon_previous" else 1), available.size())
+			if index < available.size(): select_slot(available[index])
 			get_viewport().set_input_as_handled()
 			return
 
-
-func _clear_slot(slot: int) -> void:
-	if is_instance_valid(_runtimes[slot]):
-		_runtimes[slot].set_active(false)
-		_runtimes[slot].queue_free()
-	_runtimes[slot] = null
-	_stacks[slot] = null
-
-
-func _validate_ownership() -> void:
-	for i in _stacks.size():
-		if _stacks[i] != null and _stacks[i] not in inventory.stacks:
-			_clear_slot(i)
-	equipment_changed.emit()
-
-
 func _on_lock_changed(locked: bool) -> void:
-	if locked:
-		_cancel_actions()
-
+	if locked: _cancel_actions()
 
 func _cancel_actions() -> void:
-	for runtime in _runtimes:
-		if is_instance_valid(runtime):
-			runtime.cancel_action()
+	for runtime in _runtimes.values():
+		if is_instance_valid(runtime): runtime.cancel_action()
