@@ -56,12 +56,12 @@ Steel:
 
 The Player emits external_motion_requested during its physics update. The controller adds forces through add_external_acceleration, and the Player integrates acceleration * delta once before move_and_slide. Neither power assigns a target velocity or position. Holding both powers applies both contributions; with equal strengths they cancel.
 
-Ground drive retains the existing stat-driven WASD baseline (10 unmodified). Carried/external momentum is separate. Running speed is transferred into momentum on jump/walk-off, rather than overwritten in flight. Landing reclassifies the aligned movement portion to avoid doubling the running speed. Collision normals clip blocked drive, and the post-slide velocity updates the carried channel.
+The Player uses one actual CharacterBody3D velocity. Grounded horizontal motion converges smoothly toward stat-driven WASD speed (10 unmodified), with the same traction regardless of velocity source. In the air, existing velocity is preserved without any channel transfer. External acceleration is added once per physics tick; move_and_slide supplies the next collision-resolved velocity. See PLAYER_TRACTION_CORRECTION.md for the correction and tests.
 
 New small movement tuning:
 - jump_speed = 7, semantic jump action.
 - air_control_acceleration = 4: optional additive steering while airborne.
-- ground_momentum_drag = 2: grounded carried momentum slows gradually; set 0 to remove this friction.
+- ground_traction = 12 (inverse seconds): shared horizontal input response/braking while grounded. No ground traction in air.
 - gravity remains the existing project gravity throughout force application.
 
 Releasing a power stops new acceleration, without clearing momentum. Releasing WASD in air also retains velocity. Air has no automatic drag. Ground friction, wall/floor collisions and the existing explicit gameplay-lock velocity reset remain legitimate reasons momentum can change. Space advances dialogue while locked and jumps only during gameplay.
@@ -95,7 +95,7 @@ Test fixtures are under Main/AllomancyFixtures:
 - HeavyObject: (-2, 0.7, -1).
 - DirectionalCart: (3, 0.6, 2), local -Z travel axis.
 
-They are separate from the visual environment and existing inventory pickups. Loose objects are reusable primitive RigidBody scenes, not inventory items. The cart/props lock angular axes and use low ordinary physics friction/damping for legible testing. No wheels, torque or damage mechanics were added. Existing enemies remain active in the main environment.
+They are separate from the visual environment and existing inventory pickups. Loose objects are reusable primitive RigidBody scenes, not inventory items. The cart/props lock angular axes and share the normal movable-prop PhysicsMaterial (friction 0.65, zero bounce), with explicit Replace linear damping 0.15. The floor/architecture use the shared normal world surface material (friction 0.8). See WORLD_PHYSICS_BASELINE.md for the native contact convention. No wheels, torque or damage mechanics were added. Existing enemies remain active in the main environment.
 
 ## Exact manual tests
 

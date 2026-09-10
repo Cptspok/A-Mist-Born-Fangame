@@ -1,0 +1,81 @@
+# Native world physics baseline
+
+## Cause
+
+All four movable Allomancy fixture scenes embedded separate PhysicsMaterial subresources with friction 0.15, bounce default 0, and rough default false. The prototype floor and architecture had no explicit PhysicsMaterial override. The floor's StandardMaterial3D roughness only affects rendering.
+
+Godot's default non-rough contact rule uses the lower friction, so the low prop setting remained the limiting surface value. This was deliberate low-friction fixture setup from the first force prototype, not residual Steel/Iron state. Linear damping was 0.15 in default Combine mode, plus project default 0.1; it acted through air as well as on the ground and was not a substitute for contact friction. Angular damping inherited the project default 0.1; fixture rotations were already locked.
+
+Reference: [Godot PhysicsMaterial documentation](https://docs.godotengine.org/en/stable/classes/class_physicsmaterial.html). No physical movement was inferred from the visual material.
+
+## Two shared resources
+
+| Resource | Friction | Bounce | Rough / Absorbent |
+|---|---:|---:|---|
+| resources/physics/normal_world_surface.tres | 0.8 | 0 | false / false |
+| resources/physics/normal_movable_prop.tres | 0.65 | 0 | false / false |
+
+Assign these through the physics body's physics_material_override, not the MeshInstance material.
+
+normal_world_surface is assigned to all ten StaticBody3D nodes in prototype_environment.tscn: ground, four walls, divider, two sight-screen obstacles and two fixed block props. Future normal level collision should reference this same resource.
+
+normal_movable_prop replaces the embedded materials in allomancy_light, allomancy_medium, allomancy_heavy and allomancy_cart. It has no metal, target-class, ability or script dependency. Both sides now have an explicit contact convention. Shared Resources intentionally update all users; make a copy only when later design actually requires a different surface.
+
+No third/cart-specific preset was needed. Directional force projection, class multipliers, mass compensation, and tether behavior are unchanged. Higher native friction may completely resist a small sideways cart force; it does not change the projected force itself.
+
+## Damping and future prop workflow
+
+For the current fixtures:
+- linear_damp_mode = Replace (1).
+- linear_damp = 0.15, the explicit total instead of 0.15 plus default 0.1.
+- Angular damping is unchanged (project default 0.1; all fixture angular axes remain locked).
+- Bounce 0; native sleep, CCD, mass and existing rotational locks unchanged.
+
+This slightly reduces airborne damping while raising ground contact friction. No global damping or project physics setting changed. No custom friction code was added.
+
+For a future wooden crate, debris, knife or other loose prop:
+1. Create a RigidBody3D, CollisionShape3D and visual mesh in the desired scene.
+2. Assign normal_movable_prop.tres to Physics Material Override.
+3. Keep linear damping moderate. For the exact fixture baseline, choose Replace / 0.15. A new body using the current native default damping of 0.1 is also compatible.
+4. Place it on normal_world_surface collision.
+5. Only if it should be Allomantically targetable, add a separate MetalTether and link its physical owner.
+
+PhysicsMaterial does not store rigid-body damping; the two body properties above belong on the body. No custom script is needed for a normal prop. Current inventory WorldItem pickups are StaticBody3D, so this task does not convert dropped inventory items into dynamic bodies.
+
+## Exact manual tests
+
+Use the existing main scene; reset between comparisons. Use short, comparable F/C holds so launch speed does not dominate the friction comparison.
+
+A. Aim at LIGHT and briefly hold F along the floor, then release. Strong initial object response remains; contact should brake the skid substantially faster.
+B. Launch LIGHT through air (temporarily raise its start position in the existing scene or Push from below). Release in flight: useful horizontal travel remains. Once it lands, contact friction should visibly increase slowing. Restore the position afterward.
+C. Briefly Pull LIGHT with C, then release: it should settle rather than skate for a long distance.
+D. Compare MEDIUM and HEAVY from similar angles: class response differences remain, while both share the same contact material.
+E. Push the cart from behind along its local -Z axis, release: it travels and slows naturally.
+F. Reset and Push from the side for the same duration: lateral response remains weaker; it may be held nearly still by contact friction.
+G. In the existing main scene, add a generic RigidBody3D box with BoxShape3D and a mesh, assign normal_movable_prop.tres, set linear damping Replace / 0.15, and give it initial Linear Velocity (3, 0, 0). Put it just above the ground in a clear area. Add no MetalTether or scripts. Run: it should skid and settle. Repeat from a higher position to compare airborne travel with landing. Remove the temporary test box afterward.
+
+No separate scene or duplicate physics framework is required for G.
+
+## Files and checks
+
+Added:
+- resources/physics/normal_world_surface.tres
+- resources/physics/normal_movable_prop.tres
+- WORLD_PHYSICS_BASELINE.md
+
+Modified:
+- scenes/prototype_environment.tscn
+- scenes/allomancy_light.tscn
+- scenes/allomancy_medium.tscn
+- scenes/allomancy_heavy.tscn
+- scenes/allomancy_cart.tscn
+- ALLOMANCY_MILESTONE.md (updated fixture description)
+
+Allomancy scripts and Player movement were not edited for this task. Existing prior traction changes were preserved.
+
+Godot 4.7.2 import/resource checks passed. One startup sanity run loaded the actual main scene and confirmed world friction 0.8, each fixture friction 0.65, bounce 0, and Replace damping 0.15. It also confirmed native project linear/angular defaults of 0.1. Detailed physics testing remains manual. Temporary validation files were removed.
+
+## Limits
+
+These are provisional normal-contact values, not final material balance. No measured stopping distance is claimed. Long Allomancy holds can produce high velocity, and even higher friction cannot turn those into an arbitrarily short skid. Shape, contact normal, slope and ongoing forces affect settling. Rolling objects may need a later rolling-resistance decision; this baseline adds no wheel/rolling simulation, sleep manager or airborne drag model.
+

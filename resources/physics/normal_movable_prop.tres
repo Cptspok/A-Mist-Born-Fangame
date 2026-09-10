@@ -1,0 +1,8 @@
+[gd_resource type="PhysicsMaterial" format=3]
+
+[resource]
+resource_name = "Normal Movable Prop"
+friction = 0.65
+rough = false
+bounce = 0.0
+absorbent = false

@@ -5,13 +5,11 @@ extends CharacterBody3D
 var move_speed: float = 10.0
 signal external_motion_requested(delta: float)
 @export_range(0.0, 30.0, 0.1) var jump_speed := 7.0
-## Ground friction for carried momentum only; air has no automatic drag.
-@export_range(0.0, 30.0, 0.1) var ground_momentum_drag := 2.0
+## Horizontal convergence rate (1/second) toward ground input velocity.
+## Applies equally to running and external motion; never damps airborne velocity.
+@export_range(0.0, 40.0, 0.1, "or_greater") var ground_traction := 12.0
 @export_range(0.0, 30.0, 0.1) var air_control_acceleration := 4.0
-var _drive := Vector3.ZERO
-var _momentum := Vector3.ZERO
 var _external_acceleration := Vector3.ZERO
-var _was_grounded := true
 
 ## Radius used to find nearby interaction components.
 @export_range(0.1, 10.0, 0.1, "or_greater") var interaction_radius: float = 1.75
@@ -53,39 +51,30 @@ func add_external_acceleration(acceleration: Vector3) -> void:
 
 func _physics_process(delta: float) -> void:
 	if GameplayLocks.is_locked(): return
-	var grounded := is_on_floor()
 	var movement_input := Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	var desired := global_basis * Vector3(movement_input.x, 0.0, movement_input.y)
-	if grounded:
-		if not _was_grounded and not desired.is_zero_approx():
-			# Reclassify carried running speed on landing instead of adding it twice.
-			var axis := desired.normalized()
-			_momentum -= axis * clampf(_momentum.dot(axis), 0.0, move_speed * desired.length())
-		_drive = desired * move_speed
-		_momentum.x = move_toward(_momentum.x, 0.0, ground_momentum_drag * delta)
-		_momentum.z = move_toward(_momentum.z, 0.0, ground_momentum_drag * delta)
-		_momentum.y = maxf(_momentum.y, 0.0)
+	if is_on_floor():
+		# One traction law for all actual horizontal motion, regardless of origin.
+		# Exponential response avoids instant stops and a frame-dependent blend.
+		var horizontal := Vector2(velocity.x, velocity.z)
+		var ground_input_velocity := Vector2(desired.x, desired.z) * move_speed
+		var response := 1.0 - exp(-maxf(ground_traction, 0.0) * delta)
+		horizontal = horizontal.lerp(ground_input_velocity, response)
+		velocity.x = horizontal.x
+		velocity.z = horizontal.y
+		velocity.y = maxf(velocity.y, 0.0)
 		if Input.is_action_just_pressed(&"jump"):
-			_momentum += _drive
-			_drive = Vector3.ZERO
-			_momentum.y += jump_speed
+			velocity.y += jump_speed
 	else:
-		# Carry the final grounded drive into flight once, including running off edges.
-		_momentum += _drive
-		_drive = Vector3.ZERO
-		_momentum += desired * air_control_acceleration * delta
-	_was_grounded = grounded
-	_momentum.y -= gravity * delta
+		# Existing flight velocity is already in the body; no channel transfer.
+		velocity += desired * air_control_acceleration * delta
+	velocity.y -= gravity * delta
 	external_motion_requested.emit(delta)
-	_momentum += _external_acceleration * delta
+	# Applied after traction so sustained forces still produce grounded motion.
+	velocity += _external_acceleration * delta
 	_external_acceleration = Vector3.ZERO
-	velocity = _drive + _momentum
 	move_and_slide()
-	# Collision response clips both channels so blocked drive cannot become recoil.
-	for index in get_slide_collision_count():
-		var normal := get_slide_collision(index).get_normal()
-		if _drive.dot(normal) < 0.0: _drive = _drive.slide(normal)
-	_momentum = velocity - _drive
+	# The collision-resolved body velocity is the next frame's starting point.
 
 func _unhandled_input(event: InputEvent) -> void:
 	if GameplayLocks.is_locked():
@@ -122,8 +111,6 @@ func _get_nearest_interaction() -> InteractionComponent:
 func _on_gameplay_lock_changed(locked: bool) -> void:
 	if locked:
 		velocity = Vector3.ZERO
-		_drive = Vector3.ZERO
-		_momentum = Vector3.ZERO
 		_external_acceleration = Vector3.ZERO
 
 

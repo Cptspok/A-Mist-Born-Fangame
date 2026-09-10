@@ -1,6 +1,8 @@
 [gd_scene load_steps=7 format=3]
 [ext_resource type="Script" path="res://scripts/metal_tether_component.gd" id="tether"]
 
+[ext_resource type="PhysicsMaterial" path="res://resources/physics/normal_movable_prop.tres" id="physics"]
+
 [sub_resource type="BoxShape3D" id="body_shape"]
 size = Vector3(0.65, 0.65, 0.65)
 [sub_resource type="BoxShape3D" id="tether_shape"]
@@ -11,11 +13,10 @@ albedo_color = Color(0.3, 0.6, 0.95, 1)
 [sub_resource type="BoxMesh" id="mesh"]
 size = Vector3(0.65, 0.65, 0.65)
 material = SubResource("material")
-[sub_resource type="PhysicsMaterial" id="physics"]
-friction = 0.15
 [node name="allomancy_medium" type="RigidBody3D"]
 mass = 1.0
-physics_material_override = SubResource("physics")
+physics_material_override = ExtResource("physics")
+linear_damp_mode = 1
 linear_damp = 0.15
 axis_lock_angular_x = true
 axis_lock_angular_y = true

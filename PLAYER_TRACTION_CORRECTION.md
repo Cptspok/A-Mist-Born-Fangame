@@ -1,0 +1,69 @@
+# Ground traction / momentum correction
+
+## Cause and fix
+
+The previous Player controller treated horizontal motion differently depending on its internal source: ordinary _drive was immediately replaced/zeroed by input, while _momentum decayed at only 2 units/second squared. Running speed could be transferred into the latter channel during an airborne transition, and then retained the slow decay after landing. Thus a floor transition during a weak Pull could make existing running speed feel like substantial "Pull inertia."
+
+Inspection found no latched Push/Pull state or inflated LIGHT multiplier. Both powers already added acceleration only while held. At current tuning, LIGHT Player acceleration is 30 * 0.03 = 0.9 units/second squared (at most 0.015 velocity per 60 Hz tick before other influences), versus ANCHORED 30. That arithmetic is unchanged.
+
+PlayerController now keeps a single authoritative CharacterBody3D.velocity. The separate drive/momentum fields, channel transfers, landing reclassification and post-collision subtraction were removed. move_and_slide's resolved velocity is used directly next frame. There is no source-specific residual to reconstruct or retain.
+
+## Ground and air behavior
+
+While grounded, the horizontal vector converges toward the stat-driven WASD velocity using:
+response = 1 - exp(-ground_traction * delta)
+horizontal = lerp(horizontal, ground_input_velocity, response)
+
+Without WASD, the target is zero, but horizontal velocity is decelerated rather than assigned zero. The same law applies to ordinary locomotion, landed momentum, and external forces. The vector blend is direction-independent.
+
+Allomantic acceleration is added afterward, exactly once as acceleration * delta. Sustained strong force can therefore move the Player against traction; weak force produces correspondingly small drift. Traction is proportional resistance, not a static-friction threshold. It does not impose a hard speed cap.
+
+In the air this ground blend is skipped entirely. Existing velocity remains; only existing air steering, gravity, external acceleration and collision response alter it. Jump impulse and gravity are unchanged. Horizontal traction never damps vertical velocity. Existing explicit Inventory/dialogue lock reset is preserved.
+
+## Inspector tuning
+
+Player:
+- ground_traction = 12.0 (inverse seconds), replacing ground_momentum_drag.
+- air_control_acceleration = 4.0 (unchanged).
+- jump_speed = 7.0 (unchanged).
+- Movement baseline continues to come from StatComponent, normally 10.
+
+One ground setting controls both response to movement input and braking, avoiding multiple overlapping friction knobs. Higher traction is more responsive; lower is more slippery. Zero disables the ground blend, including ground input acceleration, so use positive values for ordinary walking.
+
+For reference, exponential decay with no input or external force reduces a 10-unit/second horizontal speed to about 0.082 after 0.4 seconds at traction 12. This is an analytical estimate, not a measured gameplay result. At 60 Hz, steady purely horizontal force with no input gives approximately 0.083 speed for LIGHT and 2.76 for ANCHORED. Vertical force can lift the Player into the undamped airborne branch. These are provisional tuning results, not new class balance values.
+
+No serialized ground_momentum_drag overrides were present in current scenes. Any separately authored overrides outside this project should be retuned to ground_traction; the units differ.
+
+## Exact manual tests
+
+Use the existing main scene, F Push, C Pull and Space jump. Keep camera angle/distance comparable between class tests; reset movable objects by restarting the scene.
+
+A. Hold W on flat ground, then release: decelerate responsively without an instant velocity assignment or prolonged skating.
+B. Run while holding C on LightObject; release C and then W. The object moves strongly, Player reaction stays small, and existing running speed does not become a long slow-decay slide.
+C. From rest, aim at LightObject and hold C briefly: only tiny Player drift. Release C: it decays quickly while grounded.
+D. Repeat on MediumObject at a comparable angle: Player reaction is noticeably greater than LIGHT.
+E. Repeat on HeavyObject / an anchored beam: larger Player response remains.
+F. Push an anchored beam while grounded: strong force still causes movement; where direction has sufficient upward component, it lifts the Player into flight. To isolate horizontal response, temporarily place a fixed tether at Player height in the existing main scene; restore its position afterward.
+G. Jump/Pull to gain horizontal speed, release forces, and land with no WASD: speed brakes progressively and promptly after floor contact.
+H. Run, jump, aim toward an overhead/right anchor and hold C: forward velocity survives while the force bends the trajectory.
+I. Release C and WASD in the air: trajectory continues; gravity remains active.
+J. Combine diagonal running/jumping motion with F/C: directional components combine without replacing velocity.
+
+Also repeat B over small floor transitions, and compare grounded force release with airborne release. Check that Inventory/dialogue still lock gameplay, stat-based movement speed still works, and object/cart reactions remain unchanged.
+
+## Files and validation
+
+Modified:
+- scripts/player.gd (only gameplay code changed).
+- ALLOMANCY_MILESTONE.md (updated movement section).
+
+Added:
+- PLAYER_TRACTION_CORRECTION.md (this report).
+
+SteelPush, IronPull, Metal classes/tuning, targeting, object response, InputMap, jump mechanics, equipment and stats were unchanged.
+Godot 4.7.2 parser/import checks and the main-scene startup sanity check passed with no reported errors. No separate controller, test scene, or gameplay test suite was added. Detailed movement verification remains manual.
+
+## Limits
+
+This is a traction-foundation fix, not final locomotion tuning. Normal ground acceleration is now smoothed as well as stopping. Traction acts whenever is_on_floor reports grounded; a one-tick floor-state transition and ordinary collisions can still affect motion. Sustained forces settle toward a grounded drift; weak force is not mathematically clamped to rest. Air steering remains additive, and there is still no top-speed cap, sprint, buffering, coyote time, slope-specific traction, or new jump behavior.
+
