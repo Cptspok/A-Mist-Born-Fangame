@@ -3,6 +3,8 @@ extends CharacterBody3D
 
 ## Runtime effective speed; configure its base on StatComponent.
 var move_speed: float = 10.0
+## Ground locomotion only; effective MOVE_SPEED also scales sprint.
+@export_range(1.0, 3.0, 0.05, "or_greater") var sprint_multiplier := 1.5
 signal external_motion_requested(delta: float)
 @export_range(0.0, 30.0, 0.1) var jump_speed := 7.0
 ## Horizontal convergence rate (1/second) toward ground input velocity.
@@ -57,7 +59,10 @@ func _physics_process(delta: float) -> void:
 		# One traction law for all actual horizontal motion, regardless of origin.
 		# Exponential response avoids instant stops and a frame-dependent blend.
 		var horizontal := Vector2(velocity.x, velocity.z)
-		var ground_input_velocity := Vector2(desired.x, desired.z) * move_speed
+		var intended_speed := move_speed
+		if Input.is_action_pressed(&"sprint") and not movement_input.is_zero_approx():
+			intended_speed *= sprint_multiplier
+		var ground_input_velocity := Vector2(desired.x, desired.z) * intended_speed
 		var response := 1.0 - exp(-maxf(ground_traction, 0.0) * delta)
 		horizontal = horizontal.lerp(ground_input_velocity, response)
 		velocity.x = horizontal.x
