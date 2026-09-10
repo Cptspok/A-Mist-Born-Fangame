@@ -3,6 +3,8 @@ extends Resource
 
 enum Trait { WEAPON, TWO_HANDED, BOW, QUIVER, DUAL_WIELD, MAGIC_SUPPORT }
 @export var allowed_slots: Array[EquipmentSlots.Slot] = []
+## Categories and explicit concrete slots are additive alternatives.
+@export var allowed_categories: Array[EquipmentSlots.Category] = []
 @export var traits: Array[Trait] = []
 ## Explicit family IDs, not item names. Both weapons must opt in for dual wield.
 @export var family: StringName
@@ -15,3 +17,6 @@ enum Trait { WEAPON, TWO_HANDED, BOW, QUIVER, DUAL_WIELD, MAGIC_SUPPORT }
 @export var requires_slot: int = -1
 @export var required_traits: Array[Trait] = []
 @export var required_families: Array[StringName] = []
+
+func allows_slot(slot: int) -> bool:
+	return slot in allowed_slots or EquipmentSlots.category(slot) in allowed_categories

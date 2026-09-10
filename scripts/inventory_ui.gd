@@ -4,7 +4,7 @@ extends CanvasLayer
 @export_range(0, 16, 1) var cell_gap := 4.0
 var panel: PanelContainer
 var grid: InventoryGrid
-var slots_box: VBoxContainer
+var slots_box: GridContainer
 var slot_controls: Array[EquipmentSlotUI] = []
 var tooltip: Label
 var status: Label
@@ -16,7 +16,7 @@ var _previous_mouse_mode: Input.MouseMode
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	panel = PanelContainer.new()
-	panel.position = Vector2(35, 35)
+	panel.position = Vector2(24, 24)
 	add_child(panel)
 	var margin := MarginContainer.new()
 	for side in ["left", "right", "top", "bottom"]: margin.add_theme_constant_override("margin_" + side, 20)
@@ -34,10 +34,24 @@ func _ready() -> void:
 	grid = InventoryGrid.new()
 	grid.stack_clicked.connect(_show_menu)
 	grid.stack_hovered.connect(_show_tooltip)
-	row.add_child(grid)
-	slots_box = VBoxContainer.new()
-	slots_box.add_theme_constant_override("separation", 12)
-	row.add_child(slots_box)
+	var inventory_column := VBoxContainer.new()
+	row.add_child(inventory_column)
+	var inventory_title := Label.new()
+	inventory_title.text = "INVENTORY"
+	inventory_column.add_child(inventory_title)
+	inventory_column.add_child(grid)
+	var divider := VSeparator.new()
+	row.add_child(divider)
+	var equipment_column := VBoxContainer.new()
+	row.add_child(equipment_column)
+	var equipment_title := Label.new()
+	equipment_title.text = "EQUIPMENT"
+	equipment_column.add_child(equipment_title)
+	slots_box = GridContainer.new()
+	slots_box.columns = 3
+	slots_box.add_theme_constant_override("h_separation", 10)
+	slots_box.add_theme_constant_override("v_separation", 10)
+	equipment_column.add_child(slots_box)
 	status = Label.new()
 	status.text = "Drag to equip, return to grid, or outside this panel to drop. Right-click for actions."
 	status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -53,11 +67,12 @@ func _ready() -> void:
 	tooltip = Label.new()
 	tooltip.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	tooltip.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	tooltip.custom_minimum_size.x = 560
-	column.add_child(tooltip)
+	tooltip.custom_minimum_size.x = 300
+	inventory_column.add_child(tooltip)
 	menu = PopupMenu.new()
 	menu.id_pressed.connect(_menu_action)
 	add_child(menu)
+	get_viewport().size_changed.connect(func(): _fit_panel.call_deferred())
 	hide()
 
 func _input(event: InputEvent) -> void:
@@ -99,7 +114,8 @@ func open() -> void:
 		slots_box.remove_child(control)
 		control.queue_free()
 	slot_controls.clear()
-	for slot in equipment.enabled_slots:
+	for slot in EquipmentSlots.DISPLAY_ORDER:
+		if slot not in equipment.enabled_slots: continue
 		var control := EquipmentSlotUI.new()
 		control.configure(equipment, slot)
 		control.preview_changed.connect(_preview)
@@ -113,7 +129,7 @@ func open() -> void:
 	show()
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	get_tree().paused = true
-	panel.reset_size()
+	_fit_panel.call_deferred()
 
 func close() -> void:
 	if not visible: return
@@ -144,18 +160,26 @@ func _rejected(reason: String) -> void:
 func _show_menu(stack: ItemStack, position: Vector2) -> void:
 	selected_stack = stack
 	menu.clear()
-	var profile := stack.definition.equipment_profile
-	if profile != null:
-		for slot in equipment.enabled_slots:
-			if slot in profile.allowed_slots: menu.add_item("Equip " + EquipmentSlots.label(slot), slot)
+	if stack.definition.equipment_profile != null:
+		menu.add_item("Equip", 101)
+		menu.set_item_disabled(menu.get_item_index(101), equipment.context_destination(stack) < 0)
 	menu.add_item("Throw", 100)
 	menu.position = Vector2i(position)
 	menu.popup()
 
 func _menu_action(id: int) -> void:
 	if id == 100: grid.inventory.request_throw(selected_stack)
-	else: equipment.transfer(selected_stack, id)
+	elif id == 101: equipment.equip_from_context(selected_stack)
 
 
 func _show_tooltip(stack: ItemStack, _position: Vector2) -> void:
 	tooltip.text = "" if stack == null else stack.definition.display_name + "\n" + stack.definition.characteristics + "\n" + stack.definition.description
+
+func _fit_panel() -> void:
+	if not visible: return
+	panel.scale = Vector2.ONE
+	panel.reset_size()
+	var available := get_viewport().get_visible_rect().size - Vector2(48, 48)
+	var extent := panel.get_combined_minimum_size()
+	var ratio := minf(1.0, minf(available.x / extent.x, available.y / extent.y))
+	panel.scale = Vector2.ONE * maxf(0.1, ratio)

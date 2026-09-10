@@ -3,7 +3,7 @@ extends Node
 
 signal equipment_changed
 signal transaction_rejected(reason: String)
-@export var enabled_slots: Array[EquipmentSlots.Slot] = [EquipmentSlots.Slot.MAIN_HAND, EquipmentSlots.Slot.OFF_HAND]
+@export var enabled_slots: Array[EquipmentSlots.Slot] = [EquipmentSlots.Slot.MAIN_HAND, EquipmentSlots.Slot.OFF_HAND, EquipmentSlots.Slot.HEAD, EquipmentSlots.Slot.CHEST, EquipmentSlots.Slot.GLOVES, EquipmentSlots.Slot.BELT, EquipmentSlots.Slot.BOOTS, EquipmentSlots.Slot.TRINKET_1, EquipmentSlots.Slot.TRINKET_2]
 @onready var inventory: InventoryComponent = $"../InventoryComponent"
 var _slots: Dictionary = {}
 const WORLD_DROP := -2
@@ -39,7 +39,7 @@ func _invalid_slots(state: Dictionary) -> Array[int]:
 	for slot in state:
 		var stack: ItemStack = state[slot]
 		var p := stack.definition.equipment_profile
-		if p == null or slot not in p.allowed_slots or slot not in enabled_slots:
+		if p == null or not p.allows_slot(slot) or slot not in enabled_slots:
 			invalid.append(slot)
 			continue
 		if p.requires_slot >= 0 and not _matches(state.get(p.requires_slot), p.required_traits, p.required_families):
@@ -74,7 +74,7 @@ func preview(stack: ItemStack, destination: int, cell := Vector2i(-1, -1)) -> Di
 	var returns: Array[ItemStack] = []
 	if destination >= 0:
 		var profile := stack.definition.equipment_profile
-		if destination not in enabled_slots or profile == null or destination not in profile.allowed_slots:
+		if destination not in enabled_slots or profile == null or not profile.allows_slot(destination):
 			plan.reason = "Item does not fit this slot."
 			return plan
 		if source == destination:
@@ -189,3 +189,33 @@ func _commit_world_drop(stack: ItemStack) -> bool:
 	if not plan.valid: return false
 	_apply_plan(plan)
 	return true
+
+func get_equipped_by_category(category: EquipmentSlots.Category) -> Array[ItemStack]:
+	var items: Array[ItemStack] = []
+	for slot in enabled_slots:
+		if EquipmentSlots.category(slot) == category and _slots.has(slot):
+			items.append(_slots[slot])
+	return items
+
+func compatible_slots(stack: ItemStack) -> Array[int]:
+	var result: Array[int] = []
+	if stack == null or stack.definition.equipment_profile == null: return result
+	for slot in enabled_slots:
+		if stack.definition.equipment_profile.allows_slot(slot): result.append(slot)
+	return result
+
+## Context equip may choose an empty equivalent slot, but never an arbitrary replacement.
+func context_destination(stack: ItemStack) -> int:
+	var candidates := compatible_slots(stack)
+	if candidates.size() == 1:
+		return candidates[0] if preview(stack, candidates[0]).valid else -1
+	for slot in candidates:
+		if not _slots.has(slot) and preview(stack, slot).valid: return slot
+	return -1
+
+func equip_from_context(stack: ItemStack) -> bool:
+	var destination := context_destination(stack)
+	if destination < 0:
+		transaction_rejected.emit("No unambiguous valid destination. Drag to a slot for explicit replacement.")
+		return false
+	return transfer(stack, destination)

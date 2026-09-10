@@ -22,6 +22,20 @@
 
 [ext_resource type="Resource" path="res://resources/quiver.tres" id="equipment_quiver"]
 
+[ext_resource type="Resource" path="res://resources/helmet.tres" id="equipment_helmet"]
+
+[ext_resource type="Resource" path="res://resources/chest_armor.tres" id="equipment_chest_armor"]
+
+[ext_resource type="Resource" path="res://resources/gloves.tres" id="equipment_gloves"]
+
+[ext_resource type="Resource" path="res://resources/belt.tres" id="equipment_belt"]
+
+[ext_resource type="Resource" path="res://resources/boots.tres" id="equipment_boots"]
+
+[ext_resource type="Resource" path="res://resources/trinket_a.tres" id="equipment_trinket_a"]
+
+[ext_resource type="Resource" path="res://resources/trinket_b.tres" id="equipment_trinket_b"]
+
 [sub_resource type="NavigationMesh" id="NavigationMesh_3s2qq"]
 vertices = PackedVector3Array(-3.1999998, 0.9603107, -7.2, -1.1999998, 0.9603107, -7.2, -1.1999998, 0.9603107, -11.2, -11.2, 0.9603107, -6.95, -3.4499998, 0.9603107, -6.7, -11.2, 0.9603107, -11.2, 9.3, 0.9603107, -2.1999998, 9.55, 0.9603107, -0.19999981, 11.3, 0.9603107, -0.4499998, 11.3, 0.9603107, -11.2, 0.8000002, 0.9603107, -6.95, 0.8000002, 0.9603107, -1.6999998, 8.05, 0.9603107, -1.4499998, 8.3, 0.9603107, -2.1999998, -11.2, 0.9603107, 6.55, -10.2, 0.9603107, 6.55, -9.95, 0.9603107, 5.3, -0.6999998, 0.9603107, -1.1999998, -0.6999998, 0.9603107, -5.45, -3.1999998, 0.9603107, -5.45, -8.2, 0.9603107, 5.3, -0.19999981, 0.9603107, -0.9499998, 4.05, 0.9603107, 5.8, 6.05, 0.9603107, 5.8, 8.05, 0.9603107, 5.55, 0.3000002, 0.9603107, -0.9499998, 3.8000002, 0.9603107, 6.3, -9.95, 0.9603107, 7.8, -11.2, 0.9603107, 11.3, 5.05, 0.9603107, 11.3, 5.05, 0.9603107, 8.3, 3.8000002, 0.9603107, 8.05, -7.95, 0.9603107, 7.8, -7.7, 0.9603107, 5.55, 8.3, 0.9603107, 6.05, 6.3, 0.9603107, 8.05, 9.55, 0.9603107, 5.8, 11.3, 0.9603107, 11.3, -9.2, 1.4603107, 6.3, -9.2, 1.4603107, 6.8, -8.7, 1.4603107, 6.8, -8.7, 1.4603107, 6.3, 4.8, 1.9603107, 6.8, 4.8, 1.9603107, 7.3, 5.3, 1.9603107, 7.3, 5.3, 1.9603107, 6.8)
 polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(0, 4, 3), PackedInt32Array(3, 5, 0), PackedInt32Array(0, 5, 2), PackedInt32Array(7, 6, 8), PackedInt32Array(8, 6, 9), PackedInt32Array(2, 10, 1), PackedInt32Array(12, 11, 13), PackedInt32Array(13, 11, 10), PackedInt32Array(13, 10, 6), PackedInt32Array(6, 10, 2), PackedInt32Array(6, 2, 9), PackedInt32Array(15, 14, 16), PackedInt32Array(16, 14, 3), PackedInt32Array(19, 18, 17), PackedInt32Array(3, 4, 19), PackedInt32Array(17, 21, 20), PackedInt32Array(20, 16, 17), PackedInt32Array(17, 16, 19), PackedInt32Array(19, 16, 3), PackedInt32Array(23, 22, 24), PackedInt32Array(24, 22, 12), PackedInt32Array(12, 22, 11), PackedInt32Array(11, 22, 25), PackedInt32Array(22, 26, 25), PackedInt32Array(15, 27, 14), PackedInt32Array(14, 27, 28), PackedInt32Array(30, 29, 31), PackedInt32Array(31, 29, 32), PackedInt32Array(32, 29, 27), PackedInt32Array(27, 29, 28), PackedInt32Array(25, 26, 21), PackedInt32Array(21, 26, 31), PackedInt32Array(21, 31, 33), PackedInt32Array(33, 31, 32), PackedInt32Array(33, 20, 21), PackedInt32Array(24, 34, 23), PackedInt32Array(23, 34, 35), PackedInt32Array(7, 8, 36), PackedInt32Array(36, 8, 37), PackedInt32Array(29, 30, 35), PackedInt32Array(34, 36, 35), PackedInt32Array(35, 36, 29), PackedInt32Array(29, 36, 37), PackedInt32Array(41, 40, 38), PackedInt32Array(38, 40, 39), PackedInt32Array(45, 44, 42), PackedInt32Array(42, 44, 43)]
@@ -124,3 +138,25 @@ item_definition = ExtResource("equipment_bow")
 [node name="quiverWorldItem" parent="." instance=ExtResource("7_world")]
 position = Vector3(-4, 0.6, 7.6)
 item_definition = ExtResource("equipment_quiver")
+
+[node name="helmetWorldItem" parent="." instance=ExtResource("7_world")]
+position = Vector3(-10, 0.45, 10)
+item_definition = ExtResource("equipment_helmet")
+[node name="chest_armorWorldItem" parent="." instance=ExtResource("7_world")]
+position = Vector3(-8.5, 0.45, 10)
+item_definition = ExtResource("equipment_chest_armor")
+[node name="glovesWorldItem" parent="." instance=ExtResource("7_world")]
+position = Vector3(-7, 0.45, 10)
+item_definition = ExtResource("equipment_gloves")
+[node name="beltWorldItem" parent="." instance=ExtResource("7_world")]
+position = Vector3(-5.5, 0.45, 10)
+item_definition = ExtResource("equipment_belt")
+[node name="bootsWorldItem" parent="." instance=ExtResource("7_world")]
+position = Vector3(-4, 0.45, 10)
+item_definition = ExtResource("equipment_boots")
+[node name="trinket_aWorldItem" parent="." instance=ExtResource("7_world")]
+position = Vector3(-2.5, 0.45, 10)
+item_definition = ExtResource("equipment_trinket_a")
+[node name="trinket_bWorldItem" parent="." instance=ExtResource("7_world")]
+position = Vector3(-1, 0.45, 10)
+item_definition = ExtResource("equipment_trinket_b")

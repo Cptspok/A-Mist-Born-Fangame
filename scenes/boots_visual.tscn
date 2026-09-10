@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3]
+[ext_resource type="Texture2D" path="res://resources/boots.svg" id="icon"]
+[sub_resource type="BoxMesh" id="mesh"]
+size = Vector3(0.35, 0.25, 0.25)
+[node name="boots" type="Node3D"]
+[node name="Mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("mesh")
+[node name="Icon" type="Sprite3D" parent="."]
+position = Vector3(0, 0.38, 0)
+texture = ExtResource("icon")
+pixel_size = 0.006
+billboard = 1
+[node name="Label" type="Label3D" parent="."]
+position = Vector3(0, 0.85, 0)
+text = "Boots"
+modulate = Color(0.494, 0.667, 0.573, 1)
+font_size = 28
+billboard = 1
+

@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ItemDefinition" load_steps=6 format=3]
+[ext_resource type="Script" path="res://scripts/item_definition.gd" id="item"]
+[ext_resource type="Script" path="res://scripts/equipment_profile.gd" id="profile_script"]
+[ext_resource type="Texture2D" path="res://resources/gloves.svg" id="icon"]
+[ext_resource type="PackedScene" path="res://scenes/gloves_visual.tscn" id="visual"]
+[sub_resource type="Resource" id="profile"]
+script = ExtResource("profile_script")
+allowed_categories = Array[int]([5])
+[resource]
+script = ExtResource("item")
+item_id = "prototype_gloves"
+display_name = "Gloves"
+description = "Prototype equipment. No stats or worn character appearance."
+characteristics = "2 x 1 | Gloves"
+item_type = "Armor"
+grid_width = 2
+grid_height = 1
+inventory_sprite = ExtResource("icon")
+world_visual = ExtResource("visual")
+equipment_profile = SubResource("profile")
+
