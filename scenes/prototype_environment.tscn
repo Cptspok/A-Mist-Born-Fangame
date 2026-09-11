@@ -2,6 +2,8 @@
 
 [ext_resource type="PhysicsMaterial" path="res://resources/physics/normal_world_surface.tres" id="world_physics"]
 
+[ext_resource type="PackedScene" path="res://scenes/greybox_block.tscn" id="gate_block"]
+
 [sub_resource type="StandardMaterial3D" id="Material_ground"]
 albedo_color = Color(0.32, 0.37, 0.36, 1)
 roughness = 1.0
@@ -43,10 +45,10 @@ size = Vector3(0.4, 2.5, 24)
 material = SubResource("Material_wall")
 
 [sub_resource type="BoxShape3D" id="Shape_4"]
-size = Vector3(0.4, 2.5, 24)
+size = Vector3(0.4, 2.5, 18)
 
 [sub_resource type="BoxMesh" id="Mesh_4"]
-size = Vector3(0.4, 2.5, 24)
+size = Vector3(0.4, 2.5, 18)
 material = SubResource("Material_wall")
 
 [sub_resource type="BoxShape3D" id="Shape_5"]
@@ -132,7 +134,7 @@ mesh = SubResource("Mesh_3")
 
 [node name="EastWall" type="StaticBody3D" parent="Structures" groups=["navigation_static"]]
 physics_material_override = ExtResource("world_physics")
-position = Vector3(12, 1.25, 0)
+position = Vector3(12, 1.25, -3)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Structures/EastWall"]
 shape = SubResource("Shape_4")
@@ -193,3 +195,8 @@ shape = SubResource("Shape_9")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Props/LandmarkBlock"]
 mesh = SubResource("Mesh_9")
+
+[node name="EastGateReturn" parent="Structures" instance=ExtResource("gate_block")]
+position = Vector3(12, 1.25, 11)
+dimensions = Vector3(0.4, 2.5, 2)
+tint = Color(0.65, 0.59, 0.47, 1)

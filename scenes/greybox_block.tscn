@@ -1,0 +1,8 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://scripts/greybox_block.gd" id="script"]
+[ext_resource type="PhysicsMaterial" path="res://resources/physics/normal_world_surface.tres" id="physics"]
+[node name="GreyboxBlock" type="StaticBody3D"]
+script = ExtResource("script")
+physics_material_override = ExtResource("physics")
+[node name="Mesh" type="MeshInstance3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]

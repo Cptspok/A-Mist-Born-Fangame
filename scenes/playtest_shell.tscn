@@ -1,0 +1,20 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://scripts/playtest_shell.gd" id="shell"]
+[ext_resource type="Script" path="res://scripts/playtest_menu_view.gd" id="menu"]
+[ext_resource type="Script" path="res://scripts/playtest_target_feedback.gd" id="feedback"]
+[node name="PlaytestShell" type="Node"]
+process_mode = 3
+script = ExtResource("shell")
+[node name="Menu" type="CanvasLayer" parent="."]
+script = ExtResource("menu")
+[node name="Feedback" type="CanvasLayer" parent="."]
+layer = 2
+[node name="Crosshair" type="Control" parent="Feedback"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("feedback")

@@ -81,6 +81,8 @@ func _ready() -> void:
 	hide()
 
 func _input(event: InputEvent) -> void:
+	# Do not open inventory over another SceneTree pause owner (shell menus).
+	if get_tree().paused and not visible: return
 	if visible and event is InputEventMouseButton and get_viewport().gui_is_dragging():
 		_drop_drag_outside(event)
 	if event.is_action_pressed("toggle_inventory"):

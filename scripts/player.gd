@@ -3,15 +3,16 @@ extends CharacterBody3D
 
 ## Runtime effective speed; configure its base on StatComponent.
 var move_speed: float = 10.0
-## Ground locomotion only; effective MOVE_SPEED also scales sprint.
+## Locomotion target only; never a limit on externally generated velocity.
 @export_range(1.0, 3.0, 0.05, "or_greater") var sprint_multiplier := 1.5
 signal external_motion_requested(delta: float)
-@export_range(0.0, 30.0, 0.1) var jump_speed := 7.0
+@export_range(0.0, 30.0, 0.1) var jump_speed := 9.9
 ## Horizontal convergence rate (1/second) toward ground input velocity.
 ## Applies equally to running and external motion; never damps airborne velocity.
 @export_range(0.0, 40.0, 0.1, "or_greater") var ground_traction := 12.0
 @export_range(0.0, 30.0, 0.1) var air_control_acceleration := 4.0
-var _external_acceleration := Vector3.ZERO
+@export_range(0.01, 1000.0, 0.01, "or_greater") var force_response_mass := 1.0
+var _external_force := Vector3.ZERO
 
 ## Radius used to find nearby interaction components.
 @export_range(0.1, 10.0, 0.1, "or_greater") var interaction_radius: float = 1.75
@@ -47,21 +48,28 @@ func _ready() -> void:
 	interaction_area.area_exited.connect(_on_interaction_area_exited)
 
 
-## External systems add acceleration; the controller integrates it exactly once.
-func add_external_acceleration(acceleration: Vector3) -> void:
-	if acceleration.is_finite(): _external_acceleration += acceleration
+## CharacterBody adapter: only this motor owns continuous-force integration.
+func get_effective_mass() -> float:
+	return maxf(force_response_mass, 0.001)
+
+func apply_external_force(force: Vector3) -> void:
+	if force.is_finite() and not GameplayLocks.is_locked(): _external_force += force
+
+func apply_external_impulse(impulse: Vector3) -> void:
+	if impulse.is_finite() and not GameplayLocks.is_locked():
+		velocity += impulse / get_effective_mass()
 
 func _physics_process(delta: float) -> void:
 	if GameplayLocks.is_locked(): return
 	var movement_input := Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	var desired := global_basis * Vector3(movement_input.x, 0.0, movement_input.y)
+	var intended_speed := move_speed
+	if Input.is_action_pressed(&"sprint") and not movement_input.is_zero_approx():
+		intended_speed *= sprint_multiplier
 	if is_on_floor():
 		# One traction law for all actual horizontal motion, regardless of origin.
 		# Exponential response avoids instant stops and a frame-dependent blend.
 		var horizontal := Vector2(velocity.x, velocity.z)
-		var intended_speed := move_speed
-		if Input.is_action_pressed(&"sprint") and not movement_input.is_zero_approx():
-			intended_speed *= sprint_multiplier
 		var ground_input_velocity := Vector2(desired.x, desired.z) * intended_speed
 		var response := 1.0 - exp(-maxf(ground_traction, 0.0) * delta)
 		horizontal = horizontal.lerp(ground_input_velocity, response)
@@ -69,17 +77,32 @@ func _physics_process(delta: float) -> void:
 		velocity.z = horizontal.y
 		velocity.y = maxf(velocity.y, 0.0)
 		if Input.is_action_just_pressed(&"jump"):
-			velocity.y += jump_speed
+			PhysicalForceResponse.apply_impulse(self, Vector3.UP * jump_speed * get_effective_mass())
 	else:
-		# Existing flight velocity is already in the body; no channel transfer.
-		velocity += desired * air_control_acceleration * delta
+		_apply_air_motor(desired, intended_speed, delta)
 	velocity.y -= gravity * delta
 	external_motion_requested.emit(delta)
 	# Applied after traction so sustained forces still produce grounded motion.
-	velocity += _external_acceleration * delta
-	_external_acceleration = Vector3.ZERO
+	velocity += (_external_force / get_effective_mass()) * delta
+	_external_force = Vector3.ZERO
 	move_and_slide()
 	# The collision-resolved body velocity is the next frame's starting point.
+
+## Limit the motor's proposed speed gain, not actual/external velocity.
+## At excess speed, directional input can rotate or oppose momentum; it cannot
+## increase its magnitude. No input leaves momentum completely untouched.
+func _apply_air_motor(desired: Vector3, target_speed: float, delta: float) -> void:
+	var input := Vector2(desired.x, desired.z)
+	if input.is_zero_approx(): return
+	var horizontal := Vector2(velocity.x, velocity.z)
+	var candidate := horizontal + input * air_control_acceleration * delta
+	var motor_ceiling := maxf(horizontal.length(), target_speed * input.length())
+	# Keeping existing speed as the floor of this budget prevents an external
+	# launch from being reduced to locomotion speed. Steering costs no extra speed.
+	if candidate.length_squared() > motor_ceiling * motor_ceiling:
+		candidate = candidate.normalized() * motor_ceiling
+	velocity.x = candidate.x
+	velocity.z = candidate.y
 
 func _unhandled_input(event: InputEvent) -> void:
 	if GameplayLocks.is_locked():
@@ -116,7 +139,7 @@ func _get_nearest_interaction() -> InteractionComponent:
 func _on_gameplay_lock_changed(locked: bool) -> void:
 	if locked:
 		velocity = Vector3.ZERO
-		_external_acceleration = Vector3.ZERO
+		_external_force = Vector3.ZERO
 
 
 func _on_interaction_area_entered(area: Area3D) -> void:

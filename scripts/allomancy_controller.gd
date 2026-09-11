@@ -1,5 +1,7 @@
 class_name AllomancyController
-extends Node
+extends Node3D
+
+## Spatial parent: the Targeting Area3D must inherit Player motion.
 
 signal debug_changed(enabled: bool)
 @export var tuning: AllomancyTuning
@@ -7,6 +9,7 @@ signal debug_changed(enabled: bool)
 @onready var player: PlayerController = get_parent()
 @onready var targeting: AllomancyTargeting = $Targeting
 @onready var health: HealthComponent = $"../HealthComponent"
+var last_interaction: Dictionary = {}
 var steel := SteelPush.new()
 var iron := IronPull.new()
 
@@ -16,15 +19,20 @@ func _ready() -> void:
 	GameplayLocks.lock_changed.connect(_locked)
 
 func _step(_delta: float) -> void:
+	last_interaction = {}
 	if health.is_dead() or GameplayLocks.is_locked():
 		targeting.clear_target()
 		return
 	targeting.refresh()
 	var tether := targeting.selected
 	if not is_instance_valid(tether): return
-	# Each power consumes the shared selected region. Both held cancel line forces.
-	if Input.is_action_pressed(&"steel_push"): steel.apply(player, tether, tuning)
-	if Input.is_action_pressed(&"iron_pull"): iron.apply(player, tether, tuning)
+	# Opposite velocity-dependent laws would otherwise create unintended braking.
+	# Preserve the existing both-buttons-cancel convention explicitly.
+	var pushing := Input.is_action_pressed(&"steel_push")
+	var pulling := Input.is_action_pressed(&"iron_pull")
+	if pushing == pulling: return
+	if pushing: last_interaction = steel.apply(player, tether, tuning)
+	else: last_interaction = iron.apply(player, tether, tuning)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"toggle_allomancy_debug"):
@@ -33,4 +41,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 func _locked(locked: bool) -> void:
-	if locked: targeting.clear_target()
+	if locked:
+		last_interaction = {}
+		targeting.clear_target()

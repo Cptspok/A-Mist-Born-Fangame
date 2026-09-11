@@ -53,9 +53,19 @@ func _refresh_label() -> void:
 		InputHint.binding(&"steel_push"), InputHint.binding(&"iron_pull"),
 		InputHint.binding(&"jump"), InputHint.binding(&"toggle_allomancy_debug"),
 		("Metal: " + target.name + " / " + AllomancyTuning.ResponseClass.keys()[target.allomancy_class]) if is_instance_valid(target) else "Metal: aim at a visible tether"]
-	_label.visible = not GameplayLocks.is_locked()
+	if controller.debug_enabled and is_instance_valid(controller.player):
+		_label.text += "\nVelocity %s" % controller.player.velocity
+		var sample := controller.last_interaction
+		if not sample.is_empty():
+			_label.text += "\n%s axis %s\nRelative %.2f / %.2f m/s | factor %.3f\nForce: Player %s | object %s" % [
+				sample.power, sample.axis, sample.speed, sample.terminal, sample.factor,
+				sample.player_force, sample.object_force]
+		else:
+			_label.text += "\nApplied Allomancy force: 0 (released / no target / both held)"
+	_label.visible = controller.debug_enabled and not GameplayLocks.is_locked()
 
 func _process(_delta: float) -> void:
+	_refresh_label()
 	var targeting: AllomancyTargeting = controller.get_node("Targeting")
 	var nearby := targeting.nearby()
 	for tether in _visuals.keys():

@@ -1,6 +1,6 @@
 # Allomancy metal tether / Push-Pull foundation
 
-Actual project: C:/Users/CptSp/Documents/Codex/ai-game-framework-test.
+Actual project: C:/Users/CptSp/Documents/Codex/A Mist Born fangame.
 
 ## Editor workflow
 

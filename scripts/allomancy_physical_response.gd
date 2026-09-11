@@ -10,19 +10,17 @@ var body: RigidBody3D
 
 func _ready() -> void:
 	body = get_node_or_null(body_path) as RigidBody3D
-	if body != null: body.set_meta(&"allomancy_response", self)
+	if body != null: body.set_meta(&"physics_force_response", self)
 
 func _exit_tree() -> void:
-	if is_instance_valid(body) and body.get_meta(&"allomancy_response", null) == self:
-		body.remove_meta(&"allomancy_response")
+	if is_instance_valid(body) and body.get_meta(&"physics_force_response", null) == self:
+		body.remove_meta(&"physics_force_response")
 
-func apply_acceleration(acceleration: Vector3) -> void:
-	if body == null or body.freeze: return
-	var adjusted := acceleration
+func filter_force(force: Vector3) -> Vector3:
+	if body == null or body.freeze: return Vector3.ZERO
+	var adjusted := force
 	if mode == Mode.DIRECTIONAL and not preferred_local_axis.is_zero_approx():
 		var axis := (body.global_basis * preferred_local_axis).normalized()
-		var parallel := axis * acceleration.dot(axis)
-		adjusted = parallel + (acceleration - parallel) * lateral_response
-	body.sleeping = false
-	# Cancel literal mass scaling: class multipliers define gameplay response.
-	body.apply_central_force(adjusted * body.mass)
+		var parallel := axis * force.dot(axis)
+		adjusted = parallel + (force - parallel) * lateral_response
+	return adjusted

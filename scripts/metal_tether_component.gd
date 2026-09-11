@@ -32,13 +32,3 @@ func target_point(from: Vector3) -> Vector3:
 	if shape is SphereShape3D:
 		return volume.to_global(local.limit_length(shape.radius))
 	return volume.global_position
-
-func apply_object_acceleration(acceleration: Vector3) -> void:
-	var body := get_physical_owner()
-	if body == null or body.freeze or allomancy_class == AllomancyTuning.ResponseClass.ANCHORED: return
-	var response: AllomancyPhysicalResponse = body.get_meta(&"allomancy_response", null)
-	if is_instance_valid(response):
-		response.apply_acceleration(acceleration)
-	else:
-		body.sleeping = false
-		body.apply_central_force(acceleration * body.mass)

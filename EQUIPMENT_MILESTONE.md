@@ -1,6 +1,6 @@
 # Equipment milestone
 
-Implemented in C:/Users/CptSp/Documents/Codex/ai-game-framework-test.
+Implemented in C:/Users/CptSp/Documents/Codex/A Mist Born fangame.
 
 ## Architecture and configuration
 
@@ -32,7 +32,7 @@ Esc/Close cancels an ongoing drag without transferring ownership.
 | Bow | 2 x 3 | Main | Off accepts QUIVER with archery family; empty Off allowed |
 | Quiver | 1 x 2 | Off | Requires BOW with archery family in Main |
 
-Sword remains near (-7, 0.45, 6.5). Greatsword, Bow, Quiver are at (-6, 0.6, 7.6), (-5, 0.6, 7.6), (-4, 0.6, 7.6), beside spawn, through existing WorldItem instances. New visuals are colored labeled primitives with distinct icons. Greatsword currently shares Sword's first-person mesh and swing.
+Sword remains near (-7, 0.45, 6.5). Greatsword, Bow, Quiver are at (-6, 0.6, 7.6), (-5, 0.6, 7.6), (-4, 0.6, 7.6), beside spawn, through existing WorldItem instances. New visuals are colored primitives with distinct icons; obsolete floating item-name labels were removed. Greatsword currently shares Sword's first-person mesh and swing.
 
 ## Manual tests (detailed gameplay testing is left to the user)
 

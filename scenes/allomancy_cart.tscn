@@ -26,11 +26,6 @@ continuous_cd = true
 shape = SubResource("body_shape")
 [node name="Mesh" type="MeshInstance3D" parent="."]
 mesh = SubResource("mesh")
-[node name="Label" type="Label3D" parent="."]
-position = Vector3(0, 1, 0)
-text = "CART axis: local Z"
-font_size = 24
-billboard = 1
 [node name="MetalTether" type="Area3D" parent="."]
 collision_layer = 16
 collision_mask = 0

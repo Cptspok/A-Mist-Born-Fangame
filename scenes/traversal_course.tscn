@@ -1,0 +1,178 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/greybox_block.tscn" id="block"]
+
+[ext_resource type="PackedScene" path="res://scenes/metal_tether.tscn" id="tether"]
+
+[ext_resource type="Script" path="res://scripts/traversal_course.gd" id="script"]
+
+[ext_resource type="PackedScene" path="res://scenes/allomancy_light.tscn" id="light"]
+
+[ext_resource type="PackedScene" path="res://scenes/allomancy_medium.tscn" id="medium"]
+
+[ext_resource type="PackedScene" path="res://scenes/allomancy_heavy.tscn" id="heavy"]
+
+[sub_resource type="StandardMaterial3D" id="anchor_mat"]
+albedo_color = Color(0.7, 0.4, 0.85, 1)
+
+[sub_resource type="BoxMesh" id="anchor_mesh"]
+size = Vector3(1.2, 0.25, 0.25)
+material = SubResource("anchor_mat")
+
+[sub_resource type="StandardMaterial3D" id="takeoff_mat"]
+albedo_color = Color(0.85, 0.72, 0.3, 1)
+
+[sub_resource type="BoxMesh" id="takeoff_mesh"]
+size = Vector3(6, 0.02, 0.12)
+material = SubResource("takeoff_mat")
+
+[node name="TraversalCourse" type="Node3D"]
+script = ExtResource("script")
+
+[node name="AllomancyTrial" type="Label3D" parent="."]
+position = Vector3(0, 3, 10)
+text = "Allomancy Trial"
+font_size = 64
+pixel_size = 0.015
+billboard = 1
+modulate = Color(0.93, 0.96, 0.87, 1)
+
+[node name="Start" type="Marker3D" parent="."]
+position = Vector3(0, 0.95, 9)
+
+[node name="01_Runway" parent="." instance=ExtResource("block")]
+position = Vector3(0, -0.5, 5)
+dimensions = Vector3(6, 1, 14)
+
+[node name="02_JumpLanding" parent="." instance=ExtResource("block")]
+position = Vector3(0, -0.5, -7)
+dimensions = Vector3(6, 1, 6)
+
+[node name="03_FirstRoof" parent="." instance=ExtResource("block")]
+position = Vector3(0, 5.5, -17)
+dimensions = Vector3(8, 1, 8)
+
+[node name="04_ArcLanding" parent="." instance=ExtResource("block")]
+position = Vector3(29, 7.5, -17)
+dimensions = Vector3(10, 1, 8)
+
+[node name="05_LooseMetalDeck" parent="." instance=ExtResource("block")]
+position = Vector3(29, 7.5, -4)
+dimensions = Vector3(10, 1, 10)
+
+[node name="06_Ascent" parent="." instance=ExtResource("block")]
+position = Vector3(29, 15.5, 10)
+dimensions = Vector3(8, 1, 8)
+
+[node name="07_SafeStep" parent="." instance=ExtResource("block")]
+position = Vector3(18, 19.5, 19)
+dimensions = Vector3(7, 1, 7)
+
+[node name="08_Destination" parent="." instance=ExtResource("block")]
+position = Vector3(4, 24.5, 10)
+dimensions = Vector3(10, 1, 10)
+
+[node name="CatchFloor" parent="." instance=ExtResource("block")]
+position = Vector3(7, -7.5, 2)
+dimensions = Vector3(66, 1, 68)
+tint = Color(0.22, 0.25, 0.29, 1)
+
+[node name="YardAccess" parent="." instance=ExtResource("block")]
+position = Vector3(-19, -0.5, 8)
+dimensions = Vector3(32, 1, 4)
+
+[node name="LooseDeckBackstop" parent="." instance=ExtResource("block")]
+position = Vector3(29, 8.299999999999999, 1)
+dimensions = Vector3(10, 0.6, 0.4)
+
+[node name="LooseDeckSideStop" parent="." instance=ExtResource("block")]
+position = Vector3(34, 9.0, -4)
+dimensions = Vector3(0.4, 2, 10)
+
+[node name="ArcBandSHORT" parent="." instance=ExtResource("block")]
+position = Vector3(25, 8.012500000000001, -17)
+dimensions = Vector3(0.25, 0.025, 8)
+tint = Color(0.75, 0.65, 0.25, 1)
+
+[node name="ArcBandCENTER" parent="." instance=ExtResource("block")]
+position = Vector3(29, 8.012500000000001, -17)
+dimensions = Vector3(0.25, 0.025, 8)
+tint = Color(0.75, 0.65, 0.25, 1)
+
+[node name="ArcBandLONG" parent="." instance=ExtResource("block")]
+position = Vector3(33, 8.012500000000001, -17)
+dimensions = Vector3(0.25, 0.025, 8)
+tint = Color(0.75, 0.65, 0.25, 1)
+
+[node name="A1_Lift" parent="." instance=ExtResource("tether")]
+position = Vector3(0, 11, -14)
+
+[node name="A1_LiftMarker" type="MeshInstance3D" parent="."]
+position = Vector3(0, 11, -14)
+mesh = SubResource("anchor_mesh")
+
+[node name="A2_PushHeel" parent="." instance=ExtResource("tether")]
+position = Vector3(-2, 7, -17)
+
+[node name="A2_PushHeelMarker" type="MeshInstance3D" parent="."]
+position = Vector3(-2, 7, -17)
+mesh = SubResource("anchor_mesh")
+
+[node name="A3_ArcCatch" parent="." instance=ExtResource("tether")]
+position = Vector3(27, 14, -20)
+
+[node name="A3_ArcCatchMarker" type="MeshInstance3D" parent="."]
+position = Vector3(27, 14, -20)
+mesh = SubResource("anchor_mesh")
+
+[node name="A4_Redirect" parent="." instance=ExtResource("tether")]
+position = Vector3(31, 14, -5)
+
+[node name="A4_RedirectMarker" type="MeshInstance3D" parent="."]
+position = Vector3(31, 14, -5)
+mesh = SubResource("anchor_mesh")
+
+[node name="A5_Ascent" parent="." instance=ExtResource("tether")]
+position = Vector3(29, 22, 7)
+
+[node name="A5_AscentMarker" type="MeshInstance3D" parent="."]
+position = Vector3(29, 22, 7)
+mesh = SubResource("anchor_mesh")
+
+[node name="A6_ChainHeel" parent="." instance=ExtResource("tether")]
+position = Vector3(30, 15, 8)
+
+[node name="A6_ChainHeelMarker" type="MeshInstance3D" parent="."]
+position = Vector3(30, 15, 8)
+mesh = SubResource("anchor_mesh")
+
+[node name="A7_Safe" parent="." instance=ExtResource("tether")]
+position = Vector3(18, 26, 19)
+
+[node name="A7_SafeMarker" type="MeshInstance3D" parent="."]
+position = Vector3(18, 26, 19)
+mesh = SubResource("anchor_mesh")
+
+[node name="A8_Finish" parent="." instance=ExtResource("tether")]
+position = Vector3(4, 31, 10)
+
+[node name="A8_FinishMarker" type="MeshInstance3D" parent="."]
+position = Vector3(4, 31, 10)
+mesh = SubResource("anchor_mesh")
+
+[node name="LightReference" parent="." instance=ExtResource("light")]
+position = Vector3(26, 8.4, -6)
+
+[node name="MediumReference" parent="." instance=ExtResource("medium")]
+position = Vector3(30, 8.6, -5)
+
+[node name="HeavyReference" parent="." instance=ExtResource("heavy")]
+position = Vector3(31, 16.7, 11)
+
+[node name="WalkTakeoff" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.02, 3)
+mesh = SubResource("takeoff_mesh")
+
+[node name="SprintTakeoff" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.02, 8)
+mesh = SubResource("takeoff_mesh")

@@ -1,6 +1,6 @@
 # Player stats and modifiers milestone
 
-Implemented in C:/Users/CptSp/Documents/Codex/ai-game-framework-test.
+Implemented in C:/Users/CptSp/Documents/Codex/A Mist Born fangame.
 
 ## Ownership and API
 

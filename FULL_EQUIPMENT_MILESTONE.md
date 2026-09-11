@@ -1,6 +1,6 @@
 # Full equipment layout milestone
 
-Current implementation in C:/Users/CptSp/Documents/Codex/ai-game-framework-test. This expands the earlier hand milestone described in EQUIPMENT_MILESTONE.md; its two-slot UI and special temporary trinket-free swap test instructions are historical.
+Current implementation in C:/Users/CptSp/Documents/Codex/A Mist Born fangame. This expands the earlier hand milestone described in EQUIPMENT_MILESTONE.md; its two-slot UI and special temporary trinket-free swap test instructions are historical.
 
 ## Architecture and Inspector configuration
 

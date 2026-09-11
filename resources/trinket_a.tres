@@ -1,16 +1,17 @@
-[gd_resource type="Resource" script_class="ItemDefinition" load_steps=8 format=3]
-[ext_resource type="Script" path="res://scripts/item_definition.gd" id="item"]
-[ext_resource type="Script" path="res://scripts/equipment_profile.gd" id="profile_script"]
-[ext_resource type="Texture2D" path="res://resources/trinket_a.svg" id="icon"]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://b03wswwffl5vp"]
+
+[ext_resource type="Texture2D" uid="uid://bneuee83jg5e1" path="res://resources/trinket_a.svg" id="icon"]
+[ext_resource type="Script" uid="uid://ufeuy8so4umi" path="res://scripts/item_definition.gd" id="item"]
+[ext_resource type="Script" uid="uid://bo0gtdxtvj5ft" path="res://scripts/equipment_profile.gd" id="profile_script"]
+[ext_resource type="Script" uid="uid://ce5qg0420yhx8" path="res://scripts/stat_modifier.gd" id="stat_modifier_script"]
 [ext_resource type="PackedScene" path="res://scenes/trinket_a_visual.tscn" id="visual"]
-[ext_resource type="Script" path="res://scripts/stat_modifier.gd" id="stat_modifier_script"]
+
 [sub_resource type="Resource" id="profile"]
 script = ExtResource("profile_script")
 allowed_categories = Array[int]([7])
+
 [sub_resource type="Resource" id="stat_contribution"]
 script = ExtResource("stat_modifier_script")
-stat = 0
-operation = 0
 value = 10
 
 [resource]
@@ -20,11 +21,7 @@ display_name = "Trinket A"
 description = "Prototype equipment. Test modifiers; no worn character appearance."
 characteristics = "1 x 1 | Trinket | +10 Max Health"
 item_type = "Trinket"
-grid_width = 1
-grid_height = 1
 inventory_sprite = ExtResource("icon")
 world_visual = ExtResource("visual")
 equipment_profile = SubResource("profile")
-
-
 stat_modifiers = Array[ExtResource("stat_modifier_script")]([SubResource("stat_contribution")])

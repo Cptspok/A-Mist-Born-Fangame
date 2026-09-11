@@ -29,6 +29,7 @@ radius = 1.75
 
 [node name="Player" type="CharacterBody3D" unique_id=1091081823 groups=["player"]]
 script = ExtResource("1_player")
+jump_speed = 10.8
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=666769192]
 shape = SubResource("CapsuleShape3D_player")
@@ -62,6 +63,13 @@ world_item_scene = ExtResource("4_world_item")
 
 [node name="StatComponent" type="Node" parent="."]
 script = ExtResource("9_stats")
+initial_base_values = Dictionary[int, float]({
+0: 100.0,
+1: 5.0,
+2: 0.0,
+3: 0.0,
+4: 1.0
+})
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("5_health")
@@ -78,7 +86,7 @@ script = ExtResource("7_combat")
 [node name="EquipmentStatsBridge" type="Node" parent="."]
 script = ExtResource("10_stats_bridge")
 
-[node name="Allomancy" type="Node" parent="."]
+[node name="Allomancy" type="Node3D" parent="."]
 script = ExtResource("11_allomancy")
 tuning = ExtResource("14_tuning")
 

@@ -7,9 +7,3 @@ material = SubResource("material")
 [node name="quiver" type="Node3D"]
 [node name="Mesh" type="MeshInstance3D" parent="."]
 mesh = SubResource("mesh")
-[node name="Label" type="Label3D" parent="."]
-position = Vector3(0, 0.85, 0)
-text = "QUIVER"
-font_size = 32
-billboard = 1
-
