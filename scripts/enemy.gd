@@ -44,7 +44,11 @@ func move_with_external_forces(delta: float) -> void:
 	_external_velocity += _external_force / get_effective_mass() * delta
 	_external_force = Vector3.ZERO
 	velocity += _external_velocity
+	var before_motion := global_position
 	move_and_slide()
+	var reaction := get_node_or_null("CombatReaction") as CombatReactionComponent
+	if reaction != null:
+		reaction.observe_external_motion(global_position - before_motion, _external_velocity, delta)
 	# Remove momentum into contact surfaces so walls/floors cannot store it.
 	for index in get_slide_collision_count():
 		var normal := get_slide_collision(index).get_normal()

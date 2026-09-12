@@ -19,6 +19,7 @@ func _process(_delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_echo(): return
+	if is_instance_valid(player) and player.get_node("HealthComponent").is_dead(): return
 	if event.is_action_pressed("pause"):
 		if InventoryUI.visible: return # Inventory owns Escape until it closes.
 		get_viewport().set_input_as_handled()
@@ -80,6 +81,7 @@ func _launch(intro: bool) -> void:
 	world.process_mode = Node.PROCESS_MODE_PAUSABLE
 	add_child(world)
 	player = world.get_node("Player")
+	player.get_node("DeathFlow").retry_requested.connect(_retry_after_death)
 	if destination == "lab":
 		player.global_position = Vector3(45, 0.95, 49)
 		player.rotation.y = PI # Face into lab (+Z).
@@ -95,3 +97,8 @@ func _launch(intro: bool) -> void:
 
 func _apply_settings() -> void:
 	if is_instance_valid(player): player.mouse_sensitivity = PlaytestSettings.sensitivity
+
+func _retry_after_death(retry_transform: Transform3D) -> void:
+	_launch(false)
+	player.global_transform = retry_transform
+	world.get_node("TraversalCourse/Start").global_transform = retry_transform

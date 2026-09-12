@@ -30,7 +30,11 @@ func _physics_process(delta: float) -> void:
 	if not actor.is_active or GameplayLocks.is_locked():
 		return
 	sensing.sample(delta)
+	var was_committed: bool = attack.is_busy()
 	attack.tick(delta)
+	if was_committed or attack.is_busy():
+		movement.move_toward_point(actor.global_position, 0.0, delta)
+		return
 	var target: Node3D = sensing.target
 	if actor.state not in [&"Idle", &"ReturnHome"]:
 		if not is_instance_valid(target) or sensing.unseen_time > sensing.lost_sight_grace or actor.global_position.distance_to(actor.spawn_position) > maximum_leash_distance:

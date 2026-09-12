@@ -27,7 +27,11 @@ func _on_gameplay_lock_changed(locked: bool) -> void:
 func _physics_process(delta: float) -> void:
 	if not actor.is_active or GameplayLocks.is_locked():
 		return
+	var was_committed: bool = attack.is_busy()
 	attack.tick(delta)
+	if was_committed or attack.is_busy():
+		movement.move_toward_point(actor.global_position, 0.0, delta)
+		return
 	sensing.sample(delta)
 	var target: Node3D = sensing.target
 	if actor.state not in [&"Idle", &"ReturnHome"]:

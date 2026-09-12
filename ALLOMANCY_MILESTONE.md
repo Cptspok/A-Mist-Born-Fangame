@@ -297,3 +297,98 @@ compete under pressure and need manual assessment. Off-nav displacement recovery
 an existing future concern, not a newly observed gameplay failure. Separate future
 system work is warranted only if playtests expose a blocker; no recovery, targeting,
 cover, combat or force-system redesign was attempted.
+
+## Combat Stakes & Timing v0.1
+
+HealthComponent remains unchanged. New player_death.gd listens to died, closes inventory
+and dialogue, acquires its named gameplay lock, pauses the world, and displays Defeated /
+Retrying for 1.5 seconds using a pause-independent timer. It then delegates replacement
+to the existing playtest shell, or reloads the current scene when running main directly.
+The shell rebuilds its gameplay world, resets HP/enemies/items/projectiles, and resumes
+mouse capture without another introduction. A non-physical CombatRetry marker at
+(5,.95,4) supplies a fast retry when death occurs within 24 m of the encounter; other
+locations use the existing session Start. The marker, delay and radius are configurable.
+Inventory/equipment reset with the world: collect/equip the sword again after retry.
+No checkpoint network, save data or new penalty system was added.
+
+Threat: melee DamageSourceComponent and ranged attack projectile_damage are 30 damage.
+Against base 100 HP this is four solid unmitigated hits. Existing armor/max-health
+modifiers still apply; equipment balance was not changed. The general damage component
+and projectile scene defaults were not globally retuned.
+
+New committed_enemy_attack.gd shares the phase clock and prototype poses:
+- Melee: .65 s WINDUP, .14 s STRIKE, .55 s RECOVERY; 1.5 s minimum start-to-start cooldown.
+- Ranged: .75 s AIM, .10 s FIRE, .65 s RECOVERY; 2 s minimum start-to-start cooldown.
+Existing AI reposition phases can add time between attacks. Timings are Inspector values.
+The actor faces its target once at commitment. Navigation intent and facing updates are
+held during the action/reaction, but the existing external-force motor continues moving
+it. The melee strike checks current range (1.8 m), a 50-degree half-angle around the
+committed facing, and LOS. It applies damage exactly once at STRIKE entry, not every
+frame of the short strike presentation. Ranged snapshots a world-space aim point at
+commitment, checks muzzle clearance and LOS to that snapshot at FIRE, and emits at most
+one existing non-homing projectile. Moving sideways or behind cover can defeat the shot.
+
+New combat_reaction_component.gd owns only an interrupt signal, interruptibility window,
+and reaction duration. WINDUP/AIM opens the window; STRIKE/FIRE closes it. The existing
+physical motor reports collision-resolved movement projected along external velocity,
+capped by external speed * dt. A window needs .18 m accumulated movement at external
+speed >=1.2 m/s to interrupt, then locks the action for .5 s. All three values are
+exposed. Tiny forces or force into a blocking wall do not automatically interrupt.
+This bridge works with generic forces/impulses; Steel/Iron and attack scripts contain
+no power-specific interruption checks. Reaction never clears physical momentum.
+Interrupted wind-up cannot emit its hit/shot. Already-resolved hits and existing
+projectiles are not undone. Recovery is not interruptible and ordinary sword damage
+was not given an automatic stagger effect.
+
+Feedback: sword raises and snaps down, bow raises/cants before firing, body leans with
+the action, and interruption produces a brief recoil before returning to rest. Equipment
+and carried tethers move together through their existing hierarchy. No new VFX, damage,
+defense, stamina, combo, poise or animation framework was added.
+
+Changed: enemy.gd (physical-motion observation), both enemy attack and behavior scripts,
+playtest_shell.gd (retry hookup), enemy/example_enemy/ranged_enemy/player scenes (components
+and tuning), and main.tscn (retry marker only). Added player_death.gd,
+committed_enemy_attack.gd and combat_reaction_component.gd, plus generated script UIDs.
+Encounter geometry, navigation resource, NavigationAgent settings, locomotion and
+Allomancy tuning are unchanged. Playground/Allomancy Trial layouts are unchanged;
+the reusable player failure flow applies wherever the player scene is used.
+
+Validation: parser/import and one startup wiring check (corrected the temporary checker
+so it did not precompile an autoload-dependent class before autoload initialization).
+Both attack/reaction connections, the health death signal, shell retry callback and marker
+path passed. Sandbox editor/log/cache/certificate warnings were emitted. Temporary
+checker removed; no combat test suite. Full death/retry UX, attack feel, hit timing and
+AI recovery have not been gameplay-tested by Codex.
+
+Spam concern from code inspection, not gameplay: player melee sets cooldown before hit
+resolution, so same-frame spam is blocked. Default sword damage 25 plus its +5 equipment
+stat totals 30; the 60-HP melee enemy can die to two swings .6 s apart, potentially before
+its .65 s wind-up resolves (and initial alert makes this easier). Per milestone scope,
+player attacks and enemy HP remain unchanged. If spam still dominates, evaluate enemy
+survivability versus player time-to-kill as a separate balance task before new mechanics.
+Other known limitations: snapshot shots may be easy to sidestep at distance; melee is
+one cone/LOS sample rather than a swept sword collider; sword/shield selection overlap
+and off-nav recovery remain unchanged. No new AI recovery failure was observed in the
+limited checks. The next question is whether threat makes the player stop attacking to
+move, use cover, or interrupt, especially while both enemies remain alive.
+
+Manual sequence:
+1. Enter Testing Zone, equip the existing sword, approach the courtyard from (5,0,4).
+2. Stand still without attacking. Watch melee raise -> strike -> recovery, count hits,
+   and verify four unmitigated hits defeat a base-HP player.
+3. During the 1.5 s Defeated overlay, try movement/attack/inventory/Escape. After retry,
+   verify HP/enemies/props reset, no duplicate UI/projectiles, normal mouse capture,
+   inventory/dialogue work, and you return to the courtyard approach. Re-equip the sword.
+4. Observe another melee wind-up; sidestep/back away. Repeat while mindlessly attacking
+   to assess whether the known two-hit kill still bypasses the threat.
+5. Push sword/shield during wind-up, then separately Pull. Look for displacement, cancelled
+   strike and short recoil. Compare tiny taps and pressing an enemy against solid cover.
+6. Push after STRIKE begins: the resolved hit must not be retroactively removed. Release
+   and verify navigation/chase/attack resume after the reaction/recovery.
+7. Watch ranged aim -> fire -> reload. Move laterally or behind cart/crates during aim.
+   Pull the pouch during aim: qualifying displacement should prevent the projectile.
+8. Let a projectile fire, then Push/Pull: the already-launched projectile must remain.
+9. Fight with sword and movement alone, then repeat using defensive Allomancy. Evaluate
+   the key metric: did an enemy action ever make another response more urgent than attacking?
+10. Repeat death/retry, including after opening/closing inventory or dialogue and through
+    both the playtest shell and direct main.tscn execution; check ordinary AI recovery.

@@ -25,6 +25,12 @@ position = Vector3(0, 0.4, -0.65)
 
 [node name="RangedAttack" type="Node" parent="."]
 script = ExtResource("5_attack")
+windup_duration = 0.75
+strike_duration = 0.10
+recovery_duration = 0.65
+attack_cooldown = 2.0
+equipment_name = &"WoodenBow"
+windup_rotation = Vector3(-0.25, 0, -0.25)
 
 [node name="RangedBehaviour" type="Node" parent="."]
 script = ExtResource("6_behaviour")

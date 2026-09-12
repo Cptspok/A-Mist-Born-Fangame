@@ -28,6 +28,7 @@ script = ExtResource("5_attack")
 script = ExtResource("6_damage")
 monitoring = false
 monitorable = false
+damage_amount = 30.0
 
 [node name="MeleeBehaviour" type="Node" parent="."]
 script = ExtResource("7_behaviour")

@@ -215,3 +215,6 @@ position = Vector3(11.8, 0, -8)
 [node name="ParkedFreightCart" parent="." instance=ExtResource("freight_cart")]
 position = Vector3(3.0, 0, 1.0)
 rotation = Vector3(0, 0.18, 0)
+
+[node name="CombatRetry" type="Marker3D" parent="."]
+position = Vector3(5, 0.95, 4)

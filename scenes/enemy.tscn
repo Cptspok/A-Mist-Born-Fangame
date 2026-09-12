@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_enemy"]
 [ext_resource type="Script" path="res://scripts/health_component.gd" id="2_health"]
 [ext_resource type="PackedScene" path="res://scenes/hurtbox_component.tscn" id="3_hurtbox"]
 [ext_resource type="Script" path="res://scripts/enemy_death_fade.gd" id="4_death"]
+
+[ext_resource type="Script" path="res://scripts/combat_reaction_component.gd" id="reaction"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_enemy"]
 radius = 0.4
@@ -34,3 +36,6 @@ target_desired_distance = 0.15
 radius = 0.4
 height = 1.8
 avoidance_enabled = false
+
+[node name="CombatReaction" type="Node" parent="."]
+script = ExtResource("reaction")
