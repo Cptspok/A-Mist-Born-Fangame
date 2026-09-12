@@ -224,3 +224,76 @@ Manual sequence (default bindings F = Steelpush, C = Ironpull, T = debug):
 Future tasks only if playtesting warrants: target hysteresis/cycling for screen-space
 overlap, force-mass/drag tuning, navigation recovery after displacement beyond the baked
 map, and equipment animation. No disarm, breakage, loot, ragdoll or new damage mechanics.
+
+## Semantic Combat Encounter v0.1
+
+The north-east portion of Testing Zone is now a loading courtyard (roughly x=1..11,
+z=3..-11). Two masonry warehouses frame a low loading platform. The existing sight
+screen and east passage divider form approach corners; crates and a masonry pier
+interrupt ranged LOS. A broad central ramp rises 0.8 m over 4 m, with ground-level
+flanks on either side. Ordinary walking reaches the ranged position. Primitive stone,
+rough timber, and bright low-roughness metal carry the visual language; no labels added.
+
+Existing melee enemy starts at (5,0.9,-1.2), facing the approaching player once sensed.
+Existing ranged enemy starts at (6.2,1.7,-9), on the loading platform. Both retain their
+existing AI, navigation agents, equipment visuals, carried tethers and force response.
+The approach brings the player into melee pressure before the platform firing position;
+cover and the ramp offer different ways to close or retreat.
+
+Six environmental opportunities / seven tethers:
+- Reused timber signpost at (1.1,0,1.8), anchored bracket near the entrance.
+- Chocked timber freight cart at (3,0,1), anchored iron wheel hardware on both sides.
+  This new parked cart is static cover; the old movable directional cart remains in
+  the western general testing area at (-9.5,0.6,-2.5).
+- Steel beam at (10.1,3.6,-4.3), visibly carried by two timber posts over the east flank.
+- Loading-platform rear rail at (5.9,1.6,-10.85).
+- Flush drainage grate at (2.35,0.025,-6.1) in the western flank.
+- Reused loose LIGHT steel bar at (8.3,0.25,-4.8), beside the loading approach.
+The sign, cart and overhead structure are mixed material. Crates, masonry and timber
+supports have no tethers. Loose steel keeps its existing generic physics; no ammunition,
+projectile behavior, damage rules or pickups were added.
+
+NPCs, world items, pickup access and general testing remain to the south-west. Existing
+abstract force-class fixtures remain in that separate western testing area; the heavy
+fixture moved to (-5.5,0.7,-3.5). The non-metal dummy remains available on the east edge.
+Playground and Allomancy Trial geometry, fixtures and tuning are unchanged.
+
+Navigation: new static bodies and the reused sign/dummy participate in navigation_static.
+The existing NavigationRegion3D now references resources/testing_zone_navigation.tres,
+baked from the complete Testing Zone source geometry. Its transform and the enemy
+NavigationOrigin workaround are unchanged. A connectivity check exposed a real ramp
+blocker: the old bake agent_max_climb=.2 rounded to zero against cell_height=.25.
+Only the NavigationMesh bake allowance changed to .25 (one voxel); NavigationAgent
+settings are untouched. The corrected navigation route connects (5,.5,2) through the
+ramp to (6.2,1.25,-9). No manual rebake is required for this saved layout. After future
+static edits, select the existing NavigationRegion3D and bake again with the same group.
+
+Validation was limited to scene startup/resource loading, ownership checks, source-group
+sanity and navigation-mesh connectivity while preparing the bake. Temporary preparation
+scripts were removed. No gameplay scripts changed and no automated combat tests were
+added. Godot reported sandbox log/certificate warnings, a one-time mesh parsing warning,
+and existing voxel rounding warnings for bake height/radius. Detailed combat, visual
+readability and displacement recovery require manual playtesting.
+
+Exact manual route:
+1. Start the existing Allomancy Trial session or run main.tscn. Use the existing return
+   route to Testing Zone's east gate near (12,0,8). No spawn/menu changes were made.
+2. Head west to the item/NPC area around (-6,0,6); equip the existing sword. Head east
+   to (5,0,4), then north past the parked cart into the courtyard.
+3. First fight with ordinary movement and sword. Use cart/crates/corners for LOS cover;
+   approach the platform via the central ramp beginning near (5.9,0,-3.8).
+4. Restart and repeat: Pull melee sword/shield while strafing, Push to create space,
+   then Pull the ranged pouch from its platform. Release and watch both AIs recover.
+5. Try the sign bracket to retreat, the eastern beam to change approach/height, and
+   the platform rail to close distance. Compare the western grate's low force axis.
+6. Manipulate the loose bar beside the ramp opportunistically; compare non-metal cover.
+   Toggle T only to inspect ownership/selection, then repeat with debug off.
+7. Walk both ground flanks and the ramp; check cover against actual ranged attacks.
+   Return to NPC/item testing, then check the unchanged Playground and Allomancy Trial.
+
+No new carried-metal or targeting blocker was established by the lightweight checks.
+Known screen-space sword/shield switching remains; seven environmental tethers may
+compete under pressure and need manual assessment. Off-nav displacement recovery remains
+an existing future concern, not a newly observed gameplay failure. Separate future
+system work is warranted only if playtests expose a blocker; no recovery, targeting,
+cover, combat or force-system redesign was attempted.
