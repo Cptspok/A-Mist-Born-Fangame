@@ -19,7 +19,7 @@
 [ext_resource type="PackedScene" path="res://scenes/allomancy_cart.tscn" id="allomancy_cart"]
 [ext_resource type="PackedScene" path="res://scenes/allomancy_heavy.tscn" id="allomancy_heavy"]
 [ext_resource type="PackedScene" path="res://scenes/allomancy_light.tscn" id="allomancy_light"]
-[ext_resource type="PackedScene" path="res://scenes/allomancy_medium.tscn" id="allomancy_medium"]
+[ext_resource type="PackedScene" uid="uid://c6rfyo8c81oko" path="res://scenes/allomancy_medium.tscn" id="allomancy_medium"]
 [ext_resource type="Resource" uid="uid://da2qrvnimasb2" path="res://resources/belt.tres" id="equipment_belt"]
 [ext_resource type="Resource" uid="uid://ohgfvqbcwxud" path="res://resources/boots.tres" id="equipment_boots"]
 [ext_resource type="Resource" uid="uid://by6iitlu4ve0r" path="res://resources/bow.tres" id="equipment_bow"]
@@ -32,6 +32,10 @@
 [ext_resource type="Resource" uid="uid://bdv3m4tjm0qkh" path="res://resources/trinket_b.tres" id="equipment_trinket_b"]
 [ext_resource type="PackedScene" path="res://scenes/movement_lab.tscn" id="movement_lab"]
 [ext_resource type="PackedScene" path="res://scenes/traversal_course.tscn" id="traversal"]
+
+[ext_resource type="PackedScene" path="res://scenes/world_metal_signpost.tscn" id="world_metal_signpost"]
+[ext_resource type="PackedScene" path="res://scenes/world_loose_steel.tscn" id="world_loose_steel"]
+[ext_resource type="PackedScene" path="res://scenes/wooden_practice_dummy.tscn" id="wooden_practice_dummy"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_3s2qq"]
 vertices = PackedVector3Array(-3.1999998, 0.9603107, -7.2, -1.1999998, 0.9603107, -7.2, -1.1999998, 0.9603107, -11.2, -11.2, 0.9603107, -6.95, -3.4499998, 0.9603107, -6.7, -11.2, 0.9603107, -11.2, 9.3, 0.9603107, -2.1999998, 9.55, 0.9603107, -0.19999981, 11.3, 0.9603107, -0.4499998, 11.3, 0.9603107, -11.2, 0.8000002, 0.9603107, -6.95, 0.8000002, 0.9603107, -1.6999998, 8.05, 0.9603107, -1.4499998, 8.3, 0.9603107, -2.1999998, -11.2, 0.9603107, 6.55, -10.2, 0.9603107, 6.55, -9.95, 0.9603107, 5.3, -0.6999998, 0.9603107, -1.1999998, -0.6999998, 0.9603107, -5.45, -3.1999998, 0.9603107, -5.45, -8.2, 0.9603107, 5.3, -0.19999981, 0.9603107, -0.9499998, 4.05, 0.9603107, 5.8, 6.05, 0.9603107, 5.8, 8.05, 0.9603107, 5.55, 0.3000002, 0.9603107, -0.9499998, 3.8000002, 0.9603107, 6.3, -9.95, 0.9603107, 7.8, -11.2, 0.9603107, 11.3, 5.05, 0.9603107, 11.3, 5.05, 0.9603107, 8.3, 3.8000002, 0.9603107, 8.05, -7.95, 0.9603107, 7.8, -7.7, 0.9603107, 5.55, 8.3, 0.9603107, 6.05, 6.3, 0.9603107, 8.05, 9.55, 0.9603107, 5.8, 11.3, 0.9603107, 11.3, -9.2, 1.4603107, 6.3, -9.2, 1.4603107, 6.8, -8.7, 1.4603107, 6.8, -8.7, 1.4603107, 6.3, 4.8, 1.9603107, 6.8, 4.8, 1.9603107, 7.3, 5.3, 1.9603107, 7.3, 5.3, 1.9603107, 6.8)
@@ -168,29 +172,32 @@ item_definition = ExtResource("equipment_trinket_a")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.45, 10)
 item_definition = ExtResource("equipment_trinket_b")
 
-[node name="ZoneLabels" type="Node3D" parent="."]
+[node name="ZoneLabels" type="Node3D" parent="." unique_id=228151255]
 
-[node name="TestingZone" type="Label3D" parent="ZoneLabels"]
-position = Vector3(10, 3.2, 8)
-text = "Testing Zone"
-font_size = 64
+[node name="TestingZone" type="Label3D" parent="ZoneLabels" unique_id=548121899]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 3.2, 8)
 pixel_size = 0.015
 billboard = 1
 modulate = Color(0.93, 0.96, 0.87, 1)
+text = "Testing Zone"
+font_size = 64
 
 [node name="AllomancyFixtures" type="Node3D" parent="." unique_id=347719455]
 
 [node name="OverheadAnchor" parent="AllomancyFixtures" unique_id=1434617510 instance=ExtResource("allomancy_anchor")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 6, 0)
 
-[node name="RedirectAnchor" parent="AllomancyFixtures" unique_id=1156825096 instance=ExtResource("allomancy_anchor")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 7, 2)
+[node name="TimberSignpost" parent="AllomancyFixtures" unique_id=1156825096 instance=ExtResource("world_metal_signpost")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.8, 0, 2)
 
-[node name="LightObject" parent="AllomancyFixtures" unique_id=682223205 instance=ExtResource("allomancy_light")]
+[node name="LooseSteelBar" parent="AllomancyFixtures" unique_id=682223205 instance=ExtResource("world_loose_steel")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.4, -1)
 
 [node name="MediumObject" parent="AllomancyFixtures" unique_id=1889854052 instance=ExtResource("allomancy_medium")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.6, -1)
+
+[node name="MediumObject2" parent="AllomancyFixtures" unique_id=1098347497 instance=ExtResource("allomancy_medium")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.846474, 0.6, -0.560503)
 
 [node name="HeavyObject" parent="AllomancyFixtures" unique_id=1756011737 instance=ExtResource("allomancy_heavy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.7, -1)
@@ -203,3 +210,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 0, 0)
 
 [node name="MovementLab" parent="." unique_id=611010362 instance=ExtResource("movement_lab")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 0, 80)
+
+[node name="WoodenPracticeDummy" parent="." instance=ExtResource("wooden_practice_dummy")]
+position = Vector3(11.8, 0, -8)

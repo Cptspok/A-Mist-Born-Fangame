@@ -43,7 +43,7 @@ func move_toward_point(point: Vector3, speed: float, delta: float) -> void:
 		actor.velocity.y = 0.0
 	else:
 		actor.velocity.y -= float(ProjectSettings.get_setting("physics/3d/default_gravity")) * delta
-	actor.move_and_slide()
+	actor.move_with_external_forces(delta)
 
 
 func face(point: Vector3) -> void:

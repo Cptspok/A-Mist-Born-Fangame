@@ -7,7 +7,7 @@ static func evaluate(player: PlayerController, tether: MetalTetherComponent,
 	var axis := tether.volume.global_position - PhysicalForceResponse.get_world_position(player)
 	if axis.length_squared() < 0.0001: return {}
 	axis = axis.normalized() * (1.0 if pulling else -1.0)
-	var owner: RigidBody3D = tether.get_physical_owner()
+	var owner: PhysicsBody3D = tether.get_physical_owner()
 	if tether.allomancy_class == AllomancyTuning.ResponseClass.ANCHORED: owner = null
 	var relative := PhysicalForceResponse.get_velocity(player) - PhysicalForceResponse.get_velocity(owner)
 	var speed := relative.dot(axis)

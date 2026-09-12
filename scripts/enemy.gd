@@ -22,12 +22,51 @@ signal state_changed(state: StringName)
 var state: StringName = &"Idle"
 var spawn_position: Vector3
 
+@export_group("External forces")
+@export_range(0.01, 1000.0, 0.01, "or_greater") var force_response_mass := 2.0
+@export_range(0.0, 50.0, 0.1) var external_ground_drag := 4.0
+var _external_force := Vector3.ZERO
+var _external_velocity := Vector3.ZERO
+
+func get_effective_mass() -> float:
+	return maxf(force_response_mass, 0.001)
+
+func apply_external_force(force: Vector3) -> void:
+	if is_active and not GameplayLocks.is_locked() and force.is_finite():
+		_external_force += force
+
+func apply_external_impulse(impulse: Vector3) -> void:
+	if is_active and not GameplayLocks.is_locked() and impulse.is_finite():
+		_external_velocity += impulse / get_effective_mass()
+
+## The motor supplies intent; external momentum is integrated independently.
+func move_with_external_forces(delta: float) -> void:
+	_external_velocity += _external_force / get_effective_mass() * delta
+	_external_force = Vector3.ZERO
+	velocity += _external_velocity
+	move_and_slide()
+	# Remove momentum into contact surfaces so walls/floors cannot store it.
+	for index in get_slide_collision_count():
+		var normal := get_slide_collision(index).get_normal()
+		if _external_velocity.dot(normal) < 0.0:
+			_external_velocity = _external_velocity.slide(normal)
+	if is_on_floor():
+		_external_velocity = _external_velocity.move_toward(Vector3.ZERO, external_ground_drag * delta)
+	# Vertical momentum is already carried by the motor's velocity/gravity.
+	_external_velocity.y = 0.0
+
+func _clear_external_forces(locked: bool = true) -> void:
+	if locked:
+		_external_force = Vector3.ZERO
+		_external_velocity = Vector3.ZERO
+
 @onready var collision_shape: CollisionShape3D = $CollisionShape3D
 @onready var visual_root: Node3D = $VisualRoot
 @onready var health_component: HealthComponent = $HealthComponent
 
 
 func _ready() -> void:
+	GameplayLocks.lock_changed.connect(_clear_external_forces)
 	spawn_position = global_position
 	_configure_collision()
 	_instantiate_visual()
@@ -73,5 +112,9 @@ func _play_idle_animation() -> void:
 
 func _on_died() -> void:
 	_is_active = false
+	_clear_external_forces()
+	for tether in visual_root.find_children("*", "Area3D", true, false):
+		if tether is MetalTetherComponent:
+			tether.enabled = false
 	velocity = Vector3.ZERO
 	set_state(&"Dead")
