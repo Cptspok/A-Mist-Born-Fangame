@@ -1,0 +1,156 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/greybox_block.tscn" id="block"]
+
+[node name="CentralHub" type="Node3D"]
+
+[node name="Plaza" parent="." groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(0, -0.5, 0)
+dimensions = Vector3(26, 1, 26)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="TrialLink" parent="." groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(0, -0.5, -28)
+dimensions = Vector3(6, 1, 32)
+tint = Color(0.37, 0.43, 0.45, 1)
+
+
+[node name="LabLink" parent="." groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(-18, -0.5, 0)
+dimensions = Vector3(12, 1, 8)
+tint = Color(0.37, 0.43, 0.45, 1)
+
+
+[node name="CityLink" parent="." groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(27, -0.5, 0)
+dimensions = Vector3(30, 1, 8)
+tint = Color(0.37, 0.43, 0.45, 1)
+
+
+[node name="WorkshopLink" parent="." groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(0, -0.5, 24)
+dimensions = Vector3(8, 1, 24)
+tint = Color(0.37, 0.43, 0.45, 1)
+
+
+[node name="Trial-1Post" parent="." groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(-4.5, 2, -12)
+dimensions = Vector3(1, 4, 1)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="Trial1Post" parent="." groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(4.5, 2, -12)
+dimensions = Vector3(1, 4, 1)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="TrialLintel" parent="." groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(0, 4.4, -12)
+dimensions = Vector3(10, 0.8, 1)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="TrialSign" type="Label3D" parent="."]
+position = Vector3(0, 4.5, -12)
+text = "Allomancy Trial"
+font_size = 48
+pixel_size = 0.012
+billboard = 1
+
+
+[node name="Lab-1Post" parent="." groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(-12, 2, -4.5)
+dimensions = Vector3(1, 4, 1)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="Lab1Post" parent="." groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(-12, 2, 4.5)
+dimensions = Vector3(1, 4, 1)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="LabLintel" parent="." groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(-12, 4.4, 0)
+dimensions = Vector3(1, 0.8, 10)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="LabSign" type="Label3D" parent="."]
+position = Vector3(-12, 4.5, 0)
+text = "Movement Lab"
+font_size = 48
+pixel_size = 0.012
+billboard = 1
+
+
+[node name="City-1Post" parent="." groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(12, 2, -4.5)
+dimensions = Vector3(1, 4, 1)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="City1Post" parent="." groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(12, 2, 4.5)
+dimensions = Vector3(1, 4, 1)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="CityLintel" parent="." groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(12, 4.4, 0)
+dimensions = Vector3(1, 0.8, 10)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="CitySign" type="Label3D" parent="."]
+position = Vector3(12, 4.5, 0)
+text = "Mini City"
+font_size = 48
+pixel_size = 0.012
+billboard = 1
+
+
+[node name="Workshop-1Post" parent="." groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(-4.5, 2, 12)
+dimensions = Vector3(1, 4, 1)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="Workshop1Post" parent="." groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(4.5, 2, 12)
+dimensions = Vector3(1, 4, 1)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="WorkshopLintel" parent="." groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(0, 4.4, 12)
+dimensions = Vector3(10, 0.8, 1)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="WorkshopSign" type="Label3D" parent="."]
+position = Vector3(0, 4.5, 12)
+text = "Systems Workshop"
+font_size = 48
+pixel_size = 0.012
+billboard = 1
+
+
+[node name="InformationBoard" parent="." groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(0, 2, -4)
+dimensions = Vector3(7, 3, 0.35)
+tint = Color(0.16, 0.2, 0.24, 1)
+
+
+[node name="Directory" type="Label3D" parent="."]
+position = Vector3(0, 2, -3.78)
+text = "PROTOTYPE WORLD\nNorth: Allomancy Trial\nWest: Movement Lab | East: Mini City\nSouth: Systems Workshop"
+font_size = 48
+pixel_size = 0.012
+billboard = 1
+
+
+[node name="Spawn" type="Marker3D" parent="."]
+position = Vector3(0, 0.95, 3)

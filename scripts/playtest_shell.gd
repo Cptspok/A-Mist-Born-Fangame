@@ -4,7 +4,7 @@ var world: Node3D
 var player: PlayerController
 var page := "main"
 var back_page := "main"
-var destination := "lab"
+var destination := "hub"
 @onready var menu = $Menu
 @onready var feedback = $Feedback/Crosshair
 
@@ -36,7 +36,7 @@ func _input(event: InputEvent) -> void:
 func _action(action: String) -> void:
 	match action:
 		"quit": get_tree().quit()
-		"lab", "advanced":
+		"hub", "lab", "advanced":
 			destination = action
 			_launch(true)
 		"restart": _launch(false)
@@ -83,8 +83,9 @@ func _launch(intro: bool) -> void:
 	player = world.get_node("Player")
 	player.get_node("DeathFlow").retry_requested.connect(_retry_after_death)
 	if destination == "lab":
-		player.global_position = Vector3(45, 0.95, 49)
-		player.rotation.y = PI # Face into lab (+Z).
+		player.global_transform = world.get_node("MovementLabEntry").global_transform
+	elif destination == "advanced":
+		player.global_transform = world.get_node("TraversalCourse/Start").global_transform
 	# Reuse the existing fall reset and its single Start marker for this session.
 	world.get_node("TraversalCourse/Start").global_transform = player.global_transform
 	feedback.player = player

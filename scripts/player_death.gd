@@ -51,8 +51,8 @@ func _on_died() -> void:
 	if marker != null and actor.global_position.distance_to(marker.global_position) <= encounter_retry_radius:
 		retry = marker.global_transform
 	else:
-		# Existing session start remains the fallback outside the combat testbed.
-		var start := actor.get_parent().get_node_or_null("TraversalCourse/Start") as Node3D
+		# The safe hub is the fallback for the reorganized prototype world.
+		var start := actor.get_parent().get_node_or_null("CentralHub/Spawn") as Node3D
 		if start != null: retry = start.global_transform
 	_release_lock()
 	get_tree().paused = false

@@ -14,7 +14,7 @@
 
 [node name="Playground" type="Label3D" parent="."]
 position = Vector3(0, 3, -29)
-text = "Playground"
+text = "Movement Lab"
 font_size = 64
 pixel_size = 0.015
 billboard = 1

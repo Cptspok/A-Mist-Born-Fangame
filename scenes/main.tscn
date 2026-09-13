@@ -1,46 +1,13 @@
 [gd_scene format=3 uid="uid://c0gh0ft1ahxsx"]
 
-[ext_resource type="PackedScene" uid="uid://bu28ecb8jyof2" path="res://scenes/player.tscn" id="1_player"]
-[ext_resource type="PackedScene" path="res://scenes/test_interactable.tscn" id="2_test_interactable"]
-[ext_resource type="PackedScene" path="res://scenes/example_npc.tscn" id="3_example_npc"]
-[ext_resource type="PackedScene" path="res://scenes/npc.tscn" id="4_tbgi4"]
-[ext_resource type="Script" uid="uid://dv3sig1sv8u2u" path="res://scripts/dialogue_data.gd" id="5_tefeu"]
-[ext_resource type="PackedScene" uid="uid://by3o77onquenk" path="res://assets/knight_mouse.glb" id="6_tefeu"]
-[ext_resource type="PackedScene" path="res://scenes/world_item.tscn" id="7_world"]
-[ext_resource type="Resource" path="res://resources/red_item/red_item.tres" id="8_red"]
-[ext_resource type="Resource" uid="uid://cg8yca0q0hgft" path="res://resources/blue_item/blue_item.tres" id="9_blue"]
-[ext_resource type="PackedScene" path="res://scenes/example_enemy.tscn" id="10_enemy"]
-[ext_resource type="PackedScene" path="res://scenes/player_health_hud.tscn" id="11_health_hud"]
-[ext_resource type="PackedScene" path="res://scenes/prototype_environment.tscn" id="12_environment"]
-[ext_resource type="PackedScene" path="res://scenes/ranged_enemy.tscn" id="13_ranged"]
-[ext_resource type="Resource" uid="uid://t7fgo684v1d7" path="res://resources/sword.tres" id="14_sword"]
-[ext_resource type="PackedScene" path="res://scenes/equipment_feedback.tscn" id="15_feedback"]
-[ext_resource type="PackedScene" path="res://scenes/allomancy_anchor.tscn" id="allomancy_anchor"]
-[ext_resource type="PackedScene" path="res://scenes/allomancy_cart.tscn" id="allomancy_cart"]
-[ext_resource type="PackedScene" path="res://scenes/allomancy_heavy.tscn" id="allomancy_heavy"]
-[ext_resource type="PackedScene" path="res://scenes/allomancy_light.tscn" id="allomancy_light"]
-[ext_resource type="PackedScene" uid="uid://c6rfyo8c81oko" path="res://scenes/allomancy_medium.tscn" id="allomancy_medium"]
-[ext_resource type="Resource" uid="uid://da2qrvnimasb2" path="res://resources/belt.tres" id="equipment_belt"]
-[ext_resource type="Resource" uid="uid://ohgfvqbcwxud" path="res://resources/boots.tres" id="equipment_boots"]
-[ext_resource type="Resource" uid="uid://by6iitlu4ve0r" path="res://resources/bow.tres" id="equipment_bow"]
-[ext_resource type="Resource" uid="uid://dyolny6ri4sov" path="res://resources/chest_armor.tres" id="equipment_chest_armor"]
-[ext_resource type="Resource" uid="uid://yho44ry547k7" path="res://resources/gloves.tres" id="equipment_gloves"]
-[ext_resource type="Resource" uid="uid://rahjudu41da0" path="res://resources/greatsword.tres" id="equipment_greatsword"]
-[ext_resource type="Resource" uid="uid://bssumij3mn7qw" path="res://resources/helmet.tres" id="equipment_helmet"]
-[ext_resource type="Resource" uid="uid://dpidm6e2tfmvc" path="res://resources/quiver.tres" id="equipment_quiver"]
-[ext_resource type="Resource" uid="uid://b03wswwffl5vp" path="res://resources/trinket_a.tres" id="equipment_trinket_a"]
-[ext_resource type="Resource" uid="uid://bdv3m4tjm0qkh" path="res://resources/trinket_b.tres" id="equipment_trinket_b"]
-[ext_resource type="PackedScene" path="res://scenes/movement_lab.tscn" id="movement_lab"]
-[ext_resource type="PackedScene" path="res://scenes/traversal_course.tscn" id="traversal"]
-
-[ext_resource type="PackedScene" path="res://scenes/world_metal_signpost.tscn" id="world_metal_signpost"]
-[ext_resource type="PackedScene" path="res://scenes/world_loose_steel.tscn" id="world_loose_steel"]
-[ext_resource type="PackedScene" path="res://scenes/wooden_practice_dummy.tscn" id="wooden_practice_dummy"]
-
-[ext_resource type="PackedScene" path="res://scenes/semantic_combat_courtyard.tscn" id="courtyard"]
-[ext_resource type="PackedScene" path="res://scenes/encounter_freight_cart.tscn" id="freight_cart"]
-
-[ext_resource type="NavigationMesh" path="res://resources/testing_zone_navigation.tres" id="encounter_nav"]
+[ext_resource type="PackedScene" path="res://scenes/central_hub.tscn" id="hub"]
+[ext_resource type="PackedScene" path="res://scenes/systems_workshop.tscn" id="workshop"]
+[ext_resource type="PackedScene" path="res://scenes/mini_city.tscn" id="city"]
+[ext_resource type="PackedScene" path="res://scenes/movement_lab.tscn" id="lab"]
+[ext_resource type="PackedScene" path="res://scenes/traversal_course.tscn" id="trial"]
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="player"]
+[ext_resource type="PackedScene" path="res://scenes/player_health_hud.tscn" id="health"]
+[ext_resource type="PackedScene" path="res://scenes/equipment_feedback.tscn" id="equipment"]
 
 [sub_resource type="Environment" id="Environment_main"]
 background_mode = 1
@@ -49,174 +16,49 @@ ambient_light_source = 2
 ambient_light_color = Color(0.6, 0.7, 1, 1)
 ambient_light_energy = 0.7
 
-[sub_resource type="Resource" id="Resource_dyuxv"]
-script = ExtResource("5_tefeu")
-lines = ["Smells like cheese in here!", "Hand your cheese!!
-"]
-metadata/_custom_type_script = "uid://dv3sig1sv8u2u"
+[node name="Main" type="Node3D"]
 
-[node name="Main" type="Node3D" unique_id=1532754735]
-
-[node name="Environment" parent="." unique_id=957588596 groups=["navigation_static"] instance=ExtResource("12_environment")]
-
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=411464533 groups=["navigation_static"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4603107, 0)
-navigation_mesh = ExtResource("encounter_nav")
-
-[node name="GameplayHUD" type="CanvasLayer" parent="." unique_id=475399014]
-layer = 0
-
-[node name="EquipmentFeedback" parent="GameplayHUD" unique_id=516890309 instance=ExtResource("15_feedback")]
-layout_mode = 3
-
-[node name="PlayerHealthHUD" parent="GameplayHUD" unique_id=1437172500 instance=ExtResource("11_health_hud")]
-layout_mode = 3
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=53357245]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_main")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=69987973]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.8660254, 0.40957603, -0.28678823, 0, 0.57357645, 0.81915206, 0.5, -0.7094065, 0.49673176, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Player" parent="." unique_id=2143874241 instance=ExtResource("1_player")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 0.95, 9)
+[node name="CentralHub" parent="." instance=ExtResource("hub")]
+position = Vector3(0, 0, 0)
+
+
+[node name="MovementLab" parent="." instance=ExtResource("lab")]
+position = Vector3(-55, 0, 0)
+
+
+[node name="TraversalCourse" parent="." instance=ExtResource("trial")]
+position = Vector3(0, 0, -55)
+
+
+[node name="MiniCity" parent="." instance=ExtResource("city")]
+position = Vector3(55, 0, 0)
+
+
+[node name="SystemsWorkshop" parent="." instance=ExtResource("workshop")]
+position = Vector3(0, 0, 45)
+
+
+[node name="Player" parent="." instance=ExtResource("player")]
+position = Vector3(0, 0.95, 3)
 ground_traction = 11.0
 
-[node name="TestInteractable" parent="." unique_id=2019253119 instance=ExtResource("2_test_interactable")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.5, 2)
-
-[node name="ExampleNpc" parent="." unique_id=1511190966 instance=ExtResource("3_example_npc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.9, 5)
-
-[node name="Npc" parent="." unique_id=1381639427 instance=ExtResource("4_tbgi4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.9, 6)
-display_name = "Momouse"
-dialogue_data = SubResource("Resource_dyuxv")
-visual_scene = ExtResource("6_tefeu")
-metadata/_edit_group_ = true
-
-[node name="RedWorldItem" parent="." unique_id=1364395878 instance=ExtResource("7_world")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0.45, 3)
-item_definition = ExtResource("8_red")
-quantity = 2
-
-[node name="RedWorldItem2" parent="." unique_id=526653211 instance=ExtResource("7_world")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.45, 3)
-item_definition = ExtResource("8_red")
-quantity = 2
-
-[node name="BlueWorldItem" parent="." unique_id=438299378 instance=ExtResource("7_world")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.45, 3)
-item_definition = ExtResource("9_blue")
-
-[node name="BlueWorldItem2" parent="." unique_id=2119322264 instance=ExtResource("7_world")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.45, 3)
-item_definition = ExtResource("9_blue")
-
-[node name="BlueWorldItem3" parent="." unique_id=843365009 instance=ExtResource("7_world")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.45, 3)
-item_definition = ExtResource("9_blue")
-
-[node name="ExampleEnemy" parent="." unique_id=1089710274 instance=ExtResource("10_enemy")]
-encounter_id = &"courtyard"
-position = Vector3(5, 0.9, -1.2)
-
-[node name="RangedEnemy" parent="." unique_id=1163748825 instance=ExtResource("13_ranged")]
-encounter_id = &"courtyard"
-position = Vector3(6.2, 1.7, -9.0)
-
-[node name="SwordWorldItem" parent="." unique_id=1851098926 instance=ExtResource("7_world")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0.45, 6.5)
-item_definition = ExtResource("14_sword")
-
-[node name="greatswordWorldItem" parent="." unique_id=1615579724 instance=ExtResource("7_world")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.6, 7.6)
-item_definition = ExtResource("equipment_greatsword")
-
-[node name="bowWorldItem" parent="." unique_id=305134287 instance=ExtResource("7_world")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.6, 7.6)
-item_definition = ExtResource("equipment_bow")
-
-[node name="quiverWorldItem" parent="." unique_id=1484112304 instance=ExtResource("7_world")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.6, 7.6)
-item_definition = ExtResource("equipment_quiver")
-
-[node name="helmetWorldItem" parent="." unique_id=1807556104 instance=ExtResource("7_world")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.45, 10)
-item_definition = ExtResource("equipment_helmet")
-
-[node name="chest_armorWorldItem" parent="." unique_id=497513638 instance=ExtResource("7_world")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 0.45, 10)
-item_definition = ExtResource("equipment_chest_armor")
-
-[node name="glovesWorldItem" parent="." unique_id=1878324457 instance=ExtResource("7_world")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0.45, 10)
-item_definition = ExtResource("equipment_gloves")
-
-[node name="beltWorldItem" parent="." unique_id=294787161 instance=ExtResource("7_world")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 0.45, 10)
-item_definition = ExtResource("equipment_belt")
-
-[node name="bootsWorldItem" parent="." unique_id=1247513240 instance=ExtResource("7_world")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.45, 10)
-item_definition = ExtResource("equipment_boots")
-
-[node name="trinket_aWorldItem" parent="." unique_id=1806340029 instance=ExtResource("7_world")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0.45, 10)
-item_definition = ExtResource("equipment_trinket_a")
-
-[node name="trinket_bWorldItem" parent="." unique_id=408249567 instance=ExtResource("7_world")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.45, 10)
-item_definition = ExtResource("equipment_trinket_b")
-
-[node name="ZoneLabels" type="Node3D" parent="." unique_id=228151255]
-
-[node name="TestingZone" type="Label3D" parent="ZoneLabels" unique_id=548121899]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 3.2, 8)
-pixel_size = 0.015
-billboard = 1
-modulate = Color(0.93, 0.96, 0.87, 1)
-text = "Testing Zone"
-font_size = 64
-
-[node name="AllomancyFixtures" type="Node3D" parent="." unique_id=347719455]
-
-[node name="OverheadAnchor" parent="AllomancyFixtures" unique_id=1434617510 instance=ExtResource("allomancy_anchor")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 6, 0)
-
-[node name="TimberSignpost" parent="AllomancyFixtures" unique_id=1156825096 groups=["navigation_static"] instance=ExtResource("world_metal_signpost")]
-position = Vector3(1.1, 0, 1.8)
-
-[node name="LooseSteelBar" parent="AllomancyFixtures" unique_id=682223205 instance=ExtResource("world_loose_steel")]
-position = Vector3(8.3, 0.25, -4.8)
-
-[node name="MediumObject" parent="AllomancyFixtures" unique_id=1889854052 instance=ExtResource("allomancy_medium")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.6, -1)
-
-[node name="MediumObject2" parent="AllomancyFixtures" unique_id=1098347497 instance=ExtResource("allomancy_medium")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.846474, 0.6, -0.560503)
-
-[node name="HeavyObject" parent="AllomancyFixtures" unique_id=1756011737 instance=ExtResource("allomancy_heavy")]
-position = Vector3(-5.5, 0.7, -3.5)
-
-[node name="DirectionalCart" parent="AllomancyFixtures" unique_id=1338114425 instance=ExtResource("allomancy_cart")]
-position = Vector3(-9.5, 0.6, -2.5)
-
-[node name="TraversalCourse" parent="." unique_id=322981343 instance=ExtResource("traversal")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 0, 0)
-
-[node name="MovementLab" parent="." unique_id=611010362 instance=ExtResource("movement_lab")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 0, 80)
-
-[node name="WoodenPracticeDummy" parent="." groups=["navigation_static"] instance=ExtResource("wooden_practice_dummy")]
-position = Vector3(11.8, 0, -8)
-
-[node name="SemanticCombatCourtyard" parent="." instance=ExtResource("courtyard")]
-
-[node name="ParkedFreightCart" parent="." instance=ExtResource("freight_cart")]
-position = Vector3(3.0, 0, 1.0)
-rotation = Vector3(0, 0.18, 0)
-
 [node name="CombatRetry" type="Marker3D" parent="."]
-position = Vector3(5, 0.95, 4)
+position = Vector3(0, 0.95, 3)
+
+[node name="GameplayHUD" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="EquipmentFeedback" parent="GameplayHUD" instance=ExtResource("equipment")]
+
+[node name="PlayerHealthHUD" parent="GameplayHUD" instance=ExtResource("health")]
+
+[node name="MovementLabEntry" type="Marker3D" parent="."]
+position = Vector3(-25, 0.95, 0)
+rotation = Vector3(0, 1.570796, 0)

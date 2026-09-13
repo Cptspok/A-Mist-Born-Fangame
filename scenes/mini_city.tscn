@@ -1,0 +1,396 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/greybox_block.tscn" id="block"]
+[ext_resource type="PackedScene" path="res://scenes/example_enemy.tscn" id="melee"]
+[ext_resource type="PackedScene" path="res://scenes/ranged_enemy.tscn" id="ranged"]
+[ext_resource type="PackedScene" path="res://scenes/example_npc.tscn" id="npc"]
+[ext_resource type="PackedScene" path="res://scenes/encounter_freight_cart.tscn" id="cart"]
+[ext_resource type="PackedScene" path="res://scenes/world_metal_signpost.tscn" id="sign"]
+[ext_resource type="PackedScene" path="res://scenes/world_loose_steel.tscn" id="loose"]
+[ext_resource type="PackedScene" path="res://scenes/world_metal_rail.tscn" id="rail"]
+[ext_resource type="Script" path="res://scripts/dialogue_data.gd" id="dialogue"]
+[ext_resource type="NavigationMesh" path="res://resources/mini_city_navigation.tres" id="nav"]
+
+[sub_resource type="Resource" id="dialogue0"]
+script = ExtResource("dialogue")
+lines = ["Quiet here. Trouble starts beyond the north lane."]
+
+[sub_resource type="Resource" id="dialogue1"]
+script = ExtResource("dialogue")
+lines = ["The wall ramp loops back to this market."]
+
+[node name="MiniCity" type="Node3D"]
+
+[node name="Architecture" type="Node3D" parent="."]
+
+
+[node name="Market" type="Node3D" parent="."]
+
+
+[node name="Encounters" type="Node3D" parent="."]
+
+
+[node name="Metalwork" type="Node3D" parent="."]
+
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = ExtResource("nav")
+
+[node name="DistrictGround" parent="Architecture" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(12, -0.5, -29)
+dimensions = Vector3(54, 1, 88)
+tint = Color(0.4, 0.43, 0.45, 1)
+
+
+[node name="Entrance" type="Label3D" parent="Market"]
+position = Vector3(-10, 3, 0)
+text = "Mini City"
+font_size = 48
+pixel_size = 0.012
+billboard = 1
+
+
+[node name="ReturnSign" type="Label3D" parent="Market"]
+position = Vector3(-13, 3, 5)
+text = "Central Hub"
+font_size = 48
+pixel_size = 0.012
+billboard = 1
+
+
+[node name="StallCounter0" parent="Market" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(-8, 0.6, -8)
+dimensions = Vector3(4, 1.2, 1.5)
+tint = Color(0.4, 0.26, 0.14, 1)
+
+
+[node name="StallPost0_0" parent="Market" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(-9.8, 1.6, -8)
+dimensions = Vector3(0.18, 3.2, 0.18)
+tint = Color(0.4, 0.26, 0.14, 1)
+
+
+[node name="StallPost0_1" parent="Market" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(-6.2, 1.6, -8)
+dimensions = Vector3(0.18, 3.2, 0.18)
+tint = Color(0.4, 0.26, 0.14, 1)
+
+
+[node name="StallCanopy0" parent="Market" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(-8, 3.1, -8)
+dimensions = Vector3(4.5, 0.25, 2.5)
+tint = Color(0.57, 0.5, 0.35, 1)
+
+
+[node name="SignBracket0" parent="Metalwork" groups=["navigation_static"] instance=ExtResource("sign")]
+position = Vector3(-5.6, 0, -8)
+
+
+[node name="StallCounter1" parent="Market" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(8, 0.6, -8)
+dimensions = Vector3(4, 1.2, 1.5)
+tint = Color(0.4, 0.26, 0.14, 1)
+
+
+[node name="StallPost1_0" parent="Market" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(6.2, 1.6, -8)
+dimensions = Vector3(0.18, 3.2, 0.18)
+tint = Color(0.4, 0.26, 0.14, 1)
+
+
+[node name="StallPost1_1" parent="Market" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(9.8, 1.6, -8)
+dimensions = Vector3(0.18, 3.2, 0.18)
+tint = Color(0.4, 0.26, 0.14, 1)
+
+
+[node name="StallCanopy1" parent="Market" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(8, 3.1, -8)
+dimensions = Vector3(4.5, 0.25, 2.5)
+tint = Color(0.57, 0.5, 0.35, 1)
+
+
+[node name="SignBracket1" parent="Metalwork" groups=["navigation_static"] instance=ExtResource("sign")]
+position = Vector3(10.4, 0, -8)
+
+
+[node name="StallCounter2" parent="Market" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(-7, 0.6, 8)
+dimensions = Vector3(4, 1.2, 1.5)
+tint = Color(0.4, 0.26, 0.14, 1)
+
+
+[node name="StallPost2_0" parent="Market" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(-8.8, 1.6, 8)
+dimensions = Vector3(0.18, 3.2, 0.18)
+tint = Color(0.4, 0.26, 0.14, 1)
+
+
+[node name="StallPost2_1" parent="Market" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(-5.2, 1.6, 8)
+dimensions = Vector3(0.18, 3.2, 0.18)
+tint = Color(0.4, 0.26, 0.14, 1)
+
+
+[node name="StallCanopy2" parent="Market" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(-7, 3.1, 8)
+dimensions = Vector3(4.5, 0.25, 2.5)
+tint = Color(0.57, 0.5, 0.35, 1)
+
+
+[node name="SignBracket2" parent="Metalwork" groups=["navigation_static"] instance=ExtResource("sign")]
+position = Vector3(-4.6, 0, 8)
+
+
+[node name="FountainBasin" parent="Market" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(0, 0.2, 0)
+dimensions = Vector3(4, 0.4, 4)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="BasinRim0" parent="Market" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(0, 0.55, -2)
+dimensions = Vector3(4.4, 0.7, 0.3)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="BasinRim1" parent="Market" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(0, 0.55, 2)
+dimensions = Vector3(4.4, 0.7, 0.3)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="BasinRim2" parent="Market" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(-2, 0.55, 0)
+dimensions = Vector3(0.3, 0.7, 4)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="BasinRim3" parent="Market" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(2, 0.55, 0)
+dimensions = Vector3(0.3, 0.7, 4)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="FountainColumn" parent="Market" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(0, 1.3, 0)
+dimensions = Vector3(0.8, 2, 0.8)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="FountainSpout" parent="Metalwork" groups=["navigation_static"] instance=ExtResource("rail")]
+position = Vector3(0, 2.25, 0)
+
+
+[node name="MarketCart" parent="Market" groups=["navigation_static"] instance=ExtResource("cart")]
+position = Vector3(8, 0, 6)
+
+
+[node name="Crate0" parent="Market" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(11, 0.6, 8)
+dimensions = Vector3(1.2, 1.2, 1.2)
+tint = Color(0.4, 0.26, 0.14, 1)
+
+
+[node name="Crate1" parent="Market" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(11, 0.6, 10)
+dimensions = Vector3(1.2, 1.2, 1.2)
+tint = Color(0.4, 0.26, 0.14, 1)
+
+
+[node name="StallKeeper" parent="Market" instance=ExtResource("npc")]
+position = Vector3(-8, 0.9, -5)
+display_name = "StallKeeper"
+dialogue_data = SubResource("dialogue0")
+
+[node name="CartDriver" parent="Market" instance=ExtResource("npc")]
+position = Vector3(7, 0.9, 8)
+display_name = "CartDriver"
+dialogue_data = SubResource("dialogue1")
+
+[node name="WestFront" parent="Architecture" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(-9, 5, -24.5)
+dimensions = Vector3(10, 10, 19)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="EastFront" parent="Architecture" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(10, 5, -25)
+dimensions = Vector3(10, 10, 20)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="EastLoadingBuilding" parent="Architecture" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(13, 4, -41)
+dimensions = Vector3(8, 8, 12)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="RoofWest" parent="Architecture" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(-7, 3, -62)
+dimensions = Vector3(14, 6, 20)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="RoofEast" parent="Architecture" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(13, 3, -62)
+dimensions = Vector3(12, 6, 20)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="LoadingDeck" parent="Architecture" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(4.5, 0.75, -41)
+dimensions = Vector3(7, 1.5, 10)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="LoadingRamp" parent="." groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(2.5, 0.55, -33.5)
+dimensions = Vector3(3, 0.4, 6.02015)
+tint = Color(0.48, 0.51, 0.54, 1)
+rotation = Vector3(-2.85014, 0, 0)
+
+
+[node name="RoofAccess" parent="." groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(-6.0, 2.8, -44.5)
+dimensions = Vector3(5, 0.4, 16.95549)
+tint = Color(0.48, 0.51, 0.54, 1)
+rotation = Vector3(-2.76109, 0, 0)
+
+
+[node name="RoofBridge" parent="Architecture" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(3.5, 5.8, -69)
+dimensions = Vector3(9, 0.4, 3)
+tint = Color(0.52, 0.47, 0.37, 1)
+
+
+[node name="WallBridge" parent="Architecture" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(25, 5.8, -66)
+dimensions = Vector3(14, 0.4, 4)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="WallWalk" parent="Architecture" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(34, 2.75, -46)
+dimensions = Vector3(7, 5.5, 48)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="WallCap" parent="Architecture" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(34, 5.75, -46)
+dimensions = Vector3(7, 0.5, 48)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="ReturnRamp" parent="." groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(34.0, 2.8, -13.0)
+dimensions = Vector3(5, 0.4, 19.77367)
+tint = Color(0.48, 0.51, 0.54, 1)
+rotation = Vector3(-2.81984, 0, 0)
+
+
+[node name="WallCover-59" parent="Architecture" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(32, 6.8, -59)
+dimensions = Vector3(2, 1.6, 1.5)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="WallCover-43" parent="Architecture" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(32, 6.8, -43)
+dimensions = Vector3(2, 1.6, 1.5)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="WallCover-29" parent="Architecture" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(32, 6.8, -29)
+dimensions = Vector3(2, 1.6, 1.5)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="Parapet30.7" parent="Architecture" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(30.7, 6.4, -42)
+dimensions = Vector3(0.3, 0.8, 40)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="Parapet37.3" parent="Architecture" groups=["navigation_static"] instance=ExtResource("block")]
+position = Vector3(37.3, 6.4, -46)
+dimensions = Vector3(0.3, 0.8, 48)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+
+[node name="RoofRoute" type="Label3D" parent="."]
+position = Vector3(-6, 3, -38)
+text = "Rooftops"
+font_size = 48
+pixel_size = 0.012
+billboard = 1
+
+
+[node name="WallReturn" type="Label3D" parent="."]
+position = Vector3(34, 2, -3)
+text = "Market / Hub"
+font_size = 48
+pixel_size = 0.012
+billboard = 1
+
+
+[node name="AmbushMeleeA" parent="Encounters" instance=ExtResource("melee")]
+position = Vector3(-1, 0.9, -33)
+encounter_id = &"city_ambush"
+
+[node name="AmbushMeleeB" parent="Encounters" instance=ExtResource("melee")]
+position = Vector3(1, 0.9, -37)
+encounter_id = &"city_ambush"
+
+[node name="AmbushRanged" parent="Encounters" instance=ExtResource("ranged")]
+position = Vector3(4.5, 2.4, -42)
+encounter_id = &"city_ambush"
+
+[node name="RoofRangedWest" parent="Encounters" instance=ExtResource("ranged")]
+position = Vector3(-9, 6.9, -66)
+encounter_id = &"city_roofs"
+
+[node name="RoofRangedEast" parent="Encounters" instance=ExtResource("ranged")]
+position = Vector3(8, 6.9, -66)
+encounter_id = &"city_roofs"
+
+[node name="RoofMelee" parent="Encounters" instance=ExtResource("melee")]
+position = Vector3(-4, 6.9, -59)
+encounter_id = &"city_roofs"
+
+[node name="WallRangedNorth" parent="Encounters" instance=ExtResource("ranged")]
+position = Vector3(35, 6.9, -51)
+encounter_id = &"city_wall"
+
+[node name="WallRangedSouth" parent="Encounters" instance=ExtResource("ranged")]
+position = Vector3(35, 6.9, -35)
+encounter_id = &"city_wall"
+
+[node name="LoadingRail" parent="Metalwork" groups=["navigation_static"] instance=ExtResource("rail")]
+position = Vector3(4.5, 2.4, -45)
+rotation = Vector3(0, 0, 0)
+
+[node name="WestGutter" parent="Metalwork" groups=["navigation_static"] instance=ExtResource("rail")]
+position = Vector3(-7, 6.25, -52)
+rotation = Vector3(0, 0, 0)
+
+[node name="EastGutter" parent="Metalwork" groups=["navigation_static"] instance=ExtResource("rail")]
+position = Vector3(13, 6.25, -52)
+rotation = Vector3(0, 0, 0)
+
+[node name="RoofBrace" parent="Metalwork" groups=["navigation_static"] instance=ExtResource("rail")]
+position = Vector3(-13, 7, -62)
+rotation = Vector3(0, 1.5708, 0)
+
+[node name="WallFixture" parent="Metalwork" groups=["navigation_static"] instance=ExtResource("rail")]
+position = Vector3(37, 7, -44)
+rotation = Vector3(0, 1.5708, 0)
+
+[node name="AlleySign" parent="Metalwork" groups=["navigation_static"] instance=ExtResource("sign")]
+position = Vector3(-3, 0, -29)
+
+
+[node name="LooseSteel" parent="Metalwork" instance=ExtResource("loose")]
+position = Vector3(2, 0.25, -35)
+
