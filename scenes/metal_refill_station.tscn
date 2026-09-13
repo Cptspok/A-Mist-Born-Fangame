@@ -19,7 +19,7 @@ script = ExtResource("1_test")
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("2_interaction")
-interaction_prompt = "Refill Steel / Iron"
+interaction_prompt = "Refill metals"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionComponent"]
 shape = SubResource("SphereShape3D_test")

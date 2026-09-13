@@ -24,7 +24,7 @@ static func apply(player: PlayerController, tether: MetalTetherComponent,
 		tuning: AllomancyTuning, pulling: bool) -> Dictionary:
 	var result := evaluate(player, tether, tuning, pulling)
 	if result.is_empty(): return {}
-	result.player_force = PhysicalForceResponse.apply_force(player, result.player_force)
+	result.player_force = PhysicalForceResponse.apply_force(player, result.player_force, true)
 	result.object_force = PhysicalForceResponse.apply_force(result.owner, result.object_force)
 	result.power = "Iron" if pulling else "Steel"
 	return result

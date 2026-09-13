@@ -6,6 +6,8 @@ var _resources: AllomancyComponent
 @onready var iron_bar: ProgressBar = $Rows/Iron/Bar
 @onready var steel_text: Label = $Rows/Steel/Text
 @onready var iron_text: Label = $Rows/Iron/Text
+@onready var pewter_bar: ProgressBar = $Rows/Pewter/Bar
+@onready var pewter_text: Label = $Rows/Pewter/Text
 
 func _ready() -> void:
 	var resources: AllomancyComponent
@@ -26,14 +28,15 @@ func _ready() -> void:
 	router.focus_changed.connect(func(focused: bool): $Focus.text = "FOCUSED: Push / Pull" if focused else "Equipment")
 	_update(&"steel", resources.reserve(&"steel"), resources.maximum_reserve(&"steel"))
 	_update(&"iron", resources.reserve(&"iron"), resources.maximum_reserve(&"iron"))
+	_update(&"pewter", resources.reserve(&"pewter"), resources.maximum_reserve(&"pewter"))
 
 func _update(id: StringName, current: float, maximum: float) -> void:
-	if id != &"steel" and id != &"iron": return
-	var bar := steel_bar if id == &"steel" else iron_bar
-	var label := steel_text if id == &"steel" else iron_text
+	if id not in [&"steel", &"iron", &"pewter"]: return
+	var bar := steel_bar if id == &"steel" else (iron_bar if id == &"iron" else pewter_bar)
+	var label := steel_text if id == &"steel" else (iron_text if id == &"iron" else pewter_text)
 	bar.max_value = maxf(maximum, 0.001)
 	bar.value = current
-	label.text = "%s %s  %.1f / %.0f" % ["Steel" if id == &"steel" else "Iron", "ON" if _resources.is_burning(id) else "OFF", current, maximum]
+	label.text = "%s %s  %.1f / %.0f" % [_resources.metal_name(id), "ON" if _resources.is_burning(id) else "OFF", current, maximum]
 
 func _burn_changed(id: StringName) -> void:
 	_update(id, _resources.reserve(id), _resources.maximum_reserve(id))

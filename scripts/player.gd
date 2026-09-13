@@ -79,7 +79,7 @@ func _physics_process(delta: float) -> void:
 		velocity.z = horizontal.y
 		velocity.y = maxf(velocity.y, 0.0)
 		if Input.is_action_just_pressed(&"jump") and not $ContextualInput.wheel_open:
-			PhysicalForceResponse.apply_impulse(self, Vector3.UP * jump_speed * get_effective_mass())
+			PhysicalForceResponse.apply_impulse(self, Vector3.UP * jump_speed * $StatComponent.get_value(StatIds.Stat.JUMP_MULTIPLIER) * get_effective_mass(), true)
 	else:
 		_apply_air_motor(desired, intended_speed, delta)
 	velocity.y -= gravity * delta

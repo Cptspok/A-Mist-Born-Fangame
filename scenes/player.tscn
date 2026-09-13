@@ -28,6 +28,9 @@
 [ext_resource type="Script" path="res://scripts/contextual_input.gd" id="context_input"]
 [ext_resource type="Script" path="res://scripts/metal_wheel.gd" id="wheel"]
 
+[ext_resource type="Resource" path="res://resources/pewter_metal.tres" id="pewter_metal"]
+[ext_resource type="Script" path="res://scripts/pewter_burn.gd" id="pewter_burn"]
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
 radius = 0.4
 height = 1.8
@@ -101,7 +104,7 @@ script = ExtResource("abilities")
 
 [node name="AllomancyComponent" type="Node" parent="."]
 script = ExtResource("metals")
-definitions = Array[Resource]([ExtResource("steel_metal"), ExtResource("iron_metal")])
+definitions = Array[Resource]([ExtResource("steel_metal"), ExtResource("iron_metal"), ExtResource("pewter_metal")])
 
 [node name="Allomancy" type="Node3D" parent="."]
 script = ExtResource("11_allomancy")
@@ -131,3 +134,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 0
 script = ExtResource("wheel")
+
+[node name="PewterBurn" type="Node" parent="."]
+script = ExtResource("pewter_burn")

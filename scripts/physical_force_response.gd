@@ -19,8 +19,9 @@ static func get_effective_mass(body: Node3D) -> float:
 static func get_world_position(body: Node3D) -> Vector3:
 	return body.global_position if is_instance_valid(body) else Vector3.ZERO
 
-static func apply_force(body: Node3D, force: Vector3) -> Vector3:
+static func apply_force(body: Node3D, force: Vector3, self_generated := false) -> Vector3:
 	if not force.is_finite() or not is_instance_valid(body): return Vector3.ZERO
+	if not self_generated: force *= _external_multiplier(body)
 	if body is RigidBody3D:
 		if body.freeze: return Vector3.ZERO
 		# Optional filter, not a prerequisite for native rigid-body force response.
@@ -35,8 +36,9 @@ static func apply_force(body: Node3D, force: Vector3) -> Vector3:
 		return force
 	return Vector3.ZERO
 
-static func apply_impulse(body: Node3D, impulse: Vector3) -> void:
+static func apply_impulse(body: Node3D, impulse: Vector3, self_generated := false) -> void:
 	if not impulse.is_finite() or not is_instance_valid(body): return
+	if not self_generated: impulse *= _external_multiplier(body)
 	if body is RigidBody3D:
 		if body.freeze: return
 		var response = body.get_meta(&"physics_force_response") if body.has_meta(&"physics_force_response") else null
@@ -45,3 +47,8 @@ static func apply_impulse(body: Node3D, impulse: Vector3) -> void:
 		body.apply_central_impulse(impulse)
 	elif body.has_method("apply_external_impulse"):
 		body.apply_external_impulse(impulse)
+
+## Self-generated locomotion/Allomancy bypasses resistance to imposed forces.
+static func _external_multiplier(body: Node3D) -> float:
+	var stats := body.get_node_or_null("StatComponent") as StatComponent
+	return stats.get_value(StatIds.Stat.EXTERNAL_FORCE_MULTIPLIER) if stats != null else 1.0

@@ -1,0 +1,67 @@
+# Pewter Burn v0.1
+
+## Behavior and provisional tuning
+
+Pewter is an unlocked third MetalDefinition in Player/AllomancyComponent. The existing data-driven wheel automatically shows its reserve and independent ON/OFF toggle alongside Steel/Iron; one locked placeholder remains. Pewter starts OFF. It uses CONTINUOUS consumption, so Focus/equipment/wheel context does not gate the effect.
+
+resources/pewter_metal.tres: maximum/default reserve 1000, consumption 2 units per game second. The existing refill_all() station refills all three metals and now displays all registered reserves. Refill restores reserves only; it does not heal or erase debt.
+
+Player/PewterBurn exposes:
+
+| Parameter | Default |
+|---|---:|
+| deferred_fraction | 0.5 |
+| debt_per_second | 5 HP/s |
+| jump_multiplier | 1.25 |
+| melee_impulse_bonus | 6 impulse units |
+| external_force_multiplier | 0.65 |
+
+## Physical enhancement
+
+PewterBurn owns source-tagged StatComponent modifiers and removes only its own contributions on burn stop/removal. Three stat IDs were appended, preserving existing enum values: JUMP_MULTIPLIER (neutral 1), MELEE_IMPULSE (neutral 0), EXTERNAL_FORCE_MULTIPLIER (neutral 1).
+
+Jump uses its existing impulse with the jump multiplier. Melee uses its existing hit/LOS/deduplication flow and adds the stat's forward impulse on a valid hit. Existing melee damage and attack speed do not change; unenhanced weapons retain zero added impulse. Six impulse units give an enemy of effective mass 2 an initial 3 m/s velocity contribution before its existing movement/contact response.
+
+PhysicalForceResponse scales externally imposed forces/impulses by the recipient's optional StatComponent. An explicit self_generated flag excludes the player's own jump and Steel/Iron contribution from this resistance. Thus Pewter neither strengthens nor weakens the existing Steel/Iron force law. No run-speed, acceleration, gravity, attack-speed, healing, armor or damage bonus was introduced.
+
+Resistance covers adapter-submitted forces/impulses, not engine collision depenetration or arbitrary direct velocity assignments. Current enemies were not given new knockback attacks simply to test resistance.
+
+## Damage and debt
+
+The existing DamageSource -> HurtboxComponent -> HealthComponent path is retained. HealthComponent now permits reusable incoming-damage processing callables. Only Player/PewterBurn registers the Pewter transformation; enemy attacks and the generic ability component contain no Pewter knowledge.
+
+While burning, each incoming damage amount is split: 50% applies to actual HP immediately; 50% accumulates as runtime debt. This is deferral, not damage reduction. Repeated hits add debt, which remains stored while burning. Normal HealthComponent heal()/restore_to_max() affect HP only.
+
+Any burn stop (manual, depleted reserve, lost access) removes enhancements and enables local debt resolution. At 5 HP/s, the component subtracts each payment from debt and calls HealthComponent.apply_damage(payment, false). That bypasses incoming processors to prevent deferring the same obligation twice, but retains normal health signals and death/retry. Reactivating Pewter pauses resolution without clearing remaining debt. Resolution runs only while off and owing debt, in scaled game time under existing scene-pause behavior.
+
+Health damage return values and hit/damage-dealt signals retain their immediate-HP meaning; at a tuned 100% deferral, a hit can store debt while returning zero immediate HP damage. Projectile impact consumption is independent of that return value and remains unchanged.
+
+Death/new-world reset clears the component's runtime debt and stat handles through the existing reset philosophy. No save/debt persistence, healing items or alternate death flow were added.
+
+## HUD
+
+The existing health bar is green. Grey overlays the portion of current HP owed as debt; the numeric HP remains actual current/max health. A debt label shows the complete debt even when it exceeds available HP/bar length. A red line marks the HP threshold required to survive full repayment; debt >= current HP is labeled LETHAL in red (equality also kills). Healing updates that comparison without changing debt. Zero debt hides all extra debt feedback.
+
+The existing reserve HUD adds a Pewter ON/OFF bar and numeric reserve, repositioned above the weapon area to fit three rows. It remains signal-driven. No wheel interaction changes or final HUD art.
+
+## Files
+
+New: scripts/pewter_burn.gd; resources/pewter_metal.tres; this report.
+
+Modified: scripts/stat_ids.gd, health_component.gd, physical_force_response.gd, allomancy_interaction.gd (self-generated flag only), player.gd (jump multiplier only), melee_weapon.gd, player_health_hud.gd, allomancy_reserve_hud.gd, metal_refill_station.gd; scenes/player.tscn, player_health_hud.tscn, allomancy_reserve_hud.tscn, metal_refill_station.tscn (prompt only).
+
+## Validation and manual checklist
+
+Static damage/force/state inspection plus one short headless Main startup. No new parse/resource/runtime errors; only the pre-existing Windows certificate-store error. No gameplay harnesses, combat/traversal simulations, additional startups or desktop control. Manual validation remains necessary for tuning, body response and rendered HUD readability.
+
+1. Open wheel: toggle Pewter alone, then alongside Steel/Iron. Verify normal equipment and Focus routing remain unchanged.
+2. Watch Pewter reserve drain continuously while burning, including in normal equipment mode. Verify wheel slowdown scales time and off stops consumption.
+3. Compare unenhanced/enhanced jumps and melee enemy displacement. Check run speed and Steel/Iron movement remain unchanged. Assess resistance using existing imposed-force paths; ordinary hits without knockback do not demonstrate it.
+4. Take repeated hits while burning: actual HP loses the immediate portion and grey debt grows. Keep burning and verify stored debt does not repay.
+5. Toggle off: HP and debt fall together gradually. Turn on midway: repayment pauses; turn off again: it resumes from the remaining debt.
+6. Test depletion by temporarily lowering Pewter reserve or raising its rate in data, then restore test tuning. Depletion should remove enhancements and begin repayment.
+7. Accumulate debt >= remaining HP: red LETHAL feedback should appear. Let it resolve and confirm normal death/retry.
+8. Use any existing healing/debug HealthComponent.heal() path: HP rises, debt stays, and the lethal warning can clear. No new healing input/item was added.
+9. Verify refill, inventory/dialogue, wheel/Focus and repeated death/retry; a fresh world should have no prior debt or modifiers.
+
+Deferred: Charge, Surge, flaring, progression, new healing items, injury systems and new enemy mechanics. Damage processors are a small ordered callable seam, not a complete damage-context/status framework.

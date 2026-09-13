@@ -15,4 +15,7 @@ func _refill(interactor: Node) -> void:
 	var resources := interactor.get_node_or_null("AllomancyComponent") as AllomancyComponent
 	if resources != null: resources.refill_all()
 func _changed(_id: StringName, _current: float, _maximum: float) -> void:
-	$Label.text = "Refill metals\nSteel: %.1f / %.1f\nIron: %.1f / %.1f" % [_resources.reserve(&"steel"), _resources.maximum_reserve(&"steel"), _resources.reserve(&"iron"), _resources.maximum_reserve(&"iron")]
+	var text := "Refill metals"
+	for id in _resources.metal_ids():
+		text += "\n%s: %.1f / %.1f" % [_resources.metal_name(id), _resources.reserve(id), _resources.maximum_reserve(id)]
+	$Label.text = text

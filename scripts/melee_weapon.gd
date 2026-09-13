@@ -56,6 +56,9 @@ func handle_action(action: StringName, pressed: bool) -> void:
 			continue
 		damaged.append(health)
 		source.apply_damage_to(hurtbox)
+		var impulse := _stats.get_value(StatIds.Stat.MELEE_IMPULSE) if _stats != null else 0.0
+		if impulse > 0.0:
+			PhysicalForceResponse.apply_impulse(hurtbox.get_parent() as Node3D, -aim.global_basis.z * impulse)
 
 
 func cancel_action() -> void:

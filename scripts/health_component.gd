@@ -15,6 +15,7 @@ var current_health: float:
 
 var _current_health: float = 0.0
 var _is_dead: bool = false
+var _damage_processors: Array[Callable] = []
 
 
 func _ready() -> void:
@@ -26,9 +27,21 @@ func _ready() -> void:
 	_is_dead = is_zero_approx(_current_health)
 
 
-func apply_damage(amount: float) -> float:
-	if amount <= 0.0 or _is_dead:
+## Processors transform incoming damage, never healing. Return immediate damage.
+func register_damage_processor(processor: Callable) -> void:
+	if processor.is_valid() and processor not in _damage_processors: _damage_processors.append(processor)
+
+func unregister_damage_processor(processor: Callable) -> void:
+	_damage_processors.erase(processor)
+
+## Already-processed obligations can bypass processors to avoid deferring twice.
+func apply_damage(amount: float, process_incoming := true) -> float:
+	if not is_finite(amount) or amount <= 0.0 or _is_dead:
 		return 0.0
+	if process_incoming:
+		for processor in _damage_processors.duplicate():
+			if processor.is_valid(): amount = maxf(0.0, float(processor.call(amount)))
+		if amount <= 0.0: return 0.0
 
 	var previous_health := _current_health
 	_current_health = maxf(_current_health - amount, 0.0)
