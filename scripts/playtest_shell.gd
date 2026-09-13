@@ -42,6 +42,7 @@ func _action(action: String) -> void:
 		"restart": _launch(false)
 		"resume": _resume()
 		"main":
+			RespawnSession.reset()
 			_clear_world()
 			_show("main")
 		"settings", "controls":
@@ -74,7 +75,8 @@ func _clear_world() -> void:
 		world.queue_free()
 	world = null
 
-func _launch(intro: bool) -> void:
+func _launch(intro: bool, preserve_checkpoint := false) -> void:
+	if not preserve_checkpoint: RespawnSession.reset()
 	_clear_world()
 	get_tree().paused = true
 	world = WORLD.instantiate()
@@ -100,6 +102,6 @@ func _apply_settings() -> void:
 	if is_instance_valid(player): player.mouse_sensitivity = PlaytestSettings.sensitivity
 
 func _retry_after_death(retry_transform: Transform3D) -> void:
-	_launch(false)
+	_launch(false, true)
 	player.global_transform = retry_transform
 	world.get_node("TraversalCourse/Start").global_transform = retry_transform

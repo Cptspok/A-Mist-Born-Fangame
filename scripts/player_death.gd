@@ -54,6 +54,7 @@ func _on_died() -> void:
 		# The safe hub is the fallback for the reorganized prototype world.
 		var start := actor.get_parent().get_node_or_null("CentralHub/Spawn") as Node3D
 		if start != null: retry = start.global_transform
+	retry = RespawnSession.resolve(retry)
 	_release_lock()
 	get_tree().paused = false
 	if retry_requested.get_connections().is_empty():

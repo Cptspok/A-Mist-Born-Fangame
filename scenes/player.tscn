@@ -20,6 +20,11 @@
 
 [ext_resource type="Script" path="res://scripts/player_death.gd" id="death"]
 
+[ext_resource type="Script" path="res://scripts/ability_component.gd" id="abilities"]
+[ext_resource type="Script" path="res://scripts/allomancy_component.gd" id="metals"]
+[ext_resource type="Resource" path="res://resources/steel_metal.tres" id="steel_metal"]
+[ext_resource type="Resource" path="res://resources/iron_metal.tres" id="iron_metal"]
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
 radius = 0.4
 height = 1.8
@@ -87,6 +92,13 @@ script = ExtResource("7_combat")
 
 [node name="EquipmentStatsBridge" type="Node" parent="."]
 script = ExtResource("10_stats_bridge")
+
+[node name="AbilityComponent" type="Node" parent="."]
+script = ExtResource("abilities")
+
+[node name="AllomancyComponent" type="Node" parent="."]
+script = ExtResource("metals")
+definitions = Array[Resource]([ExtResource("steel_metal"), ExtResource("iron_metal")])
 
 [node name="Allomancy" type="Node3D" parent="."]
 script = ExtResource("11_allomancy")

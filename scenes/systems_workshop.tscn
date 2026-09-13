@@ -1,5 +1,7 @@
 [gd_scene format=3]
 
+[ext_resource type="PackedScene" path="res://scenes/metal_refill_station.tscn" id="refill"]
+
 [ext_resource type="PackedScene" path="res://scenes/test_interactable.tscn" id="2_test_interactable"]
 [ext_resource type="PackedScene" path="res://scenes/example_npc.tscn" id="3_example_npc"]
 [ext_resource type="PackedScene" path="res://scenes/npc.tscn" id="4_tbgi4"]
@@ -218,3 +220,6 @@ position = Vector3(9, 0.15, 9)
 dimensions = Vector3(10, 0.3, 8)
 tint = Color(0.36, 0.4, 0.42, 1)
 
+
+[node name="MetalRefillStation" parent="." instance=ExtResource("refill")]
+position = Vector3(5, 0.5, 5)
