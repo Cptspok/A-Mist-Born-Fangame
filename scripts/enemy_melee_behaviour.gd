@@ -27,21 +27,21 @@ func _on_gameplay_lock_changed(locked: bool) -> void:
 func _physics_process(delta: float) -> void:
 	if not actor.is_active or GameplayLocks.is_locked():
 		return
+	sensing.sample(delta)
 	var was_committed: bool = attack.is_busy()
 	attack.tick(delta)
 	if was_committed or attack.is_busy():
 		movement.move_toward_point(actor.global_position, 0.0, delta)
 		return
-	sensing.sample(delta)
 	var target: Node3D = sensing.target
 	if actor.state not in [&"Idle", &"ReturnHome"]:
-		if not is_instance_valid(target) or sensing.unseen_time > sensing.lost_sight_grace or actor.global_position.distance_to(actor.spawn_position) > maximum_leash_distance:
+		if not is_instance_valid(target) or not sensing.is_aware() or actor.global_position.distance_to(actor.spawn_position) > maximum_leash_distance:
 			actor.set_state(&"ReturnHome")
 	var destination := actor.global_position
 	var speed: float = 0.0
 	match actor.state:
 		&"Idle":
-			if sensing.visible_target and is_instance_valid(target):
+			if sensing.is_aware() and is_instance_valid(target):
 				_elapsed = 0.0
 				actor.set_state(&"Alert")
 		&"Alert":
@@ -82,7 +82,7 @@ func _physics_process(delta: float) -> void:
 			# The target must also be inside so an outside target cannot lure us
 			# straight back across the leash after every alert.
 			var reengage_distance := maximum_leash_distance * 0.9
-			if sensing.visible_target and is_instance_valid(target) and actor.global_position.distance_to(actor.spawn_position) <= reengage_distance and target.global_position.distance_to(actor.spawn_position) <= reengage_distance:
+			if sensing.is_aware() and is_instance_valid(target) and actor.global_position.distance_to(actor.spawn_position) <= reengage_distance and target.global_position.distance_to(actor.spawn_position) <= reengage_distance:
 				_elapsed = 0.0
 				speed = 0.0
 				actor.set_state(&"Alert")

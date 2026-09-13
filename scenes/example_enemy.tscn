@@ -13,13 +13,16 @@ display_name = "Training Enemy"
 visual_scene = ExtResource("2_visual")
 
 [node name="HealthComponent" parent="." index="2"]
-max_health = 60.0
+max_health = 120.0
 
 [node name="Sensing" type="Node" parent="."]
 script = ExtResource("3_sensing")
+detection_range = 16.0
 
 [node name="Movement" type="Node" parent="."]
 script = ExtResource("4_movement")
+chase_speed = 7.0
+reposition_speed = 3.5
 
 [node name="MeleeAttack" type="Node" parent="."]
 script = ExtResource("5_attack")
@@ -28,7 +31,8 @@ script = ExtResource("5_attack")
 script = ExtResource("6_damage")
 monitoring = false
 monitorable = false
-damage_amount = 30.0
+damage_amount = 38.0
 
 [node name="MeleeBehaviour" type="Node" parent="."]
 script = ExtResource("7_behaviour")
+maximum_leash_distance = 20.0

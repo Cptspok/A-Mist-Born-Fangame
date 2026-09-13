@@ -2,6 +2,7 @@ class_name EnemyController
 extends CharacterBody3D
 
 @export_group("Identity")
+@export var encounter_id: StringName = &""
 @export var display_name: String = "Enemy"
 
 @export_group("Visuals")

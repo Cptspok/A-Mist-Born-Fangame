@@ -392,3 +392,101 @@ Manual sequence:
    the key metric: did an enemy action ever make another response more urgent than attacking?
 10. Repeat death/retry, including after opening/closing inventory or dialogue and through
     both the playtest shell and direct main.tscn execution; check ordinary AI recovery.
+
+## Threat & Encounter Aggro v0.1
+
+Shared awareness extends the existing enemy_sensing.gd rather than adding squad AI.
+EnemyController exposes encounter_id; only the two courtyard instances in main.tscn
+use `courtyard`. Empty IDs disable sharing. Sensing exposes ally_alert_radius=18 m,
+awareness_duration=6 s, and alert_interval=1 s. Detection/visible combat entry and
+committed attack entry identify a target. Attributed player attacks notify the victim's
+hurtbox before damage (so even a lethal opening hit alerts allies). DamageSourceComponent
+now forwards an optional instigator; player melee, enemy melee and projectile launch
+supply their existing actor. Unknown sources and allied projectiles are not falsely
+identified as player hostility. Health/damage calculations are unchanged.
+
+Alerts reach active sensors with the same nonempty encounter ID within the sender's
+radius. Received alerts establish awareness, not LOS, and do not rebroadcast on their
+own. Direct sight can refresh the group once per second; a fresh hostile hit is immediate.
+The current game uses the existing single Player target, not factions/multiple-hostile
+selection. Melee and ranged behavior independently decide engagement from awareness;
+attack LOS checks and home leashes remain in force. Six seconds without fresh knowledge
+allows return-home. There is no global blackboard or psychic cross-map group alert.
+
+Prototype tuning (Inspector defaults / scene data):
+- Melee: 120 HP (four 30-damage equipped sword hits), 38 damage, chase 7 m/s (was 3),
+  reposition 3.5 m/s (was 2), sensing 16 m, home leash 20 m. The .65/.14/.55 attack phases
+  and 1.5 s attack cooldown are unchanged. Return speed remains 2.5 m/s.
+- Ranged: 90 HP (three ordinary sword hits, was 100), 30 damage unchanged, sensing 22 m,
+  attack range cap 20 m, home leash 22 m. Chase 4.5 m/s and reposition 5 m/s (both were
+  2.5); return remains 2.5. The preferred horizontal shooting band is 7–15 m.
+- Ranged projectile: attack-local speed 24 m/s (was 8), lifetime 1.25 s, travel budget
+  30 m; generic projectile scene defaults are unchanged. Non-homing aim snapshot and
+  collision/LOS remain. No prediction or hitscan was added.
+- Ranged aim .65 s, fire .10 s, recovery .45 s, start-to-start cooldown 1.35 s (was 2 s
+  plus compulsory repositioning). Actual cadence includes interruptions/movement/LOS.
+
+Ranged distance management:
+- Below 7 m: try a short retreat/diagonal retreat. Failed attempts wait 2.5 s before
+  retrying, allowing the actor to fire from an imperfect position when it has LOS.
+- Within 7–15 m: stand and fire by default. After at least two emitted shots and a
+  4.5 s reposition cooldown, optionally pick a useful lateral/diagonal position.
+- Above 15 m: approach the useful band. Lost LOS can also justify approach or a short
+  lateral move. At close range without LOS, do not blindly run toward the player.
+
+At most three candidates are considered per decision, no more often than .5 s. Candidates
+are projected onto the existing navmesh, require a complete short path (<=5.4 m), respect
+home limits, reject unnecessarily closer endpoints/initial detours, and prefer clear LOS.
+Retreat must gain >=.65 m separation. Steps are nominally 3 m and end within .8 s;
+.35 s without movement ends a blocked reposition. No useful candidate means stay/fire
+when possible. Movement is never reevaluated during the existing committed attack or
+reaction lock. Position after an Ironpull uses these same distance rules; no Iron logic.
+
+Ranged feedback now has an exaggerated bow raise, drawing-hand pull/body lean, a held
+last 30% of the aim window, sharp release, and recovery. Existing reaction/body recoil
+continues. There are no added art assets, VFX, abilities or changes to physical Allomancy.
+
+Files changed: scenes/main.tscn (two encounter IDs only), example_enemy.tscn and
+ranged_enemy.tscn (tuning), scripts/enemy.gd (ID), enemy_sensing.gd, both behavior scripts,
+enemy_ranged_attack.gd (local projectile tuning, shot signal, pose),
+committed_enemy_attack.gd (one alert notification at commitment), enemy_melee_attack.gd,
+melee_weapon.gd, projectile.gd, damage_source_component.gd and hurtbox_component.gd
+(optional attribution wiring), and this document. No new persistent scenes/scripts.
+Encounter geometry, platform, navigation bake, agent settings, death/retry, player
+locomotion, sword damage/cooldown and Allomancy force/interruption tuning are unchanged.
+
+Validation: parser check and temporary startup sanity confirmed shared alert, isolation
+by different encounter ID, damage-alert connection, 120/90 HP and the existing connected
+platform path. A parser inference issue in candidate-eye construction was corrected.
+Sandbox log/certificate warnings remain; temporary checker removed. No automated gameplay
+suite, repeated broad tests, or detailed combat playtest. No new pathfinding or Allomancy
+failure was exposed by these limited checks.
+
+Manual sequence:
+1. Retry fresh, equip the sword and approach from (5,0,4). Engage melee first; confirm
+   ranged joins. Retry and engage ranged first; confirm melee joins. Repeat by detection
+   only. T may help inspect carried targets, but test telegraphs with it off.
+2. Count four sword hits on full-health melee and three on ranged with ordinary equipment.
+   Fight melee while ignoring ranged, then use cart/crates/corners to break ranged LOS.
+3. Watch ranged in the 7–15 m band: shots should dominate, with occasional short lateral
+   moves after multiple shots. Watch the raise/draw/hold/release; deliberately sidestep,
+   then compare standing still. One stray shot should hurt without deciding the fight.
+4. Close inside 7 m; observe an attempted retreat. Corner it and confirm failed retreat
+   does not stop it firing when it can see you. Retreat beyond 15 m within the courtyard;
+   verify it approaches. Check ramp/platform movement and short reposition paths.
+5. Pull its pouch during aim, then release: existing interruption/displacement should work,
+   followed by ordinary separation behavior. Push melee away to buy time for ranged.
+6. Compare backing away from melee alone versus both enemies applying pressure. Die/retry
+   and repeat; check clean state reset and group awareness on each fresh engagement.
+7. Evaluate whether either enemy can still be safely ignored and whether cover, elevation
+   and position manipulation now change decisions.
+
+Known limits: the player still walks at 10 m/s versus melee chase 7 m/s; solo endless
+retreat may remain possible, while this milestone relies on combined ranged pressure
+and courtyard geometry. No player speed changes were made. Snapshot shots can still be
+avoided by sustained lateral movement. Three local candidates are not a tactical planner;
+LOS/path scoring can reject otherwise useful positions and dynamic blockers can stop a
+path. Existing off-nav force recovery and sword/shield target overlap are unchanged.
+Aggro requires actual sight, attributed contact or combat entry, not a missed distant
+sword swing or an unattributed generic force. Next tuning should follow combined-combat
+playtests rather than adding new combat systems.

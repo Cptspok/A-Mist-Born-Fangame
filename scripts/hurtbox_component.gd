@@ -1,6 +1,8 @@
 class_name HurtboxComponent
 extends Area3D
 
+signal attacked_by(instigator: Node3D)
+
 signal hit_received(amount: float, current_health: float, max_health: float)
 
 const HURTBOX_COLLISION_LAYER := 1 << 2
@@ -31,13 +33,15 @@ func _ready() -> void:
 		push_error("HurtboxComponent could not find a HealthComponent at %s." % health_component_path)
 
 
-func receive_damage(amount: float) -> float:
+func receive_damage(amount: float, instigator: Node3D = null) -> float:
 	if not is_instance_valid(_health_component):
 		_resolve_health_component()
 
 	if _health_component == null:
 		return 0.0
 
+	if amount > 0.0 and not _health_component.is_dead() and is_instance_valid(instigator):
+		attacked_by.emit(instigator)
 	var applied_damage := _health_component.apply_damage(amount)
 	if applied_damage > 0.0:
 		hit_received.emit(

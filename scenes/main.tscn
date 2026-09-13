@@ -119,9 +119,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.45, 3)
 item_definition = ExtResource("9_blue")
 
 [node name="ExampleEnemy" parent="." unique_id=1089710274 instance=ExtResource("10_enemy")]
+encounter_id = &"courtyard"
 position = Vector3(5, 0.9, -1.2)
 
 [node name="RangedEnemy" parent="." unique_id=1163748825 instance=ExtResource("13_ranged")]
+encounter_id = &"courtyard"
 position = Vector3(6.2, 1.7, -9.0)
 
 [node name="SwordWorldItem" parent="." unique_id=1851098926 instance=ExtResource("7_world")]

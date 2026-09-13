@@ -14,6 +14,7 @@ var _launched: bool = false
 
 
 func launch(origin: Vector3, direction: Vector3, shooter: Node3D) -> void:
+	damage_source.instigator = shooter
 	global_position = origin
 	_direction = direction.normalized()
 	_excluded.clear()

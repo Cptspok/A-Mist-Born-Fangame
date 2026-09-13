@@ -17,4 +17,6 @@ func resolve_strike() -> void:
 	var hit := actor.get_world_3d().direct_space_state.intersect_ray(query)
 	if not hit.is_empty() and hit.get("collider") != target: return
 	var hurtbox := target.get_node_or_null("HurtboxComponent") as HurtboxComponent
-	if hurtbox != null: source.apply_damage_to(hurtbox)
+	if hurtbox != null:
+		source.instigator = actor
+		source.apply_damage_to(hurtbox)

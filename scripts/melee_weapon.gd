@@ -8,6 +8,7 @@ var _excluded: Array[RID] = []
 
 
 func _ready() -> void:
+	source.instigator = wielder
 	if wielder is PlayerController:
 		_stats = wielder.get_node_or_null("StatComponent") as StatComponent
 	if wielder is CollisionObject3D:

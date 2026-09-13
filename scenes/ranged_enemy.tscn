@@ -11,24 +11,27 @@
 display_name = "Ranged Enemy"
 visual_scene = ExtResource("2_visual")
 
+[node name="HealthComponent" parent="." index="2"]
+max_health = 90.0
+
 [node name="Sensing" type="Node" parent="."]
 script = ExtResource("3_sensing")
-detection_range = 10.0
+detection_range = 22.0
 
 [node name="Movement" type="Node" parent="."]
 script = ExtResource("4_movement")
-chase_speed = 2.5
-reposition_speed = 2.5
+chase_speed = 4.5
+reposition_speed = 5.0
 
 [node name="ProjectileOrigin" type="Marker3D" parent="."]
 position = Vector3(0, 0.4, -0.65)
 
 [node name="RangedAttack" type="Node" parent="."]
 script = ExtResource("5_attack")
-windup_duration = 0.75
+windup_duration = 0.65
 strike_duration = 0.10
-recovery_duration = 0.65
-attack_cooldown = 2.0
+recovery_duration = 0.45
+attack_cooldown = 1.35
 equipment_name = &"WoodenBow"
 windup_rotation = Vector3(-0.25, 0, -0.25)
 

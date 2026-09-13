@@ -31,6 +31,7 @@ func is_interruptible() -> bool:
 
 func begin(victim: Node3D) -> bool:
 	if is_busy() or _cooldown > 0.0 or GameplayLocks.is_locked() or not actor.is_active or not is_instance_valid(victim): return false
+	actor.get_node("Sensing").identify_hostile(victim)
 	target = victim
 	aim_point = victim.global_position
 	var facing := Vector3(aim_point.x, actor.global_position.y, aim_point.z)

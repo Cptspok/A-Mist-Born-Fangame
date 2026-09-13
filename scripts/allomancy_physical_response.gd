@@ -13,7 +13,7 @@ func _ready() -> void:
 	if body != null: body.set_meta(&"physics_force_response", self)
 
 func _exit_tree() -> void:
-	if is_instance_valid(body) and body.get_meta(&"physics_force_response", null) == self:
+	if is_instance_valid(body) and body.has_meta(&"physics_force_response") and body.get_meta(&"physics_force_response") == self:
 		body.remove_meta(&"physics_force_response")
 
 func filter_force(force: Vector3) -> Vector3:

@@ -23,7 +23,9 @@ static func apply_force(body: Node3D, force: Vector3) -> Vector3:
 	if not force.is_finite() or not is_instance_valid(body): return Vector3.ZERO
 	if body is RigidBody3D:
 		if body.freeze: return Vector3.ZERO
-		var response = body.get_meta(&"physics_force_response", null)
+		# Optional filter, not a prerequisite for native rigid-body force response.
+		# A null get_meta default still reports a missing-key error in Godot.
+		var response = body.get_meta(&"physics_force_response") if body.has_meta(&"physics_force_response") else null
 		if is_instance_valid(response): force = response.filter_force(force)
 		if not force.is_zero_approx(): body.sleeping = false
 		body.apply_central_force(force)
@@ -37,7 +39,7 @@ static func apply_impulse(body: Node3D, impulse: Vector3) -> void:
 	if not impulse.is_finite() or not is_instance_valid(body): return
 	if body is RigidBody3D:
 		if body.freeze: return
-		var response = body.get_meta(&"physics_force_response", null)
+		var response = body.get_meta(&"physics_force_response") if body.has_meta(&"physics_force_response") else null
 		if is_instance_valid(response): impulse = response.filter_force(impulse)
 		if not impulse.is_zero_approx(): body.sleeping = false
 		body.apply_central_impulse(impulse)
