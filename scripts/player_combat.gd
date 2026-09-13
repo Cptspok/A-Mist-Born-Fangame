@@ -48,15 +48,16 @@ func select_slot(slot: int) -> void:
 		_runtimes[key].set_active(key == slot)
 	equipment_changed.emit()
 
+## Equipment receives contextual clicks only from ContextualInput.
+func handle_contextual_action(action: StringName, pressed: bool) -> void:
+	if _runtimes.has(active_slot): _runtimes[active_slot].handle_action(action, pressed)
+
 func _unhandled_input(event: InputEvent) -> void:
-	if GameplayLocks.is_locked() or health.is_dead() or get_tree().paused: return
-	for action in [&"primary_action", &"secondary_action", &"ability_1", &"ability_2"]:
+	if GameplayLocks.is_locked() or health.is_dead() or get_tree().paused or get_parent().get_node("ContextualInput").wheel_open: return
+	for action in [&"ability_1", &"ability_2"]:
 		if event.is_action_pressed(action) or event.is_action_released(action):
 			var pressed := event.is_action_pressed(action)
-			if action in [&"ability_1", &"ability_2"]:
-				ability_requested.emit(action, pressed)
-			elif _runtimes.has(active_slot):
-				_runtimes[active_slot].handle_action(action, pressed)
+			ability_requested.emit(action, pressed)
 			get_viewport().set_input_as_handled()
 			return
 	# Bindings index combat-capable items, never physical Off Hand directly.

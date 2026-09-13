@@ -1,5 +1,6 @@
 extends Control
 ## Replaceable presentation: state and costs belong to AllomancyComponent.
+var _resources: AllomancyComponent
 @export var resource_component_path: NodePath
 @onready var steel_bar: ProgressBar = $Rows/Steel/Bar
 @onready var iron_bar: ProgressBar = $Rows/Iron/Bar
@@ -17,7 +18,12 @@ func _ready() -> void:
 		hide()
 		return
 	if not resources.is_node_ready(): await resources.ready
+	_resources = resources
 	resources.reserve_changed.connect(_update)
+	resources.burn_started.connect(_burn_changed)
+	resources.burn_stopped.connect(_burn_changed)
+	var router = get_tree().get_first_node_in_group("player").get_node("ContextualInput")
+	router.focus_changed.connect(func(focused: bool): $Focus.text = "FOCUSED: Push / Pull" if focused else "Equipment")
 	_update(&"steel", resources.reserve(&"steel"), resources.maximum_reserve(&"steel"))
 	_update(&"iron", resources.reserve(&"iron"), resources.maximum_reserve(&"iron"))
 
@@ -27,4 +33,7 @@ func _update(id: StringName, current: float, maximum: float) -> void:
 	var label := steel_text if id == &"steel" else iron_text
 	bar.max_value = maxf(maximum, 0.001)
 	bar.value = current
-	label.text = "%s  %.1f / %.0f" % ["Steel" if id == &"steel" else "Iron", current, maximum]
+	label.text = "%s %s  %.1f / %.0f" % ["Steel" if id == &"steel" else "Iron", "ON" if _resources.is_burning(id) else "OFF", current, maximum]
+
+func _burn_changed(id: StringName) -> void:
+	_update(id, _resources.reserve(id), _resources.maximum_reserve(id))

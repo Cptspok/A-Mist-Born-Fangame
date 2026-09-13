@@ -4,6 +4,7 @@ signal reserve_changed(id: StringName, current: float, maximum: float)
 signal burn_started(id: StringName)
 signal burn_stopped(id: StringName)
 signal depleted(id: StringName)
+signal engagement_changed(id: StringName, engaged: bool)
 signal access_changed(id: StringName, available: bool)
 @export var definitions: Array[Resource] = []
 @export var start_at_full := true
@@ -17,7 +18,7 @@ func _ready() -> void:
 func register_metal(definition: MetalDefinition, available := true) -> bool:
 	if definition == null or definition.metal_id == &"" or _states.has(definition.metal_id): return false
 	var maximum := maxf(0.0, definition.maximum_reserve)
-	_states[definition.metal_id] = {"maximum": maximum, "reserve": maximum if start_at_full else clampf(definition.default_reserve, 0.0, maximum), "rate": maxf(0.0, definition.consumption_rate), "burning": false, "automatic": true, "access": available}
+	_states[definition.metal_id] = {"maximum": maximum, "reserve": maximum if start_at_full else clampf(definition.default_reserve, 0.0, maximum), "rate": maxf(0.0, definition.consumption_rate), "burning": false, "automatic": definition.consumption_policy == MetalDefinition.ConsumptionPolicy.CONTINUOUS, "engaged": false, "name": definition.display_name, "access": available}
 	return true
 
 func has_access(id: StringName) -> bool:
@@ -57,9 +58,8 @@ func _set_reserve(id: StringName, value: float) -> void:
 		depleted.emit(id)
 	reserve_changed.emit(id, current, maximum_reserve(id))
 
-func begin_burn(id: StringName, automatic_consumption := true) -> bool:
+func begin_burn(id: StringName) -> bool:
 	if not has_access(id) or reserve(id) <= 0.0: return false
-	_states[id].automatic = automatic_consumption
 	if not is_burning(id):
 		_states[id].burning = true
 		burn_started.emit(id)
@@ -68,6 +68,7 @@ func begin_burn(id: StringName, automatic_consumption := true) -> bool:
 func stop_burn(id: StringName) -> void:
 	if not is_burning(id): return
 	_states[id].burning = false
+	set_engaged(id, false)
 	burn_stopped.emit(id)
 
 func is_burning(id: StringName) -> bool:
@@ -76,13 +77,31 @@ func is_burning(id: StringName) -> bool:
 func refill_all() -> void:
 	for id in _states: add_reserve(id, maximum_reserve(id))
 
-## Concrete effects report actual usage for this step. No target knowledge here.
-## Manual consumption bypasses the continuous loop, avoiding stale/double charges.
+func metal_ids() -> Array:
+	return _states.keys()
+
+func metal_name(id: StringName) -> String:
+	return _states[id].name if _states.has(id) else "Locked"
+
+func toggle_burn(id: StringName) -> void:
+	if is_burning(id): stop_burn(id)
+	else: begin_burn(id)
+
+func set_engaged(id: StringName, engaged: bool) -> void:
+	if not _states.has(id): return
+	engaged = engaged and is_burning(id)
+	if _states[id].engaged == engaged: return
+	_states[id].engaged = engaged
+	engagement_changed.emit(id, engaged)
+
+func is_engaged(id: StringName) -> bool:
+	return _states.has(id) and _states[id].engaged
+
+## Usage never toggles burning. Controlled and persistent cost policies are data.
 func consume_usage(id: StringName, delta: float, engaged: bool) -> void:
-	if not engaged:
-		stop_burn(id)
-		return
-	if not is_finite(delta) or delta <= 0.0 or not begin_burn(id, false): return
+	set_engaged(id, engaged)
+	if not is_engaged(id) or _states[id].automatic: return
+	if not is_finite(delta) or delta <= 0.0: return
 	_set_reserve(id, reserve(id) - float(_states[id].rate) * delta)
 
 func advance(delta: float) -> void:

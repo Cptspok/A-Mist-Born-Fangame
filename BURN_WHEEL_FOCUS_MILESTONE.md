@@ -1,0 +1,65 @@
+# Burn / Metal Wheel / Focus v0.1
+
+## Runtime responsibilities
+
+- MetalDefinition selects CONTINUOUS or EFFECT_GATED consumption. Steel/Iron use EFFECT_GATED without changing reserve values/rates. No additional real metal definitions were added.
+- AllomancyComponent owns independent access, burning and engagement states. toggle_burn()/begin_burn()/stop_burn() represent burn choice; consume_usage() reports accepted effect work and never toggles the burn. Depletion/access loss stop a burn. CONTINUOUS definitions still drain while toggled, independently of Focus or the wheel, in scaled game time.
+- AbilityComponent remains unchanged and generic. Held abilities are attempts to perform controlled actions; releasing/cancelling these stops engagement, not the metal burn.
+- ContextualInput owns runtime Focus and wheel-open state and is the sole primary/secondary dispatcher. Focus has set_focus() plus an Inspector Hold/Toggle input adapter; default is Toggle. Main/Pause Settings exposes Toggle/Hold, saved through PlaytestSettings. Metal-wheel hover is UI-only and does not select a single active metal.
+- MetalWheel draws four functional radial sectors: Steel, Iron and two anonymous locked slots. Slots show ON/OFF/reserves or dark red LOCKED. Clicks toggle burns through the state component; no canonical placeholder powers or progression were invented.
+
+## Controls and effects
+
+Hold Shift to open the wheel and release to close. Click Steel/Iron to enable either or both; they start OFF. Press C to toggle Focus by default; choose Hold in Settings for held Focus. Normal LMB/RMB route to equipment. Focused LMB requests Steelpush only if Steel burns; focused RMB requests Ironpull only if Iron burns. An unavailable focused action never falls through to equipment.
+
+Both mouse controls may engage concurrently, each using its unchanged force law against the current tether and its own reserve. This intentionally replaces the former both-buttons-cancel workaround. No force strengths, velocity laws, targeting rules or external-force integration changed. Each nonzero accepted force result meters only its corresponding metal. Tether loss stops cost/engagement but preserves burn and held intent; reacquisition can resume the effect. Depletion stops the burn and cancels its controlled ability. Refill restores reserve, not burn selection; toggle back ON and click again.
+
+V/B InputMap actions were removed; ability IDs steel_push and iron_pull remain stable internal IDs. ZQSD, Space, Ctrl walk, F interaction, I inventory, equipment switching and the existing A/E placeholders remain unchanged.
+
+## Exclusive routing and interruptions
+
+PlayerCombat no longer listens to primary/secondary InputMap events; it exposes handle_contextual_action() for the router. AllomancyController no longer polls mouse/temporary key input. The router chooses exactly one recipient, tracks each press's recipient, and delivers releases only to the owner.
+
+Entering/exiting Focus or opening/closing the wheel cancels current equipment/controlled actions. Mouse buttons already held across a context transition require release and a fresh press; no synthetic attack is generated on exit. GUI-consumed releases are recovered from current input state. The wheel consumes mouse clicks and blocks equipment/interaction/jump/movement intent while leaving physics running. Normal keyboard movement resumes on closing it.
+
+## Slowdown, locks and presentation
+
+Wheel opening saves the previous Engine.time_scale and multiplies it by 0.15. Closing restores the saved value. UI input is event-driven, so it remains responsive. Gravity, momentum, enemies and persistent costs continue in slowed game time; the tree is not paused by the wheel.
+
+Pause, inventory/dialogue locks, death and window focus loss close the wheel, cancel controlled input and clear Focus. World removal restores the saved time scale. Persistent burn toggles survive these context changes until depletion or a new world reset. The shell's mouse arbiter explicitly respects wheel-open state, preventing recapture while selecting wedges. Existing modal pause/lock behavior retains priority.
+
+The existing reserve HUD now shows ON/OFF per metal and an Equipment/FOCUSED indicator. It observes reserve/burn/Focus signals. Workshop refill remains unchanged.
+
+## Files
+
+New: scripts/contextual_input.gd, scripts/metal_wheel.gd, this report.
+
+Modified: project.godot; resources/steel_metal.tres and iron_metal.tres; scenes/player.tscn and allomancy_reserve_hud.tscn; scripts/metal_definition.gd, allomancy_component.gd, allomancy_controller.gd, player_combat.gd, player.gd, playtest_shell.gd, playtest_controls.gd, allomancy_reserve_hud.gd; CONTROL_CLEANUP.md historical-note link.
+
+## Validation and limits
+
+Static inspection of routing, state/cost separation, interruption cleanup and resource references. Exactly one short Main startup was attempted: it exposed an encoding error in the wheel script; the encoding and a subsequent Vector2 inference error were corrected with parser-only validation. The final wheel parser check passed. Other loaded scripts reported no parse errors. No second gameplay startup, test harness, traversal/combat simulation or desktop control was performed. The existing Windows certificate-store error appeared during startup.
+
+Manual validation is still required for the wheel's rendered layout/click hit areas, simultaneous force composition, GUI interruption edge cases and airborne use. The wheel uses fixed prototype dimensions and anonymous locked slots, not final art. Global time-scale ownership currently assumes no other simultaneous slowdown writer; future time effects should share an owner-aware time service. Focus Hold/Toggle is available in Settings and persisted in user://playtest_settings.cfg. No new spells, buffs, flaring, ingestion, progression or save system.
+
+## Manual checklist
+
+1. Start fresh: burns OFF; normal LMB/RMB use equipment only. V/B do nothing.
+2. Hold Shift: confirm radial wheel, free cursor and 15% time; click Steel ON, inspect reserve/ON HUD, release Shift.
+3. Hold C: LMB Push works; RMB does nothing; no equipment action occurs. Release C, then use a fresh equipment click.
+4. Toggle Steel OFF/Iron ON; repeat with RMB Pull and inactive LMB.
+5. Toggle both ON; Focus and test each button and both together. Hold without a tether, acquire/lose/reacquire it, and check independent effect-gated reserve drain.
+6. Check that exiting/re-entering Focus and opening/closing the wheel preserve both burns. Verify held clicks across transitions cause no extra equipment attack.
+7. Click locked sectors: they stay unavailable. Test wheel selection while airborne and under enemy pressure, then close and verify normal time/control returns.
+8. Open inventory, dialogue, pause or switch windows while the wheel is open; ensure the wheel closes and slowdown does not remain stuck. Test a death/retry as well.
+9. Deplete a metal with low test reserves if desired: burn/effect stop without spam. Workshop refill restores reserve; toggle ON again and use a fresh focused click.
+
+## Focus preference follow-up
+
+Settings > Focus behavior offers Toggle (default) and Hold from both the main and pause menus. The existing PlaytestSettings ConfigFile stores `focus_mode = "toggle"` or `"hold"` under `[settings]` in `user://playtest_settings.cfg`. Missing/invalid values fall back to Toggle. No new persistence infrastructure was added.
+
+ContextualInput applies the saved preference on ready and observes settings changes. Only an actual mode change cancels the current context, clears Focus and suppresses already-held clicks; unrelated settings changes do not reset Focus. Existing inventory/dialogue/pause/death cancellation remains unchanged. Metal/equipment systems still receive only contextual action requests and do not inspect the preference. Controls text reflects the saved mode.
+
+Follow-up files: scripts/playtest_settings.gd, scripts/playtest_menu_view.gd, scripts/contextual_input.gd, scripts/playtest_controls.gd, this report. Validation: static code/diff inspection only; no startup or automated gameplay testing.
+
+Manual checks: fresh/default Toggle (C on, C off); change to Hold (press on, release off); restart application and confirm Hold persists; switch back to Toggle; enter inventory/dialogue while focused and holding a mouse action, then return and verify Focus remains safely reset with no equipment attack until a fresh click. Confirm burns remain enabled and unrelated settings still work.

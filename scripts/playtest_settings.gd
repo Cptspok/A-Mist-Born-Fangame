@@ -6,6 +6,7 @@ var master := 1.0
 var music := 1.0
 var sfx := 1.0
 var fullscreen := false
+var focus_mode := "toggle"
 
 func _ready() -> void:
 	var config := ConfigFile.new()
@@ -15,13 +16,14 @@ func _ready() -> void:
 		music = clampf(float(config.get_value("settings", "music", 1.0)), 0, 1)
 		sfx = clampf(float(config.get_value("settings", "sfx", 1.0)), 0, 1)
 		fullscreen = bool(config.get_value("settings", "fullscreen", false))
+		focus_mode = "hold" if config.get_value("settings", "focus_mode", "toggle") == "hold" else "toggle"
 	apply()
 
 func update(key: String, value: Variant) -> void:
 	set(key, value)
 	apply()
 	var config := ConfigFile.new()
-	for setting in ["sensitivity", "master", "music", "sfx", "fullscreen"]:
+	for setting in ["sensitivity", "master", "music", "sfx", "fullscreen", "focus_mode"]:
 		config.set_value("settings", setting, get(setting))
 	var error := config.save(PATH)
 	if error != OK: push_warning("Could not save playtest settings: %s" % error)

@@ -25,6 +25,9 @@
 [ext_resource type="Resource" path="res://resources/steel_metal.tres" id="steel_metal"]
 [ext_resource type="Resource" path="res://resources/iron_metal.tres" id="iron_metal"]
 
+[ext_resource type="Script" path="res://scripts/contextual_input.gd" id="context_input"]
+[ext_resource type="Script" path="res://scripts/metal_wheel.gd" id="wheel"]
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
 radius = 0.4
 height = 1.8
@@ -115,3 +118,16 @@ script = ExtResource("13_debug")
 
 [node name="DeathFlow" type="Node" parent="."]
 script = ExtResource("death")
+
+[node name="ContextualInput" type="Node" parent="."]
+script = ExtResource("context_input")
+[node name="MetalWheelLayer" type="CanvasLayer" parent="."]
+layer = 5
+[node name="MetalWheel" type="Control" parent="MetalWheelLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+script = ExtResource("wheel")

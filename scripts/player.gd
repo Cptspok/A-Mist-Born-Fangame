@@ -62,9 +62,11 @@ func apply_external_impulse(impulse: Vector3) -> void:
 func _physics_process(delta: float) -> void:
 	if GameplayLocks.is_locked(): return
 	var movement_input := Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
+	if $ContextualInput.wheel_open: movement_input = Vector2.ZERO
 	var desired := global_basis * Vector3(movement_input.x, 0.0, movement_input.y)
+	# Default run uses the existing multiplier; walk selects the unchanged base.
 	var intended_speed := move_speed
-	if Input.is_action_pressed(&"sprint") and not movement_input.is_zero_approx():
+	if not Input.is_action_pressed(&"walk") and not movement_input.is_zero_approx():
 		intended_speed *= sprint_multiplier
 	if is_on_floor():
 		# One traction law for all actual horizontal motion, regardless of origin.
@@ -76,7 +78,7 @@ func _physics_process(delta: float) -> void:
 		velocity.x = horizontal.x
 		velocity.z = horizontal.y
 		velocity.y = maxf(velocity.y, 0.0)
-		if Input.is_action_just_pressed(&"jump"):
+		if Input.is_action_just_pressed(&"jump") and not $ContextualInput.wheel_open:
 			PhysicalForceResponse.apply_impulse(self, Vector3.UP * jump_speed * get_effective_mass())
 	else:
 		_apply_air_motor(desired, intended_speed, delta)
@@ -105,7 +107,7 @@ func _apply_air_motor(desired: Vector3, target_speed: float, delta: float) -> vo
 	velocity.z = candidate.y
 
 func _unhandled_input(event: InputEvent) -> void:
-	if GameplayLocks.is_locked():
+	if GameplayLocks.is_locked() or $ContextualInput.wheel_open:
 		return
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		rotate_y(deg_to_rad(-event.relative.x * mouse_sensitivity))

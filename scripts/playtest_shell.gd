@@ -15,7 +15,8 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	# Final arbiter: never capture while another UI still owns a gameplay lock.
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if page != "game" or GameplayLocks.is_locked() else Input.MOUSE_MODE_CAPTURED
+	var wheel_open: bool = is_instance_valid(player) and player.get_node("ContextualInput").wheel_open
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if page != "game" or GameplayLocks.is_locked() or wheel_open else Input.MOUSE_MODE_CAPTURED
 
 func _input(event: InputEvent) -> void:
 	if event.is_echo(): return

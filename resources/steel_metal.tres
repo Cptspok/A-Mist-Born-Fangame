@@ -7,3 +7,4 @@ display_name = "Steel"
 maximum_reserve = 1000.0
 default_reserve = 1000.0
 consumption_rate = 1.0
+consumption_policy = 1

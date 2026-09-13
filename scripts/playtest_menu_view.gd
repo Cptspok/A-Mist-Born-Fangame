@@ -66,6 +66,13 @@ func show_page(page: String, back: String) -> void:
 			_slider("Master volume", "master", 0, 1, 0.01)
 			_slider("Music volume", "music", 0, 1, 0.01)
 			_slider("SFX volume", "sfx", 0, 1, 0.01)
+			_label("Focus behavior")
+			var focus_mode := OptionButton.new()
+			focus_mode.add_item("Toggle")
+			focus_mode.add_item("Hold")
+			focus_mode.selected = 1 if PlaytestSettings.focus_mode == "hold" else 0
+			focus_mode.item_selected.connect(func(index: int): PlaytestSettings.update("focus_mode", "hold" if index == 1 else "toggle"))
+			rows.add_child(focus_mode)
 			var display := OptionButton.new()
 			display.add_item("Windowed")
 			display.add_item("Fullscreen")
