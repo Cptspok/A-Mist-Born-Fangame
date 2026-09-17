@@ -1,0 +1,80 @@
+# Crouch, body-level Allomancy and prototype presentation
+
+Implemented 2026-09-17 after 019, against the developer's current working files.
+
+Changes
+- scripts/player.gd: held crouch replaces walking. Inspector defaults are
+  crouched_movement_speed=2.5 m/s, crouched_height=1.1 m, and
+  crouch_transition_speed=5 m/s (1.8-to-1.1 transition takes 0.14 seconds).
+  Each player duplicates its capsule. Height changes keep the bottom fixed;
+  camera lowers by the height difference. Minimum height respects capsule radius
+  plus a small floor clearance. Jump input is ignored until fully standing.
+- Standing sweeps a full-radius sphere from the current upper capsule center
+  through the whole remaining expansion, checks both endpoints, uses the body's
+  collision mask, and excludes itself. A 0.005 m margin is conservative near
+  walls/ceilings. Blocked expansion holds the current height and retries each
+  physics tick. No velocity cap or force/traction retuning was introduced.
+- project.godot and scripts/playtest_controls.gd rename Walk to Crouch, retaining
+  the physical Left Ctrl binding. Historical Walk records remain historical.
+- resources/{steel,iron,pewter}_metal.tres: maximum_reserve and default_reserve
+  are 200 each. Consumption remains Steel=1, Iron=1, Pewter=2. Consumables still
+  compute missing reserve against the configured maximum; no recipe changes.
+- scenes/player.tscn: AllomanticOrigin Marker3D at local (0,0.35,0), approximately
+  1.25 m above standing feet. The original root is capsule-centered, not at feet.
+  scripts/allomancy_interaction.gd previously used that root via the generic
+  force adapter; now it uses PlayerController.get_allomantic_origin().
+  The marker drops by half the lost capsule height during crouch. Adjust its
+  standing position in the player scene. scripts/allomancy_debug.gd displays
+  the same marker-to-tether-center axis. Targeting remains unchanged.
+  Camera pitch never steers free forces. Force laws, response classes, adapters,
+  soft terminal response and impulses are unchanged. No capture state added.
+
+Presentation and preservation
+- Discovered 78 imported PNGs: 13 each in Dark, Light, Green, Orange, Purple,
+  and Red; Txt9.tres is an existing triplanar Dark/texture_09 stairs material.
+  Existing imported files and Txt9 were left intact.
+- Added three shared resources/greybox_materials materials: floor uses
+  Dark/texture_02.png, structure uses Light/texture_01.png, traversal uses
+  Orange/texture_03.png. World triplanar mapping repeats at four metres.
+- scripts/greybox_block.gd adds an opt-in surface_material property. Its setter
+  only changes presentation; dimensions and collision generation are unchanged.
+  Untargeted blocks retain existing tint and authored mesh material overrides.
+- scenes/mini_city.tscn: only 15 Architecture blocks, including district ground,
+  building masses, decks, bridges, wall walk/cover and parapets.
+- scenes/movement_lab.tscn: 36 existing structural blocks (floor, decks, landings,
+  steps, roof, launch platform and bay walls).
+- scenes/traversal_course.tscn: 11 existing blocks (runway, landings, roofs,
+  ascent/destination platforms, catch floor and loose-deck structural stops).
+- Merchant stalls, carts, loose metal, pickups, NPCs, enemies, weapons, fixed
+  metal props, decoration and other scenes were left unchanged. No Levels files
+  were edited. No Hathsin/mine scenes, materials or layouts were changed,
+  reverted, replaced, reorganized or cleaned up. No Git restore was used.
+
+Validation and limits
+- Static inspection of force/motor/consumable paths and targeted diff checks.
+- Each of the three scene edits was reversed in memory by removing only new
+  material declarations/assignments; exact comparison to its pre-edit working
+  content passed. No transforms, children, collision or navigation were edited.
+- Standalone player --check-only could not resolve GameplayLocks (autoload).
+  One minimal headless startup then exited 0, without script/resource errors;
+  Godot reported a system certificate-store warning. No gameplay harness,
+  traversal automation, physics experiment or desktop interaction was used.
+- Gameplay and visual evaluation remain the owner's manual task. The clearance
+  margin may conservatively delay standing close to walls. Existing hurtbox and
+  interaction volumes are unchanged; crouch is traversal support, not combat
+  hitbox/stealth tuning. Player capsule assumes the existing upright orientation.
+
+Suggested owner tests (not performed results)
+1. Hold/release Ctrl: smooth lowering, reduced speed, feet remain fixed; Space
+   is ignored while crouched and works again standing.
+2. Enter a low passage held crouched; release below its ceiling. Stay low,
+   move around without height oscillation, then exit and stand automatically.
+3. Check fresh Steel/Iron/Pewter reserves at 200, burn, then use a vial and watch
+   absorption stop at 200. Verify the existing consumption pace is unchanged.
+4. Pull a ground-level loose box: the axis rises toward the chest. Look up/down
+   while retaining the same target; pitch must not steer its force. Watch mass,
+   floor friction, near-body collisions and possible overshoot/oscillation.
+5. Push loose objects and test fixed-anchor launches; momentum should survive
+   airborne crouching and the existing ground traction should still apply.
+6. Inspect the three updated prototype scenes for readable grids and unchanged
+   geometry/props; compare with your untouched mine work.

@@ -103,6 +103,6 @@ func _process(_delta: float) -> void:
 	_line_mesh.clear_surfaces()
 	if is_instance_valid(targeting.selected):
 		_line_mesh.surface_begin(Mesh.PRIMITIVE_LINES)
-		_line_mesh.surface_add_vertex(controller.player.global_position)
-		_line_mesh.surface_add_vertex(targeting.selected.target_point(controller.player.global_position))
+		_line_mesh.surface_add_vertex(controller.player.get_allomantic_origin())
+		_line_mesh.surface_add_vertex(targeting.selected.volume.global_position)
 		_line_mesh.surface_end()

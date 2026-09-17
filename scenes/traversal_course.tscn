@@ -1,5 +1,8 @@
 [gd_scene format=3 uid="uid://scnep11gxfkr"]
 
+[ext_resource type="Material" path="res://resources/greybox_materials/floor.tres" id="gb_floor"]
+[ext_resource type="Material" path="res://resources/greybox_materials/structure.tres" id="gb_structure"]
+[ext_resource type="Material" path="res://resources/greybox_materials/traversal.tres" id="gb_traversal"]
 [ext_resource type="PackedScene" path="res://scenes/greybox_block.tscn" id="block"]
 [ext_resource type="PackedScene" path="res://scenes/checkpoint.tscn" id="checkpoint"]
 [ext_resource type="PackedScene" path="res://scenes/allomancy_heavy.tscn" id="heavy"]
@@ -15,89 +18,66 @@ albedo_color = Color(0.7, 0.4, 0.85, 1)
 material = SubResource("anchor_mat")
 size = Vector3(1.2, 0.25, 0.25)
 
-[sub_resource type="StandardMaterial3D" id="takeoff_mat"]
-albedo_color = Color(0.85, 0.72, 0.3, 1)
-
-[sub_resource type="BoxMesh" id="takeoff_mesh"]
-material = SubResource("takeoff_mat")
-size = Vector3(6, 0.02, 0.12)
-
 [node name="TraversalCourse" type="Node3D" unique_id=498594515]
 script = ExtResource("script")
-
-[node name="AllomancyTrial" type="Label3D" parent="." unique_id=161528645]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 10)
-pixel_size = 0.015
-billboard = 1
-modulate = Color(0.93, 0.96, 0.87, 1)
-text = "Allomancy Trial"
-font_size = 64
 
 [node name="Start" type="Marker3D" parent="." unique_id=1537318040]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 9)
 
 [node name="01_Runway" parent="." unique_id=856042211 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 5)
-dimensions = Vector3(6, 1, 14)
+dimensions = Vector3(8, 1, 14)
 
 [node name="02_JumpLanding" parent="." unique_id=1495775328 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -7)
 
 [node name="03_FirstRoof" parent="." unique_id=1943091331 instance=ExtResource("block")]
+surface_material = ExtResource("gb_structure")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, -17)
 dimensions = Vector3(8, 1, 8)
 
 [node name="04_ArcLanding" parent="." unique_id=1690638936 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.192326, 7.252961, -17)
 dimensions = Vector3(10, 1, 8)
 
 [node name="05_LooseMetalDeck" parent="." unique_id=1738565369 instance=ExtResource("block")]
+surface_material = ExtResource("gb_structure")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.192326, 7.3296776, -4)
 dimensions = Vector3(10, 1, 10)
 
 [node name="06_Ascent" parent="." unique_id=1449297623 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.192326, 15.329678, 10)
 dimensions = Vector3(8, 1, 8)
 
 [node name="07_SafeStep" parent="." unique_id=704159295 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.192326, 19.329678, 19)
 dimensions = Vector3(7, 1, 7)
 
 [node name="08_Destination" parent="." unique_id=1989693041 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 24.329678, 10)
 dimensions = Vector3(10, 1, 10)
 
 [node name="CatchFloor" parent="." unique_id=1996469813 instance=ExtResource("block")]
+surface_material = ExtResource("gb_floor")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -7.5, 2)
 dimensions = Vector3(66, 1, 68)
 tint = Color(0.22, 0.25, 0.29, 1)
 
-[node name="YardAccess" parent="." unique_id=245626661 instance=ExtResource("block")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, -0.5, 8)
-dimensions = Vector3(32, 1, 4)
-
 [node name="LooseDeckBackstop" parent="." unique_id=316196616 instance=ExtResource("block")]
+surface_material = ExtResource("gb_structure")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.192326, 8.129678, 1)
 dimensions = Vector3(10, 0.6, 0.4)
 
 [node name="LooseDeckSideStop" parent="." unique_id=114482410 instance=ExtResource("block")]
+surface_material = ExtResource("gb_structure")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.192326, 8.829678, -4)
 dimensions = Vector3(0.4, 2, 10)
-
-[node name="ArcBandSHORT" parent="." unique_id=1050022925 instance=ExtResource("block")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.192326, 7.765461, -17)
-dimensions = Vector3(0.25, 0.1, 8)
-tint = Color(0.75, 0.65, 0.25, 1)
-
-[node name="ArcBandCENTER" parent="." unique_id=116383295 instance=ExtResource("block")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.192326, 7.765461, -17)
-dimensions = Vector3(0.25, 0.1, 8)
-tint = Color(0.75, 0.65, 0.25, 1)
-
-[node name="ArcBandLONG" parent="." unique_id=108360041 instance=ExtResource("block")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.192326, 7.765461, -17)
-dimensions = Vector3(0.25, 0.1, 8)
-tint = Color(0.75, 0.65, 0.25, 1)
 
 [node name="A1_Lift" parent="." unique_id=2033299635 instance=ExtResource("tether")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11, -14)
@@ -166,14 +146,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1344748, 0.37817383, -0.964
 
 [node name="HeavyReference" parent="." unique_id=999198831 instance=ExtResource("heavy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.192326, 16.529678, 11)
-
-[node name="WalkTakeoff" type="MeshInstance3D" parent="." unique_id=558669385]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 3)
-mesh = SubResource("takeoff_mesh")
-
-[node name="SprintTakeoff" type="MeshInstance3D" parent="." unique_id=680538978]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 8)
-mesh = SubResource("takeoff_mesh")
 
 [node name="CheckpointStart" parent="." unique_id=178064557 instance=ExtResource("checkpoint")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9)

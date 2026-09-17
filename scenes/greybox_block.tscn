@@ -1,8 +1,30 @@
-[gd_scene format=3]
-[ext_resource type="Script" path="res://scripts/greybox_block.gd" id="script"]
+[gd_scene format=3 uid="uid://2wp53oqsdqpb"]
+
+[ext_resource type="Texture2D" uid="uid://dw0wxe7drga88" path="res://resources/GreyboxTextures/Dark/texture_06.png" id="3_xdeem"]
 [ext_resource type="PhysicsMaterial" path="res://resources/physics/normal_world_surface.tres" id="physics"]
-[node name="GreyboxBlock" type="StaticBody3D"]
-script = ExtResource("script")
+[ext_resource type="Script" uid="uid://c6rq0tkr0rs7r" path="res://scripts/greybox_block.gd" id="script"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0ccma"]
+albedo_color = Color(0.48, 0.52, 0.56, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ywtd8"]
+material = SubResource("StandardMaterial3D_0ccma")
+size = Vector3(6, 1, 6)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4t83t"]
+albedo_texture = ExtResource("3_xdeem")
+uv1_triplanar = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qqqg1"]
+size = Vector3(6, 1, 6)
+
+[node name="GreyboxBlock" type="StaticBody3D" unique_id=1484395777]
 physics_material_override = ExtResource("physics")
-[node name="Mesh" type="MeshInstance3D" parent="."]
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+script = ExtResource("script")
+
+[node name="Mesh" type="MeshInstance3D" parent="." unique_id=809574705]
+mesh = SubResource("BoxMesh_ywtd8")
+surface_material_override/0 = SubResource("StandardMaterial3D_4t83t")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=880423135]
+shape = SubResource("BoxShape3D_qqqg1")

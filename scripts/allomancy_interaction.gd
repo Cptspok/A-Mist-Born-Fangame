@@ -4,7 +4,7 @@ extends RefCounted
 ## Returns diagnostic values; evaluating the interaction never changes velocity.
 static func evaluate(player: PlayerController, tether: MetalTetherComponent,
 		tuning: AllomancyTuning, pulling: bool) -> Dictionary:
-	var axis := tether.volume.global_position - PhysicalForceResponse.get_world_position(player)
+	var axis := tether.volume.global_position - player.get_allomantic_origin()
 	if axis.length_squared() < 0.0001: return {}
 	axis = axis.normalized() * (1.0 if pulling else -1.0)
 	var owner: PhysicsBody3D = tether.get_physical_owner()

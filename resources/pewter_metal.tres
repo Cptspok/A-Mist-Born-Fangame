@@ -4,7 +4,7 @@
 script = ExtResource("script")
 metal_id = &"pewter"
 display_name = "Pewter"
-maximum_reserve = 1000.0
-default_reserve = 1000.0
+maximum_reserve = 200.0
+default_reserve = 200.0
 consumption_rate = 2.0
 consumption_policy = 0

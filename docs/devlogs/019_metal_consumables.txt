@@ -1,0 +1,53 @@
+# Metal Consumables v0.1
+
+Implemented in the existing project. No gameplay automation or editor/computer control was used.
+
+## Files
+
+Added:
+- `scripts/consumable_definition.gd`: reusable stateless consumable use contract.
+- `scripts/metal_consumable_definition.gd`: quality, metal IDs, absorption duration.
+- `scripts/workshop_item_supply.gd` and `scenes/workshop_item_supply.tscn`: repeatable inventory supply using existing interaction and placeholder conventions.
+- `resources/metal_consumables/{raw_steel,basic_steel_vial,pure_steel_vial,basic_iron_vial,basic_pewter_vial,basic_mixed_vial}.tres`: six item definitions with embedded consumable recipes.
+- `tools/validate_metal_consumable_resources.gd`: resource loading audit only; never instantiates gameplay scenes.
+
+Modified:
+- `scripts/item_definition.gd`: optional consumable definition.
+- `scripts/inventory_component.gd`: owned-stack use transaction, decrements exactly one on success, removes only empty stacks.
+- `scripts/inventory_ui.gd`: right-click Use, feedback and tooltip quantity.
+- `scripts/inventory_grid.gd`: stack quantity display.
+- `scripts/allomancy_component.gd`: independent pending absorption doses feeding existing reserves/signals.
+- `scenes/systems_workshop.tscn`: six repeatable stations.
+
+## Architecture and Inspector tuning
+
+ItemDefinition.consumable is a ConsumableDefinition resource. The project previously had Equip/Throw context actions but no consumable-use implementation; Use now shares that same inventory interaction. ItemStack retains quantity/ownership and definitions remain immutable during use.
+
+Expand an item's Consumable resource in the Inspector:
+- preparation_quality: RAW / BASIC / PURE metadata, reserved for future rules.
+- absorption_duration: positive seconds, explicitly configured per recipe (quality does not automatically change duration). Initial values: RAW 20, BASIC 15, PURE 1.
+- metals: Array[StringName], e.g. steel, iron, pewter. Add any registered metal ID without changing consumable code. A mixture is simply multiple IDs in this array. Duplicate IDs count once.
+
+On use, AllomancyComponent snapshots maximum minus current for each included metal. Each pending dose distributes exactly that original amount over its duration using normal add_reserve clamping and reserve_changed signals. All metals progress concurrently. Later burns do not enlarge doses. Overlapping doses coexist independently, and clamped portions are permanently wasted. Full portions schedule no dose, but the item is still consumed. Unregistered IDs, empty recipes or invalid durations reject the whole use without consuming quantity. Registered but inaccessible metals can receive reserves without granting access.
+
+Workshop stations expose item_definition and quantity_per_interaction (default 3). Each interaction grants a normal stack in a free inventory slot; existing full-inventory rejection applies. Stock is unlimited, and stations do not refill reserves directly.
+
+## Exact manual checks
+
+1. Enter Systems Workshop via the existing navigation. Find the six labelled supply blocks on the raised platform beside the original refill station: Workshop-local X=6/9/12, Z=7/11; main-world Z=52/56. Front row: Raw Steel, Basic Steel, Pure Steel. Back row: Basic Iron, Basic Pewter, mixed vial.
+2. Face a station and press F. Press I; verify its stack has x3. Right-click and select Use; quantity becomes x2. Close with I to advance absorption. Repeat F whenever more stock is needed; free inventory slots are required.
+3. For faster low-reserve setup, before running, temporarily disable Player/AllomancyComponent.start_at_full and set default_reserve on the existing metal definitions to 200 (leave maximums and burn rates unchanged). Otherwise deplete normally using existing powers. Restore those temporary Inspector changes after testing.
+4. With Steel below maximum and its burn OFF, use Basic Steel. Close inventory: the existing HUD should rise smoothly for 15 game seconds by the missing-at-use amount. Repeat with Raw Steel (20 seconds) and Pure Steel (1 second).
+5. Repeat Basic Steel while performing a sustained Steelpush against a valid tether: hold Shift and toggle Steel ON, release Shift, enable Focus with C, then use LMB. Newly burned reserve should reduce the final result below full. Focus is cleared when inventory opens; re-enable it afterward as needed.
+6. Lower Steel, Iron and Pewter; turn their burns OFF. Use the mixed vial and close inventory: all three rise concurrently for 15 seconds. Repeat with one reserve already full: only the others rise. Use a single-metal vial to confirm other reserves stay unchanged.
+7. While Steel is low, use Basic Steel twice before closing inventory. Both snapshot the same deficit; they add together and hit the cap early. Wait past 15 seconds, then burn: wasted excess must not reappear. Also try Basic plus Pure to check different overlapping durations.
+8. Use all three quantities in a stack; it disappears only after the third use. Use at full reserves: quantity still decreases. Repeat pickup, movement, Throw and equipment Equip/unequip checks.
+9. With existing Pewter Debt present, use Basic Pewter; replenishment must not forgive the debt. Observe natural debt behavior under existing rules. Check Steel/Iron forces, Pewter effects, wheel and Focus as before.
+
+## Validation and limitations
+
+Godot 4.7.2 parser checks passed for the new data/supply scripts and modified item/inventory/reserve/grid scripts. Standalone inventory_ui check-only cannot resolve the existing GameplayLocks autoload; the project-context resource audit subsequently loaded it and all six items and both scenes successfully with no script errors. The audit emitted an environment root-certificate-store warning unrelated to these resources. No game scene was instantiated or gameplay tested.
+
+Absorption uses scaled physics time: inventory/pause stops it and existing time scaling affects it. Doses live with AllomancyComponent and disappear when the actor/world is recreated; there is no save serialization added. Replenishment never enables burning or resets Pewter Debt. Existing HUD automatically reflects current metals; a future metal would separately need HUD presentation if desired. Identical supplies occupy separate stacks according to existing inventory placement rules. Placeholder icons are reused; no art was created.
+
+Poisoning, sleep, purge/burn-off, crafting/mixing UI, flaring interactions and raw-metal damage/toxicity were intentionally NOT implemented. No reserve maximum, burn rate, force, combat, movement, equipment, dialogue, checkpoint or AI tuning was changed. The pre-existing untracked pewter_burn.gd.uid was left untouched.

@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://brithsd8qqind"]
+
+[ext_resource type="PackedScene" uid="uid://b30bfltyu7ni6" path="res://Levels/hathsin_pit/Depths.tscn" id="1_eepbp"]
+[ext_resource type="PackedScene" uid="uid://bu28ecb8jyof2" path="res://scenes/player.tscn" id="2_5gk0u"]
+
+[node name="HathsinPit" type="Node3D" unique_id=40468962]
+
+[node name="Depths" parent="." unique_id=603749044 instance=ExtResource("1_eepbp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.4378052, 0)
+
+[node name="Corridor" type="Node3D" parent="." unique_id=227511790]
+
+[node name="Barraks" type="Node3D" parent="." unique_id=1830374356]
+
+[node name="Entrance" type="Node3D" parent="." unique_id=1908846334]
+
+[node name="Player" parent="." unique_id=1091081823 instance=ExtResource("2_5gk0u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.901, 5.132)
+ground_traction = 11.0

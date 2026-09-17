@@ -30,6 +30,8 @@ func _draw() -> void:
 		var rect := Rect2(_cell_to_pixel(stack.grid_position), Vector2(stack.definition.grid_width, stack.definition.grid_height) * (cell_size + gap) - Vector2(gap, gap))
 		draw_rect(rect, Color("20252d"))
 		if stack.definition.inventory_sprite: draw_texture_rect(stack.definition.inventory_sprite, rect.grow(-6), false)
+		if stack.quantity > 1:
+			draw_string(get_theme_default_font(), rect.position + Vector2(5, rect.size.y - 5), "x%d" % stack.quantity, HORIZONTAL_ALIGNMENT_LEFT, -1, 13)
 		draw_string(get_theme_default_font(), rect.position + Vector2(5,18), stack.definition.display_name, HORIZONTAL_ALIGNMENT_LEFT, -1, 13)
 	var data: Variant = get_viewport().gui_get_drag_data()
 	if data is Dictionary and data.get("inventory") == inventory and get_global_rect().has_point(get_global_mouse_position()):

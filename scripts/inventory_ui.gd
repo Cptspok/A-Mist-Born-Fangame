@@ -168,6 +168,8 @@ func _rejected(reason: String) -> void:
 func _show_menu(stack: ItemStack, position: Vector2) -> void:
 	selected_stack = stack
 	menu.clear()
+	if stack.definition.consumable != null:
+		menu.add_item("Use", 102)
 	if stack.definition.equipment_profile != null:
 		menu.add_item("Equip", 101)
 		menu.set_item_disabled(menu.get_item_index(101), equipment.context_destination(stack) < 0)
@@ -178,10 +180,16 @@ func _show_menu(stack: ItemStack, position: Vector2) -> void:
 func _menu_action(id: int) -> void:
 	if id == 100: grid.inventory.request_throw(selected_stack)
 	elif id == 101: equipment.equip_from_context(selected_stack)
+	elif id == 102:
+		if grid.inventory.try_use(selected_stack):
+			status.text = "Used %s. Close inventory to resume absorption." % selected_stack.definition.display_name
+			_show_tooltip(selected_stack if selected_stack in grid.inventory.stacks else null, Vector2.ZERO)
+		else:
+			status.text = "Cannot use this item here."
 
 
 func _show_tooltip(stack: ItemStack, _position: Vector2) -> void:
-	tooltip.text = "" if stack == null else stack.definition.display_name + "\n" + stack.definition.characteristics + "\n" + stack.definition.description
+	tooltip.text = "" if stack == null else stack.definition.display_name + " (x%d)\n" % stack.quantity + stack.definition.characteristics + "\n" + stack.definition.description
 
 func _fit_panel() -> void:
 	if not visible: return

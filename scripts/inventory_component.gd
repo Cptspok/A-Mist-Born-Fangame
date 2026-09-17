@@ -50,5 +50,18 @@ func request_throw(stack: ItemStack) -> void:
 	if stack in stacks:
 		throw_requested.emit(stack)
 
+## Only owned inventory stacks can be consumed. Shared definitions are immutable.
+func try_use(stack: ItemStack) -> bool:
+	if stack == null or stack not in stacks or stack.quantity <= 0 or stack.definition == null:
+		return false
+	var consumable := stack.definition.consumable
+	if consumable == null or not consumable.apply(get_parent()):
+		return false
+	stack.quantity -= 1
+	if stack.quantity == 0:
+		stacks.erase(stack)
+	contents_changed.emit()
+	return true
+
 func _rects_overlap(a: Vector2i, aw: int, ah: int, b: Vector2i, bw: int, bh: int) -> bool:
 	return a.x < b.x + bw and a.x + aw > b.x and a.y < b.y + bh and a.y + ah > b.y

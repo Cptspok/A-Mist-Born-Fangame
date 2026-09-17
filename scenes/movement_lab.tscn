@@ -1,297 +1,283 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://k6iivwn5t6m1"]
 
-[ext_resource type="PackedScene" path="res://scenes/greybox_block.tscn" id="block"]
-
+[ext_resource type="Material" path="res://resources/greybox_materials/floor.tres" id="gb_floor"]
+[ext_resource type="Material" path="res://resources/greybox_materials/structure.tres" id="gb_structure"]
+[ext_resource type="Material" path="res://resources/greybox_materials/traversal.tres" id="gb_traversal"]
 [ext_resource type="PackedScene" path="res://scenes/lab_anchor.tscn" id="anchor"]
-
-[ext_resource type="PackedScene" path="res://scenes/allomancy_light.tscn" id="light"]
-
-[ext_resource type="PackedScene" path="res://scenes/allomancy_medium.tscn" id="medium"]
-
+[ext_resource type="PackedScene" path="res://scenes/greybox_block.tscn" id="block"]
 [ext_resource type="PackedScene" path="res://scenes/allomancy_heavy.tscn" id="heavy"]
+[ext_resource type="PackedScene" path="res://scenes/allomancy_light.tscn" id="light"]
+[ext_resource type="PackedScene" uid="uid://c6rfyo8c81oko" path="res://scenes/allomancy_medium.tscn" id="medium"]
 
-[node name="MovementLab" type="Node3D"]
+[node name="MovementLab" type="Node3D" unique_id=1928348412]
 
-[node name="Playground" type="Label3D" parent="."]
-position = Vector3(0, 3, -29)
-text = "Movement Lab"
-font_size = 64
-pixel_size = 0.015
-billboard = 1
-modulate = Color(0.93, 0.96, 0.87, 1)
+[node name="Foundation" type="Node3D" parent="." unique_id=733775668]
 
-[node name="Foundation" type="Node3D" parent="."]
-
-[node name="CatchFloor" parent="Foundation" instance=ExtResource("block")]
-position = Vector3(0, -0.5, 0)
+[node name="CatchFloor" parent="Foundation" unique_id=1894807213 instance=ExtResource("block")]
+surface_material = ExtResource("gb_floor")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 dimensions = Vector3(68, 1, 68)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="LinkToAdvanced" parent="Foundation" instance=ExtResource("block")]
-position = Vector3(0, -0.5, -51)
-dimensions = Vector3(8, 1, 34)
-tint = Color(0.35, 0.45, 0.5, 1)
+[node name="01_OrdinaryMovement" type="Node3D" parent="." unique_id=1182534796]
 
-[node name="01_OrdinaryMovement" type="Node3D" parent="."]
-
-[node name="RunDeck" parent="01_OrdinaryMovement" instance=ExtResource("block")]
-position = Vector3(-20, 0.7, -21)
+[node name="RunDeck" parent="01_OrdinaryMovement" unique_id=267297554 instance=ExtResource("block")]
+surface_material = ExtResource("gb_structure")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0.7, -21)
 dimensions = Vector3(12, 1, 10)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="ShortLanding" parent="01_OrdinaryMovement" instance=ExtResource("block")]
-position = Vector3(-20, 0.7, -9)
+[node name="ShortLanding" parent="01_OrdinaryMovement" unique_id=382917285 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0.7, -9)
 dimensions = Vector3(12, 1, 10)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="SprintLanding" parent="01_OrdinaryMovement" instance=ExtResource("block")]
-position = Vector3(-20, 1.5, 7)
+[node name="SprintLanding" parent="01_OrdinaryMovement" unique_id=1080988248 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 1.5, 7)
 dimensions = Vector3(12, 1, 14)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="EntryStep0" parent="01_OrdinaryMovement" instance=ExtResource("block")]
-position = Vector3(-20, 0.2, -31)
+[node name="EntryStep0" parent="01_OrdinaryMovement" unique_id=2057722706 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0.2, -31)
 dimensions = Vector3(12, 0.4, 2)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="EntryStep1" parent="01_OrdinaryMovement" instance=ExtResource("block")]
-position = Vector3(-20, 0.4, -29)
+[node name="EntryStep1" parent="01_OrdinaryMovement" unique_id=859680459 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0.4, -29)
 dimensions = Vector3(12, 0.8, 2)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="EntryStep2" parent="01_OrdinaryMovement" instance=ExtResource("block")]
-position = Vector3(-20, 0.6000000000000001, -27)
-dimensions = Vector3(12, 1.2000000000000002, 2)
+[node name="EntryStep2" parent="01_OrdinaryMovement" unique_id=628880409 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0.6, -27)
+dimensions = Vector3(12, 1.2, 2)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="ReturnStep0" parent="01_OrdinaryMovement" instance=ExtResource("block")]
-position = Vector3(-33.0, 0.2, 7)
+[node name="ReturnStep0" parent="01_OrdinaryMovement" unique_id=1592491548 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 0.2, 7)
 dimensions = Vector3(1.4, 0.4, 8)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="ReturnStep1" parent="01_OrdinaryMovement" instance=ExtResource("block")]
-position = Vector3(-31.6, 0.4, 7)
+[node name="ReturnStep1" parent="01_OrdinaryMovement" unique_id=2137387266 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.6, 0.4, 7)
 dimensions = Vector3(1.4, 0.8, 8)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="ReturnStep2" parent="01_OrdinaryMovement" instance=ExtResource("block")]
-position = Vector3(-30.2, 0.6000000000000001, 7)
-dimensions = Vector3(1.4, 1.2000000000000002, 8)
+[node name="ReturnStep2" parent="01_OrdinaryMovement" unique_id=1361381220 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.2, 0.6, 7)
+dimensions = Vector3(1.4, 1.2, 8)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="ReturnStep3" parent="01_OrdinaryMovement" instance=ExtResource("block")]
-position = Vector3(-28.8, 0.8, 7)
+[node name="ReturnStep3" parent="01_OrdinaryMovement" unique_id=421027286 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.8, 0.8, 7)
 dimensions = Vector3(1.4, 1.6, 8)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="ReturnStep4" parent="01_OrdinaryMovement" instance=ExtResource("block")]
-position = Vector3(-27.4, 1.0, 7)
-dimensions = Vector3(1.4, 2.0, 8)
+[node name="ReturnStep4" parent="01_OrdinaryMovement" unique_id=874440038 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.4, 1, 7)
+dimensions = Vector3(1.4, 2, 8)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="M1_CorrectShort" parent="01_OrdinaryMovement" instance=ExtResource("anchor")]
-position = Vector3(-20, 6, -7)
+[node name="M1_CorrectShort" parent="01_OrdinaryMovement" unique_id=1574449973 instance=ExtResource("anchor")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 6, -7)
 
-[node name="MetalTether" parent="01_OrdinaryMovement/M1_CorrectShort" index="0"]
-metadata/lab_purpose = "C: extend an imperfect jump"
+[node name="M2_ReturnPull" parent="01_OrdinaryMovement" unique_id=371825903 instance=ExtResource("anchor")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 5, -9)
 
-[node name="M2_ReturnPull" parent="01_OrdinaryMovement" instance=ExtResource("anchor")]
-position = Vector3(-27, 5, -9)
+[node name="M3_LowAssist" parent="01_OrdinaryMovement" unique_id=1109415297 instance=ExtResource("anchor")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 1, -2)
 
-[node name="MetalTether" parent="01_OrdinaryMovement/M2_ReturnPull" index="0"]
-metadata/lab_purpose = "C: redirect back after overshoot"
+[node name="02_IronPull" type="Node3D" parent="." unique_id=1739148186]
 
-[node name="M3_LowAssist" parent="01_OrdinaryMovement" instance=ExtResource("anchor")]
-position = Vector3(-20, 1, -2)
-
-[node name="MetalTether" parent="01_OrdinaryMovement/M3_LowAssist" index="0"]
-metadata/lab_purpose = "F: low reference in open gap"
-
-[node name="02_IronPull" type="Node3D" parent="."]
-
-[node name="BroadRoof" parent="02_IronPull" instance=ExtResource("block")]
-position = Vector3(22, 3.5, -12)
+[node name="BroadRoof" parent="02_IronPull" unique_id=1105743753 instance=ExtResource("block")]
+surface_material = ExtResource("gb_structure")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 3.5, -12)
 dimensions = Vector3(18, 1, 12)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="RoofReturnStep0" parent="02_IronPull" instance=ExtResource("block")]
-position = Vector3(27, 0.25, 9)
+[node name="RoofReturnStep0" parent="02_IronPull" unique_id=1911449063 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 0.25, 9)
 dimensions = Vector3(8, 0.5, 2)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="RoofReturnStep1" parent="02_IronPull" instance=ExtResource("block")]
-position = Vector3(27, 0.5, 7)
-dimensions = Vector3(8, 1.0, 2)
+[node name="RoofReturnStep1" parent="02_IronPull" unique_id=35873460 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 0.5, 7)
+dimensions = Vector3(8, 1, 2)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="RoofReturnStep2" parent="02_IronPull" instance=ExtResource("block")]
-position = Vector3(27, 0.75, 5)
+[node name="RoofReturnStep2" parent="02_IronPull" unique_id=1252018747 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 0.75, 5)
 dimensions = Vector3(8, 1.5, 2)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="RoofReturnStep3" parent="02_IronPull" instance=ExtResource("block")]
-position = Vector3(27, 1.0, 3)
-dimensions = Vector3(8, 2.0, 2)
+[node name="RoofReturnStep3" parent="02_IronPull" unique_id=1088573267 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 1, 3)
+dimensions = Vector3(8, 2, 2)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="RoofReturnStep4" parent="02_IronPull" instance=ExtResource("block")]
-position = Vector3(27, 1.25, 1)
+[node name="RoofReturnStep4" parent="02_IronPull" unique_id=1611136519 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 1.25, 1)
 dimensions = Vector3(8, 2.5, 2)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="RoofReturnStep5" parent="02_IronPull" instance=ExtResource("block")]
-position = Vector3(27, 1.5, -1)
-dimensions = Vector3(8, 3.0, 2)
+[node name="RoofReturnStep5" parent="02_IronPull" unique_id=1053622812 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 1.5, -1)
+dimensions = Vector3(8, 3, 2)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="RoofReturnStep6" parent="02_IronPull" instance=ExtResource("block")]
-position = Vector3(27, 1.75, -3)
+[node name="RoofReturnStep6" parent="02_IronPull" unique_id=982782791 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 1.75, -3)
 dimensions = Vector3(8, 3.5, 2)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="RoofReturnStep7" parent="02_IronPull" instance=ExtResource("block")]
-position = Vector3(27, 2.0, -5)
-dimensions = Vector3(8, 4.0, 2)
+[node name="RoofReturnStep7" parent="02_IronPull" unique_id=1724247192 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 2, -5)
+dimensions = Vector3(8, 4, 2)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="I1_Forward" parent="02_IronPull" instance=ExtResource("anchor")]
-position = Vector3(7, 2, -8)
+[node name="I1_Forward" parent="02_IronPull" unique_id=1629300945 instance=ExtResource("anchor")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 2, -8)
 
-[node name="MetalTether" parent="02_IronPull/I1_Forward" index="0"]
-metadata/lab_purpose = "C: forward Pull on open floor"
+[node name="I2_Up" parent="02_IronPull" unique_id=168686586 instance=ExtResource("anchor")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 9, -23)
 
-[node name="I2_Up" parent="02_IronPull" instance=ExtResource("anchor")]
-position = Vector3(6, 9, -23)
+[node name="I3_Diagonal" parent="02_IronPull" unique_id=1930298466 instance=ExtResource("anchor")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 10, -13)
 
-[node name="MetalTether" parent="02_IronPull/I2_Up" index="0"]
-metadata/lab_purpose = "C: upward / sideways approach"
+[node name="03_SteelAndChain" type="Node3D" parent="." unique_id=1885488521]
 
-[node name="I3_Diagonal" parent="02_IronPull" instance=ExtResource("anchor")]
-position = Vector3(20, 10, -13)
-
-[node name="MetalTether" parent="02_IronPull/I3_Diagonal" index="0"]
-metadata/lab_purpose = "C: diagonal rise to broad roof"
-
-[node name="03_SteelAndChain" type="Node3D" parent="."]
-
-[node name="Launch" parent="03_SteelAndChain" instance=ExtResource("block")]
-position = Vector3(17, 1.5, 4)
+[node name="Launch" parent="03_SteelAndChain" unique_id=1216164192 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 1.5, 4)
 dimensions = Vector3(14, 1, 10)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="GenerousLanding" parent="03_SteelAndChain" instance=ExtResource("block")]
-position = Vector3(17, 2.5, 20)
+[node name="GenerousLanding" parent="03_SteelAndChain" unique_id=321829739 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 2.5, 20)
 dimensions = Vector3(22, 1, 14)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="LaunchStep0" parent="03_SteelAndChain" instance=ExtResource("block")]
-position = Vector3(2, 0.25, 4)
+[node name="LaunchStep0" parent="03_SteelAndChain" unique_id=509010861 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.25, 4)
 dimensions = Vector3(2, 0.5, 8)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="LaunchStep1" parent="03_SteelAndChain" instance=ExtResource("block")]
-position = Vector3(4, 0.5, 4)
-dimensions = Vector3(2, 1.0, 8)
+[node name="LaunchStep1" parent="03_SteelAndChain" unique_id=2053235446 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.5, 4)
+dimensions = Vector3(2, 1, 8)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="LaunchStep2" parent="03_SteelAndChain" instance=ExtResource("block")]
-position = Vector3(6, 0.75, 4)
+[node name="LaunchStep2" parent="03_SteelAndChain" unique_id=103522627 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.75, 4)
 dimensions = Vector3(2, 1.5, 8)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="LaunchStep3" parent="03_SteelAndChain" instance=ExtResource("block")]
-position = Vector3(8, 1.0, 4)
-dimensions = Vector3(2, 2.0, 8)
+[node name="LaunchStep3" parent="03_SteelAndChain" unique_id=1001774050 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1, 4)
+dimensions = Vector3(2, 2, 8)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="LandingStep0" parent="03_SteelAndChain" instance=ExtResource("block")]
-position = Vector3(-5, 0.25, 20)
+[node name="LandingStep0" parent="03_SteelAndChain" unique_id=643409648 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.25, 20)
 dimensions = Vector3(2, 0.5, 8)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="LandingStep1" parent="03_SteelAndChain" instance=ExtResource("block")]
-position = Vector3(-3, 0.5, 20)
-dimensions = Vector3(2, 1.0, 8)
+[node name="LandingStep1" parent="03_SteelAndChain" unique_id=56884038 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.5, 20)
+dimensions = Vector3(2, 1, 8)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="LandingStep2" parent="03_SteelAndChain" instance=ExtResource("block")]
-position = Vector3(-1, 0.75, 20)
+[node name="LandingStep2" parent="03_SteelAndChain" unique_id=1960164677 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.75, 20)
 dimensions = Vector3(2, 1.5, 8)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="LandingStep3" parent="03_SteelAndChain" instance=ExtResource("block")]
-position = Vector3(1, 1.0, 20)
-dimensions = Vector3(2, 2.0, 8)
+[node name="LandingStep3" parent="03_SteelAndChain" unique_id=857665353 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 20)
+dimensions = Vector3(2, 2, 8)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="LandingStep4" parent="03_SteelAndChain" instance=ExtResource("block")]
-position = Vector3(3, 1.25, 20)
+[node name="LandingStep4" parent="03_SteelAndChain" unique_id=1396113676 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1.25, 20)
 dimensions = Vector3(2, 2.5, 8)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="LandingStep5" parent="03_SteelAndChain" instance=ExtResource("block")]
-position = Vector3(5, 1.5, 20)
-dimensions = Vector3(2, 3.0, 8)
+[node name="LandingStep5" parent="03_SteelAndChain" unique_id=812145014 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1.5, 20)
+dimensions = Vector3(2, 3, 8)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="S1_Push" parent="03_SteelAndChain" instance=ExtResource("anchor")]
-position = Vector3(17, 2.7, 1)
+[node name="S1_Push" parent="03_SteelAndChain" unique_id=1984853768 instance=ExtResource("anchor")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 2.7, 1)
 
-[node name="MetalTether" parent="03_SteelAndChain/S1_Push" index="0"]
-metadata/lab_purpose = "F: jump past, aim back / down"
+[node name="S2_Catch" parent="03_SteelAndChain" unique_id=1451294457 instance=ExtResource("anchor")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 9, 19)
 
-[node name="S2_Catch" parent="03_SteelAndChain" instance=ExtResource("anchor")]
-position = Vector3(17, 9, 19)
+[node name="S3_SideReturn" parent="03_SteelAndChain" unique_id=419269880 instance=ExtResource("anchor")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 7, 16)
 
-[node name="MetalTether" parent="03_SteelAndChain/S2_Catch" index="0"]
-metadata/lab_purpose = "C: catch / extend toward landing"
+[node name="04_MetalAndTargeting" type="Node3D" parent="." unique_id=1424695024]
 
-[node name="S3_SideReturn" parent="03_SteelAndChain" instance=ExtResource("anchor")]
-position = Vector3(28, 7, 16)
-
-[node name="MetalTether" parent="03_SteelAndChain/S3_SideReturn" index="0"]
-metadata/lab_purpose = "C: redirect an overshoot sideways"
-
-[node name="04_MetalAndTargeting" type="Node3D" parent="."]
-
-[node name="WestBayWall" parent="04_MetalAndTargeting" instance=ExtResource("block")]
-position = Vector3(-31, 1, 23)
+[node name="WestBayWall" parent="04_MetalAndTargeting" unique_id=2047080700 instance=ExtResource("block")]
+surface_material = ExtResource("gb_structure")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 1, 23)
 dimensions = Vector3(0.5, 2, 20)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="SouthBayWall" parent="04_MetalAndTargeting" instance=ExtResource("block")]
-position = Vector3(-19, 1, 33)
+[node name="SouthBayWall" parent="04_MetalAndTargeting" unique_id=1223694583 instance=ExtResource("block")]
+surface_material = ExtResource("gb_structure")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 1, 33)
 dimensions = Vector3(24, 2, 0.5)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="EastBayWall" parent="04_MetalAndTargeting" instance=ExtResource("block")]
-position = Vector3(-7, 1, 26)
+[node name="EastBayWall" parent="04_MetalAndTargeting" unique_id=1721481503 instance=ExtResource("block")]
+surface_material = ExtResource("gb_structure")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 1, 26)
 dimensions = Vector3(0.5, 2, 14)
 tint = Color(0.48, 0.55, 0.57, 1)
 
-[node name="Light" parent="04_MetalAndTargeting" instance=ExtResource("light")]
-position = Vector3(-26, 0.4, 21)
+[node name="Light" parent="04_MetalAndTargeting" unique_id=902637426 instance=ExtResource("light")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 0.4, 21)
 
-[node name="Medium" parent="04_MetalAndTargeting" instance=ExtResource("medium")]
-position = Vector3(-19, 0.6, 21)
+[node name="Medium" parent="04_MetalAndTargeting" unique_id=1013850807 instance=ExtResource("medium")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0.6, 21)
 
-[node name="Heavy" parent="04_MetalAndTargeting" instance=ExtResource("heavy")]
-position = Vector3(-12, 0.7, 21)
+[node name="Heavy" parent="04_MetalAndTargeting" unique_id=874757264 instance=ExtResource("heavy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0.7, 21)
 
-[node name="T1_Left" parent="04_MetalAndTargeting" instance=ExtResource("anchor")]
-position = Vector3(-27, 4, 29)
+[node name="T1_Left" parent="04_MetalAndTargeting" unique_id=1268036763 instance=ExtResource("anchor")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 4, 29)
 
-[node name="MetalTether" parent="04_MetalAndTargeting/T1_Left" index="0"]
-metadata/lab_purpose = "ANCHORED / aim separately"
+[node name="T2_Center" parent="04_MetalAndTargeting" unique_id=1409537889 instance=ExtResource("anchor")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 4, 29)
 
-[node name="T2_Center" parent="04_MetalAndTargeting" instance=ExtResource("anchor")]
-position = Vector3(-19, 4, 29)
-
-[node name="MetalTether" parent="04_MetalAndTargeting/T2_Center" index="0"]
-metadata/lab_purpose = "ANCHORED / aim separately"
-
-[node name="T3_Right" parent="04_MetalAndTargeting" instance=ExtResource("anchor")]
-position = Vector3(-11, 4, 29)
-
-[node name="MetalTether" parent="04_MetalAndTargeting/T3_Right" index="0"]
-metadata/lab_purpose = "ANCHORED / aim separately"
+[node name="T3_Right" parent="04_MetalAndTargeting" unique_id=445417497 instance=ExtResource("anchor")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 4, 29)

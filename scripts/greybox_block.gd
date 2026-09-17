@@ -1,5 +1,10 @@
 @tool
 extends StaticBody3D
+## Opt-in presentation override. Existing untargeted blocks keep their tint.
+@export var surface_material: Material:
+ set(value):
+  surface_material = value
+  if is_node_ready(): $Mesh.material_override = surface_material
 ## Single authored dimension drives the visible box and its collision.
 @export var dimensions := Vector3(6, 1, 6):
  set(value):
@@ -19,6 +24,7 @@ func _sync() -> void:
  material.roughness = 1.0
  box.material = material
  $Mesh.mesh = box
+ if surface_material != null: $Mesh.material_override = surface_material
  var shape := BoxShape3D.new()
  shape.size = dimensions
  $CollisionShape3D.shape = shape

@@ -1,15 +1,14 @@
 [gd_scene format=3 uid="uid://c0gh0ft1ahxsx"]
 
-[ext_resource type="PackedScene" path="res://scenes/central_hub.tscn" id="hub"]
-[ext_resource type="PackedScene" path="res://scenes/systems_workshop.tscn" id="workshop"]
 [ext_resource type="PackedScene" path="res://scenes/mini_city.tscn" id="city"]
-[ext_resource type="PackedScene" path="res://scenes/movement_lab.tscn" id="lab"]
-[ext_resource type="PackedScene" path="res://scenes/traversal_course.tscn" id="trial"]
-[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="player"]
-[ext_resource type="PackedScene" path="res://scenes/player_health_hud.tscn" id="health"]
 [ext_resource type="PackedScene" path="res://scenes/equipment_feedback.tscn" id="equipment"]
-
+[ext_resource type="PackedScene" path="res://scenes/player_health_hud.tscn" id="health"]
+[ext_resource type="PackedScene" uid="uid://d1vyu4w6usieg" path="res://scenes/central_hub.tscn" id="hub"]
+[ext_resource type="PackedScene" path="res://scenes/movement_lab.tscn" id="lab"]
+[ext_resource type="PackedScene" uid="uid://bu28ecb8jyof2" path="res://scenes/player.tscn" id="player"]
 [ext_resource type="PackedScene" path="res://scenes/allomancy_reserve_hud.tscn" id="reserve_hud"]
+[ext_resource type="PackedScene" uid="uid://scnep11gxfkr" path="res://scenes/traversal_course.tscn" id="trial"]
+[ext_resource type="PackedScene" path="res://scenes/systems_workshop.tscn" id="workshop"]
 
 [sub_resource type="Environment" id="Environment_main"]
 background_mode = 1
@@ -18,51 +17,52 @@ ambient_light_source = 2
 ambient_light_color = Color(0.6, 0.7, 1, 1)
 ambient_light_energy = 0.7
 
-[node name="Main" type="Node3D"]
+[node name="Main" type="Node3D" unique_id=1002522322]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1818493921]
 environment = SubResource("Environment_main")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=87557792]
 transform = Transform3D(0.8660254, 0.40957603, -0.28678823, 0, 0.57357645, 0.81915206, 0.5, -0.7094065, 0.49673176, 0, 0, 0)
 shadow_enabled = true
 
-[node name="CentralHub" parent="." instance=ExtResource("hub")]
-position = Vector3(0, 0, 0)
+[node name="CentralHub" parent="." unique_id=1980026565 instance=ExtResource("hub")]
 
+[node name="MovementLab" parent="." unique_id=2079760460 instance=ExtResource("lab")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.860382, 0, 0)
 
-[node name="MovementLab" parent="." instance=ExtResource("lab")]
-position = Vector3(-55, 0, 0)
+[node name="TraversalCourse" parent="." unique_id=1014372219 instance=ExtResource("trial")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -32.655296)
 
+[node name="MiniCity" parent="." unique_id=1344486492 instance=ExtResource("city")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 39.060883, 0, 0)
 
-[node name="TraversalCourse" parent="." instance=ExtResource("trial")]
-position = Vector3(0, 0, -55)
+[node name="SystemsWorkshop" parent="." unique_id=2066876825 instance=ExtResource("workshop")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 37.916992)
 
-
-[node name="MiniCity" parent="." instance=ExtResource("city")]
-position = Vector3(55, 0, 0)
-
-
-[node name="SystemsWorkshop" parent="." instance=ExtResource("workshop")]
-position = Vector3(0, 0, 45)
-
-
-[node name="Player" parent="." instance=ExtResource("player")]
-position = Vector3(0, 0.95, 3)
+[node name="Player" parent="." unique_id=1977453853 instance=ExtResource("player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 3)
 ground_traction = 11.0
 
-[node name="CombatRetry" type="Marker3D" parent="."]
-position = Vector3(0, 0.95, 3)
+[node name="CombatRetry" type="Marker3D" parent="." unique_id=601539297]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 3)
 
-[node name="GameplayHUD" type="CanvasLayer" parent="."]
+[node name="GameplayHUD" type="CanvasLayer" parent="." unique_id=1366722987]
 layer = 0
 
-[node name="EquipmentFeedback" parent="GameplayHUD" instance=ExtResource("equipment")]
+[node name="EquipmentFeedback" parent="GameplayHUD" unique_id=2081146458 instance=ExtResource("equipment")]
+layout_mode = 3
 
-[node name="PlayerHealthHUD" parent="GameplayHUD" instance=ExtResource("health")]
+[node name="PlayerHealthHUD" parent="GameplayHUD" unique_id=80876395 instance=ExtResource("health")]
+layout_mode = 3
 
-[node name="MovementLabEntry" type="Marker3D" parent="."]
-position = Vector3(-25, 0.95, 0)
-rotation = Vector3(0, 1.570796, 0)
+[node name="AllomancyReserveHUD" parent="GameplayHUD" unique_id=183385636 instance=ExtResource("reserve_hud")]
+layout_mode = 3
+anchors_preset = 3
+offset_left = -280.0
+offset_top = -174.0
+offset_right = 0.0
+offset_bottom = 0.0
 
-[node name="AllomancyReserveHUD" parent="GameplayHUD" instance=ExtResource("reserve_hud")]
+[node name="MovementLabEntry" type="Marker3D" parent="." unique_id=978262830]
+transform = Transform3D(3.1391647e-07, 0, 1, 0, 1, 0, -1, 0, 3.1391647e-07, -25, 0.95, 0)

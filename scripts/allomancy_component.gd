@@ -9,6 +9,33 @@ signal access_changed(id: StringName, available: bool)
 @export var definitions: Array[Resource] = []
 @export var start_at_full := true
 var _states: Dictionary = {}
+## Pending doses only; _states remains the sole source of reserve values.
+var _absorptions: Array[Dictionary] = []
+
+func begin_absorption(metals: Array[StringName], duration: float) -> bool:
+	if metals.is_empty() or not is_finite(duration) or duration <= 0.0: return false
+	# Reject invalid recipes atomically. Locked registered metals can still be ingested.
+	for id in metals:
+		if not _states.has(id): return false
+	var seen: Array[StringName] = []
+	for id in metals:
+		if id in seen: continue
+		seen.append(id)
+		var missing := maxf(0.0, maximum_reserve(id) - reserve(id))
+		if missing > 0.0:
+			_absorptions.append({"metal": id, "amount": missing, "duration": duration, "elapsed": 0.0, "delivered": 0.0})
+	# Full reserves intentionally waste the consumed item.
+	return true
+
+func _advance_absorption(delta: float) -> void:
+	for index in range(_absorptions.size() - 1, -1, -1):
+		var dose: Dictionary = _absorptions[index]
+		dose.elapsed = minf(float(dose.duration), float(dose.elapsed) + delta)
+		var delivered := float(dose.amount) * float(dose.elapsed) / float(dose.duration)
+		add_reserve(dose.metal, delivered - float(dose.delivered))
+		# Count attempted delivery even when clamped: excess is permanently wasted.
+		dose.delivered = delivered
+		if float(dose.elapsed) >= float(dose.duration): _absorptions.remove_at(index)
 
 func _ready() -> void:
 	process_physics_priority = -10 # Resolve depletion before the actor applies forces.
@@ -108,6 +135,7 @@ func advance(delta: float) -> void:
 	if not is_finite(delta) or delta <= 0.0: return
 	for id in _states.keys():
 		if is_burning(id) and _states[id].automatic: _set_reserve(id, reserve(id) - float(_states[id].rate) * delta)
+	_advance_absorption(delta)
 
 func _physics_process(delta: float) -> void:
 	advance(delta)

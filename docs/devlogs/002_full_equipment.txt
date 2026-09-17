@@ -1,0 +1,98 @@
+# Full equipment layout milestone
+
+Current implementation in C:/Users/CptSp/Documents/Codex/A Mist Born fangame. This expands the earlier hand milestone described in 001_equipment.txt; its two-slot UI and special temporary trinket-free swap test instructions are historical.
+
+## Architecture and Inspector configuration
+
+EquipmentComponent remains the only equipment owner. Its default enabled_slots now includes all nine concrete slots: Head, Chest, Main Hand, Off Hand, Gloves, Belt, Boots, Trinket 1, Trinket 2. Existing numeric slot IDs were preserved, so existing hand Resources keep their meaning.
+
+EquipmentSlots.Category and CATEGORIES map concrete positions to types. Both trinket positions map to TRINKET. EquipmentProfile.allowed_categories and allowed_slots are additive: a slot is allowed if either its concrete ID or category matches. New armor Resources specify one category; trinkets specify only TRINKET, without duplicating concrete IDs. Existing hand Resources retain their explicit asymmetric allowed_slots.
+
+Compatibility validation calls EquipmentProfile.allows_slot from the existing planner. All transfers, swaps, displaced-item placement, exact-cell returns, and world drops still use that planner. No per-item drag code, extra ownership array, second component, or multi-slot occupancy was added.
+
+Queries: get_equipped_stack(slot), get_equipped_items() (dictionary snapshot), get_equipped_by_category(category) (ItemStack array). Future consumers can iterate definitions/profiles without reading the UI. No stats or bonuses exist.
+
+Configure:
+- Player/Equipment.enabled_slots to expose positions.
+- ItemDefinition.equipment_profile.allowed_categories and/or allowed_slots for placement.
+- Existing profile traits, family restrictions and dependencies for coexistence.
+- ItemDefinition.grid_width/grid_height for inventory footprint.
+- EquipmentSlots.DISPLAY_ORDER for UI presentation order only.
+- Existing InventoryDropper.world_item_scene/drop_offset for shared world dropping.
+
+## UI and context actions
+
+Existing panel now separates INVENTORY from EQUIPMENT with headings and a divider. Equipment uses three columns:
+
+| Head | Chest | Gloves |
+|---|---|---|
+| Main Hand | Off Hand | Belt |
+| Boots | Trinket 1 | Trinket 2 |
+
+Each 160 x 108 slot has a permanent slot title, item icon, item name or empty/unavailable label. Existing green/red/amber borders and red X conflict overlays remain. The panel scales down on open/window resize to fit the viewport while leaving an outside border for world drops. No frame polling was added.
+
+Right-click Equip asks EquipmentComponent for a context destination. A single compatible destination can replace its occupant if the normal transaction fits. Multiple destinations choose the first empty valid one. If none is empty and valid, Equip is disabled: use drag/drop to choose an explicit replacement. It recalculates on activation. This applies to trinkets and other multi-destination equipment without item-name checks. Throw remains unchanged.
+
+## Added test items and placement
+
+All use original WorldItem pickup/drop architecture, locally authored SVG icons and simple world meshes/icon billboards. No external art.
+
+| Item | Category | Grid footprint | World position |
+|---|---|---|---|
+| Helmet | HEAD | 2 x 2 | (-10, 0.45, 10) |
+| Chest Armor | CHEST | 2 x 3 | (-8.5, 0.45, 10) |
+| Gloves | GLOVES | 2 x 1 | (-7, 0.45, 10) |
+| Belt | BELT | 2 x 1 | (-5.5, 0.45, 10) |
+| Boots | BOOTS | 2 x 2 | (-4, 0.45, 10) |
+| Trinket A | TRINKET | 1 x 1 | (-2.5, 0.45, 10) |
+| Trinket B | TRINKET | 1 x 1 | (-1, 0.45, 10) |
+
+These form a spaced row along the south side, behind the initial facing direction near spawn. Equip items as you collect them to free the existing inventory grid. Trinkets are distinct definitions/icons solely to make swaps visible; their slots have identical meaning.
+
+## Exact manual tests
+
+Use E to pick up and I to open inventory, or the current rebound actions.
+
+A. Pick up Helmet; drag grid → Head. Icon/name appear in Head; its 2 x 2 grid footprint disappears.
+B. Drag Helmet toward Boots: red preview; release leaves original ownership/position unchanged.
+C. Pick up Boots; drag to Boots: succeeds.
+D. Pick up Trinket A and B; drag each to a different trinket position: both accepted.
+E. Drag A from Trinket 1 onto B in Trinket 2: names/icons exchange with no inventory occupancy. Return one to the grid and move the remaining trinket to the empty trinket position: succeeds.
+F. Drag Helmet or Chest Armor to either trinket position: rejects.
+G. Drag equipped Helmet to a chosen empty 2 x 2 grid region: returns at that exact origin.
+H. Repeat over an occupied cell or a cell where the footprint crosses the grid edge: rejects, Head remains occupied.
+I. Drag equipped armor outside the entire panel, release: exactly one matching WorldItem appears; that slot clears.
+J. Close I, pick it up with E: same definition/quantity, correct grid footprint; equip again.
+K. Fill the grid with pickups, then try returning equipped armor: rejects without changing any equipment.
+L. Sword Main → empty Off works. With Sword Off, hover Greatsword Main: Off gets X; drop returns Sword to inventory and blocks Off. Greatsword occupies only Main. A full grid may still permit this because its freed 2 x 3 footprint fits Sword. For a genuine capacity failure, replace Bow + Quiver with Greatsword while no space exists beyond its freed footprint: entire transaction rejects.
+M. Quiver without Bow rejects. Bow Main permits Quiver Off and rejects Sword Off. Removing Bow returns Quiver by first fit; insufficient space for both rejects. World-dropping Bow requires space only for Quiver; with no such region, neither moves and nothing spawns.
+N. World-drop equipped Sword/Greatsword: slot and first-person presentation clear, HUD updates. Pick up and re-equip; Sword combat remains usable.
+O. Repeat mixed armor/trinket/weapon equip, exact-cell return, swaps, world drop and pickup. Check one owner/slot per item, no duplicates or stale references.
+
+Context checks: with empty Trinket slots, context Equip A then B fills the first then second. To test both-full rejection, temporarily duplicate a Trinket WorldItem in the existing main scene through the Inspector and collect the third: Equip is disabled, while dragging onto an occupied slot explicitly replaces it if inventory space permits. Remove the temporary duplicate afterward. Helmet and Boots context Equip target their sole categories.
+
+Also equip Chest, Gloves and Belt in their corresponding positions; test an invalid cross-category swap. Armor/accessories must not create weapon runtimes or worn meshes.
+
+## Files in this expansion
+
+Modified:
+- scripts/equipment_slots.gd
+- scripts/equipment_profile.gd
+- scripts/equipment_component.gd
+- scripts/equipment_slot_ui.gd
+- scripts/inventory_ui.gd
+- scenes/main.tscn
+
+Added:
+- resources/{helmet,chest_armor,gloves,belt,boots,trinket_a,trinket_b}.tres
+- Matching .svg icons and Godot .svg.import metadata.
+- scenes/{helmet,chest_armor,gloves,belt,boots,trinket_a,trinket_b}_visual.tscn
+- 002_full_equipment.txt
+
+Existing hand Resources, combat runtime, world dropper, WorldItem, inventory grid/ownership, player controls, enemies, navigation and dialogue were not modified in this expansion.
+
+## Validation and limitations
+
+Godot 4.7.2 headless editor import/parser checks passed. One startup sanity run loaded the actual main scene and opened/closed the existing panel successfully, reporting nine slots. Detailed manual gameplay/drag tests were intentionally left to the user. Existing hand compatibility code and shared world-drop pathway were preserved, rather than bypassed by the category checks.
+
+No stats, armor values, bonuses, worn meshes, combat additions, multi-slot items, or final UI artwork. At very small window sizes the prototype scales down, reducing text/target size. The existing fixed-offset world placement and first-fit inventory packing limitations remain.

@@ -14,6 +14,21 @@ signal external_motion_requested(delta: float)
 @export_range(0.01, 1000.0, 0.01, "or_greater") var force_response_mass := 1.0
 var _external_force := Vector3.ZERO
 
+@export_group("Crouch")
+@export_range(0.1, 10.0, 0.1) var crouched_movement_speed := 2.5
+@export_range(0.8, 1.8, 0.05) var crouched_height := 1.1
+## Capsule height change in metres per second; feet stay fixed.
+@export_range(0.1, 15.0, 0.1) var crouch_transition_speed := 5.0
+@export_group("")
+var is_crouching := false
+var _standing_height: float
+var _standing_center_y: float
+var _origin_standing_y: float
+var _capsule: CapsuleShape3D
+var _clearance_sphere := SphereShape3D.new()
+@onready var body_shape: CollisionShape3D = $CollisionShape3D
+@onready var allomantic_origin: Marker3D = $AllomanticOrigin
+
 ## Radius used to find nearby interaction components.
 @export_range(0.1, 10.0, 0.1, "or_greater") var interaction_radius: float = 1.75
 
@@ -35,6 +50,12 @@ var nearby_interactions: Array[InteractionComponent] = []
 
 
 func _ready() -> void:
+	_capsule = body_shape.shape.duplicate() as CapsuleShape3D
+	body_shape.shape = _capsule
+	_standing_height = _capsule.height
+	_standing_center_y = body_shape.position.y
+	_origin_standing_y = allomantic_origin.position.y
+	_clearance_sphere.radius = _capsule.radius
 	var stats := $StatComponent as StatComponent
 	move_speed = stats.get_value(StatIds.Stat.MOVE_SPEED)
 	stats.stat_changed.connect(_on_stat_changed)
@@ -61,13 +82,11 @@ func apply_external_impulse(impulse: Vector3) -> void:
 
 func _physics_process(delta: float) -> void:
 	if GameplayLocks.is_locked(): return
+	_update_crouch(delta)
 	var movement_input := Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	if $ContextualInput.wheel_open: movement_input = Vector2.ZERO
 	var desired := global_basis * Vector3(movement_input.x, 0.0, movement_input.y)
-	# Default run uses the existing multiplier; walk selects the unchanged base.
-	var intended_speed := move_speed
-	if not Input.is_action_pressed(&"walk") and not movement_input.is_zero_approx():
-		intended_speed *= sprint_multiplier
+	var intended_speed := crouched_movement_speed if is_crouching else move_speed * sprint_multiplier
 	if is_on_floor():
 		# One traction law for all actual horizontal motion, regardless of origin.
 		# Exponential response avoids instant stops and a frame-dependent blend.
@@ -78,7 +97,7 @@ func _physics_process(delta: float) -> void:
 		velocity.x = horizontal.x
 		velocity.z = horizontal.y
 		velocity.y = maxf(velocity.y, 0.0)
-		if Input.is_action_just_pressed(&"jump") and not $ContextualInput.wheel_open:
+		if Input.is_action_just_pressed(&"jump") and not is_crouching and not $ContextualInput.wheel_open:
 			PhysicalForceResponse.apply_impulse(self, Vector3.UP * jump_speed * $StatComponent.get_value(StatIds.Stat.JUMP_MULTIPLIER) * get_effective_mass(), true)
 	else:
 		_apply_air_motor(desired, intended_speed, delta)
@@ -89,6 +108,45 @@ func _physics_process(delta: float) -> void:
 	_external_force = Vector3.ZERO
 	move_and_slide()
 	# The collision-resolved body velocity is the next frame's starting point.
+
+func get_allomantic_origin() -> Vector3:
+	return allomantic_origin.global_position
+
+func _update_crouch(delta: float) -> void:
+	var held := Input.is_action_pressed(&"crouch")
+	# Keep the clearance sphere above floor contact even at the minimum height.
+	var minimum_height := minf(_capsule.radius * 2.0 + 0.02, _standing_height)
+	var target_height := clampf(crouched_height, minimum_height, _standing_height) if held else _standing_height
+	# Check the whole remaining expansion on every tick, including mid-transition.
+	if target_height > _capsule.height and not _has_standing_clearance():
+		target_height = _capsule.height
+	_capsule.height = move_toward(_capsule.height, target_height, crouch_transition_speed * delta)
+	var height_loss := _standing_height - _capsule.height
+	body_shape.position.y = _standing_center_y - height_loss * 0.5
+	camera_pivot.position.y = eye_height - height_loss
+	# Chest follows body height, never camera pitch or aiming direction.
+	allomantic_origin.position.y = _origin_standing_y - height_loss * 0.5
+	is_crouching = held or height_loss > 0.001
+
+func _has_standing_clearance() -> bool:
+	# Expanding a foot-anchored capsule adds exactly the volume swept by its
+	# upper hemisphere. A full-radius sphere sweep checks that volume without
+	# testing the feet against the floor. Include rigid bodies, exclude self.
+	var query := PhysicsShapeQueryParameters3D.new()
+	query.shape = _clearance_sphere
+	query.transform = body_shape.global_transform
+	query.transform.origin += body_shape.global_basis.y * (_capsule.height * 0.5 - _capsule.radius)
+	query.collision_mask = collision_mask
+	query.exclude = [get_rid()]
+	query.margin = 0.005
+	var space := get_world_3d().direct_space_state
+	if not space.intersect_shape(query, 1).is_empty(): return false
+	query.motion = body_shape.global_basis.y * (_standing_height - _capsule.height)
+	var sweep := space.cast_motion(query)
+	if sweep[0] < 1.0: return false
+	query.transform.origin += query.motion
+	query.motion = Vector3.ZERO
+	return space.intersect_shape(query, 1).is_empty()
 
 ## Limit the motor's proposed speed gain, not actual/external velocity.
 ## At excess speed, directional input can rotate or oppose momentum; it cannot

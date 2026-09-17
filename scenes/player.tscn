@@ -54,6 +54,9 @@ mesh = SubResource("BoxMesh_k4r0y")
 [node name="CameraPivot" type="Node3D" parent="."]
 position = Vector3(0, 0.7, 0)
 
+[node name="AllomanticOrigin" type="Marker3D" parent="."]
+position = Vector3(0, 0.35, 0)
+
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
 current = true
 
