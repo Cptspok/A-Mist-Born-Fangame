@@ -1,0 +1,75 @@
+# Deterministic authored loose-metal manipulation
+
+2026-09-18. Supersedes the approach/held details in 026. Manual acceptance remains
+pending; no automated gameplay or visual success is claimed.
+
+State and ownership
+- FREE -> APPROACH -> HELD -> THROW/DROP -> FREE.
+- Controlled states retain the sole collision-swept kinematic owner introduced
+  in 026. Native force/gravity integration is suspended only on that body.
+- Ordinary Iron is bypassed during controlled motion. FREE law remains systemic.
+
+APPROACH
+- Authored smoothstep height: y = start_y + (3s^2 - 2s^3)*(endpoint_y-start_y).
+  Half progress means exactly half the current required lift. Incoming vertical
+  velocity cannot flatten the path. All coordinates share the same curve clock.
+- Horizontal Hermite entry tangent uses the incoming velocity projected toward
+  the socket, bounded to [0, 2*horizontal_distance]. For a stationary endpoint,
+  this keeps horizontal travel monotone and avoids overshooting from fast entry.
+  At half progress it has traversed 50..75% horizontally while rising 50%.
+- Duration = distance / 6, bounded by the existing 0.18..0.8 s Inspector values.
+  No acceleration budget, braking solver or gravity-derived duration remains.
+- Endpoint follows the moving socket with exponential position smoothing; curve
+  is not restarted. Actual next displacement is move_and_collide(reference-COM).
+  A local obstruction constrains travel and pauses progress, with release after
+  sustained blocking. It never replaces the elevated endpoint with floor travel.
+- Successful unobstructed curve completion enters HELD immediately. Removed
+  position/relative-velocity convergence gates and any wait for a second motor.
+
+HELD
+- Reference = current controlled position lerped toward the camera-relative
+  socket by 1-exp(-follow_responsiveness*dt). Actual movement is locally swept.
+- No follow velocity, endpoint velocity, spring state or translation feed-forward
+  is stored. Position smoothing supplies short lag and cannot oscillate around a
+  stationary target. Render interpolation remains unchanged.
+- held_distance and held_vertical_offset remain explicit Inspector values.
+
+THROW
+- Direction is normalized clamped capture aim-forward, shared with debug ray.
+- Added evaluate_captured_throw(direction) entry point, sharing _evaluate_axis
+  magnitude math with existing FREE evaluation. Removed virtual origins and the
+  optional origin/position override API; captured COM is only the launch/debug
+  position, never a direction input.
+- Magnitude uses tuning.steel_force, steel_terminal_speed, terminal factor and
+  tuning.response(class). Impulse = object_force * push_impulse_duration; native
+  impulse response supplies mass scaling. Player reaction uses player_force and
+  the same duration. Default LIGHT maximum is 48*2*0.12 = 11.52 Ns.
+- Snapshot direction and magnitude while the controlled body reports systemic
+  velocity zero; end control; restore dynamics and clear authored motion; apply
+  impulse. Thus camera/jump lag cannot enter either direction or body momentum.
+- Existing engagement latch consumes the throwing Steel press until release or
+  context cancellation. No later torso-based Steel from that same press.
+- DROP clears only this controlled body's authored movement, restores dynamics
+  and applies no launch. World gravity/collision resumes normally.
+
+Cleanup / integration
+- Removed critically damped held-step function, stored follow/endpoint velocities,
+  incoming vertical tangent, physics convergence gate, virtual-origin workaround,
+  optional position override and obsolete force_scale blend parameter.
+- FREE evaluate still constructs its original torso-to-metal axis; same shared
+  scalar math and physical adapter calls. Current IronPull/SteelPush callers use
+  their original four arguments. No free behavior or tuning was changed.
+- Kinematic freeze and sleep settings are restored on throw/drop/cancellation.
+  No controller callback survives release; normal bodies are not left frozen.
+
+Diagnostics and validation
+- Existing optional show_loose_metal_capture_debug on CapturePoint and master
+  Allomancy debug key. FREE/APPROACH/HELD, physical COM, actual curve reference,
+  socket, swept result and the exact captured aim ray remain available.
+- One Godot 4.7.2 minimal headless menu startup passed with no script/resource
+  errors; existing certificate-store warning only. Final unused force_scale API
+  removal was statically checked against all callers; no second startup.
+- No gameplay automation, harness, interactive control, test props or scenes.
+- Edited capture, interaction and controller scripts plus this record only.
+  No scenes, resources, materials, settings or Hathsin content were changed or
+  reverted. Other gameplay systems and current user scene work remain intact.

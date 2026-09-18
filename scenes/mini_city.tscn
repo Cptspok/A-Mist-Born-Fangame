@@ -1,11 +1,15 @@
 [gd_scene format=3 uid="uid://bqseeyb4enu6o"]
 
-[ext_resource type="Material" path="res://resources/greybox_materials/floor.tres" id="gb_floor"]
-[ext_resource type="Material" path="res://resources/greybox_materials/structure.tres" id="gb_structure"]
-[ext_resource type="Material" path="res://resources/greybox_materials/traversal.tres" id="gb_traversal"]
-[ext_resource type="PackedScene" path="res://scenes/greybox_block.tscn" id="block"]
+[ext_resource type="PackedScene" path="res://scenes/world_item.tscn" id="5_hw62b"]
+[ext_resource type="Resource" uid="uid://t7fgo684v1d7" path="res://resources/sword.tres" id="6_fuosr"]
+[ext_resource type="Resource" uid="uid://dpidm6e2tfmvc" path="res://resources/quiver.tres" id="7_jleqt"]
+[ext_resource type="Resource" uid="uid://by6iitlu4ve0r" path="res://resources/bow.tres" id="8_8eyx4"]
+[ext_resource type="PackedScene" uid="uid://2wp53oqsdqpb" path="res://scenes/greybox_block.tscn" id="block"]
 [ext_resource type="PackedScene" path="res://scenes/encounter_freight_cart.tscn" id="cart"]
 [ext_resource type="Script" uid="uid://dv3sig1sv8u2u" path="res://scripts/dialogue_data.gd" id="dialogue"]
+[ext_resource type="Material" path="res://resources/greybox_materials/floor.tres" id="gb_floor"]
+[ext_resource type="Material" uid="uid://dxkg0nn5jc1f8" path="res://resources/greybox_materials/structure.tres" id="gb_structure"]
+[ext_resource type="Material" uid="uid://5smtwio0d5e1" path="res://resources/greybox_materials/traversal.tres" id="gb_traversal"]
 [ext_resource type="PackedScene" path="res://scenes/world_loose_steel.tscn" id="loose"]
 [ext_resource type="PackedScene" path="res://scenes/example_enemy.tscn" id="melee"]
 [ext_resource type="NavigationMesh" path="res://resources/mini_city_navigation.tres" id="nav"]
@@ -27,92 +31,92 @@ lines = ["The wall ramp loops back to this market."]
 [node name="Architecture" type="Node3D" parent="." unique_id=2077969454]
 
 [node name="DistrictGround" parent="Architecture" unique_id=947725896 groups=["navigation_static"] instance=ExtResource("block")]
-surface_material = ExtResource("gb_floor")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, -0.5, -29)
+surface_material = ExtResource("gb_floor")
 dimensions = Vector3(54, 1, 88)
 tint = Color(0.4, 0.43, 0.45, 1)
 
 [node name="WestFront" parent="Architecture" unique_id=1713023506 groups=["navigation_static"] instance=ExtResource("block")]
-surface_material = ExtResource("gb_structure")
 transform = Transform3D(0.63875777, 0, 0, 0, 1, 0, 0, 0, 1, -11.752258, 5, -24.5)
+surface_material = ExtResource("gb_structure")
 dimensions = Vector3(10, 10, 19)
 tint = Color(0.48, 0.51, 0.54, 1)
 
 [node name="EastFront" parent="Architecture" unique_id=350246953 groups=["navigation_static"] instance=ExtResource("block")]
-surface_material = ExtResource("gb_structure")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, -25)
+surface_material = ExtResource("gb_structure")
 dimensions = Vector3(10, 10, 20)
 tint = Color(0.48, 0.51, 0.54, 1)
 
 [node name="EastLoadingBuilding" parent="Architecture" unique_id=1906580933 groups=["navigation_static"] instance=ExtResource("block")]
-surface_material = ExtResource("gb_structure")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 4, -41)
+surface_material = ExtResource("gb_structure")
 dimensions = Vector3(8, 8, 12)
 tint = Color(0.48, 0.51, 0.54, 1)
 
 [node name="RoofWest" parent="Architecture" unique_id=1076762842 groups=["navigation_static"] instance=ExtResource("block")]
-surface_material = ExtResource("gb_structure")
 transform = Transform3D(1, 0, 0, 0, 2.0092695, 0, 0, 0, 1, -7, 5.900116, -62)
+surface_material = ExtResource("gb_structure")
 dimensions = Vector3(14, 6, 20)
 tint = Color(0.48, 0.51, 0.54, 1)
 
 [node name="RoofEast" parent="Architecture" unique_id=563875756 groups=["navigation_static"] instance=ExtResource("block")]
-surface_material = ExtResource("gb_structure")
 transform = Transform3D(1, 0, 0, 0, 2.596798, 0, 0, 0, 1, 13, 7.7074776, -62)
+surface_material = ExtResource("gb_structure")
 dimensions = Vector3(12, 6, 20)
 tint = Color(0.48, 0.51, 0.54, 1)
 
 [node name="LoadingDeck" parent="Architecture" unique_id=1917933471 groups=["navigation_static"] instance=ExtResource("block")]
-surface_material = ExtResource("gb_structure")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0.75, -41)
+surface_material = ExtResource("gb_structure")
 dimensions = Vector3(7, 1.5, 10)
 tint = Color(0.48, 0.51, 0.54, 1)
 
 [node name="RoofBridge" parent="Architecture" unique_id=616904418 groups=["navigation_static"] instance=ExtResource("block")]
-surface_material = ExtResource("gb_traversal")
 transform = Transform3D(1.1591892, -0.37397245, 0, 0.4233608, 1.0239607, 0, 0, 0, 1, 2.04171, 13.389417, -69)
+surface_material = ExtResource("gb_traversal")
 dimensions = Vector3(9, 0.4, 3)
 tint = Color(0.52, 0.47, 0.37, 1)
 
 [node name="WallBridge" parent="Architecture" unique_id=1829777667 groups=["navigation_static"] instance=ExtResource("block")]
-surface_material = ExtResource("gb_traversal")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 15.288331, -66)
+surface_material = ExtResource("gb_traversal")
 dimensions = Vector3(14, 0.4, 4)
 tint = Color(0.48, 0.51, 0.54, 1)
 
 [node name="WallWalk" parent="Architecture" unique_id=76089035 groups=["navigation_static"] instance=ExtResource("block")]
-surface_material = ExtResource("gb_structure")
 transform = Transform3D(1, 0, 0, 0, 2.8155208, 0, 0, 0, 1, 34, 7.7481623, -46)
+surface_material = ExtResource("gb_structure")
 dimensions = Vector3(7, 5.5, 48)
 tint = Color(0.48, 0.51, 0.54, 1)
 
 [node name="WallCover-59" parent="Architecture" unique_id=1781603922 instance=ExtResource("block")]
-surface_material = ExtResource("gb_structure")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 16.379164, -59)
+surface_material = ExtResource("gb_structure")
 dimensions = Vector3(2, 1.6, 1.5)
 tint = Color(0.48, 0.51, 0.54, 1)
 
 [node name="WallCover-43" parent="Architecture" unique_id=1913145623 instance=ExtResource("block")]
-surface_material = ExtResource("gb_structure")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 16.379164, -43)
+surface_material = ExtResource("gb_structure")
 dimensions = Vector3(2, 1.6, 1.5)
 tint = Color(0.48, 0.51, 0.54, 1)
 
 [node name="WallCover-29" parent="Architecture" unique_id=528443184 instance=ExtResource("block")]
-surface_material = ExtResource("gb_structure")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 16.379164, -29)
+surface_material = ExtResource("gb_structure")
 dimensions = Vector3(2, 1.6, 1.5)
 tint = Color(0.48, 0.51, 0.54, 1)
 
 [node name="Parapet30.7" parent="Architecture" unique_id=2066679249 groups=["navigation_static"] instance=ExtResource("block")]
-surface_material = ExtResource("gb_structure")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.7, 15.870369, -42)
+surface_material = ExtResource("gb_structure")
 dimensions = Vector3(0.3, 0.8, 40)
 tint = Color(0.48, 0.51, 0.54, 1)
 
 [node name="Parapet37.3" parent="Architecture" unique_id=418316830 groups=["navigation_static"] instance=ExtResource("block")]
-surface_material = ExtResource("gb_structure")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.3, 15.870369, -46)
+surface_material = ExtResource("gb_structure")
 dimensions = Vector3(0.3, 0.8, 48)
 tint = Color(0.48, 0.51, 0.54, 1)
 
@@ -142,6 +146,10 @@ tint = Color(0.57, 0.5, 0.35, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.6, -8)
 dimensions = Vector3(4, 1.2, 1.5)
 tint = Color(0.4, 0.26, 0.14, 1)
+
+[node name="SwordWorldItem" parent="Market/StallCounter1" unique_id=1228884100 instance=ExtResource("5_hw62b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.4499997, 1.5)
+item_definition = ExtResource("6_fuosr")
 
 [node name="StallPost1_0" parent="Market" unique_id=1443357648 groups=["navigation_static"] instance=ExtResource("block")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.2, 1.6, -8)
@@ -177,6 +185,14 @@ tint = Color(0.4, 0.26, 0.14, 1)
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 17.583588, 3.1, -16.843262)
 dimensions = Vector3(4.5, 0.25, 2.5)
 tint = Color(0.57, 0.5, 0.35, 1)
+
+[node name="quiverWorldItem" parent="Market" unique_id=1047535991 instance=ExtResource("5_hw62b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.3581543, 1.7783022, 7.9387703)
+item_definition = ExtResource("7_jleqt")
+
+[node name="bowWorldItem" parent="Market" unique_id=132881733 instance=ExtResource("5_hw62b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1.7205384, 7.6000004)
+item_definition = ExtResource("8_8eyx4")
 
 [node name="StallCounter2" parent="Market" unique_id=1940321466 instance=ExtResource("block")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0.6, 8)

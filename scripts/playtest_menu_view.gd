@@ -42,7 +42,7 @@ func show_page(page: String, back: String) -> void:
 	match page:
 		"main":
 			_title("MISTBORN PROTOTYPE")
-			_label("Prototype World v0.1")
+			_label("Playtest v0.0.2")
 			_buttons([["Play", "hub"], ["Settings", "settings"], ["Controls", "controls"], ["Quit", "quit"]])
 		"destinations":
 			_title("PLAYTEST")
@@ -54,7 +54,7 @@ func show_page(page: String, back: String) -> void:
 		"intro":
 			_title("CONTROLS")
 			_label(PlaytestControls.text(true))
-			_label("Visible metal offers Steel/Iron opportunities. Gold feedback shows the selected target.\nSteel pushes away; Iron pulls toward. Release to keep momentum.\nPause offers Restart Test whenever you need a fresh start.")
+			#_label("Visible metal offers Steel/Iron opportunities. Gold feedback shows the selected target.\nSteel pushes away; Iron pulls toward. Release to keep momentum.\nPause offers Restart Test whenever you need a fresh start.")
 			_buttons([["Start", "resume"]])
 		"controls":
 			_title("CONTROLS")

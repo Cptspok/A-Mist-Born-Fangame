@@ -9,10 +9,10 @@ enum ResponseClass { LIGHT, MEDIUM, HEAVY, ANCHORED }
 @export var anchored_response := Vector2(1.0, 0.0)
 @export_range(0.0, 200.0, 0.5, "or_greater") var steel_force := 30.0
 @export_range(0.0, 200.0, 0.5, "or_greater") var iron_force := 30.0
-@export_range(0.1, 200.0, 0.1, "or_greater") var steel_terminal_speed := 24.0
-@export_range(0.1, 200.0, 0.1, "or_greater") var iron_terminal_speed := 24.0
+@export_range(0.1, 200.0, 0.1, "or_greater") var steel_terminal_speed := 30.0
+@export_range(0.1, 200.0, 0.1, "or_greater") var iron_terminal_speed := 30.0
 @export_range(1.0, 200.0, 1.0, "or_greater") var max_range := 30.0
-@export_range(1.0, 85.0, 1.0) var targeting_half_angle := 45.0
+@export_range(1.0, 85.0, 1.0) var targeting_half_angle := 50.0
 
 func response(kind: ResponseClass) -> Vector2:
 	match kind:

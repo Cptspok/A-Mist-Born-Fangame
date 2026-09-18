@@ -4,9 +4,20 @@ extends RefCounted
 ## Returns diagnostic values; evaluating the interaction never changes velocity.
 static func evaluate(player: PlayerController, tether: MetalTetherComponent,
 		tuning: AllomancyTuning, pulling: bool) -> Dictionary:
-	var axis := tether.volume.global_position - player.get_allomantic_origin()
+	var axis := tether.get_force_position() - player.get_allomantic_origin()
 	if axis.length_squared() < 0.0001: return {}
 	axis = axis.normalized() * (1.0 if pulling else -1.0)
+	return _evaluate_axis(player, tether, tuning, pulling, axis)
+
+## Captured release preserves existing Steel recoil. Projectile speed belongs
+## to the authored launch and does NOT use this force/terminal calculation.
+static func evaluate_captured_recoil(player: PlayerController, tether: MetalTetherComponent,
+		tuning: AllomancyTuning, direction: Vector3) -> Dictionary:
+	if not direction.is_finite() or direction.is_zero_approx(): return {}
+	return _evaluate_axis(player, tether, tuning, false, -direction.normalized())
+
+static func _evaluate_axis(player: PlayerController, tether: MetalTetherComponent,
+		tuning: AllomancyTuning, pulling: bool, axis: Vector3) -> Dictionary:
 	var owner: PhysicsBody3D = tether.get_physical_owner()
 	if tether.allomancy_class == AllomancyTuning.ResponseClass.ANCHORED: owner = null
 	var relative := PhysicalForceResponse.get_velocity(player) - PhysicalForceResponse.get_velocity(owner)

@@ -1,0 +1,68 @@
+# Authoritative approach step and runtime manipulation instrumentation
+
+2026-09-17. Owner reports continued trajectory failures after prior passes.
+This pass does not claim visual acceptance; owner will test manually.
+
+Actual changes relative to 024
+- APPROACH now commands (reference_position - actual_COM) / physics_step.
+  Removed incremental reference displacement plus bounded gradual recovery.
+  The next unblocked native step therefore targets the reference itself, not
+  a lagged recovery point. Native damping/gravity preparation remains separate.
+  No force tuning, radius tuning, hold-point movement or spring tuning.
+- Collision tests constrain only the next commanded step. The approach clock
+  pauses while blocked, avoiding accumulated trajectory catch-up against a wall.
+  Reference/hold destination is never collapsed by sweep travel. Separating
+  floor contacts allow lift; native collisions/CCD remain enabled.
+- HOLD convergence now checks observed incoming solver velocity, not the new
+  velocity command that the controller has just assigned. Position tolerance,
+  reference velocity tolerance and completed reference time are also required.
+- Release returns the manipulation state to FREE. Existing HOLD motor and all
+  loose_metal_body.gd render interpolation remain unchanged.
+
+Ownership audit
+- FREE: unchanged IronPull/SteelPush -> AllomancyInteraction -> physical adapter.
+- APPROACH: Hermite reference with actual entry COM/velocity, adaptive endpoint,
+  motion-derived duration/runway; explicit next-reference velocity owns motion.
+- HOLD: existing damped controller. Separate branch, never concurrent with the
+  approach command. AllomancyController returns before ordinary force application
+  for both controlled states. No force-strength blend survives in that path.
+- CAPTURED PUSH: existing corrected controlled_launch_axis() is the sole aim
+  source, using clamped capture pitch/yaw. Virtual origin = physical COM - axis.
+  Snapshot precedes synchronous release/cleanup, then shared Steel evaluation
+  and impulse application. No COM-to-fixed-origin direction is used.
+- Existing input engagement latch remains consumed until primary release/context
+  cancellation, preventing further ordinary Steel from that same held press.
+- Cleanup retains damped legitimate momentum while removing controller output.
+  Independent world momentum may affect total velocity; it is not silently wiped.
+
+Temporary instrumentation
+- Toggle: Player/AllomanticOrigin/CapturePoint script Inspector property
+  show_loose_metal_capture_debug, default true. Existing Allomancy debug action
+  (T by default) is the master runtime toggle. No scene editing was required.
+- Existing debug label reports FREE for a selected loose target, APPROACH/HOLD
+  during manipulation, reference error, command velocity and blocked duration.
+- Pink cross: physical COM. Cyan cross: actual approach reference. Green cross:
+  runtime ideal HOLD goal. Orange cross: actual collision-safe next step target.
+- White arrow during HOLD: physical COM plus controlled_launch_axis(), the same
+  function invoked by captured Steel. Old captured-origin-to-COM debug line is
+  suppressed during manipulation because it no longer describes launch aim.
+- Markers deliberately use physical coordinates, not interpolated render poses.
+  Different marker sizes expose coincident values; unshaded depth-independent
+  lines remain visible through the prop. No gameplay transforms are changed.
+- Last launch arrow/text persists 2.5 seconds: snapshotted axis and origin,
+  cleaned velocity, submitted impulse and immediate live solver velocity. These
+  are measured in the actual launch branch, not reconstructed expected values.
+  The data never feeds targeting, physics or input state.
+- Toggle hides instrumentation without disabling manipulation. No polished UI,
+  damage, VFX, new test objects or additional capture slots.
+
+Validation and preservation
+- Static review of single-owner branches, reference/body command, collision
+  constraints, observed convergence, snapshot/release/impulse ordering and latch.
+- Exactly one Godot 4.7.2 headless menu startup (--quit-after 2), exit 0, no
+  script/resource errors. Existing certificate-store warning only. Subsequent
+  debug text clarification reviewed statically; no second startup.
+- No gameplay automation, physics harness, duplicate scene or editor control.
+- Only the three manipulation/debug scripts and this log were edited. No scene,
+  resource, material, settings, mine/Hathsin, targeting, free force-law, player,
+  inventory, combat or other user-authored content was edited or reverted.

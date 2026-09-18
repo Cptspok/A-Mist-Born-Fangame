@@ -1,35 +1,29 @@
-[gd_scene load_steps=19 format=3 uid="uid://bu28ecb8jyof2"]
+[gd_scene format=3 uid="uid://bu28ecb8jyof2"]
 
 [ext_resource type="Script" uid="uid://bg1qyq53c7xaf" path="res://scripts/player.gd" id="1_player"]
 [ext_resource type="Script" uid="uid://dbcboo7f7n2yk" path="res://scripts/inventory_component.gd" id="2_inventory"]
-[ext_resource type="Script" path="res://scripts/inventory_dropper.gd" id="3_dropper"]
+[ext_resource type="Script" uid="uid://ud4al25tt1wo" path="res://scripts/inventory_dropper.gd" id="3_dropper"]
 [ext_resource type="PackedScene" path="res://scenes/world_item.tscn" id="4_world_item"]
-[ext_resource type="Script" path="res://scripts/health_component.gd" id="5_health"]
+[ext_resource type="Script" uid="uid://b8ulgl88r41mg" path="res://scripts/health_component.gd" id="5_health"]
 [ext_resource type="PackedScene" path="res://scenes/hurtbox_component.tscn" id="6_hurtbox"]
-[ext_resource type="Script" path="res://scripts/player_combat.gd" id="7_combat"]
-
-[ext_resource type="Script" path="res://scripts/equipment_component.gd" id="8_equipment"]
-
-[ext_resource type="Script" path="res://scripts/stat_component.gd" id="9_stats"]
-[ext_resource type="Script" path="res://scripts/equipment_stats_bridge.gd" id="10_stats_bridge"]
-
-[ext_resource type="Script" path="res://scripts/allomancy_controller.gd" id="11_allomancy"]
-[ext_resource type="Script" path="res://scripts/allomancy_targeting.gd" id="12_targeting"]
-[ext_resource type="Script" path="res://scripts/allomancy_debug.gd" id="13_debug"]
+[ext_resource type="Script" uid="uid://bdsdqb6fwcw0w" path="res://scripts/player_combat.gd" id="7_combat"]
+[ext_resource type="Script" uid="uid://c6tf3sp43ggob" path="res://scripts/equipment_component.gd" id="8_equipment"]
+[ext_resource type="Script" uid="uid://bse4o5a7apl82" path="res://scripts/stat_component.gd" id="9_stats"]
+[ext_resource type="Script" uid="uid://dprj0mbaqkp2c" path="res://scripts/equipment_stats_bridge.gd" id="10_stats_bridge"]
+[ext_resource type="Script" uid="uid://cb2j37owydqky" path="res://scripts/allomancy_controller.gd" id="11_allomancy"]
+[ext_resource type="Script" uid="uid://cu0kpsew43nf3" path="res://scripts/allomancy_targeting.gd" id="12_targeting"]
+[ext_resource type="Script" uid="uid://0jr7bka3wl76" path="res://scripts/allomancy_debug.gd" id="13_debug"]
 [ext_resource type="Resource" path="res://resources/allomancy_tuning.tres" id="14_tuning"]
-
-[ext_resource type="Script" path="res://scripts/player_death.gd" id="death"]
-
-[ext_resource type="Script" path="res://scripts/ability_component.gd" id="abilities"]
-[ext_resource type="Script" path="res://scripts/allomancy_component.gd" id="metals"]
-[ext_resource type="Resource" path="res://resources/steel_metal.tres" id="steel_metal"]
+[ext_resource type="Script" uid="uid://djqi7k3b0nhef" path="res://scripts/ability_component.gd" id="abilities"]
+[ext_resource type="Script" uid="uid://bm2km8vqldc30" path="res://scripts/loose_metal_capture.gd" id="capture"]
+[ext_resource type="Script" uid="uid://d1p6fre3kwuq4" path="res://scripts/contextual_input.gd" id="context_input"]
+[ext_resource type="Script" uid="uid://86mhee01emnp" path="res://scripts/player_death.gd" id="death"]
 [ext_resource type="Resource" path="res://resources/iron_metal.tres" id="iron_metal"]
-
-[ext_resource type="Script" path="res://scripts/contextual_input.gd" id="context_input"]
-[ext_resource type="Script" path="res://scripts/metal_wheel.gd" id="wheel"]
-
+[ext_resource type="Script" uid="uid://dq2otu3obgy12" path="res://scripts/allomancy_component.gd" id="metals"]
+[ext_resource type="Script" uid="uid://m03a813mokpt" path="res://scripts/pewter_burn.gd" id="pewter_burn"]
 [ext_resource type="Resource" path="res://resources/pewter_metal.tres" id="pewter_metal"]
-[ext_resource type="Script" path="res://scripts/pewter_burn.gd" id="pewter_burn"]
+[ext_resource type="Resource" path="res://resources/steel_metal.tres" id="steel_metal"]
+[ext_resource type="Script" uid="uid://nyye22ydgig2" path="res://scripts/metal_wheel.gd" id="wheel"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
 radius = 0.4
@@ -51,16 +45,23 @@ shape = SubResource("CapsuleShape3D_player")
 visible = false
 mesh = SubResource("BoxMesh_k4r0y")
 
-[node name="CameraPivot" type="Node3D" parent="."]
-position = Vector3(0, 0.7, 0)
+[node name="CameraPivot" type="Node3D" parent="." unique_id=1959286442]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
 
-[node name="AllomanticOrigin" type="Marker3D" parent="."]
-position = Vector3(0, 0.35, 0)
-
-[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+[node name="Camera3D" type="Camera3D" parent="CameraPivot" unique_id=1824964220]
 current = true
 
-[node name="WeaponMount" type="Node3D" parent="CameraPivot/Camera3D"]
+[node name="CapturedPushOrigin" type="Marker3D" parent="CameraPivot/Camera3D" unique_id=1041073132]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
+
+[node name="WeaponMount" type="Node3D" parent="CameraPivot/Camera3D" unique_id=1975721273]
+
+[node name="AllomanticOrigin" type="Marker3D" parent="." unique_id=1097457019]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
+
+[node name="CapturePoint" type="Marker3D" parent="AllomanticOrigin" unique_id=1573794565]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.2)
+script = ExtResource("capture")
 
 [node name="InteractionArea" type="Area3D" parent="." unique_id=1370787926]
 collision_layer = 0
@@ -73,11 +74,11 @@ shape = SubResource("SphereShape3D_interaction")
 script = ExtResource("2_inventory")
 grid_width = 5
 
-[node name="InventoryDropper" type="Node" parent="."]
+[node name="InventoryDropper" type="Node" parent="." unique_id=1105798805]
 script = ExtResource("3_dropper")
 world_item_scene = ExtResource("4_world_item")
 
-[node name="StatComponent" type="Node" parent="."]
+[node name="StatComponent" type="Node" parent="." unique_id=728319690]
 script = ExtResource("9_stats")
 initial_base_values = Dictionary[int, float]({
 0: 100.0,
@@ -87,56 +88,58 @@ initial_base_values = Dictionary[int, float]({
 4: 1.0
 })
 
-[node name="HealthComponent" type="Node" parent="."]
+[node name="HealthComponent" type="Node" parent="." unique_id=931093324]
 script = ExtResource("5_health")
 stat_component_path = NodePath("../StatComponent")
 
-[node name="HurtboxComponent" parent="." instance=ExtResource("6_hurtbox")]
+[node name="HurtboxComponent" parent="." unique_id=1705528950 instance=ExtResource("6_hurtbox")]
 
-[node name="Equipment" type="Node" parent="."]
+[node name="Equipment" type="Node" parent="." unique_id=886049584]
 script = ExtResource("8_equipment")
 
-[node name="CombatEquipment" type="Node" parent="."]
+[node name="CombatEquipment" type="Node" parent="." unique_id=705901380]
 script = ExtResource("7_combat")
 
-[node name="EquipmentStatsBridge" type="Node" parent="."]
+[node name="EquipmentStatsBridge" type="Node" parent="." unique_id=1314852800]
 script = ExtResource("10_stats_bridge")
 
-[node name="AbilityComponent" type="Node" parent="."]
+[node name="AbilityComponent" type="Node" parent="." unique_id=1177707716]
 script = ExtResource("abilities")
 
-[node name="AllomancyComponent" type="Node" parent="."]
+[node name="AllomancyComponent" type="Node" parent="." unique_id=1671479963]
 script = ExtResource("metals")
 definitions = Array[Resource]([ExtResource("steel_metal"), ExtResource("iron_metal"), ExtResource("pewter_metal")])
 
-[node name="Allomancy" type="Node3D" parent="."]
+[node name="Allomancy" type="Node3D" parent="." unique_id=1887930620]
 script = ExtResource("11_allomancy")
 tuning = ExtResource("14_tuning")
 
-[node name="Targeting" type="Area3D" parent="Allomancy"]
+[node name="Targeting" type="Area3D" parent="Allomancy" unique_id=1547678510]
 collision_layer = 0
 collision_mask = 16
 monitorable = false
 script = ExtResource("12_targeting")
 
-[node name="Debug" type="Node3D" parent="Allomancy"]
+[node name="Debug" type="Node3D" parent="Allomancy" unique_id=2104705306]
 script = ExtResource("13_debug")
 
-[node name="DeathFlow" type="Node" parent="."]
+[node name="DeathFlow" type="Node" parent="." unique_id=19115608]
 script = ExtResource("death")
 
-[node name="ContextualInput" type="Node" parent="."]
+[node name="ContextualInput" type="Node" parent="." unique_id=2088906446]
 script = ExtResource("context_input")
-[node name="MetalWheelLayer" type="CanvasLayer" parent="."]
+
+[node name="MetalWheelLayer" type="CanvasLayer" parent="." unique_id=372988532]
 layer = 5
-[node name="MetalWheel" type="Control" parent="MetalWheelLayer"]
+
+[node name="MetalWheel" type="Control" parent="MetalWheelLayer" unique_id=592203670]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 0
 script = ExtResource("wheel")
 
-[node name="PewterBurn" type="Node" parent="."]
+[node name="PewterBurn" type="Node" parent="." unique_id=1989672500]
 script = ExtResource("pewter_burn")

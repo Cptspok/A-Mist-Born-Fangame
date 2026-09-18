@@ -1,0 +1,73 @@
+# Straight authored loose Pull and strong ballistic Steel release
+
+2026-09-18. Latest owner design overrides earlier curve/capture-range behavior.
+Manual gameplay acceptance pending; no automated gameplay was performed.
+
+Removed / bypassed
+- No initial free-Iron tick for an eligible targeted loose LIGHT object.
+- Removed capture-radius/vertical-reach gates, approach timing/progress, incoming
+  tangent, smoothstep/Hermite path and smoothed approach endpoint.
+- Removed the force-times-duration projectile launch and its tuning parameter.
+  Free/environmental force law and held presentation interpolation remain.
+
+Pull
+- Existing target acquisition still supplies visibility, cone and range limits.
+  On the first targeted Iron tick, eligible loose metal immediately enters
+  APPROACH and becomes controlled kinematic movement. No ordinary Iron force
+  is submitted to that body. Simultaneous Steel does not bypass this ownership;
+  a held Steel request can throw once the object reaches HELD.
+- Each step: reference = actual_COM.move_toward(capture_point, speed*dt).
+  pull_travel_speed defaults to 18 m/s. With a stationary socket this is one
+  straight diagonal segment; a moving socket redirects subsequent straight
+  steps toward its current position. No authored arc or physics shaping.
+- Real move_and_collide sweeps each local displacement. A blocking wall/ceiling
+  limits movement; sustained blockage over 0.5 s aborts manipulation and ends
+  Iron activation, requiring a fresh press. There is no free-Iron slide fallback.
+- HELD begins when the actual swept body reaches the capture point.
+
+Capture point and hold
+- CapturePoint Inspector: held_distance=2.2 m, held_vertical_offset=-0.3 m,
+  pull_travel_speed=18 m/s, follow_responsiveness=16/s.
+- Camera-relative capture point and clamped capture pitch remain. HELD uses
+  exponential position smoothing plus swept collision. Existing render proxies
+  interpolate motion. Follow-through is never transferred into throw velocity.
+
+Ballistic release
+- CapturePoint Inspector: captured_throw_speed=90 m/s.
+- Snapshot controlled_launch_axis() (normalized clamped aim-forward) and speed.
+  Release control, restore dynamic body mode, clear authored velocity, then set
+  projectile.linear_velocity = launch_axis * captured_throw_speed.
+- Actual COM and positional lag do not enter direction. Body mass, free Steel
+  terminal speed and prior force-equivalent duration do not reduce this authored
+  initial speed. No upward angle, gravity modification or post-release steering.
+- Existing Steel magnitude/terminal/coupling evaluation is retained for player
+  recoil ONLY, with the existing 0.12-second reaction duration. Renamed its
+  captured helper to evaluate_captured_recoil to make that boundary explicit.
+- Example analytical scale: neutral cube COM about 1.30 m above floor, half
+  height 0.15 m, gravity 24. Ideal contact time sqrt(2*1.15/24) ~=0.310 s and
+  horizontal distance 90*0.310 ~=28 m before floor contact, ignoring damping.
+  This is a calculation, not an observed gameplay result. Real obstacles, damping
+  and launch height affect range. Existing CCD, gravity, collision/friction and
+  materials govern the body after release.
+- Throw consumes the current Steel engagement until primary release/context
+  cancellation. Same held input cannot resume torso-based Steel on the projectile.
+- Drop restores dynamics at rest with no launch; gravity resumes immediately.
+
+Debug
+- Existing optional capture debug toggle and master Allomancy debug action.
+  State, physical COM, socket, local step and full straight COM-to-socket target
+  line are shown. HELD throw ray calls the exact launch-axis function.
+- Removed curve-progress percentage. Last release shows actual solver velocity
+  and equivalent impulse (mass*authored velocity), explicitly labelled because
+  the projectile now receives a velocity assignment rather than that impulse.
+
+Validation and scope
+- One Godot 4.7.2 minimal headless menu startup (--quit-after 2), exit 0, no
+  script/resource errors; existing certificate-store warning only.
+- Static ownership/call-site review and targeted whitespace checks. No gameplay
+  automation, interactive editor use, temporary harness or duplicate scenes.
+- Edited capture/controller/interaction/debug scripts and added this log only.
+  No scenes, resources, materials, gravity settings or Hathsin work changed.
+- Free Steel, non-manipulable Iron, traversal, anchors, heavy objects, targeting
+  rules and unrelated gameplay remain unchanged. Eligible loose Iron is the
+  explicitly requested exception: immediate authored movement replaces physics.

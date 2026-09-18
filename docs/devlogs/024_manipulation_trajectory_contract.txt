@@ -1,0 +1,86 @@
+# Explicit loose-metal approach and aimed captured release
+
+2026-09-17. Replaces the strength-blended arrival from 023 following owner
+diagnosis and implementation instructions. Manual gameplay acceptance pending.
+
+APPROACH contract
+- FREE -> APPROACH -> HOLD -> RELEASED. Established eligible Iron acquisition
+  is still required; first acquisition tick uses unchanged free Iron.
+- Assistance starts at the existing 3.5 m minimum range, extended when the
+  incoming closing speed needs more lift/braking runway. The extra runway is
+  closing_speed * lift_time / 2 + closing_speed^2 / (2 * acceleration), measured
+  outside the horizontal hold distance. Vertical eligibility remains 1.6 m.
+- At the first solver callback, sample actual COM and incoming velocity. One
+  cubic Hermite segment starts there with that velocity and ends at the initial
+  hold point with zero relative velocity. Duration uses horizontal displacement,
+  incoming speed/braking and required lift, bounded by 0.18..0.8 seconds.
+- A damped endpoint offset follows the evolving hold destination and player
+  frame velocity. Its Hermite weight and derivative are zero at entry; at arrival
+  it contributes full endpoint position and frame velocity. No per-frame restart.
+- Static endpoint, ground-level start with zero vertical velocity:
+    y(s) = y0 + (3s^2 - 2s^3) * (hold_y - y0)
+    dy/dt = 6s(1-s) * (hold_y - y0) / duration
+  Thus an elevated target requests upward motion throughout 0 < s < 1, while
+  the same parameter schedules horizontal approach/braking. Lift is not delayed
+  until a separate positional handoff.
+- The dynamic body receives reference displacement per physics step plus
+  non-oscillating positional-error recovery. Recovery is bounded per component;
+  horizontal error cannot consume vertical authority. Standard Jolt damping and
+  gravity are compensated separately, outside tracking acceleration budgets.
+- No ordinary Iron force is submitted during APPROACH/HOLD. There is no
+  (1-blend) Iron + blend capture-force trajectory anymore.
+- HOLD requires completed reference time, no current blockage, <0.12 m actual
+  position error and <0.6 m/s velocity error relative to the moving hold frame.
+  Reference velocity must also have converged. Crossing entry range is not HOLD.
+
+Collisions and hold
+- Test-only shape sweep covers the upcoming physical displacement, not the
+  entire route to the final hold point. Blocking travel limits that step only.
+  Separating floor contacts do not erase upward motion. The goal is never
+  replaced by collision-limited travel. Persistent obstruction releases after
+  0.5 seconds. Native rigid-body collisions and existing CCD remain active.
+- The existing HOLD spring/damper, responsiveness, acceleration limit and 80%
+  bounded player translation feed-forward are retained. No freeze, custom
+  integrator switch, root transform writes or camera parenting was introduced.
+- loose_metal_body.gd and its presentation interpolation were not edited.
+
+Captured Steel contract
+- Snapshot n = -clamped_capture_aim_basis.z, physical COM P and impulse duration.
+- Use virtual_origin = P - n; evaluation direction P - virtual_origin is n,
+  regardless of height/position error relative to the ideal hold destination.
+- End Iron/capture and clean velocity before evaluating terminal response.
+  Existing Steel strength, terminal law, LIGHT coupling, mass and player recoil
+  remain in the shared evaluation/physical response APIs. Existing 0.12-second
+  force-equivalent impulse remains; no arbitrary speed or upward angle added.
+- The launch consumes the current primary-input engagement. No further Steel
+  force is applied from that press, even if the same target stays in the cone.
+  Primary release rearms ordinary Steel; context cancellation resets the latch.
+  Launched metal immediately returns to gravity and ordinary world physics.
+- Iron release without Steel remains a drop. Releasing Iron before issuing a
+  Steel press ends capture; this change does not create a post-drop aim grace.
+
+Velocity ownership
+- Track expected post-step velocity including standard damping and gravity.
+  Deviations are observed world/contact/external-force motion; incoming and
+  observed momentum decay under the existing capture damping.
+- Remove output minus retained free velocity on release. This removes planned
+  approach motion, camera/player following and pending gravity compensation,
+  without globally zeroing genuine momentum or restoring an entry snapshot.
+- Actual external momentum can still affect total release velocity. The Steel
+  impulse axis itself is always the captured aim axis. Contact decomposition
+  remains an estimate around a nonlinear solver, not exact impulse provenance.
+
+Scope and validation
+- Edited loose_metal_capture.gd, allomancy_controller.gd and the existing debug
+  label in allomancy_debug.gd to distinguish APPROACH from HOLD. Added this log.
+- Free Steel/Iron evaluation, targeting, response classes, player movement,
+  resources, scenes, materials, project settings and Hathsin were not edited.
+- One Godot 4.7.2 headless menu startup, --quit-after 2: exit 0, no script or
+  resource errors; existing system certificate-store warning only. The menu
+  preloads the world/player resources without starting gameplay.
+- The final per-component recovery bound was statically reviewed after that
+  startup; no second startup was run.
+- Static review covered Hermite endpoints, velocity continuity, lift derivative,
+  collision destination preservation, launch-axis independence, input lifetime
+  and release ordering. No gameplay automation, editor control, physics harness
+  or temporary scene. No manual visual acceptance is claimed.

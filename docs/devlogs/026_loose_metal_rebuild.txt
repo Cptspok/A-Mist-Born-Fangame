@@ -1,0 +1,84 @@
+# Loose-metal manipulation rebuild
+
+2026-09-18. Replaces the capture internals from 021-025. Manual visual acceptance
+is pending; a startup check is not claimed as gameplay validation.
+
+Ownership
+- FREE: unchanged systemic Iron/Steel, original origins, targeting and responses.
+- APPROACH and HELD: freeze_mode KINEMATIC with freeze enabled; the sole movement
+  owner is capture.follow(), called after player movement. It uses one actual
+  move_and_collide sweep for the next displacement. Dynamic gravity/forces do
+  not compete with that movement. No transforms are teleported to the endpoint.
+- THROW/DROP are synchronous transitions back to FREE. Restore dynamic mode and
+  authored sleep/freeze-mode settings before any launch impulse.
+- Explicit loose opt-in, LIGHT class, body driver, size/mass limits and actor/
+  equipped hierarchy exclusions remain. Medium/heavy/anchored are not captured.
+
+Removed
+- Capture physics callback delegation and solver damping/gravity prediction.
+- Estimated free/control velocity histories and subtraction-based release.
+- Blend weights, incremental reference-error recovery and adaptive entry runway.
+- Captured-origin geometry and unused capture-weight interface.
+- Optional force-only captured launch fallback: captured throw is an impulse.
+- No changes to free Allomancy's force/impulse adapter or force law.
+
+APPROACH
+- Entry uses configurable horizontal capture_radius and vertical reach, after
+  established active free Iron acquisition. Free force application stops during
+  controlled states; it does not run alongside the movement owner.
+- Snapshot actual COM and velocity, and build one cubic Hermite arrival. Both
+  horizontal travel and vertical lift use the same progress parameter. A damped
+  moving endpoint adapts to the hold frame without restarting the curve.
+- Duration = clamp(max(distance/max(6,speed), sqrt(abs(lift)/30), speed/90),
+  minimum_approach_duration, maximum_approach_duration); defaults 0.18..0.8 s.
+- Physical move_and_collide(reference - current_COM) moves to the reference
+  when unobstructed. Collision travel is the actual result, never a replacement
+  hold goal. Blockage pauses progress; persistent blockage over 0.5 s drops.
+- HELD requires elapsed trajectory time, no blocking collision, <0.12 m position
+  error and <0.6 m/s relative arrival velocity. Entry range alone is insufficient.
+
+HELD
+- Camera-relative held_distance=2.2 m and held_vertical_offset=-0.3 m are now
+  explicit Inspector values. Existing marker nodes remain in scenes untouched;
+  their old offsets no longer secretly configure the controller.
+- Exact critically damped position/velocity follow with bounded player translation
+  feed-forward and damped camera lag. All resulting movement is locally swept.
+- Existing mesh-proxy interpolation and player-relative presentation smoothing
+  remain. loose_metal_body.gd now handles presentation only; its old integration
+  callback is removed and activation is an explicit boolean.
+
+THROW / DROP
+- Incoming velocity shapes the arrival curve; it is consumed by authored arrival,
+  not banked for later restoration. While manipulated, motion is exclusively
+  kinematic control motion, including follow-through. Both linear/angular body
+  velocity are therefore cleared on release of THIS owned body. No global free
+  momentum rules or external-force adapter were changed.
+- This is a deliberate ownership change: captured props do not retain an
+  inferred external momentum history. They respect swept collision, then return
+  to ordinary dynamic world interaction after release.
+- Snapshot clamped aim-forward and COM, use virtual_origin=COM-axis, end control,
+  restore dynamics/clear controller velocity, then evaluate and apply existing
+  Steel magnitude, terminal response, mass response and player recoil as impulse.
+- Only HELD throws. Steel pressed during APPROACH waits until HELD if still held.
+- The throwing primary engagement remains consumed until release/context cancel;
+  it cannot immediately become free torso-based Steel on subsequent frames.
+- Iron release alone restores dynamic physics at rest; gravity then acts. No
+  force/impulse, inherited camera/jump velocity or stale entry snapshot is added.
+
+Diagnostics
+- Existing optional show_loose_metal_capture_debug toggle and master debug key.
+- FREE / APPROACH / HELD; physical COM pink, reference cyan, HELD goal green,
+  applied swept step orange, actual controlled throw axis white.
+- Reference error and measured swept displacement/dt; last throw's snapshotted
+  axis, cleaned velocity, impulse and immediate solver velocity remain available.
+- Values come from movement/throw owners, never interpolated expected poses.
+
+Validation / preservation
+- One Godot 4.7.2 headless menu startup, exit 0: no script/resource errors; existing
+  certificate-store warning only. Final debug wording/step-velocity reporting
+  changes were statically reviewed without another startup.
+- Static review and obsolete-symbol search; no gameplay automation, physics
+  harness, duplicate scenes or editor/desktop control.
+- Edited only capture/body/controller/debug scripts and added this record.
+- No scenes, resources, materials, project settings or Hathsin were changed or
+  reverted. Other user edits and other game systems remain untouched.

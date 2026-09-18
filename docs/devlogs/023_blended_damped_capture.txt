@@ -1,0 +1,134 @@
+# Blended capture, damped dynamic hold and controlled Push geometry
+
+2026-09-17, following 022. Owner manual feedback: visible hold stutter,
+horizontal-then-vertical approach and unexpectedly low/downward launches.
+The owner explicitly authorized replacing the internal follow implementation.
+No successful manual acceptance result is claimed for this implementation.
+
+Diagnosis from code (not a reproduced runtime trace)
+- 022 moved a kinematic-frozen RigidBody with move_and_collide every physics
+  tick, directly to its target after a short entry. Physics-tick transforms
+  were drawn without interpolation; project-wide interpolation is not enabled.
+  This presents discrete steps against a render-rate mouse-look camera and
+  provides no persistent damped follow-through. RigidBody synchronization and
+  contact clipping can add discontinuities. Those mechanisms have been removed;
+  which contributed most to the owner's observed stutter remains unmeasured.
+- The entry radius was 2 m, inside/behind the 2.2 m held position. Arresting
+  approach and lifting there could produce the disconnected right-angle path.
+- Project gravity is 24 m/s^2. Authored Steel force is 48 and LIGHT object
+  coupling is 2, yielding at most 96 N on the 1 kg prototype. Even a correctly
+  horizontal continuous force from rest gives an immediate downward component
+  (~14 degrees without terminal softening). Geometry alone cannot supply a
+  forward initial velocity. The old implementation erased velocity at release.
+
+Replacement
+- scripts/loose_metal_capture.gd retains one established eligible capture but
+  replaces frozen positional following with an implicit critically damped motor.
+- New scripts/loose_metal_body.gd owns _integrate_forces on the two existing
+  prototype loose-body scenes. It delegates only when captured. No root/body
+  transforms are assigned, no reparenting or freeze/custom_integrator changes.
+  Gravity, collisions, CCD, mass and ordinary physics remain active throughout.
+- Default entry is now 3.5 m horizontal range, +/-1.6 m vertical reach, after
+  normal acquisition and established active Iron. Entry itself preserves motion.
+  Smooth control weight increases monotonically with time (0.25 s) and distance
+  (3.5 down to 2.5 m). Normal Iron force is weighted by 1-control_weight;
+  elevated control and gravity compensation grow with control_weight. Thus
+  lifting begins outside the 2.2 m held position while approach is still active.
+  This weighting is exclusive to capture transition; free Iron callers use 1.
+- An implicit timestep-dependent spring/damper update runs only in the body's
+  physics integration callback, not a competing transform update. Responsiveness
+  is 16/s and controller acceleration is bounded at 250 m/s^2. Partial player
+  translational feed-forward (80%, bounded at 12 m/s) keeps running/jump lag
+  small. Camera angular velocity is not fed forward. Angular motion is damped.
+- Body physics poses are interpolated into runtime draw-only mesh proxies.
+  Original mesh/tether/collider hierarchies remain physically authoritative;
+  the original meshes' render layers are hidden only at runtime. This avoids
+  moving the loose bar's tether, which is parented beneath its mesh.
+- Presentation compensates only the player's tick-stepped translation while
+  held, fading out over 0.1 s on release. This prevents interpolated world poses
+  and an uninterpolated FPS camera producing relative translation judder.
+  Camera rotation is never compensated: visible turn follow-through remains.
+- Debug wireframes, labels and axis endpoints use the same presentation poses.
+  Debug text displays capture control percentage and physical COM measurements.
+  There are no global interpolation, physics-rate or player motor changes.
+
+Velocity ownership / release
+- The motor tracks its own velocity contribution against successive physics
+  observations. Genuine gravity/contact/external-force changes are accounted
+  separately and dissipated by the same authored hold damping. Compensated
+  gravity is not stored as latent falling momentum. Incoming momentum is not
+  resurrected from a stale snapshot when releasing.
+- Drop removes the tracked controller contribution, disconnects the callback
+  and restores can_sleep. It does not globally zero velocity, freeze a body or
+  apply a release force. Remaining free motion and gravity resume naturally.
+- Invalid/deleted/disabled objects, burn/depletion, context changes, death/locks,
+  reset and scene teardown retain cancellation. Body tree exit also releases.
+- Separation is bookkeeping for this authored controller, not an exact inverse
+  of arbitrary nonlinear contact solving. Test releases during collisions and
+  strong external impulses; normal uncluttered jump/turn follow should not be
+  retained as projectile velocity. Detailed behavior remains manually untested.
+
+Control geometry and Push
+- FREE torso origin stays Player/AllomanticOrigin at local (0,0.35,0).
+- Added Player/CameraPivot/Camera3D/CapturedPushOrigin, local (0,-0.3,0).
+  Capture interprets that offset in its clamped aim frame (-35..55 degrees).
+- Neutral COM target = that control origin + (0,0,-2.2). At the authored
+  standing eye height 1.6 m above feet, control origin/COM are at about 1.3 m.
+  Their connecting line is parallel to neutral sight, 0.3 m below it.
+- CapturePoint Position Z tunes held distance; X/Y tune additional offsets,
+  default zero. Distance is at least four bounding radii, clamped 1.5..3.5 m.
+  The actual COM, not an arbitrary mesh origin, remains the physical endpoint.
+- On captured Steel: snapshot control origin and actual physical COM; end Iron
+  and remove controller contribution; evaluate the existing Steel law using
+  saved positions and cleaned velocities; apply through PhysicalForceResponse.
+- Capture-only release adds an impulse equal to the evaluated existing Steel
+  force times push_impulse_duration (0.12 s). This is a deliberate new local
+  release behavior, needed to provide forward initial momentum under 24 gravity;
+  it is not a retune of FREE Steel. Both participant couplings and body masses
+  remain authoritative. At full response a 1 kg LIGHT prop receives 11.52 Ns.
+  Terminal response can reduce it. Set duration to 0 for force-only release.
+- No camera-forward velocity assignment or upward angle/gravity compensation
+  is applied after release. The impulse direction comes from the saved physical
+  origin-to-COM axis. Later held-Steel ticks use the ordinary free torso axis.
+  No second force application or cleanup follows the launch within that tick.
+
+Collision / limitations
+- A test-only sweep of actual body collision shapes clips the desired goal.
+  Native dynamics/CCD resolve actual motion; no manual transform pushes through
+  geometry. Sustained obstructed full control (>0.5 s) or >5 m separation drops.
+- Sharp turns can encounter the player's body; there is no pathfinding/orbit
+  solver. High-speed arrivals, moving obstacles and tight spaces need testing.
+- Visual interpolation carries about one physics tick of presentation delay;
+  diagnostic physics coordinates and rendered positions may differ slightly.
+  Draw proxies support the current static loose meshes, not skinned/animated
+  content. New eligible prop resources need the reusable loose_metal_body script.
+- Early Push during transition or during large aim lag uses the actual unsettled
+  geometry. The parallel-axis goal applies to stable hold, not arbitrary lag.
+
+Files / preservation
+- Replaced scripts/loose_metal_capture.gd; added scripts/loose_metal_body.gd.
+- Updated scripts/allomancy_controller.gd, scripts/allomancy_interaction.gd,
+  scripts/allomancy_debug.gd; scenes/player.tscn adds only the control marker;
+  scenes/allomancy_light.tscn and scenes/world_loose_steel.tscn attach the driver.
+- Added this record and updated the devlog index. Earlier records are unchanged.
+- LIGHT opt-in, mass/size limits and actor exclusions remain; MEDIUM/HEAVY/
+  ANCHORED remain excluded. Acquisition and maintained LOS/range rules persist.
+- No damage/stagger, new input, combat system, resource-rate, movement, crouch,
+  Pewter, inventory, checkpoint or free response-law retuning. No Hathsin/Levels
+  files or unrelated user scene/menu/material work was edited or restored.
+
+Validation / owner acceptance
+- Exactly one minimal headless menu startup passed (exit 0, no script/resource
+  errors); the existing system certificate-store warning remained. Subsequent
+  changes were statically reviewed. No gameplay/physics harness, automated camera,
+  extra startup, desktop or editor interaction. Smoothness is NOT yet validated.
+- Targeted diff whitespace checks and resource path checks passed.
+- API references: Godot RigidBody3D _integrate_forces and Engine interpolation:
+  https://docs.godotengine.org/en/stable/classes/class_rigidbody3d.html
+  https://docs.godotengine.org/en/stable/classes/class_engine.html
+
+Owner tests: pull LIGHT from several metres (ordinary Pull then curved rise);
+settle level; turn and jump/fall (subtle smooth follow, no jitter); drop at apex;
+Push level/up/down (initial axis then gravity); test walls/floors/ceilings and
+abrupt turns; verify anchored exclusion and unchanged free Allomancy; cancel
+with Focus, wheel, depletion and reset. These are suggested tests, not results.

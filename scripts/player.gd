@@ -6,6 +6,7 @@ var move_speed: float = 10.0
 ## Locomotion target only; never a limit on externally generated velocity.
 @export_range(1.0, 3.0, 0.05, "or_greater") var sprint_multiplier := 1.5
 signal external_motion_requested(delta: float)
+signal movement_completed(delta: float)
 @export_range(0.0, 30.0, 0.1) var jump_speed := 9.9
 ## Horizontal convergence rate (1/second) toward ground input velocity.
 ## Applies equally to running and external motion; never damps airborne velocity.
@@ -107,6 +108,7 @@ func _physics_process(delta: float) -> void:
 	velocity += (_external_force / get_effective_mass()) * delta
 	_external_force = Vector3.ZERO
 	move_and_slide()
+	movement_completed.emit(delta)
 	# The collision-resolved body velocity is the next frame's starting point.
 
 func get_allomantic_origin() -> Vector3:

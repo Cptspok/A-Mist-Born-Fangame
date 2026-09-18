@@ -1,15 +1,20 @@
-[gd_scene format=3]
-[ext_resource type="Script" path="res://scripts/playtest_shell.gd" id="shell"]
-[ext_resource type="Script" path="res://scripts/playtest_menu_view.gd" id="menu"]
-[ext_resource type="Script" path="res://scripts/playtest_target_feedback.gd" id="feedback"]
-[node name="PlaytestShell" type="Node"]
+[gd_scene format=3 uid="uid://mtu3bigv2kv5"]
+
+[ext_resource type="Script" uid="uid://dbsc7nj51nag7" path="res://scripts/playtest_target_feedback.gd" id="feedback"]
+[ext_resource type="Script" uid="uid://bxd2hvndgf2s2" path="res://scripts/playtest_menu_view.gd" id="menu"]
+[ext_resource type="Script" uid="uid://7fvofn1a4qr8" path="res://scripts/playtest_shell.gd" id="shell"]
+
+[node name="PlaytestShell" type="Node" unique_id=636696241]
 process_mode = 3
 script = ExtResource("shell")
-[node name="Menu" type="CanvasLayer" parent="."]
+
+[node name="Menu" type="CanvasLayer" parent="." unique_id=1553884653]
 script = ExtResource("menu")
-[node name="Feedback" type="CanvasLayer" parent="."]
+
+[node name="Feedback" type="CanvasLayer" parent="." unique_id=2072235318]
 layer = 2
-[node name="Crosshair" type="Control" parent="Feedback"]
+
+[node name="Crosshair" type="Control" parent="Feedback" unique_id=31960677]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

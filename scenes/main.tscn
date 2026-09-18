@@ -1,14 +1,14 @@
 [gd_scene format=3 uid="uid://c0gh0ft1ahxsx"]
 
-[ext_resource type="PackedScene" path="res://scenes/mini_city.tscn" id="city"]
+[ext_resource type="PackedScene" uid="uid://bqseeyb4enu6o" path="res://scenes/mini_city.tscn" id="city"]
 [ext_resource type="PackedScene" path="res://scenes/equipment_feedback.tscn" id="equipment"]
 [ext_resource type="PackedScene" path="res://scenes/player_health_hud.tscn" id="health"]
 [ext_resource type="PackedScene" uid="uid://d1vyu4w6usieg" path="res://scenes/central_hub.tscn" id="hub"]
-[ext_resource type="PackedScene" path="res://scenes/movement_lab.tscn" id="lab"]
+[ext_resource type="PackedScene" uid="uid://k6iivwn5t6m1" path="res://scenes/movement_lab.tscn" id="lab"]
 [ext_resource type="PackedScene" uid="uid://bu28ecb8jyof2" path="res://scenes/player.tscn" id="player"]
 [ext_resource type="PackedScene" path="res://scenes/allomancy_reserve_hud.tscn" id="reserve_hud"]
 [ext_resource type="PackedScene" uid="uid://scnep11gxfkr" path="res://scenes/traversal_course.tscn" id="trial"]
-[ext_resource type="PackedScene" path="res://scenes/systems_workshop.tscn" id="workshop"]
+[ext_resource type="PackedScene" uid="uid://cr0monvwemn7l" path="res://scenes/systems_workshop.tscn" id="workshop"]
 
 [sub_resource type="Environment" id="Environment_main"]
 background_mode = 1
@@ -41,7 +41,7 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 39.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 37.916992)
 
 [node name="Player" parent="." unique_id=1977453853 instance=ExtResource("player")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 3)
+transform = Transform3D(-0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, -0.70710677, 0, 0.95, 0)
 ground_traction = 11.0
 
 [node name="CombatRetry" type="Marker3D" parent="." unique_id=601539297]

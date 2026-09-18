@@ -1,0 +1,115 @@
+# Loose Metal Capture v0.1
+
+Implemented 2026-09-17 after 020. The developer reported that free Iron drew
+ground-level props toward the feet, making continued targeting and useful Push
+alignment awkward. This pass adds one deliberate captured control state after
+an established free Pull. It does not replace the chest-origin force law.
+
+Files changed
+- scripts/loose_metal_capture.gd (new): force motor, marker tuning, eligibility,
+  constrained aim position, obstruction/break checks and state release.
+- scripts/allomancy_controller.gd: single maintained Pull/capture/released Push
+  lifecycle, existing ability cancellation integration and Iron usage charging.
+- scripts/allomancy_targeting.gd: separately validated maintained target path.
+- scripts/metal_tether_component.gd: capture_enabled opt-in, false by default;
+  deleted collision-volume guard in availability checks.
+- scripts/allomancy_debug.gd: captured-state text and hold-motor indication.
+- scenes/player.tscn: CapturePoint Marker3D/script under AllomanticOrigin.
+- scenes/allomancy_light.tscn and scenes/world_loose_steel.tscn: enable capture
+  on their existing loose-object tethers; no transforms or physics values changed.
+- docs/devlogs/README.md and this chronological record.
+
+Eligibility
+- Explicit capture_enabled, available LIGHT tether, actual live RigidBody3D,
+  unfrozen, ordinary physics integration, mass <= 2 and bounding radius <= 0.65 m.
+- Radius includes enabled direct CollisionShape3D children and their offsets.
+  Missing collision shapes are rejected. CharacterBody/HealthComponent ancestors
+  are rejected. Opt-in is only authored on the existing LIGHT box and loose bar;
+  arbitrary tethers, actors and equipped objects are not enabled automatically.
+- MEDIUM/HEAVY stay free. Their existing couplings are (0.35,1) and (0.85,0.25),
+  compared with LIGHT (0.03,2); the existing Medium also has enlarged geometry.
+  Retaining their systemic player/object response is the conservative v0.1 choice.
+  ANCHORED is always rejected, regardless of the opt-in flag.
+
+Acquire -> free Pull -> capture
+- Initial acquisition keeps nearby candidates, camera cone/LOS and range.
+- While active Iron applies to an eligible acquired prop, remember that prop.
+  It can enter capture on a subsequent physics tick, once its physical body
+  origin is within capture_radius (2.2 m) of AllomanticOrigin, with Steel inactive.
+- Maintained targeting drops the camera-cone requirement, but requires a valid
+  available tether/body, the existing max_range and unobstructed chest-to-tether
+  LOS against the existing world layer. It cannot maintain through a wall.
+- Free pulling before capture still uses AllomanticInteraction unchanged. No
+  camera pitch/aim vector is used in free Steel or Iron force evaluation.
+
+Capture tuning / physics
+- Select Player/AllomanticOrigin/CapturePoint in the player scene.
+  Transform Position defaults to (0,0.15,-1.4), i.e. 1.4 m forward and 0.15 m
+  above the chest origin in neutral aim. Parent origin retains crouch following.
+- Marker script Inspector defaults: capture_radius 2.2 m; follow_responsiveness
+  12 /s; maximum_acceleration 400 m/s^2; break_distance 3.5 m; pitch -35..55 deg;
+  maximum_mass 2; maximum_object_radius 0.65 m.
+- The relatively high but finite acceleration budget brakes incoming props
+  near the existing free 24 m/s terminal before they cross the player's body.
+  These are initial authored values, not measured/playtested balance results.
+- Only after capture, camera pitch (clamped above) rotates the marker offset
+  with player yaw. Offset bounds are forward 1.2..2 m, lateral +/-0.3 m and
+  vertical -0.2..0.4 m, preserving a small region rather than free-flight control.
+- An implicit critically damped spring applies a mass-scaled, bounded continuous
+  force through PhysicalForceResponse. Translation feed-forward uses player
+  velocity; camera angular velocity is not injected. Actual gravity from the
+  physics direct state is compensated by force, not by disabling gravity.
+- A conservative bounding-sphere sweep shortens an obstructed goal. Prolonged
+  obstruction (>0.5 s) or excessive distance breaks capture. Native collisions
+  remain active, including collisions with the player. No transform/velocity
+  assignments, reparenting, collision exceptions, gravity overrides, freezing,
+  or extra launch impulses are used. Only one prop is held.
+- Holding charges existing Iron consumption even at steady rest. It replaces
+  the free Iron force for that prop while captured, not the global Iron law.
+
+Release / cleanup
+- Release Iron: existing ability deactivation removes the motor and references;
+  existing momentum and ordinary gravity/collision remain. No new drop key.
+- Steel while captured: remember this same prop, end Iron/capture first, then
+  apply the unchanged Steel force from its actual physical axis. Keep the
+  released prop targeted under range/LOS while Steel stays active. There is
+  no fake projectile velocity or bonus launch impulse. Releasing/repressing
+  Iron is required for another Pull; a held RMB cannot immediately recapture.
+- Invalid/deleted/disabled objects, lost LOS, burn/access/depletion, context
+  cancellation, gameplay locks/death/reset and scene removal clear control.
+  A broken captured hold ends Iron activation; a fresh press can reacquire.
+- Since body physics properties are never changed, there is no suspended state
+  or collision exception that could survive teardown and leave a floating prop.
+
+Validation and manual limitations
+- Static architecture/diff inspection and git diff --check passed.
+- Exactly one minimal headless application/menu startup exited 0, with no
+  script/resource errors and a system certificate-store warning. The shell
+  preloads the world/player resources; this is not a gameplay/physics test.
+- No gameplay harness, separate project, automated camera/traversal, repeated
+  physics runs or desktop/editor interaction was performed. Detailed feel and
+  visuals remain untested. Final braking defaults were selected by code review.
+- Watch high-speed arrivals and player contact, rapid aim reversals, crouching
+  near floors, narrow doorways, rotated bars, wall-adjacent captures and fast
+  player launches. The bounding sphere is conservative for long/thin shapes;
+  native collisions still resolve starting overlaps. Obstructions may drop
+  an object sooner than its exact shape would require. Extreme external motion
+  may outrun the motor and break capture. Object rotation is not stabilized.
+- Pressing Steel early during the settling transition uses the real, still
+  settling position and therefore may not yet align with the final aim point.
+- No damage, stagger, breakage, throw ability or combat effects were added.
+  Free force laws, reserves/rates, Pewter, movement/crouch, inventory/equipment,
+  dialogue, checkpoints and level layouts were not edited. No Levels/Hathsin
+  file, geometry, material or hierarchy was modified, restored or cleaned up.
+
+Suggested owner test (not performed results)
+A. Enable Iron/Steel burns and Focus, aim at an existing LIGHT box, hold Iron.
+B. Observe ordinary physical-axis Pull while it is still outside capture range.
+C. Let it enter capture without looking down or jumping.
+D. Look level: verify visible, stable holding in front of the chest.
+E. Aim up/down and turn: check constrained follow, including near a wall/floor.
+F. Hold Steel: verify release and ordinary physical-axis Push; release buttons.
+G. Capture again, release Iron alone: verify a natural gravity-driven drop.
+H. Pull an ANCHORED target: verify no capture (also check Medium/Heavy stay free).
+I. Change camera pitch during a free Pull/Push: force must remain on the physical
+   axis. Also try reserve depletion, Focus/wheel cancellation and reset while held.

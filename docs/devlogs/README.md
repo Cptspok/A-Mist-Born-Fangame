@@ -32,6 +32,12 @@ For future milestones, follow [CONTRIBUTING_DEVLOGS.md](CONTRIBUTING_DEVLOGS.md)
 
 | 020 | [Crouch, origin and greybox](020_crouch_origin_greybox.txt) | Replaced Walk with crouch, set three reserves to 200, added a chest force origin and opt-in prototype materials. | Current implementation; owner gameplay evaluation pending. |
 
+| 021 | [Loose Metal Capture v0.1](021_loose_metal_capture.txt) | Added opt-in LIGHT prop capture, maintained targeting and constrained force-based aim/release. | Current implementation; owner manipulation-feel testing pending. |
+
+| 022 | [Capture control refinement](022_capture_control_refinement.txt) | Replaced the spring with collision-checked positional control, COM alignment and clean release. | Current correction after owner feedback; manual retesting pending. |
+
+| 023 | [Blended damped capture](023_blended_damped_capture.txt) | Replaced frozen follow with physics-callback damping, interpolated visuals and captured-release geometry/impulse. | Current implementation; owner smoothness acceptance pending. |
+
 ## Ordering evidence and uncertainty
 
 Numbering follows the first milestone represented, not the report's last edit or filesystem timestamp. Git dates below are **commit dates**, not claims of exact implementation dates.

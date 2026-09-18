@@ -1,0 +1,109 @@
+# Capture control refinement following owner manual testing
+
+2026-09-17, following 021. Owner manual feedback: capture appeared to start at
+the feet, holding jiggled during aiming/jumping, release inherited movement,
+objects occupied too much screen space, and neutral Push tended downward.
+These are owner observations, not external playtest results.
+
+Inspection / uncertainty
+- The actual previous threshold was 2.2 m of 3D distance from torso to body
+  origin, with no scene override found. The player capsule is 1.8 m high with
+  torso at 1.25 m above the feet; the existing LIGHT cube is 0.3 m wide/high.
+  For that cube on flat ground the old sphere should be entered at roughly
+  1.9 m horizontal separation. It does not mathematically explain 0.2 m.
+- The old controller still applied real gravity/velocity-dependent forces,
+  retained incoming velocity, fed player velocity into the spring and left all
+  velocity intact on release. It could overshoot before visibly rising, lag
+  during movement and release with control-generated downward/upward velocity.
+  The bounding sphere also overestimated floor clearance for box/bar shapes.
+- The old neutral marker offset was +0.15 m above torso, so its authored target
+  itself was not below the origin. Actual spring error, premature release and
+  residual motion could contribute. Without reproducing the reported session,
+  the precise feet-only trigger and low-center cause are not proven.
+- The old code positioned body origin and evaluated the force at tether center;
+  neither guarantees physical COM for offset models. Those spatial mismatches
+  are now removed for capture-enabled LIGHT rigid bodies. Existing centered
+  test props retain the same physical force endpoint when free.
+
+Implementation
+- scripts/loose_metal_capture.gd: retains single capture state and eligibility,
+  replaces spring with a deliberately controlled kinematic-frozen RigidBody.
+  Incoming motion is arrested on entry, not banked for a later throw. A 0.15 s
+  smooth positional transition moves the actual center into its hold position.
+  After entry, position follows the current player frame directly each tick;
+  no spring, gravity compensation, angular chasing or player-velocity feed exists.
+- Actual body collision shapes move through move_and_collide with a 0.001 m
+  margin. No noclip or collision-mask exceptions. Translation stops at contact;
+  obstruction lasting 0.35 s releases capture. Orientation remains fixed while
+  captured. This is intentionally simple, not an orbit/pathfinding solver.
+- scripts/player.gd only adds movement_completed(delta) after move_and_slide.
+  scripts/allomancy_controller.gd uses that event for captured positional
+  following, removing the previous pre-movement reference-frame lag. Free
+  forces remain in their original pre-move integration phase.
+- On exit, only the captured body's kinematic-follow linear/angular velocity
+  is cleared, its previous freeze mode is restored, freeze becomes false and
+  the body wakes. Gravity, mass, damping, collision and CCD values are unchanged.
+  No captured translational or angular momentum is stored for later release.
+  Subsequent Steel forces and legitimate free impulses are not reset.
+- Tree exit of either body or controller restores the body. Existing ability
+  release, invalidity, burn/depletion, Focus/wheel cancellation, locks/death/reset
+  and scene changes retain their cleanup paths. No permanent frozen body state.
+- scripts/metal_tether_component.gd adds get_force_position(): for opted-in
+  LIGHT RigidBodies use custom COM or PhysicsDirectBodyState3D.center_of_mass_local
+  transformed to world space. Other tethers keep their existing authored point.
+  Capture aligns this center by accounting for its offset inside the body.
+- scripts/allomancy_interaction.gd uses that physical point; force magnitudes,
+  coupling, terminal response, gravity and physical adapters are unchanged.
+  Steel first releases the authored state and clears follow artifacts, then
+  evaluates the actual body-origin-to-metal-center axis and applies normal force.
+  There is no camera projectile vector or upward correction. Normal gravity
+  can immediately start a downward arc, particularly with sustained-force Steel.
+- scripts/allomancy_debug.gd labels controlled hold and displays COM horizontal
+  distance / height relative to torso, to distinguish state entry from settling.
+
+Designer tuning: Player/AllomanticOrigin/CapturePoint
+- capture_radius: 2.0 m horizontal torso-to-COM range (previously 2.2 m 3D).
+- capture_vertical_reach: +/-1.6 m around torso, so floor objects qualify early.
+- capture_transition_duration: 0.15 s; replaces spring responsiveness controls.
+- Transform Position Z: -2.2 m neutral held distance (previously -1.4).
+- Transform Position Y: 0 m relative to torso (previously +0.15); X: 0 m.
+  Runtime bounds are +/-0.3 m X/Y. Forward distance is at least four body
+  bounding radii, clamped to 1.5..3.5 m. This moves larger eligible props outward.
+- Pitch remains constrained to -35..55 degrees and affects the held control
+  offset only. Break distance is 4.5 m. Mass <=2, radius <=0.65 and explicit
+  LIGHT opt-in remain; MEDIUM/HEAVY/ANCHORED remain ineligible.
+- scenes/player.tscn changes only the CapturePoint offset. AllomanticOrigin
+  stays (0,0.35,0), independent from the manipulated control position.
+
+Validation / scope
+- One minimal headless menu startup exited 0, no script/resource errors;
+  Godot reported the existing certificate-store warning. Static diff and
+  dependency review only thereafter. No gameplay, physics harness, automated
+  camera, desktop/editor control or additional startup was used.
+- Godot API references consulted for the controlled state and COM:
+  https://docs.godotengine.org/en/4.1/classes/class_rigidbody3d.html
+  https://docs.godotengine.org/en/stable/classes/class_physicsdirectbodystate3d.html
+- No level scene apart from the reusable player scene was edited. No mine or
+  Hathsin files, geometry, textures, objects or hierarchy were changed/restored.
+  Existing unrelated scene/menu edits remain. No damage/stagger, eligibility
+  expansion, combat or other systemic retuning. Historical devlogs are intact;
+  this entry and the archive index record the correction.
+
+Manual checks still needed
+1. Pull LIGHT from several metres; watch entry near 2 m and the quick rise.
+2. Aim level: stable COM near torso axis, farther away and readable. Debug
+   height-vs-torso should settle near zero when unblocked.
+3. Turn quickly and jump/fall: held position follows, without jiggle/swinging.
+4. Drop at jump apex: no inherited upward launch. Drop while falling too.
+5. Push level/up/down: launch axis comes from actual position, not camera override.
+6. Try walls/floors/ceilings: contact stops movement; prolonged blockage drops.
+7. Anchors and Medium/Heavy never capture; ordinary free Steel/Iron stays axial.
+8. Cancel via Focus, wheel, depleted Iron, reset or deletion; no frozen remnants.
+
+Limitations: abrupt 180-degree turns can sweep through the player's obstruction
+and drop rather than route around them. Tight spaces or moving solids can break
+control. Kinematic bodies can interact with other bodies; test moving geometry.
+Positional updates run at physics rate. Pushing during the 0.15 s entry uses the
+still-settling actual position, which can legitimately point downward. Initial
+flight is not perfectly horizontal once gravity acts. These are not runtime-
+validated outcomes; detailed manipulation feel remains the owner's next test.
