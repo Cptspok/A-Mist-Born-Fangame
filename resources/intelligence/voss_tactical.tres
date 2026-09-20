@@ -1,12 +1,13 @@
 [gd_resource type="Resource" script_class="IntelligenceClueDefinition" format=3]
 [ext_resource type="Script" path="res://scripts/intelligence_clue_definition.gd" id="script"]
 [ext_resource type="Resource" path="res://resources/intelligence/darven_voss.tres" id="target"]
+[ext_resource type="Script" path="res://scripts/court_intel_field_definition.gd" id="field_type"]
+[ext_resource type="Resource" path="res://resources/intelligence/voss_field_tactics.tres" id="field"]
 [resource]
 script = ExtResource("script")
 unique_id = &"voss_tactical"
 display_name = "Guard combat report"
 target = ExtResource("target")
-reveal_type = "tactical"
 clue_text = "The collector fights with sword and shield and has no ranged attack. Keep your distance and attack from range."
-reveal_text = "The collector fights with sword and shield and has no ranged attack. Keep your distance and attack from range."
 source_description = "Wall group: WallRangedSouth"
+revealed_fields = Array[ExtResource("field_type")]([ExtResource("field")])

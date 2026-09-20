@@ -8,6 +8,7 @@ var _selector: OptionButton
 var _map_title: Label
 var _map: Control
 var _portrait: TextureRect
+var _portrait_placeholder: Label
 var _dossier: Label
 var _notes: Label
 
@@ -34,6 +35,8 @@ func _ready() -> void:
 	_portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	right.add_child(_portrait)
+	_portrait_placeholder = Label.new()
+	right.add_child(_portrait_placeholder)
 	_dossier = Label.new()
 	_dossier.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	right.add_child(_dossier)
@@ -67,7 +70,7 @@ func _refresh() -> void:
 		for target in _catalog.targets:
 			if target == null: continue
 			_targets.append(target)
-			_selector.add_item(target.display_name if _knowledge.knows(target.unique_id, "identity") else target.unknown_display_name)
+			_selector.add_item(target.display_name if _knowledge.knows_identity(target.unique_id) else target.unknown_display_name)
 	if not _targets.is_empty(): _selector.select(clampi(previous, 0, _targets.size() - 1))
 	_render()
 
@@ -79,32 +82,34 @@ func _render() -> void:
 	if _targets.is_empty():
 		_dossier.text = "No Court targets catalogued."
 		_portrait.texture = null
+		_portrait_placeholder.hide()
 		_notes.text = ""
 		return
 	var target := _targets[_selector.selected]
-	var identity := _knowledge.knows(target.unique_id, "identity")
-	var location := _knowledge.knows(target.unique_id, "location")
-	_portrait.texture = target.portrait if identity else target.unknown_portrait
+	var identity := _knowledge.knows_identity(target.unique_id)
+	var location := _knowledge.knows_map_location(target)
+	_portrait.texture = target.portrait if _knowledge.knows_portrait(target.unique_id) else target.unknown_portrait
 	_portrait.visible = _portrait.texture != null
-	_dossier.text = "Name: %s\n%s\nLocation: %s\nStatus: %s" % [target.display_name if identity else target.unknown_display_name, target.dossier_text if identity else "Portrait / dossier: ???", target.location_display_name if location else "???", "Defeated this session" if _knowledge.is_defeated(target.unique_id) else "???"]
-	_notes.text = "TACTICAL INFORMATION\n"
-	var tactical := _knowledge.clues_for(target.unique_id, "tactical")
-	if tactical.is_empty(): _notes.text += "???\n"
-	for clue in tactical:
-		_notes.text += (clue.reveal_text if not clue.reveal_text.is_empty() else clue.clue_text) + "\n"
-	_notes.text += "\nCOLLECTED DOCUMENTS\n"
+	_portrait_placeholder.visible = _portrait.texture == null
+	_portrait_placeholder.text = "Portrait: not assigned" if _knowledge.knows_portrait(target.unique_id) else "Portrait: unknown"
+	_dossier.text = "Name: %s\nStatus: %s" % [target.display_name if identity else target.unknown_display_name, _knowledge.status_label(target.unique_id)]
+	_notes.text = ""
+	for field in target.ordered_fields():
+		if _knowledge.knows_field(target.unique_id, field.unique_id):
+			_notes.text += "%s\n%s\n\n" % [field.display_label, field.revealed_text]
+	if not _knowledge.clues_for(target.unique_id).is_empty(): _notes.text += "COLLECTED DOCUMENTS\n"
 	for clue in _knowledge.clues_for(target.unique_id):
 		_notes.text += "%s\n%s\nSource: %s\n\n" % [clue.display_name, clue.clue_text, clue.source_description]
 	for district in _catalog.maps:
 		if district == null or district.district_id != target.district_id: continue
-		# A target's district itself remains unknown until the location clue.
+		# Map discovery is linked to an authored field, not a fixed clue category.
 		_map_title.text = district.display_name if location else "District assignment: ???"
 		for region in district.regions:
 			if region == null: continue
 			var known := region.initially_known
 			var located: Array[CourtTargetDefinition] = []
 			for candidate in _targets:
-				if candidate.district_id == district.district_id and candidate.region_id == region.unique_id and _knowledge.knows(candidate.unique_id, "location"):
+				if candidate.district_id == district.district_id and candidate.region_id == region.unique_id and _knowledge.knows_map_location(candidate):
 					known = true
 					located.append(candidate)
 			var box := ColorRect.new()
@@ -124,6 +129,6 @@ func _render() -> void:
 				marker.text = "●"
 				marker.modulate = Color("edc46c")
 				marker.position = candidate.map_position.clamp(Vector2.ZERO, Vector2.ONE) * (box.size - Vector2(16, 24))
-				marker.tooltip_text = candidate.display_name if _knowledge.knows(candidate.unique_id, "identity") else "???"
+				marker.tooltip_text = candidate.display_name if _knowledge.knows_identity(candidate.unique_id) else "???"
 				box.add_child(marker)
 		break

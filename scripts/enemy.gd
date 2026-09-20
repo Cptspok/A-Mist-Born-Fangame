@@ -76,6 +76,7 @@ func _clear_external_forces(locked: bool = true) -> void:
 func _ready() -> void:
 	GameplayLocks.lock_changed.connect(_clear_external_forces)
 	if court_target != null:
+		if not health_component.is_dead(): RespawnSession.knowledge.mark_alive(court_target.unique_id)
 		display_name = court_target.display_name
 		var nameplate := get_node_or_null("Nameplate") as Label3D
 		if nameplate != null: nameplate.text = display_name
