@@ -1,0 +1,133 @@
+Milestone 029 - Combat Rewards + Intelligence v0.1 + Parametric Ladders
+Implementation date: 2026-09-18. Owner gameplay testing is pending.
+
+1. DATA AND OWNERSHIP
+CourtTargetDefinition: unique ID, name/unknown name, optional portrait/unknown portrait,
+dossier text, district/region IDs, normalized marker position, location name, clue IDs.
+IntelligenceClueDefinition: unique ID, target Resource, identity/location/tactical reveal
+category, document text, reveal text, source and optional icon. All clues are unique.
+IntelligenceMapDefinition and IntelligenceRegionDefinition: district ID/name, region
+ID/name, normalized bounds and initially-known flag. IntelligenceCatalog lists maps
+and available targets. These definitions remain immutable at runtime.
+IntelligenceKnowledge is owned by RespawnSession. It records clue IDs, discovered
+targets, category reveals and defeat history, with clue_discovered, target_discovered,
+target_updated and cleared signals. New run/restart clears knowledge; checkpoint retry
+retains it. No disk persistence, XP, kill progression or campaign gates were added.
+A repeated target defeat after checkpoint respawn is possible, consistent with existing
+world replacement; dossier defeat status explicitly means 'Defeated this session'.
+
+2. MINI CITY CONTENT
+scenes/court_target.tscn inherits the existing melee enemy: 160 health, 8m detection and
+8m leash; no boss AI. Overseer Darven Voss stands at Mini City local (26, 0.9, -42),
+in the east service yard. He uses the existing primitive enemy visual with purple
+clothing and silver shield, plus a nameplate. Name is read from the target Resource.
+He exists from world startup and has his own encounter_id, court_voss. No clue gate.
+His portrait is a simple schematic SVG matching the prototype palette.
+Designated carriers, keeping every existing enemy position and group unchanged:
+- city_ambush / AmbushMeleeA: identity, 'Sealed collection order', plus basic Steel vial.
+  'Orders bear the seal of Overseer Darven Voss, the Court's collector in Mini City.'
+- city_roofs / RoofMelee: location, 'Service-yard delivery note', plus basic Iron vial.
+  'Deliver the ledger to the east service yard, between the loading house and outer wall.'
+- city_wall / WallRangedSouth: tactical, 'Guard combat report', plus basic Pewter vial.
+  'The collector fights with sword and shield and has no ranged attack. Keep your
+  distance and attack from range.'
+The tactical text describes Voss's actual melee archetype, not immunity to nearby enemies.
+
+3. REWARDS / EXISTING PICKUPS
+EnemyController exposes rewards: EnemyRewardDefinition, with Items and Intelligence
+Clues arrays. Items are ordinary ItemDefinitions, including existing consumable vials.
+Each entry drops one item; repeated item entries author additional quantities.
+Only designated carriers receive clue definitions. The death path issues rewards once,
+defers spawning outside physics callbacks, and creates existing WorldItem pickups as
+siblings of the corpse so fading the enemy does not remove them.
+Clues are wrapped in new runtime document ItemDefinitions, never by mutating authored
+resources. WorldItem -> InventoryComponent.try_add remains the pickup transaction.
+Documents are read straight into knowledge, not stored as grid stacks. Full inventory
+therefore does not block intelligence. Ordinary items retain inventory capacity rules.
+Knowledge keys by unique clue ID; repeated array entries are filtered on drop, known
+clues are not dropped on checkpoint retries, and duplicate world documents are consumed
+without another discovery signal or stack. Item_added fires only on a new discovery.
+No clue IDs appear in enemy scripts.
+
+4. INVENTORY / INTELLIGENCE UI
+Existing InventoryUI now owns a TabContainer. A/E cycle its current tab count only while
+visible; tab switching cancels item drags and context menus. Existing inventory/equipment
+controls and pause/mouse ownership remain in place. IntelligenceView reads catalog and
+knowledge, with an extensible target selector, map left and dossier right.
+Unknown identity, portrait/dossier, location and tactical fields show ???. Identity
+reveals portrait/name/dossier; location reveals region name and gold marker without
+revealing identity; tactical reveals its information independently. Collected documents
+are scrollable and include source text. Initially-known map regions are visible; unknown
+regions show ?. No Mini City IDs/names are embedded in presentation code.
+
+5. AUTHORING WITHOUT GAMEPLAY CODE
+- Create a CourtTargetDefinition Resource with a globally unique ID. Fill identity,
+  portrait/dossier and district/region/location fields. Add it to
+  resources/intelligence/catalog.tres Targets. Assign it to an existing enemy's
+  Court Target field. Use a distinct Encounter Id for a solo encounter. The new Court
+  scene is also a reusable base, with editable visual, health, sensing and leash values.
+- Create IntelligenceClueDefinition, give it a unique ID, assign the target Resource,
+  choose reveal type and write text/source/icon. Add its ID to the target's association
+  list for authoring reference; reveal authorization comes from the clue's target.
+  Add it to one carrier's EnemyRewardDefinition Intelligence Clues array. Place normal
+  item/metal definitions in Items. An ItemDefinition may also directly reference a clue
+  for designer-authored world documents.
+- Create IntelligenceMapDefinition with a unique district ID; create region subresources
+  with IDs and normalized Rect2 bounds (0..1). Add the map to catalog Maps, match target
+  district/region IDs, and set its marker position within that region (0..1).
+- Different reveal categories can be added to the clue's string enum; knowledge already
+  stores arbitrary categories and the document list renders their text. Specialized new
+  category UI would need its own presentation, not a knowledge rewrite.
+
+6. PARAMETRIC LADDER
+scenes/parametric_ladder.tscn / scripts/parametric_ladder.gd (@tool).
+Inspector: Height (1..40), Width, Rung Spacing, Rung Thickness, Climb Speed,
+Front Offset and Top Exit Distance. Height/geometry changes regenerate two solid rails,
+evenly distributed rungs and a tall interaction volume. Generated children are transient,
+not serialized duplicates. Rungs are visual; rails have collision.
+Placement: origin is bottom floor, local +Z is climbing face and -Z top landing. Keep
+upright at unit scale, rotate around Y, resize through Height. Place the top at the
+landing floor height and leave capsule clearance above it and along the exit path.
+Use F (Interact) while standing near the face or top landing; W/S climb up/down.
+Jump or Interact releases the grip. Reaching the top moves over the landing; descending
+to the bottom releases normally. Top entry moves out to the face before descending.
+The player motor owns collision motion and still emits external-motion/movement signals;
+forces or impulses release the grip and retain their normal integration. No teleports.
+Primary/secondary combat and combat ability inputs are blocked while attached; mounting
+cancels held actions. No stamina, sliding, ladder animations or ladder combat added.
+Narrow passages need space for the normal player capsule; blocked exits remain blocked
+by geometry and can be abandoned with Interact/Jump. No ladder was placed in any level.
+
+7. SAFETY / VALIDATION / LIMITATIONS
+Only Mini City integration additions: three reward assignments and one target instance
+plus their resource references. Existing transforms/geometry/nav data were not edited.
+No Hathsin files, layouts or resources were modified. Loose-metal/Steel/Iron/Pewter,
+equipment/consumable definitions, AI and checkpoint flow were not redesigned.
+Validation: static diff inspection; Godot 4.7.2 headless editor resource import; ladder
+and intelligence-view parser checks; one minimal two-frame headless main-scene startup.
+A key-variable inference parser error was corrected. Standalone checks of autoload-
+dependent scripts could not resolve autoload names; project-aware import and startup
+succeeded. Initial sandbox editor-cache path errors were avoided by placing validation
+user/cache data under temp. Remaining startup message: existing certificate-store warning.
+No temporary gameplay harness, combat/clue automation, broad suite, editor/mouse control,
+or detailed gameplay testing was performed. Runtime feel and menu layout remain for
+owner evaluation. Session knowledge has no save/load expansion.
+
+8. MANUAL TESTS (SUGGESTED; NOT EXECUTED)
+- Open inventory; A/E cycle Inventory/Intelligence in both directions. Close and confirm
+  gameplay controls retain their normal behavior. Check equipment drag/use/drop as before.
+- Start a fresh run: dossier identity/portrait/location/tactical information is ???;
+  east service yard is ?, without target marker. Voss is physically present and fightable.
+- On separate fresh runs, defeat/pick up only each designated carrier's document. Verify
+  identity-only, location-only and tactical-only field changes. Location-first should
+  show an anonymous marker while identity remains ???. Tactical-first should not unlock it.
+- Collect all three: portrait/name/dossier, east-yard marker and tactical text are known.
+- Retry a checkpoint after discovery: already-known document does not yield new discovery;
+  other members of its group never yield that clue. For a duplicate-pickup case, place
+  two WorldItems using one ItemDefinition with the same Intelligence Clue: one journal entry.
+- Pick up/use the ordinary carrier vials. Fill inventory and confirm normal loot remains
+  in world while documents can still be read. Restart clears intelligence for a new run.
+- Instance ParametricLadder in a test area of your choice, resize Height/Width/Spacing;
+  inspect rails/rungs/volume. Set base at floor and top at landing. Mount from bottom,
+  climb W/S, exit top/bottom, mount from top, and release mid-climb with F or Jump.
+  Check a narrow placement/blocked exit, pause/resume, and external-force disengagement.

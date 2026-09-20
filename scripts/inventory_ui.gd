@@ -2,6 +2,8 @@ extends CanvasLayer
 
 @export_range(32, 128, 1) var cell_size := 72.0
 @export_range(0, 16, 1) var cell_gap := 4.0
+var tabs: TabContainer
+var intelligence_view: IntelligenceView
 var panel: PanelContainer
 var grid: InventoryGrid
 var slots_box: GridContainer
@@ -26,12 +28,19 @@ func _ready() -> void:
 	column.add_theme_constant_override("separation", 14)
 	margin.add_child(column)
 	var title := Label.new()
-	title.text = "Inventory & Equipment"
+	title.text = "Inventory & Intelligence    [A / E: previous / next tab]"
 	title.add_theme_font_size_override("font_size", 26)
 	column.add_child(title)
+	tabs = TabContainer.new()
+	column.add_child(tabs)
 	var row := HBoxContainer.new()
+	row.name = "Inventory"
 	row.add_theme_constant_override("separation", 25)
-	column.add_child(row)
+	tabs.add_child(row)
+	intelligence_view = IntelligenceView.new()
+	intelligence_view.name = "Intelligence"
+	tabs.add_child(intelligence_view)
+	tabs.tab_changed.connect(_tab_changed)
 	grid = InventoryGrid.new()
 	grid.stack_clicked.connect(_show_menu)
 	grid.stack_hovered.connect(_show_tooltip)
@@ -83,6 +92,12 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	# Do not open inventory over another SceneTree pause owner (shell menus).
 	if get_tree().paused and not visible: return
+	if visible and event is InputEventKey and event.pressed and not event.echo:
+		var key: int = event.physical_keycode if event.physical_keycode != 0 else event.keycode
+		if key == KEY_A or key == KEY_E:
+			tabs.current_tab = posmod(tabs.current_tab + (-1 if key == KEY_A else 1), tabs.get_tab_count())
+			get_viewport().set_input_as_handled()
+			return
 	if visible and event is InputEventMouseButton and get_viewport().gui_is_dragging():
 		_drop_drag_outside(event)
 	if event.is_action_pressed("toggle_inventory"):
@@ -132,6 +147,7 @@ func open() -> void:
 		slot_controls.append(control)
 	if not equipment.transaction_rejected.is_connected(_rejected):
 		equipment.transaction_rejected.connect(_rejected)
+	intelligence_view.configure(RespawnSession.intelligence_catalog, RespawnSession.knowledge)
 	_previous_mouse_mode = Input.mouse_mode
 	GameplayLocks.acquire(&"inventory")
 	show()
@@ -199,3 +215,8 @@ func _fit_panel() -> void:
 	var extent := panel.get_combined_minimum_size()
 	var ratio := minf(1.0, minf(available.x / extent.x, available.y / extent.y))
 	panel.scale = Vector2.ONE * maxf(0.1, ratio)
+
+func _tab_changed(_index: int) -> void:
+	if get_viewport().gui_is_dragging(): get_viewport().gui_cancel_drag()
+	if menu != null: menu.hide()
+	_fit_panel.call_deferred()

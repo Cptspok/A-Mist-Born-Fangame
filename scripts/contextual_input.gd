@@ -101,7 +101,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	for action in [&"primary_action", &"secondary_action"]:
 		if not event.is_action_pressed(action) and not event.is_action_released(action): continue
 		get_viewport().set_input_as_handled()
-		if get_tree().paused or GameplayLocks.is_locked() or health.is_dead() or wheel_open: return
+		if get_tree().paused or GameplayLocks.is_locked() or health.is_dead() or wheel_open or get_parent().is_climbing(): return
 		if _suppressed.has(action):
 			if event.is_action_released(action): _suppressed.erase(action)
 			return

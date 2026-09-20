@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="IntelligenceClueDefinition" format=3]
+[ext_resource type="Script" path="res://scripts/intelligence_clue_definition.gd" id="script"]
+[ext_resource type="Resource" path="res://resources/intelligence/darven_voss.tres" id="target"]
+[resource]
+script = ExtResource("script")
+unique_id = &"voss_location"
+display_name = "Service-yard delivery note"
+target = ExtResource("target")
+reveal_type = "location"
+clue_text = "Deliver the ledger to the east service yard, between the loading house and outer wall."
+reveal_text = "Deliver the ledger to the east service yard, between the loading house and outer wall."
+source_description = "Rooftop group: RoofMelee"

@@ -53,7 +53,7 @@ func handle_contextual_action(action: StringName, pressed: bool) -> void:
 	if _runtimes.has(active_slot): _runtimes[active_slot].handle_action(action, pressed)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if GameplayLocks.is_locked() or health.is_dead() or get_tree().paused or get_parent().get_node("ContextualInput").wheel_open: return
+	if GameplayLocks.is_locked() or health.is_dead() or get_tree().paused or get_parent().is_climbing() or get_parent().get_node("ContextualInput").wheel_open: return
 	for action in [&"ability_1", &"ability_2"]:
 		if event.is_action_pressed(action) or event.is_action_released(action):
 			var pressed := event.is_action_pressed(action)

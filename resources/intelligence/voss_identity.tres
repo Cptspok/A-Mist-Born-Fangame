@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="IntelligenceClueDefinition" format=3]
+[ext_resource type="Script" path="res://scripts/intelligence_clue_definition.gd" id="script"]
+[ext_resource type="Resource" path="res://resources/intelligence/darven_voss.tres" id="target"]
+[resource]
+script = ExtResource("script")
+unique_id = &"voss_identity"
+display_name = "Sealed collection order"
+target = ExtResource("target")
+reveal_type = "identity"
+clue_text = "Orders bear the seal of Overseer Darven Voss, the Court's collector in Mini City."
+reveal_text = "Orders bear the seal of Overseer Darven Voss, the Court's collector in Mini City."
+source_description = "North-lane ambush: AmbushMeleeA"

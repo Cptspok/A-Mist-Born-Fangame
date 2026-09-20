@@ -4,6 +4,9 @@ extends CharacterBody3D
 @export_group("Identity")
 @export var encounter_id: StringName = &""
 @export var display_name: String = "Enemy"
+@export var court_target: CourtTargetDefinition
+@export var rewards: EnemyRewardDefinition
+var _rewards_issued := false
 
 @export_group("Visuals")
 @export var visual_scene: PackedScene
@@ -72,6 +75,10 @@ func _clear_external_forces(locked: bool = true) -> void:
 
 func _ready() -> void:
 	GameplayLocks.lock_changed.connect(_clear_external_forces)
+	if court_target != null:
+		display_name = court_target.display_name
+		var nameplate := get_node_or_null("Nameplate") as Label3D
+		if nameplate != null: nameplate.text = display_name
 	spawn_position = global_position
 	_configure_collision()
 	_instantiate_visual()
@@ -116,6 +123,10 @@ func _play_idle_animation() -> void:
 
 
 func _on_died() -> void:
+	if not _rewards_issued:
+		_rewards_issued = true
+		if court_target != null: RespawnSession.knowledge.mark_defeated(court_target.unique_id)
+		_drop_rewards.call_deferred()
 	_is_active = false
 	_clear_external_forces()
 	for tether in visual_root.find_children("*", "Area3D", true, false):
@@ -123,3 +134,6 @@ func _on_died() -> void:
 			tether.enabled = false
 	velocity = Vector3.ZERO
 	set_state(&"Dead")
+
+func _drop_rewards() -> void:
+	preload("res://scripts/enemy_rewards.gd").drop(self, rewards)

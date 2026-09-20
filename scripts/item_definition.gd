@@ -13,6 +13,7 @@ const ConsumableDefinition = preload("res://scripts/consumable_definition.gd")
 @export var world_visual: PackedScene
 @export var combat_definition: CombatItemDefinition
 @export var consumable: ConsumableDefinition
+@export var intelligence_clue: IntelligenceClueDefinition
 
 @export var equipment_profile: EquipmentProfile
 

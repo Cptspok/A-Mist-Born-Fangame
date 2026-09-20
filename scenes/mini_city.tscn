@@ -18,6 +18,10 @@
 [ext_resource type="PackedScene" path="res://scenes/ranged_enemy.tscn" id="ranged"]
 [ext_resource type="PackedScene" path="res://scenes/world_metal_signpost.tscn" id="sign"]
 
+[ext_resource type="PackedScene" path="res://scenes/court_target.tscn" id="court_target"]
+[ext_resource type="Resource" path="res://resources/intelligence/identity_rewards.tres" id="identity_rewards"]
+[ext_resource type="Resource" path="res://resources/intelligence/location_rewards.tres" id="location_rewards"]
+[ext_resource type="Resource" path="res://resources/intelligence/tactical_rewards.tres" id="tactical_rewards"]
 [sub_resource type="Resource" id="dialogue0"]
 script = ExtResource("dialogue")
 lines = ["Quiet here. Trouble starts beyond the north lane."]
@@ -270,6 +274,7 @@ dialogue_data = SubResource("dialogue1")
 [node name="Encounters" type="Node3D" parent="." unique_id=1233690275]
 
 [node name="AmbushMeleeA" parent="Encounters" unique_id=1280380751 instance=ExtResource("melee")]
+rewards = ExtResource("identity_rewards")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.9, -33)
 encounter_id = &"city_ambush"
 
@@ -290,6 +295,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 6.9, -66)
 encounter_id = &"city_roofs"
 
 [node name="RoofMelee" parent="Encounters" unique_id=1290687382 instance=ExtResource("melee")]
+rewards = ExtResource("location_rewards")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 6.9, -59)
 encounter_id = &"city_roofs"
 
@@ -298,6 +304,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 16.479164, -51)
 encounter_id = &"city_wall"
 
 [node name="WallRangedSouth" parent="Encounters" unique_id=775732233 instance=ExtResource("ranged")]
+rewards = ExtResource("tactical_rewards")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 16.479164, -35)
 encounter_id = &"city_wall"
 
@@ -353,3 +360,6 @@ tint = Color(0.48, 0.51, 0.54, 1)
 transform = Transform3D(1, 0, 0, 0, -1.0747931, 0.7829593, 0, -0.5780508, -1.4557877, 34, 7.539665, -7.7216325)
 dimensions = Vector3(5, 0.4, 19.77367)
 tint = Color(0.48, 0.51, 0.54, 1)
+
+[node name="DarvenVoss" parent="Encounters" instance=ExtResource("court_target")]
+position = Vector3(26, 0.9, -42)

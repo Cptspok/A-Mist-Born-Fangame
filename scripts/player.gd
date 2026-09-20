@@ -14,6 +14,9 @@ signal movement_completed(delta: float)
 @export_range(0.0, 30.0, 0.1) var air_control_acceleration := 4.0
 @export_range(0.01, 1000.0, 0.01, "or_greater") var force_response_mass := 1.0
 var _external_force := Vector3.ZERO
+var _ladder: ParametricLadder
+var _ladder_top_mount := false
+var _ladder_top_exit := false
 
 @export_group("Crouch")
 @export_range(0.1, 10.0, 0.1) var crouched_movement_speed := 2.5
@@ -79,11 +82,13 @@ func apply_external_force(force: Vector3) -> void:
 
 func apply_external_impulse(impulse: Vector3) -> void:
 	if impulse.is_finite() and not GameplayLocks.is_locked():
+		_ladder = null
 		velocity += impulse / get_effective_mass()
 
 func _physics_process(delta: float) -> void:
 	if GameplayLocks.is_locked(): return
 	_update_crouch(delta)
+	if _step_ladder(delta): return
 	var movement_input := Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	if $ContextualInput.wheel_open: movement_input = Vector2.ZERO
 	var desired := global_basis * Vector3(movement_input.x, 0.0, movement_input.y)
@@ -176,6 +181,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			deg_to_rad(min_look_angle), deg_to_rad(max_look_angle)
 		)
 	if event.is_action_pressed(interact_action):
+		if is_climbing():
+			_ladder = null
+			get_viewport().set_input_as_handled()
+			return
 		var interaction := _get_nearest_interaction()
 		if interaction != null:
 			interaction.interact(self)
@@ -215,3 +224,57 @@ func _on_interaction_area_exited(area: Area3D) -> void:
 
 func _on_stat_changed(stat: StatIds.Stat, value: float) -> void:
 	if stat == StatIds.Stat.MOVE_SPEED: move_speed = value
+
+func is_climbing() -> bool:
+	return is_instance_valid(_ladder)
+
+func begin_ladder(ladder: ParametricLadder) -> void:
+	if GameplayLocks.is_locked() or $HealthComponent.is_dead() or is_crouching: return
+	_ladder = ladder
+	_ladder_top_exit = false
+	_ladder_top_mount = ladder.to_local(global_position).z < 0.0
+	velocity = Vector3.ZERO
+	$ContextualInput._cancel_context()
+
+func _step_ladder(delta: float) -> bool:
+	if not is_climbing(): return false
+	if $HealthComponent.is_dead():
+		_ladder = null
+		return false
+	var ladder := _ladder
+	if Input.is_action_just_pressed("jump") and not $ContextualInput.wheel_open:
+		_ladder = null
+		velocity += ladder.global_basis.z.normalized() * 3.0 + Vector3.UP * jump_speed * 0.5
+		return false
+	var local := ladder.to_local(global_position)
+	var feet_offset := _standing_height * 0.5 - _standing_center_y
+	var top := ladder.height + feet_offset + 0.08
+	var axis := Input.get_axis("move_backward", "move_forward")
+	if $ContextualInput.wheel_open: axis = 0.0
+	var destination := Vector3(0, local.y, ladder.front_offset)
+	if _ladder_top_mount:
+		destination.y = top
+		if local.distance_to(destination) < 0.08: _ladder_top_mount = false
+	elif _ladder_top_exit:
+		destination = Vector3(0, top, -ladder.top_exit_distance)
+		if local.distance_to(destination) < 0.08:
+			_ladder = null
+			return false
+	else:
+		var aligned := Vector2(local.x, local.z - ladder.front_offset).length() < 0.1
+		if aligned:
+			destination.y = clampf(local.y + axis * ladder.climb_speed * delta, feet_offset, top)
+			if axis > 0.0 and local.y >= top - 0.03: _ladder_top_exit = true
+			if axis < 0.0 and local.y <= feet_offset + 0.03:
+				_ladder = null
+				return false
+	# Authored climbing intent uses the existing collision motor. No position snaps.
+	velocity = (ladder.to_global(destination) - global_position).limit_length(ladder.climb_speed * delta) / maxf(delta, 0.001)
+	external_motion_requested.emit(delta)
+	# External forces release the grip and retain their ordinary integration path.
+	if not _external_force.is_zero_approx(): _ladder = null
+	velocity += _external_force / get_effective_mass() * delta
+	_external_force = Vector3.ZERO
+	move_and_slide()
+	movement_completed.emit(delta)
+	return true

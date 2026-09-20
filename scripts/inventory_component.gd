@@ -23,6 +23,16 @@ func can_place(definition: ItemDefinition, position: Vector2i, ignored: ItemStac
 	return true
 
 func try_add(definition: ItemDefinition, quantity := 1) -> bool:
+	if definition == null or quantity <= 0: return false
+	var clue := definition.intelligence_clue
+	# Documents are read into the journal through the same pickup transaction.
+	# They do not consume grid space; duplicate documents yield no extra reward.
+	if clue != null:
+		if clue.unique_id == &"" or clue.target == null or clue.target.unique_id == &"":
+			pickup_rejected.emit(definition)
+			return false
+		if RespawnSession.knowledge.discover(clue): item_added.emit(definition)
+		return true
 	for y in grid_height:
 		for x in grid_width:
 			var position := Vector2i(x, y)

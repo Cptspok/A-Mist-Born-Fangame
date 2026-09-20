@@ -38,6 +38,8 @@ For future milestones, follow [CONTRIBUTING_DEVLOGS.md](CONTRIBUTING_DEVLOGS.md)
 
 | 023 | [Blended damped capture](023_blended_damped_capture.txt) | Replaced frozen follow with physics-callback damping, interpolated visuals and captured-release geometry/impulse. | Current implementation; owner smoothness acceptance pending. |
 
+| 029 | [Combat rewards, Intelligence and ladders](029_combat_intelligence_ladders.txt) | Adds authored Court clues/rewards, inventory Intelligence tab and reusable parametric ladder. | Implemented; conservative checks passed, owner gameplay evaluation pending. |
+
 ## Ordering evidence and uncertainty
 
 Numbering follows the first milestone represented, not the report's last edit or filesystem timestamp. Git dates below are **commit dates**, not claims of exact implementation dates.
