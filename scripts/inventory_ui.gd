@@ -3,6 +3,7 @@ extends CanvasLayer
 @export_range(32, 128, 1) var cell_size := 72.0
 @export_range(0, 16, 1) var cell_gap := 4.0
 var tabs: TabContainer
+var _tab_title: Label
 var intelligence_view: IntelligenceView
 var panel: PanelContainer
 var grid: InventoryGrid
@@ -28,7 +29,9 @@ func _ready() -> void:
 	column.add_theme_constant_override("separation", 14)
 	margin.add_child(column)
 	var title := Label.new()
-	title.text = "Inventory & Intelligence    [A / E: previous / next tab]"
+	_tab_title = title
+	_update_tab_hint()
+	KeybindSettings.changed.connect(_update_tab_hint)
 	title.add_theme_font_size_override("font_size", 26)
 	column.add_child(title)
 	tabs = TabContainer.new()
@@ -92,10 +95,9 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	# Do not open inventory over another SceneTree pause owner (shell menus).
 	if get_tree().paused and not visible: return
-	if visible and event is InputEventKey and event.pressed and not event.echo:
-		var key: int = event.physical_keycode if event.physical_keycode != 0 else event.keycode
-		if key == KEY_A or key == KEY_E:
-			tabs.current_tab = posmod(tabs.current_tab + (-1 if key == KEY_A else 1), tabs.get_tab_count())
+	if visible and not event.is_echo():
+		if event.is_action_pressed("previous_tab") or event.is_action_pressed("next_tab"):
+			tabs.current_tab = posmod(tabs.current_tab + (-1 if event.is_action_pressed("previous_tab") else 1), tabs.get_tab_count())
 			get_viewport().set_input_as_handled()
 			return
 	if visible and event is InputEventMouseButton and get_viewport().gui_is_dragging():
@@ -220,3 +222,6 @@ func _tab_changed(_index: int) -> void:
 	if get_viewport().gui_is_dragging(): get_viewport().gui_cancel_drag()
 	if menu != null: menu.hide()
 	_fit_panel.call_deferred()
+
+func _update_tab_hint() -> void:
+	_tab_title.text = "Inventory & Intelligence    [%s / %s: previous / next tab]" % [InputHint.binding("previous_tab"), InputHint.binding("next_tab")]

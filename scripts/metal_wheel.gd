@@ -53,5 +53,5 @@ func _draw() -> void:
 			var reserve_text := "%.1f / %.0f" % [_resources.reserve(id), _resources.maximum_reserve(id)]
 			draw_string(font, at + Vector2(-font.get_string_size(reserve_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 16).x * 0.5, 24), reserve_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 16)
 	draw_string(font, center + Vector2(-42, 0), "METALS", HORIZONTAL_ALIGNMENT_LEFT, -1, 20)
-	draw_string(font, center + Vector2(-180, OUTER + 40), "Click to toggle burns - Release Shift to close", HORIZONTAL_ALIGNMENT_LEFT, -1, 18)
+	draw_string(font, center + Vector2(-180, OUTER + 40), "Click to toggle burns - Release %s to close" % InputHint.binding("metal_wheel"), HORIZONTAL_ALIGNMENT_LEFT, -1, 18)
 

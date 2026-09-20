@@ -4,12 +4,16 @@
 [ext_resource type="Resource" uid="uid://t7fgo684v1d7" path="res://resources/sword.tres" id="6_fuosr"]
 [ext_resource type="Resource" uid="uid://dpidm6e2tfmvc" path="res://resources/quiver.tres" id="7_jleqt"]
 [ext_resource type="Resource" uid="uid://by6iitlu4ve0r" path="res://resources/bow.tres" id="8_8eyx4"]
+[ext_resource type="PackedScene" path="res://scenes/parametric_ladder.tscn" id="12_w67qg"]
 [ext_resource type="PackedScene" uid="uid://2wp53oqsdqpb" path="res://scenes/greybox_block.tscn" id="block"]
 [ext_resource type="PackedScene" path="res://scenes/encounter_freight_cart.tscn" id="cart"]
+[ext_resource type="PackedScene" path="res://scenes/court_target.tscn" id="court_target"]
 [ext_resource type="Script" uid="uid://dv3sig1sv8u2u" path="res://scripts/dialogue_data.gd" id="dialogue"]
 [ext_resource type="Material" path="res://resources/greybox_materials/floor.tres" id="gb_floor"]
 [ext_resource type="Material" uid="uid://dxkg0nn5jc1f8" path="res://resources/greybox_materials/structure.tres" id="gb_structure"]
 [ext_resource type="Material" uid="uid://5smtwio0d5e1" path="res://resources/greybox_materials/traversal.tres" id="gb_traversal"]
+[ext_resource type="Resource" path="res://resources/intelligence/identity_rewards.tres" id="identity_rewards"]
+[ext_resource type="Resource" path="res://resources/intelligence/location_rewards.tres" id="location_rewards"]
 [ext_resource type="PackedScene" path="res://scenes/world_loose_steel.tscn" id="loose"]
 [ext_resource type="PackedScene" path="res://scenes/example_enemy.tscn" id="melee"]
 [ext_resource type="NavigationMesh" path="res://resources/mini_city_navigation.tres" id="nav"]
@@ -17,11 +21,8 @@
 [ext_resource type="PackedScene" path="res://scenes/world_metal_rail.tscn" id="rail"]
 [ext_resource type="PackedScene" path="res://scenes/ranged_enemy.tscn" id="ranged"]
 [ext_resource type="PackedScene" path="res://scenes/world_metal_signpost.tscn" id="sign"]
-
-[ext_resource type="PackedScene" path="res://scenes/court_target.tscn" id="court_target"]
-[ext_resource type="Resource" path="res://resources/intelligence/identity_rewards.tres" id="identity_rewards"]
-[ext_resource type="Resource" path="res://resources/intelligence/location_rewards.tres" id="location_rewards"]
 [ext_resource type="Resource" path="res://resources/intelligence/tactical_rewards.tres" id="tactical_rewards"]
+
 [sub_resource type="Resource" id="dialogue0"]
 script = ExtResource("dialogue")
 lines = ["Quiet here. Trouble starts beyond the north lane."]
@@ -271,12 +272,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.9, 8)
 display_name = "CartDriver"
 dialogue_data = SubResource("dialogue1")
 
+[node name="ParametricLadder" parent="Market" unique_id=1619467001 instance=ExtResource("12_w67qg")]
+transform = Transform3D(-0.11149425, -0.66062576, 3.2824101, 0.031003254, 2.0178034, 1.0769337, -3.1395864, 0.04338612, -0.105931684, 19.737473, 0, -39.97789)
+
 [node name="Encounters" type="Node3D" parent="." unique_id=1233690275]
 
 [node name="AmbushMeleeA" parent="Encounters" unique_id=1280380751 instance=ExtResource("melee")]
-rewards = ExtResource("identity_rewards")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.9, -33)
 encounter_id = &"city_ambush"
+rewards = ExtResource("identity_rewards")
 
 [node name="AmbushMeleeB" parent="Encounters" unique_id=1215598171 instance=ExtResource("melee")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.9, -37)
@@ -295,18 +299,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 6.9, -66)
 encounter_id = &"city_roofs"
 
 [node name="RoofMelee" parent="Encounters" unique_id=1290687382 instance=ExtResource("melee")]
-rewards = ExtResource("location_rewards")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 6.9, -59)
 encounter_id = &"city_roofs"
+rewards = ExtResource("location_rewards")
 
 [node name="WallRangedNorth" parent="Encounters" unique_id=1403455772 instance=ExtResource("ranged")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 16.479164, -51)
 encounter_id = &"city_wall"
 
 [node name="WallRangedSouth" parent="Encounters" unique_id=775732233 instance=ExtResource("ranged")]
-rewards = ExtResource("tactical_rewards")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 16.479164, -35)
 encounter_id = &"city_wall"
+rewards = ExtResource("tactical_rewards")
+
+[node name="DarvenVoss" parent="Encounters" unique_id=1161553952 instance=ExtResource("court_target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0.9, -42)
 
 [node name="Metalwork" type="Node3D" parent="." unique_id=1231921101]
 
@@ -360,6 +367,3 @@ tint = Color(0.48, 0.51, 0.54, 1)
 transform = Transform3D(1, 0, 0, 0, -1.0747931, 0.7829593, 0, -0.5780508, -1.4557877, 34, 7.539665, -7.7216325)
 dimensions = Vector3(5, 0.4, 19.77367)
 tint = Color(0.48, 0.51, 0.54, 1)
-
-[node name="DarvenVoss" parent="Encounters" instance=ExtResource("court_target")]
-position = Vector3(26, 0.9, -42)

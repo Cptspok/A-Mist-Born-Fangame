@@ -9,13 +9,20 @@ extends Area3D
 
 signal interacted(interactor: Node)
 
+## Optional actor-specific filter shared by selection, prompt and activation.
+var availability_check: Callable
+
 
 func can_interact() -> bool:
 	return interaction_enabled
 
 
+func can_interact_with(interactor: Node) -> bool:
+	return can_interact() and (not availability_check.is_valid() or availability_check.call(interactor))
+
+
 func interact(interactor: Node) -> void:
-	if not can_interact():
+	if not can_interact_with(interactor):
 		return
 
 	interacted.emit(interactor)

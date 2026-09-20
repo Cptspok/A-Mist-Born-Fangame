@@ -19,9 +19,14 @@ func _process(_delta: float) -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if page != "game" or GameplayLocks.is_locked() or wheel_open else Input.MOUSE_MODE_CAPTURED
 
 func _input(event: InputEvent) -> void:
+	if page == "controls" and is_instance_valid(menu.controls) and menu.controls.handle_input(event): return
 	if event.is_echo(): return
 	if is_instance_valid(player) and player.get_node("HealthComponent").is_dead(): return
-	if event.is_action_pressed("pause"):
+	# Fixed Escape is a menu safety path even when Pause is cleared.
+	var cancel: bool = event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE
+	# Mouse-bound Pause opens the menu without intercepting its clickable buttons.
+	var pause_context: bool = page == "game" or (page == "pause" and event is InputEventKey)
+	if cancel or (pause_context and event.is_action_pressed("pause")):
 		if InventoryUI.visible: return # Inventory owns Escape until it closes.
 		get_viewport().set_input_as_handled()
 		match page:

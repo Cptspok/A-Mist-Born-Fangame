@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 RespawnSession="*res://scripts/respawn_session.gd"
 PlaytestSettings="*res://scripts/playtest_settings.gd"
+KeybindSettings="*res://scripts/keybind_settings.gd"
 GameplayLocks="*res://scripts/gameplay_locks.gd"
 DialogueManager="*res://scripts/dialogue_manager.gd"
 InventoryUI="*res://scripts/inventory_ui.gd"

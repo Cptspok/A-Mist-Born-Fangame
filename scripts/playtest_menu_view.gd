@@ -5,6 +5,7 @@ var center: CenterContainer
 var panel: PanelContainer
 var rows: VBoxContainer
 var scroll: ScrollContainer
+var controls: ControlsSettingsView
 
 func _ready() -> void:
 	layer = 100
@@ -35,6 +36,7 @@ func _resize() -> void:
 	panel.custom_minimum_size = Vector2(minf(650, size.x - 32), minf(700, size.y - 32))
 
 func show_page(page: String, back: String) -> void:
+	controls = null
 	show()
 	for child in rows.get_children():
 		rows.remove_child(child)
@@ -58,7 +60,8 @@ func show_page(page: String, back: String) -> void:
 			_buttons([["Start", "resume"]])
 		"controls":
 			_title("CONTROLS")
-			_label(PlaytestControls.text())
+			controls = ControlsSettingsView.new()
+			rows.add_child(controls)
 			_buttons([["Back", back]])
 		"settings":
 			_title("SETTINGS")
