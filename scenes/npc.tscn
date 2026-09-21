@@ -10,7 +10,7 @@ height = 1.8
 [sub_resource type="SphereShape3D" id="SphereShape3D_interaction"]
 radius = 1.0
 
-[node name="Npc" type="CharacterBody3D"]
+[node name="Npc" type="CharacterBody3D" groups=["ambient_disturbance"]]
 script = ExtResource("1_npc")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

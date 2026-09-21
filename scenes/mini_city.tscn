@@ -23,6 +23,9 @@
 [ext_resource type="PackedScene" path="res://scenes/world_metal_signpost.tscn" id="sign"]
 [ext_resource type="Resource" path="res://resources/intelligence/tactical_rewards.tres" id="tactical_rewards"]
 
+[ext_resource type="PackedScene" path="res://scenes/ambient_creature_spawner.tscn" id="ambient_spawner"]
+[ext_resource type="Resource" path="res://resources/ambient_rat.tres" id="ambient_rat"]
+[ext_resource type="Resource" path="res://resources/ambient_bird.tres" id="ambient_bird"]
 [sub_resource type="Resource" id="dialogue0"]
 script = ExtResource("dialogue")
 lines = ["Quiet here. Trouble starts beyond the north lane."]
@@ -367,3 +370,50 @@ tint = Color(0.48, 0.51, 0.54, 1)
 transform = Transform3D(1, 0, 0, 0, -1.0747931, 0.7829593, 0, -0.5780508, -1.4557877, 34, 7.539665, -7.7216325)
 dimensions = Vector3(5, 0.4, 19.77367)
 tint = Color(0.48, 0.51, 0.54, 1)
+
+[node name="AmbientCreatures" type="Node3D" parent="."]
+
+[node name="MarketClutterRats" parent="AmbientCreatures" instance=ExtResource("ambient_spawner")]
+respawn_enabled = true
+respawn_delay = 20.0
+respawn_min_player_distance = 12.0
+position = Vector3(12.8, 0.03, 9)
+definition = ExtResource("ambient_rat")
+count = 3
+spawn_radius = 0.65
+
+[node name="WestAlleyRats" parent="AmbientCreatures" instance=ExtResource("ambient_spawner")]
+respawn_enabled = true
+respawn_delay = 20.0
+respawn_min_player_distance = 12.0
+position = Vector3(-7.4, 0.03, -23)
+definition = ExtResource("ambient_rat")
+count = 3
+spawn_radius = 0.65
+
+[node name="LoadingLaneRats" parent="AmbientCreatures" instance=ExtResource("ambient_spawner")]
+respawn_enabled = true
+respawn_delay = 20.0
+respawn_min_player_distance = 12.0
+position = Vector3(7.6, 0.03, -30)
+definition = ExtResource("ambient_rat")
+count = 3
+spawn_radius = 0.6
+
+[node name="WestRoofBirds" parent="AmbientCreatures" instance=ExtResource("ambient_spawner")]
+respawn_enabled = true
+respawn_delay = 20.0
+respawn_min_player_distance = 12.0
+position = Vector3(-10, 11.958, -55)
+definition = ExtResource("ambient_bird")
+count = 2
+spawn_radius = 1.0
+
+[node name="EastRoofBirds" parent="AmbientCreatures" instance=ExtResource("ambient_spawner")]
+respawn_enabled = true
+respawn_delay = 20.0
+respawn_min_player_distance = 12.0
+position = Vector3(13, 15.528, -56)
+definition = ExtResource("ambient_bird")
+count = 2
+spawn_radius = 1.0

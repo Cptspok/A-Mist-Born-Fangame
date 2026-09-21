@@ -39,6 +39,8 @@ For future milestones, follow [CONTRIBUTING_DEVLOGS.md](CONTRIBUTING_DEVLOGS.md)
 | 023 | [Blended damped capture](023_blended_damped_capture.txt) | Replaced frozen follow with physics-callback damping, interpolated visuals and captured-release geometry/impulse. | Current implementation; owner smoothness acceptance pending. |
 
 | 029 | [Combat rewards, Intelligence and ladders](029_combat_intelligence_ladders.txt) | Adds authored Court clues/rewards, inventory Intelligence tab and reusable parametric ladder. | Implemented; conservative checks passed, owner gameplay evaluation pending. |
+| 030 | [Ambient Creatures v0.1](030_ambient_creatures.txt) | Reusable sensing-only creatures, ground/flying definitions, spawners and five Mini City prototype groups. | Implemented; conservative checks only, manual gameplay validation pending. |
+| 031 | [Ambient Creature corrections](031_ambient_creature_corrections.txt) | Larger reaction radii and spawner-owned group respawn gated by player distance. | Implemented; parser/static checks passed, owner gameplay testing pending. |
 
 ## Ordering evidence and uncertainty
 
@@ -90,4 +92,3 @@ The Git history includes earlier player-controller, NPC/dialogue, inventory, hea
 - The obsolete MetalRefillStation remains described in older reports intentionally. Its later removal does not invalidate the historical record; current scenes are authoritative.
 - No gameplay/code/scene/resource/configuration/imported-asset changes or gameplay tests are part of this archive task.
 - Files were moved without staging or committing existing work. High content similarity supports Git rename detection when the archive is later staged; use the original-name mapping when following history across extension changes.
-

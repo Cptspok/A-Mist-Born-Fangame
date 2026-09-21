@@ -1,0 +1,78 @@
+Ambient Creatures v0.1
+Implemented 2026-09-21; manual gameplay validation pending.
+
+Architecture and authoring
+- scripts/ambient_creature_definition.gd: AmbientCreatureDefinition Resource exposes
+  unique_id, visual_scene, GROUND/FLYING profile, trigger_radius, flee_speed,
+  flee_distance, fade_start_distance, fade_duration, minimum_object_speed,
+  fractional speed/size variation and upward_bias.
+- scenes/ambient_creature.tscn + scripts/ambient_creature.gd: Node3D, VisualRoot,
+  sensing-only Area3D/CollisionShape3D and a conditional 0.1-second object timer.
+  No physical body, navigation, combat, damage, loot or save state.
+- Visual scenes face -Z with feet at y=0. Supply mesh/GeometryInstance3D visuals;
+  per-instance transparency uses the existing project's Forward Plus fade approach.
+  Shared materials are never modified. Basic mesh rat and bird examples included.
+- scenes/ambient_creature_spawner.tscn + scripts/ambient_creature_spawner.gd:
+  definition, count, disk spawn_radius, random_rotation, spawn_on_ready, respawn,
+  respawn_delay. Call spawn() for deferred activation. Whole-group respawn starts
+  after the last creature disappears. Mini City uses one-shot groups.
+  Duplicate either ambient .tres, change visual/profile, assign to a spawner for
+  another critter/bat/etc. No species-specific behavior scripts.
+  Author on a horizontal surface at unit scale; there is no floor snapping or
+  guaranteed minimum spacing. Creatures are created at runtime.
+
+Disturbances and movement
+- Base player, NPC and enemy scenes carry ambient_disturbance group. Derived
+  enemy/NPC scenes inherit it. Custom actors can join that group themselves.
+- Sensor layer 0, mask 1 (existing bodies), monitorable=false. Actor body_entered
+  triggers immediately. Other physics layers require adjusting the sensor mask.
+- Unfrozen RigidBody3D objects trigger at >= minimum_object_speed (default 2.5 m/s).
+  Stationary props do not trigger. Only locally overlapping rigid bodies are
+  checked every 0.1 s, to catch an object accelerating while already in range.
+  Entering fast objects are checked immediately. No global object searches.
+  Extremely fast objects crossing the whole sensor between physics ticks may
+  miss detection; no swept detection was added to the manipulation system.
+- Position is sampled once. Horizontal away vector is normalized; exact overlap
+  uses a random horizontal direction. Ground remains horizontal. Flying adds
+  normalized horizontal away + UP * upward_bias, normalized again (bird 0.7).
+- Straight movement continues during fade, then queue_free. Fade starts after
+  fade_start_distance. flee_distance caps the travel budget by shortening the
+  fade duration if needed; invalid fade start is clamped below that budget.
+- Idle creatures have frame processing disabled; fleeing disables sensing and
+  object polling. Idle sensors still incur ordinary physics overlap costs.
+
+Mini City additions (existing nodes/transforms preserved)
+- MarketClutterRats: 3 at (12.8, 0.03, 9), radius 0.65, beside market crates.
+- WestAlleyRats: 3 at (-7.4, 0.03, -23), radius 0.65, west front wall alley.
+- LoadingLaneRats: 3 at (7.6, 0.03, -30), radius 0.6, below east front wall.
+- WestRoofBirds: 2 at (-10, 11.958, -55), radius 1.
+- EastRoofBirds: 2 at (13, 15.528, -56), radius 1.
+  Rooftop heights derived from the existing scaled building geometry.
+- Hathsin files untouched. No layout, enemy, Court target, merchant or loot moves.
+  Steel/Iron, loose object scripts and all other gameplay logic unchanged.
+  Shared actor scenes receive only an inert group membership addition.
+
+Validation evidence
+- Static inspection and Godot 4.7.2 editor import/class registration completed
+  without script parse errors. Sandbox denied editor cache/settings/log writes
+  and certificate access; those environment messages are not gameplay results.
+- Exactly one minimal Mini City startup (two frames) loaded the resources and
+  instantiated the groups. It exposed a typed-array erase error on static-body
+  exit. Fixed by guarding removal with 'body is RigidBody3D'.
+- Corrected creature script passes Godot --check-only. Startup was not repeated,
+  respecting the requested validation limit. No automated gameplay or desktop
+  interaction, broad harnesses, or external/developer playtest claims.
+
+Suggested manual checks (not yet performed)
+A. Approach each rat group: separate away directions, straight movement, fade/free.
+B. Cross escape paths: no blocking.
+C. Trigger beside geometry/actors: intentional pass-through without collision.
+D. Approach rooftop birds: straight away/upward escape and fade/free.
+E. Bring enemy/NPC near a fresh group: same reaction.
+F. Steel-throw a loose metal object through range above 2.5 m/s: reaction.
+G. Leave stationary object nearby: no reaction; accelerate it while overlapping
+   to verify the local velocity check.
+H. Swap definition/count/radius; test another Ground/Flying visual without code.
+I. Optional respawn: enable it and verify a new batch after all creatures fade.
+Restart/reload Mini City for fresh one-shot groups. Visual tuning and actual
+in-game reaction checks remain with the project owner.

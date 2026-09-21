@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3]
+
+[sub_resource type="StandardMaterial3D" id="fur"]
+albedo_color = Color(0.24, 0.19, 0.16, 1)
+roughness = 1.0
+[sub_resource type="StandardMaterial3D" id="pink"]
+albedo_color = Color(0.55, 0.32, 0.3, 1)
+[sub_resource type="SphereMesh" id="body"]
+radius = 0.15
+height = 0.3
+radial_segments = 8
+rings = 4
+[sub_resource type="SphereMesh" id="head"]
+radius = 0.09
+height = 0.18
+radial_segments = 8
+rings = 4
+[sub_resource type="CylinderMesh" id="tail"]
+top_radius = 0.012
+bottom_radius = 0.025
+height = 0.35
+radial_segments = 6
+
+[node name="RatVisual" type="Node3D"]
+[node name="Body" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.13, 0)
+scale = Vector3(0.8, 0.8, 1.65)
+mesh = SubResource("body")
+material_override = SubResource("fur")
+[node name="Head" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.13, -0.22)
+scale = Vector3(0.8, 0.8, 1.4)
+mesh = SubResource("head")
+material_override = SubResource("fur")
+[node name="EarLeft" type="MeshInstance3D" parent="."]
+position = Vector3(-0.055, 0.225, -0.18)
+scale = Vector3(0.45, 0.6, 0.2)
+mesh = SubResource("head")
+material_override = SubResource("pink")
+[node name="EarRight" type="MeshInstance3D" parent="."]
+position = Vector3(0.055, 0.225, -0.18)
+scale = Vector3(0.45, 0.6, 0.2)
+mesh = SubResource("head")
+material_override = SubResource("pink")
+[node name="Tail" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.07, 0.36)
+rotation = Vector3(1.5707963, 0, 0)
+mesh = SubResource("tail")
+material_override = SubResource("pink")

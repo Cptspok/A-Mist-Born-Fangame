@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="AmbientCreatureDefinition" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/ambient_creature_definition.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/ambient_rat_visual.tscn" id="2"]
+[resource]
+script = ExtResource("1")
+unique_id = &"prototype_rat"
+visual_scene = ExtResource("2")
+trigger_radius = 4.5

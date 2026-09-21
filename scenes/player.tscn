@@ -34,7 +34,7 @@ height = 1.8
 [sub_resource type="SphereShape3D" id="SphereShape3D_interaction"]
 radius = 1.75
 
-[node name="Player" type="CharacterBody3D" unique_id=1091081823 groups=["player"]]
+[node name="Player" type="CharacterBody3D" unique_id=1091081823 groups=["player", "ambient_disturbance"]]
 script = ExtResource("1_player")
 jump_speed = 10.8
 

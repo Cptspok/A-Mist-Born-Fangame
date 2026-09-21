@@ -1,0 +1,43 @@
+Ambient Creature correction pass
+Implemented 2026-09-21. Follows 030; owner reports the system works but reaction
+range was too small and one-shot groups left the city empty.
+
+Changes
+- AmbientCreatureDefinition.trigger_radius default: 3.0 -> 4.5 m.
+- resources/ambient_rat.tres explicitly sets 4.5 m; ambient_bird.tres: 4 -> 7 m.
+  Tune each Resource's trigger_radius in Inspector; profile does not override it.
+- AmbientCreatureSpawner now exposes respawn_enabled=true (replaces respawn),
+  respawn_delay=20 s, respawn_min_player_distance=12 m. Other fields retained.
+  No existing serialized uses of the old respawn property were found.
+- Existing live count decrements on each creature's one-shot tree_exited signal.
+  Only zero count schedules cooldown. One owned, one-shot Timer handles cooldown
+  and later 1-second clearance retries. Waiting/live-count guards block duplicates.
+  Deferred scheduling guards scene teardown. Invalid/missing visuals do not spawn.
+- After cooldown, all Node3D members of player group must be outside 12 m plus
+  the scaled spawn radius from the spawner origin (conservative area clearance).
+  Missing players cause continued waiting, including during player replacement.
+  No distance check runs while a group is populated or its cooldown is running.
+- respawn_enabled=false preserves one-shot behavior; disabling during a pending
+  wait cancels respawning at the next timeout. Initial spawn_on_ready is unchanged.
+- Mini City's MarketClutterRats, WestAlleyRats, LoadingLaneRats, WestRoofBirds and
+  EastRoofBirds explicitly use enabled=true, delay=20, player clearance=12.
+  Counts, positions and spawn radii unchanged.
+
+Preserved
+Creature movement/flee/fade/collision script unchanged. Actor and thrown-object
+recognition unchanged, including minimum_object_speed=2.5 and no stationary-object
+reaction. No navigation, visibility tests, per-frame searches or perception added.
+Hathsin untouched. No changes to unrelated gameplay or other Mini City content.
+
+Validation
+Static lifecycle/data review and Godot 4.7.2 --check-only on the spawner passed
+without parse errors. Godot reported sandbox-denied user log-file access.
+Git diff whitespace check passed. No startup/gameplay automation or test harness.
+Manual testing of this correction remains pending.
+
+Suggested manual checks
+Approach rats (4.5 m) and birds (7 m). Empty a group; remain nearby beyond 20 s:
+it must stay empty. Move beyond the 12 m clearance plus spawn radius: within
+about 1 s it should return. Repeat to check no duplicate groups. Disable respawn:
+the group should stay gone. Verify fast thrown metal still triggers and stationary
+metal does not. These are suggested checks, not recorded test results.
