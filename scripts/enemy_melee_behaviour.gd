@@ -6,6 +6,7 @@ extends Node
 @export_range(0.05, 2.0, 0.05) var engagement_hysteresis: float = 0.3
 @export_range(0.1, 5.0, 0.1) var reposition_duration: float = 0.9
 @export_range(5.0, 90.0, 5.0) var reposition_angle: float = 45.0
+@export var persistent_close_pressure := false
 
 @onready var actor: EnemyController = get_parent()
 @onready var sensing = actor.get_node("Sensing")
@@ -56,7 +57,7 @@ func _physics_process(delta: float) -> void:
 				actor.set_state(&"Attack")
 		&"Attack":
 			# Close small gaps inside the hysteresis band while cooldown runs.
-			if actor.global_position.distance_to(target.global_position) > attack.attack_range:
+			if actor.global_position.distance_to(target.global_position) > (preferred_engagement_distance if persistent_close_pressure else attack.attack_range):
 				destination = target.global_position
 				speed = movement.chase_speed
 			if actor.global_position.distance_to(target.global_position) > attack.attack_range + engagement_hysteresis:
@@ -68,7 +69,7 @@ func _physics_process(delta: float) -> void:
 					radial = actor.global_basis.z
 				_reposition_offset = radial.normalized().rotated(Vector3.UP, deg_to_rad(reposition_angle)) * minf(preferred_engagement_distance, attack.attack_range)
 				_elapsed = 0.0
-				actor.set_state(&"Reposition")
+				actor.set_state(&"Attack" if persistent_close_pressure else &"Reposition")
 		&"Reposition":
 			_elapsed += delta
 			destination = target.global_position + _reposition_offset

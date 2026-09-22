@@ -1,0 +1,20 @@
+[gd_scene format=3]
+[ext_resource type="PackedScene" path="res://scenes/ranged_enemy_visual.tscn" id="base"]
+[sub_resource type="StandardMaterial3D" id="wood"]
+albedo_color = Color(0.32, 0.19, 0.08, 1)
+[sub_resource type="BoxMesh" id="stock"]
+size = Vector3(0.13, 0.16, 0.85)
+material = SubResource("wood")
+[sub_resource type="BoxMesh" id="limbs"]
+size = Vector3(0.85, 0.08, 0.12)
+material = SubResource("wood")
+[node name="CrossbowSkirmisherVisual" instance=ExtResource("base")]
+[node name="WoodenBow" parent="." index="11"]
+visible = false
+[node name="Crossbow" type="Node3D" parent="."]
+position = Vector3(0.1, 0.05, -0.35)
+[node name="Stock" type="MeshInstance3D" parent="Crossbow"]
+mesh = SubResource("stock")
+[node name="Limbs" type="MeshInstance3D" parent="Crossbow"]
+position = Vector3(0, 0, -0.28)
+mesh = SubResource("limbs")

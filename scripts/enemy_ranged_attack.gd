@@ -5,7 +5,8 @@ signal shot_fired
 @export var projectile_scene: PackedScene = preload("res://scenes/projectile.tscn")
 @export var projectile_origin_path: NodePath = ^"../ProjectileOrigin"
 @export_range(0.0, 1000.0, 1.0) var projectile_damage := 30.0
-@export_range(0.1, 50.0, 0.1) var attack_range := 20.0
+@export_range(0.1, 100.0, 0.1) var attack_range := 20.0
+@export var crossbow_pose := false
 @onready var muzzle: Marker3D = get_node(projectile_origin_path)
 @onready var sensing = actor.get_node("Sensing")
 
@@ -42,6 +43,14 @@ var _hand_rest := Vector3.ZERO
 func _pose() -> void:
 	super._pose()
 	if not is_instance_valid(_equipment): return
+	if crossbow_pose:
+		var raise := 0.0
+		if phase == Phase.WINDUP: raise = clampf(elapsed / windup_duration, 0.0, 1.0)
+		elif phase == Phase.STRIKE: raise = 1.0
+		elif phase == Phase.RECOVERY: raise = 1.0 - clampf(elapsed / recovery_duration, 0.0, 1.0)
+		_equipment.position = _rest_position + Vector3(0, 0.3 * raise, -0.2 * raise)
+		_equipment.rotation = _rest_rotation + Vector3(-0.15 * raise, 0, 0)
+		return
 	if not is_instance_valid(_draw_hand):
 		_draw_hand = actor.get_node("VisualRoot").find_child("RightHand", true, false) as Node3D
 		if _draw_hand != null: _hand_rest = _draw_hand.position

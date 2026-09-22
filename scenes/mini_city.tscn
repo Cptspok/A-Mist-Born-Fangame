@@ -15,11 +15,13 @@
 [ext_resource type="Resource" path="res://resources/intelligence/identity_rewards.tres" id="identity_rewards"]
 [ext_resource type="Resource" path="res://resources/intelligence/location_rewards.tres" id="location_rewards"]
 [ext_resource type="PackedScene" path="res://scenes/world_loose_steel.tscn" id="loose"]
-[ext_resource type="PackedScene" path="res://scenes/example_enemy.tscn" id="melee"]
+[ext_resource type="PackedScene" path="res://scenes/knife_fighter.tscn" id="melee"]
+[ext_resource type="PackedScene" path="res://scenes/heavy_enemy.tscn" id="heavy"]
+[ext_resource type="PackedScene" path="res://scenes/crossbow_skirmisher.tscn" id="skirmisher"]
 [ext_resource type="NavigationMesh" path="res://resources/mini_city_navigation.tres" id="nav"]
 [ext_resource type="PackedScene" path="res://scenes/example_npc.tscn" id="npc"]
 [ext_resource type="PackedScene" path="res://scenes/world_metal_rail.tscn" id="rail"]
-[ext_resource type="PackedScene" path="res://scenes/ranged_enemy.tscn" id="ranged"]
+[ext_resource type="PackedScene" path="res://scenes/long_range_archer.tscn" id="ranged"]
 [ext_resource type="PackedScene" path="res://scenes/world_metal_signpost.tscn" id="sign"]
 [ext_resource type="Resource" path="res://resources/intelligence/tactical_rewards.tres" id="tactical_rewards"]
 
@@ -289,20 +291,20 @@ rewards = ExtResource("identity_rewards")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.9, -37)
 encounter_id = &"city_ambush"
 
-[node name="AmbushRanged" parent="Encounters" unique_id=1712986970 instance=ExtResource("ranged")]
+[node name="AmbushRanged" parent="Encounters" unique_id=1712986970 instance=ExtResource("skirmisher")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 2.4, -42)
 encounter_id = &"city_ambush"
 
-[node name="RoofRangedWest" parent="Encounters" unique_id=1352793144 instance=ExtResource("ranged")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 6.9, -66)
+[node name="RoofRangedWest" parent="Encounters" unique_id=1352793144 instance=ExtResource("skirmisher")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 12.828, -64)
 encounter_id = &"city_roofs"
 
 [node name="RoofRangedEast" parent="Encounters" unique_id=1327389357 instance=ExtResource("ranged")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 6.9, -66)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 16.398, -65)
 encounter_id = &"city_roofs"
 
-[node name="RoofMelee" parent="Encounters" unique_id=1290687382 instance=ExtResource("melee")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 6.9, -59)
+[node name="RoofMelee" parent="Encounters" unique_id=1290687382 instance=ExtResource("heavy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 12.828, -59)
 encounter_id = &"city_roofs"
 rewards = ExtResource("location_rewards")
 
@@ -310,10 +312,14 @@ rewards = ExtResource("location_rewards")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 16.479164, -51)
 encounter_id = &"city_wall"
 
-[node name="WallRangedSouth" parent="Encounters" unique_id=775732233 instance=ExtResource("ranged")]
+[node name="WallRangedSouth" parent="Encounters" unique_id=775732233 instance=ExtResource("heavy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 16.479164, -35)
 encounter_id = &"city_wall"
 rewards = ExtResource("tactical_rewards")
+
+[node name="WallKnife" parent="Encounters" instance=ExtResource("melee")]
+position = Vector3(34, 16.479164, -30)
+encounter_id = &"city_wall"
 
 [node name="DarvenVoss" parent="Encounters" unique_id=1161553952 instance=ExtResource("court_target")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0.9, -42)

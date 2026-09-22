@@ -2,13 +2,15 @@ extends Node
 @export_range(0.0, 5.0, 0.1) var alert_duration := 0.45
 @export_range(1.0, 100.0, 0.5) var maximum_leash_distance := 22.0
 @export_range(0.5, 30.0, 0.5) var minimum_comfortable_distance := 7.0
-@export_range(0.5, 30.0, 0.5) var preferred_attack_distance := 15.0
-@export_range(0.5, 30.0, 0.5) var maximum_attack_distance := 20.0
+@export_range(0.5, 100.0, 0.5) var preferred_attack_distance := 15.0
+@export_range(0.5, 100.0, 0.5) var maximum_attack_distance := 20.0
 @export_range(0.1, 3.0, 0.1) var reposition_duration := 0.8
 @export_range(0.5, 6.0, 0.25) var reposition_step := 3.0
 @export_range(0.5, 10.0, 0.5) var reposition_cooldown := 4.5
 @export_range(0.5, 5.0, 0.25) var escape_retry_interval := 2.5
 @export_range(0.1, 2.0, 0.1) var decision_interval := 0.5
+@export var hold_position := false
+@export_range(1, 10) var shots_before_reposition := 2
 @onready var actor: EnemyController = get_parent()
 @onready var sensing = actor.get_node("Sensing")
 @onready var movement = actor.get_node("Movement")
@@ -64,6 +66,13 @@ func _physics_process(delta: float) -> void:
 		if _elapsed >= alert_duration: actor.set_state(&"Attack")
 		return
 	if not is_instance_valid(target): return
+	# Elevated support can fire across the full 3D range without chasing off its perch.
+	if hold_position:
+		movement.face(target.global_position)
+		if sensing.visible_target and actor.global_position.distance_to(target.global_position) <= maximum_attack_distance:
+			attack.execute(target)
+		movement.move_toward_point(actor.global_position, 0.0, delta)
+		return
 	if actor.state == &"Reposition":
 		_elapsed += delta
 		_stalled = _stalled + delta if actor.global_position.distance_to(_last_position) < 0.01 else 0.0
@@ -84,7 +93,7 @@ func _physics_process(delta: float) -> void:
 				movement.move_toward_point(_reposition_point, movement.reposition_speed, delta)
 				return
 		elif not too_close and distance <= preferred_attack_distance:
-			if not sensing.visible_target or (_shots >= 2 and _move_remaining <= 0.0):
+			if not sensing.visible_target or (_shots >= shots_before_reposition and _move_remaining <= 0.0):
 				if _choose_reposition(target, false):
 					movement.move_toward_point(_reposition_point, movement.reposition_speed, delta)
 					return
