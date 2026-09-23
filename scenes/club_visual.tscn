@@ -1,0 +1,21 @@
+[gd_scene format=3]
+[sub_resource type="StandardMaterial3D" id="wood"]
+albedo_color = Color(0.34, 0.18, 0.07, 1)
+roughness = 0.95
+[sub_resource type="CylinderMesh" id="head"]
+material = SubResource("wood")
+top_radius = 0.14
+bottom_radius = 0.075
+height = 0.6
+[sub_resource type="CylinderMesh" id="handle"]
+material = SubResource("wood")
+top_radius = 0.06
+bottom_radius = 0.045
+height = 0.45
+[node name="ClubVisual" type="Node3D"]
+[node name="Head" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.48, 0)
+mesh = SubResource("head")
+[node name="Handle" type="MeshInstance3D" parent="."]
+position = Vector3(0, -0.04, 0)
+mesh = SubResource("handle")

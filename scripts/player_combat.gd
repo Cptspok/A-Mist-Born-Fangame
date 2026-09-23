@@ -5,6 +5,11 @@ signal equipment_changed
 signal ability_requested(action: StringName, pressed: bool)
 var active_slot: int = -1
 var _runtimes: Dictionary = {}
+## Persists across runtime replacement and context cancellation.
+var commitment_remaining := 0.0
+
+func _physics_process(delta: float) -> void:
+	if not GameplayLocks.is_locked(): commitment_remaining = maxf(0.0, commitment_remaining - delta)
 @onready var equipment: EquipmentComponent = $"../Equipment"
 @onready var camera: Camera3D = $"../CameraPivot/Camera3D"
 @onready var mount: Node3D = $"../CameraPivot/Camera3D/WeaponMount"
@@ -35,6 +40,7 @@ func _sync_equipment() -> void:
 			instance.free()
 			continue
 		runtime.configure(data, get_parent() as Node3D, camera)
+		runtime.item_definition = stack.definition
 		mount.add_child(runtime)
 		_runtimes[slot] = runtime
 	if not _runtimes.has(active_slot):
@@ -79,3 +85,12 @@ func _on_lock_changed(locked: bool) -> void:
 func _cancel_actions() -> void:
 	for runtime in _runtimes.values():
 		if is_instance_valid(runtime): runtime.cancel_action()
+
+func movement_multiplier() -> float:
+	return _runtimes[active_slot].movement_multiplier() if _runtimes.has(active_slot) else 1.0
+
+func movement_velocity() -> Vector3:
+	return _runtimes[active_slot].movement_velocity() if _runtimes.has(active_slot) else Vector3.ZERO
+
+func defend_damage(amount: float, origin: Vector3, pressure: float) -> float:
+	return _runtimes[active_slot].defend_damage(amount, origin, pressure) if _runtimes.has(active_slot) else amount

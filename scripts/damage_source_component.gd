@@ -8,6 +8,7 @@ const DAMAGE_SOURCE_COLLISION_LAYER := 1 << 3
 
 @export_range(0.0, 1000000.0, 0.1, "or_greater") var damage_amount: float = 10.0
 @export var enabled: bool = true
+@export_range(0.0, 100.0) var block_pressure := 10.0
 var instigator: Node3D
 
 
@@ -20,7 +21,7 @@ func apply_damage_to(hurtbox: HurtboxComponent) -> float:
 	if not enabled or not is_instance_valid(hurtbox):
 		return 0.0
 
-	var applied_damage := hurtbox.receive_damage(damage_amount, instigator if is_instance_valid(instigator) else null)
+	var applied_damage := hurtbox.receive_damage(damage_amount, instigator if is_instance_valid(instigator) else null, self)
 	if applied_damage > 0.0:
 		damage_dealt.emit(hurtbox, applied_damage)
 

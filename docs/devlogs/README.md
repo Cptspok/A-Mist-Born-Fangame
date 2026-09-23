@@ -41,6 +41,7 @@ For future milestones, follow [CONTRIBUTING_DEVLOGS.md](CONTRIBUTING_DEVLOGS.md)
 | 029 | [Combat rewards, Intelligence and ladders](029_combat_intelligence_ladders.txt) | Adds authored Court clues/rewards, inventory Intelligence tab and reusable parametric ladder. | Implemented; conservative checks passed, owner gameplay evaluation pending. |
 | 030 | [Ambient Creatures v0.1](030_ambient_creatures.txt) | Reusable sensing-only creatures, ground/flying definitions, spawners and five Mini City prototype groups. | Implemented; conservative checks only, manual gameplay validation pending. |
 | 031 | [Ambient Creature corrections](031_ambient_creature_corrections.txt) | Larger reaction radii and spawner-owned group respawn gated by player distance. | Implemented; parser/static checks passed, owner gameplay testing pending. |
+| 032 | [Player Weapon Combat Foundation](032_player_weapon_combat.txt) | Authored Sword/Club movesets, timed attacks, frontal guard, material data and Mini City pickups. | Implemented; parser/resource checks passed, owner gameplay testing pending. |
 
 ## Ordering evidence and uncertainty
 

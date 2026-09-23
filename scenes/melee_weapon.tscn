@@ -1,21 +1,12 @@
-[gd_scene load_steps=5 format=3]
-
-[ext_resource type="Script" path="res://scripts/melee_weapon.gd" id="1_runtime"]
-[ext_resource type="Script" path="res://scripts/damage_source_component.gd" id="2_damage"]
-[ext_resource type="Script" path="res://scripts/weapon_swing_presentation.gd" id="3_presentation"]
-[ext_resource type="PackedScene" path="res://scenes/sword_visual.tscn" id="4_visual"]
-
+[gd_scene format=3]
+[ext_resource type="Script" path="res://scripts/melee_weapon.gd" id="runtime"]
+[ext_resource type="Script" path="res://scripts/damage_source_component.gd" id="damage"]
 [node name="MeleeWeapon" type="Node3D"]
-script = ExtResource("1_runtime")
-
+script = ExtResource("runtime")
 [node name="DamageSourceComponent" type="Area3D" parent="."]
-script = ExtResource("2_damage")
+script = ExtResource("damage")
 monitoring = false
 monitorable = false
-
 [node name="Presentation" type="Node3D" parent="."]
 position = Vector3(0.35, -0.5, -0.65)
 rotation = Vector3(-0.2, 0, -0.15)
-script = ExtResource("3_presentation")
-
-[node name="SwordVisual" parent="Presentation" instance=ExtResource("4_visual")]

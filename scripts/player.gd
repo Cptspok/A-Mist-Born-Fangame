@@ -96,11 +96,14 @@ func _physics_process(delta: float) -> void:
 	if $ContextualInput.wheel_open: movement_input = Vector2.ZERO
 	var desired := global_basis * Vector3(movement_input.x, 0.0, movement_input.y)
 	var intended_speed := crouched_movement_speed if is_crouching else move_speed * sprint_multiplier
+	intended_speed *= $CombatEquipment.movement_multiplier()
+	var combat_velocity: Vector3 = $CombatEquipment.movement_velocity()
 	if is_on_floor():
 		# One traction law for all actual horizontal motion, regardless of origin.
 		# Exponential response avoids instant stops and a frame-dependent blend.
 		var horizontal := Vector2(velocity.x, velocity.z)
 		var ground_input_velocity := Vector2(desired.x, desired.z) * intended_speed
+		ground_input_velocity += Vector2(combat_velocity.x, combat_velocity.z)
 		var response := 1.0 - exp(-maxf(ground_traction, 0.0) * delta)
 		horizontal = horizontal.lerp(ground_input_velocity, response)
 		velocity.x = horizontal.x
@@ -165,7 +168,7 @@ func _apply_air_motor(desired: Vector3, target_speed: float, delta: float) -> vo
 	var input := Vector2(desired.x, desired.z)
 	if input.is_zero_approx(): return
 	var horizontal := Vector2(velocity.x, velocity.z)
-	var candidate := horizontal + input * air_control_acceleration * delta
+	var candidate := horizontal + input * air_control_acceleration * float($CombatEquipment.movement_multiplier()) * delta
 	var motor_ceiling := maxf(horizontal.length(), target_speed * input.length())
 	# Keeping existing speed as the floor of this budget prevents an external
 	# launch from being reduced to locomotion speed. Steering costs no extra speed.

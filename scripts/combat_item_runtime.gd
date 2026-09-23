@@ -5,6 +5,16 @@ var definition: CombatItemDefinition
 var wielder: Node3D
 var aim: Camera3D
 var active: bool = false
+var item_definition: ItemDefinition
+
+func movement_multiplier() -> float:
+	return 1.0
+
+func movement_velocity() -> Vector3:
+	return Vector3.ZERO
+
+func defend_damage(amount: float, _origin: Vector3, _pressure: float) -> float:
+	return amount
 
 
 func configure(data: CombatItemDefinition, actor: Node3D, camera: Camera3D) -> void:

@@ -28,6 +28,7 @@
 [ext_resource type="PackedScene" path="res://scenes/ambient_creature_spawner.tscn" id="ambient_spawner"]
 [ext_resource type="Resource" path="res://resources/ambient_rat.tres" id="ambient_rat"]
 [ext_resource type="Resource" path="res://resources/ambient_bird.tres" id="ambient_bird"]
+[ext_resource type="Resource" path="res://resources/club.tres" id="club"]
 [sub_resource type="Resource" id="dialogue0"]
 script = ExtResource("dialogue")
 lines = ["Quiet here. Trouble starts beyond the north lane."]
@@ -423,3 +424,7 @@ position = Vector3(13, 15.528, -56)
 definition = ExtResource("ambient_bird")
 count = 2
 spawn_radius = 1.0
+
+[node name="ClubWorldItem" parent="Market/StallCounter1" instance=ExtResource("5_hw62b")]
+position = Vector3(0.3, 1.45, 1.5)
+item_definition = ExtResource("club")

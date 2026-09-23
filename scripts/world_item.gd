@@ -13,6 +13,15 @@ func _ready() -> void:
 	if item_definition != null and item_definition.world_visual != null:
 		visual_root.add_child(item_definition.world_visual.instantiate())
 		fallback_mesh.hide()
+	# WorldItem is currently static: expose metallic pickups as anchored tethers.
+	# Equipped items do not create self-targeting tethers or disarming behavior.
+	if item_definition != null and item_definition.material != null and item_definition.material.metallic_content > 0.0:
+		var tether := preload("res://scenes/metal_tether.tscn").instantiate() as MetalTetherComponent
+		tether.physical_owner_path = ^".."
+		var shape := SphereShape3D.new()
+		shape.radius = 0.3
+		(tether.get_node("CollisionShape3D") as CollisionShape3D).shape = shape
+		add_child(tether)
 
 func _on_interacted(interactor: Node) -> void:
 	if not pickup_enabled: return

@@ -1,0 +1,122 @@
+Player Weapon Combat Foundation v0.1
+Implemented 2026-09-23; owner gameplay testing pending.
+
+PURPOSE AND ARCHITECTURE
+Replace instant melee damage with authored attack commitment and reusable guard.
+ItemDefinition retains inventory identity, EquipmentProfile.family and world_visual.
+Its combat_definition points to MeleeWeaponDefinition, which references a reusable
+WeaponMoveset containing any number of WeaponAttackDefinition resources.
+ItemMaterialDefinition belongs to the item, not to the moveset. Definitions remain
+immutable; melee_weapon.gd owns phases, combo index, buffers, hit history and poses.
+CombatEquipment (PlayerCombat) supplies item data to the existing runtime scene.
+ContextualInput routes primary_action / secondary_action through the equipped runtime.
+PlayerController only asks for generic movement multiplier and velocity contributions.
+Existing item stat modifiers and Pewter continue through StatComponent.
+
+ATTACKS
+Windup -> active -> recovery. DamageSource queries a rotating box each active physics
+tick. Reach, width/height and sweep angles are attack data. World ray checks reject
+occluded targets; each HealthComponent can be damaged once per attack even with
+multiple hurtboxes. Fresh per-attack shapes and runtime fallback resources never
+mutate shared configuration. Pose vectors and presentation_hook/attack_presented
+provide replaceable presentation. Successful damage emits hit_confirmed, a brief
+surface impact flash, weapon recoil and a PhysicalForceResponse impulse.
+A single expiring buffer advances the arbitrary-length sequence only after recovery.
+Additional presses refresh that one buffer; they never shorten phases. Attack speed
+is sampled from stats once at attack start. Phase durations are minimums, rounded
+up to physics ticks. Combo reset time counts from completed recovery.
+A CombatEquipment commitment timer survives focus, slot and inventory changes.
+Cancellation stops the current attack/guard and resets the sequence but cannot
+permit another attack or guard raise before the original commitment expires.
+
+MOVEMENT
+Per-attack movement_multiplier scales ground input speed and airborne input steering,
+without clamping externally generated velocity. Optional forward_speed contributes
+to the grounded motor during active frames; it does not teleport or lunge in air.
+No changes to Iron, Steel, Pewter, force integration, or Allomancy input routing.
+Existing Focus toggles cancel contextual holds/actions; using a power and returning
+to melee remains possible, with the original attack commitment still respected.
+
+BLOCK
+Hold configurable secondary_action (default RMB) in equipment context.
+Only can_block items support it; it cannot cancel an in-progress attack into guard.
+A held request raises after recovery; release drops guard. During raise there is
+no protection. Block checks the horizontal angle toward the damage source, using
+the camera's horizontal facing. Rear/side damage and damage without a source bypass.
+Hurtbox applies defense before normal Health processors, preserving armor/Pewter.
+Sword: 0.15s raise, 110-degree total cone, strength 20, takes 15% normal damage,
+45% movement. Club: 0.22s raise, 100 degrees, strength 16, takes 25%, 30% movement.
+Default source pressure is 10. Heavy's source alone is configured to 45.
+Above strength, damage fraction is max(chip fraction, 1 - strength / pressure),
+with pressure-scaled knockback capped at impulse 8 and 0.65s exposed guard recovery.
+Heavy therefore passes about 56% through Sword / 64% through Club before Health
+processors. Guard re-raises after recovery if still held. Ordinary block does not
+accumulate posture. No stamina, parry, directional mouse blocking or dodge.
+Projectile sources use contact position for frontal checks; enemy ranged AI is unchanged.
+
+WEAPON DATA (seconds, at attack speed 1)
+Sword: base 25 + existing +5 equipped physical damage, then attack multiplier.
+Left slash: 0.20 / 0.16 / 0.28; x1; reach 2.5; impact 2; movement 0.65.
+Right slash: 0.24 / 0.18 / 0.30; x1.1; reach 2.4; impact 2.5; movement 0.60.
+Overhead finisher: 0.36 / 0.20 / 0.48; x1.4; reach 2.7; impact 4; movement 0.45.
+Base resulting damage without other modifiers: 30 / 33 / 42.
+Buffer 0.45s; sequence reset 0.8s. Opposite sweeps then narrow vertical finisher.
+Club: base 38; no additional item stat contribution.
+Overhead: 0.48 / 0.18 / 0.58; x1; reach 2.1; impact 6; movement 0.35.
+Backhand: 0.62 / 0.24 / 0.72; x1.35; reach 2.2; impact 9; movement 0.25.
+Base resulting damage: 38 / 51.3. Buffer 0.5s; reset 1s.
+Club has a narrow overhead impact, then a heavier lateral return, not a Sword clone.
+All impacts add the existing MELEE_IMPULSE stat and use existing enemy force response.
+No unconditional enemy stun was introduced: current displacement interruption windows
+and actor mass/resistance determine resulting stagger.
+
+MATERIAL / ALLOMANCY
+resources/weapons/*_material.tres: category, metallic_content (0..1), mass_kg.
+Sword steel / 1 / 1.4kg; Club wood / 0 / 2.2kg.
+WorldItem creates an existing MetalTether only for positive metallic content.
+WorldItem is StaticBody3D, so this is an ANCHORED tether: detection/Push/Pull react
+against a fixed pickup; they do not move the item. No loose-body conversion.
+Fraction and mass are future data, not new force scaling. Equipped items do not
+spawn tethers, self-targets or disarming mechanics. MetalTether code is unchanged.
+
+ACCESS / TUNING
+Mini City Market/StallCounter1: existing Sword at local (-1, 1.45, 1.5), new Club
+at (0.3, 1.45, 1.5), approximately city (8.3, 2.05, -6.5).
+Interact normally to pick up; drag through ordinary inventory/equipment flow.
+Both fit permitted hand slots, but existing dual-wield rules still prohibit wearing
+both together. Replace the equipped weapon through inventory for comparison.
+Tune resources/weapons/sword_moveset.tres and club_moveset.tres for timings, damage
+multipliers, coverage, sweeps, impact, pressure, movement, poses, buffers and resets.
+Tune the item's combat subresource for base damage and block properties; item
+material/world_visual and existing EquipmentProfile remain their authoritative data.
+Legacy melee definitions without a moveset get a runtime-owned single-strike fallback;
+legacy cooldown/reach/width exports are only used by that fallback.
+
+VALIDATION / LIMITATIONS
+Godot 4.7.2 headless editor import completed with no script/parser diagnostics.
+A bounded resource-load check loaded Sword, Club, Greatsword, Player, Mini City and
+Heavy successfully. Editor import reported sandbox user/cache-directory errors;
+resource check redirected user directories into .godot and reported only the host
+certificate-store warning. No automated combat, desktop control, broad harness,
+gameplay startup, or gameplay validation was performed.
+Prototype boxes/poses/flash only; no polished animations/audio or balance claims.
+Discrete physics samples rather than continuous swept blade geometry.
+No bow, rarity/affixes, loot generation, crafting, skills, Unique system or stamina.
+Hathsin files, geometry, hierarchy, materials and placements were not edited.
+Shared player/item capabilities naturally apply wherever those existing assets run.
+No UI/style changes. Knife Fighter, Crossbow Skirmisher and Archer untouched;
+Heavy has only the additional block_pressure value, preserving its attack behavior.
+
+OWNER MANUAL CHECKLIST (suggested, not performed)
+A Mash Sword primary: verify full windup/active/recovery and no faster attack rate.
+B Read three alternating/finishing poses and rhythm.
+C Pause after recovery beyond reset time; next hit should be opener.
+D Compare miss vs flash/recoil/impulse on hit; no repeated damage per target/window.
+E Move during each attack and compare commitment; airborne momentum remains intact.
+F Hold secondary against frontal Knife Fighter attacks; verify useful chip protection.
+G Turn away; side/rear attacks bypass guard.
+H Block Heavy; verify partial penetration, knockback and exposed guard recovery.
+I Equip Club; compare two-hit overhead/backhand rhythm, impact and mobility.
+J Combine movement, Iron, Steel and Pewter; context change must not bypass commitment.
+K Inspect material resources; only metallic world pickup has a tether.
+L Switch weapons through inventory; correct visual/moveset/block data must follow.

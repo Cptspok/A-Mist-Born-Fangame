@@ -8,10 +8,16 @@
 [ext_resource type="Script" uid="uid://bo0gtdxtvj5ft" path="res://scripts/equipment_profile.gd" id="6_profile"]
 [ext_resource type="Script" uid="uid://ce5qg0420yhx8" path="res://scripts/stat_modifier.gd" id="stat_modifier_script"]
 
+[ext_resource type="Resource" path="res://resources/weapons/sword_moveset.tres" id="moveset"]
+[ext_resource type="Resource" path="res://resources/weapons/sword_material.tres" id="material"]
+
 [sub_resource type="Resource" id="SwordCombat"]
 script = ExtResource("2_weapon")
 runtime_scene = ExtResource("3_runtime")
 primary_action_label = "Attack"
+secondary_action_label = "Block (hold)"
+moveset = ExtResource("moveset")
+can_block = true
 
 [sub_resource type="Resource" id="SwordEquipment"]
 script = ExtResource("6_profile")
@@ -28,12 +34,13 @@ value = 5
 script = ExtResource("1_item")
 item_id = "prototype_sword"
 display_name = "Prototype Sword"
-description = "Equip from inventory. Primary action swings; secondary action is reserved."
+description = "Equip from inventory. Primary action chains three timed strikes; hold secondary action to block."
 characteristics = "1 x 3 | Melee weapon | +5 Physical Damage"
 item_type = "Weapon"
 inventory_sprite = ExtResource("5_icon")
 grid_height = 3
 world_visual = ExtResource("4_visual")
+material = ExtResource("material")
 combat_definition = SubResource("SwordCombat")
 equipment_profile = SubResource("SwordEquipment")
 stat_modifiers = Array[ExtResource("stat_modifier_script")]([SubResource("stat_contribution")])

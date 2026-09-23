@@ -1,0 +1,49 @@
+[gd_resource type="Resource" script_class="WeaponMoveset" format=3]
+[ext_resource type="Script" path="res://scripts/weapon_moveset.gd" id="moveset"]
+[ext_resource type="Script" path="res://scripts/weapon_attack_definition.gd" id="attack"]
+[sub_resource type="Resource" id="slash_left"]
+script = ExtResource("attack")
+presentation_hook = &"slash_left"
+windup = 0.2
+active_duration = 0.16
+recovery = 0.28
+reach = 2.5
+coverage = Vector2(1.25, 1.3)
+impact = 2.0
+[sub_resource type="Resource" id="slash_right"]
+script = ExtResource("attack")
+presentation_hook = &"slash_right"
+windup = 0.24
+active_duration = 0.18
+recovery = 0.3
+damage_multiplier = 1.1
+reach = 2.4
+coverage = Vector2(1.4, 1.2)
+sweep_start = 40.0
+sweep_end = -40.0
+movement_multiplier = 0.6
+impact = 2.5
+windup_pose = Vector3(-0.3, 0.5, 0.9)
+strike_pose = Vector3(-0.7, -0.5, -0.9)
+[sub_resource type="Resource" id="finisher"]
+script = ExtResource("attack")
+presentation_hook = &"overhead"
+windup = 0.36
+active_duration = 0.2
+recovery = 0.48
+damage_multiplier = 1.4
+reach = 2.7
+coverage = Vector2(0.85, 1.7)
+sweep_start = 5.0
+sweep_end = -5.0
+movement_multiplier = 0.45
+forward_speed = 0.8
+impact = 4.0
+block_pressure = 18.0
+windup_pose = Vector3(0.7, 0, 0.1)
+strike_pose = Vector3(-1.3, 0, -0.2)
+[resource]
+script = ExtResource("moveset")
+attacks = Array[ExtResource("attack")]([SubResource("slash_left"), SubResource("slash_right"), SubResource("finisher")])
+buffer_duration = 0.45
+sequence_reset = 0.8

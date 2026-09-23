@@ -11,6 +11,7 @@ const ConsumableDefinition = preload("res://scripts/consumable_definition.gd")
 @export_range(1, 10, 1) var grid_width := 1
 @export_range(1, 10, 1) var grid_height := 1
 @export var world_visual: PackedScene
+@export var material: ItemMaterialDefinition
 @export var combat_definition: CombatItemDefinition
 @export var consumable: ConsumableDefinition
 @export var intelligence_clue: IntelligenceClueDefinition

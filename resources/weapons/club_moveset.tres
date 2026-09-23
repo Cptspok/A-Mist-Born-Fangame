@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="WeaponMoveset" format=3]
+[ext_resource type="Script" path="res://scripts/weapon_moveset.gd" id="moveset"]
+[ext_resource type="Script" path="res://scripts/weapon_attack_definition.gd" id="attack"]
+[sub_resource type="Resource" id="overhead"]
+script = ExtResource("attack")
+presentation_hook = &"club_overhead"
+windup = 0.48
+active_duration = 0.18
+recovery = 0.58
+reach = 2.1
+coverage = Vector2(0.85, 1.8)
+sweep_start = 0.0
+sweep_end = 0.0
+movement_multiplier = 0.35
+impact = 6.0
+block_pressure = 26.0
+windup_pose = Vector3(0.9, 0.15, 0.1)
+strike_pose = Vector3(-1.4, 0, -0.1)
+[sub_resource type="Resource" id="backhand"]
+script = ExtResource("attack")
+presentation_hook = &"club_backhand"
+windup = 0.62
+active_duration = 0.24
+recovery = 0.72
+damage_multiplier = 1.35
+reach = 2.2
+coverage = Vector2(1.1, 1.25)
+sweep_start = 25.0
+sweep_end = -25.0
+movement_multiplier = 0.25
+forward_speed = 0.45
+impact = 9.0
+block_pressure = 34.0
+windup_pose = Vector3(0.2, 0.8, 1.0)
+strike_pose = Vector3(-1.0, -0.6, -1.0)
+[resource]
+script = ExtResource("moveset")
+attacks = Array[ExtResource("attack")]([SubResource("overhead"), SubResource("backhand")])
+buffer_duration = 0.5
+sequence_reset = 1.0

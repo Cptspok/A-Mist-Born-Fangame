@@ -30,6 +30,7 @@ horizontal_sweep = true
 
 [node name="DamageSourceComponent" parent="MeleeAttack" index="0"]
 damage_amount = 42.0
+block_pressure = 45.0
 
 [node name="MeleeBehaviour" parent="." index="10"]
 maximum_leash_distance = 24.0
