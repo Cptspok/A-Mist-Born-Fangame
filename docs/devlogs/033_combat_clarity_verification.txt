@@ -1,0 +1,93 @@
+Combat clarity / blocking verification pass — 2026-09-24
+Small correction to 032, not a new combat-feature milestone.
+
+FINDINGS (static trace, not an automated or manual combat test)
+project.godot maps secondary_action to RMB by default; configurable keybinds apply.
+ContextualInput._unhandled_input routes the press/release to PlayerCombat in
+equipment context, or to Allomancy while Focus is enabled. Focus/menu/slot changes
+cancel guard; re-press after cancellation. Equipment creates the runtime from
+the equipped ItemDefinition.combat_definition; active_slot selects its recipient.
+Sword and Club both use melee_weapon.tscn and can_block=true.
+Held secondary raises after attack commitment/recovery. Sword raise is 0.15s;
+Club is 0.22s. Only BLOCKING protects, not RAISING or GUARD_BROKEN.
+EnemyMeleeAttack samples the player Hurtbox and calls its DamageSource. Knife
+Fighter source damage is 16, pressure 10; Heavy is 42, pressure 45. Their source
+nodes are on the attacker, not on the sampled hit volume. Projectile moves its
+source to contact before applying damage. Hurtbox calls the parent's CombatEquipment
+defend_damage with source position/pressure before HealthComponent.apply_damage.
+The active melee runtime compares horizontal camera forward with horizontal
+source direction. Sword protects +/-55 degrees, Club +/-50 degrees, including
+the boundary. Out-of-cone/zero-horizontal-direction hits receive full damage.
+
+The existing path is connected and the defense math was functional by inspection;
+no missing dispatch or damage bypass was found for Knife Fighter/Heavy. Gameplay
+confirmation remains with the owner. Fixed an edge case: invalid/nonpositive or
+already-dead-target damage could react against/break guard before Health rejected
+the damage. Hurtbox now rejects those inputs before defense and presentation.
+
+DAMAGE (unchanged; sufficient HP and Pewter off)
+                         No valid guard       Sword guard       Club guard
+Knife Fighter            16                   2.4               4
+Heavy                    42                   23.333333         27.066667
+Ordinary damage fraction is Sword 0.15 / Club 0.25.
+Pressure above strength uses max(chip fraction, 1 - strength / pressure).
+Strength is Sword 20 / Club 16. Heavy therefore overwhelms both; existing impulse
+is min(8, (pressure-strength)*0.15), followed by 0.65s exposed recovery and a new
+raise if still held. No accumulating meter. Side/rear hits do not overwhelm guard.
+Health subtracts the defended amount, clamps at zero, emits health_changed/death,
+and returns actual HP loss. Pewter defers 50% of that amount while burning;
+later debt payments bypass reprocessing. ARMOR currently has no registered damage
+processor: 032's reference to armor processing was inaccurate. No armor change here.
+
+FEEDBACK
+New combat_feedback.gd is a small mouse-ignoring Control owned by PlayerCombat's
+CanvasLayer, independent of debug displays. Outcome is presentation-only runtime
+metadata; it does not feed into damage math. Incoming valid Hurtbox hits show:
+- Normal: red screen border and HIT.
+- Successful block: cyan shield outline and BLOCKED, retaining weapon recoil.
+- Overwhelm: orange cracked shield and GUARD OVERWHELMED; existing weapon drop,
+  knockback and recovery remain.
+- Directional failure while guard is ready: pink edge flash, inward chevrons and
+  GUARD BYPASSED; full damage remains.
+Guard status also shows QUEUED, RAISING, READY or RECOVERING, so holding RMB is not
+mistaken for immediate protection during commitment/raise. No numeric debug data.
+Feedback uses shape/text as well as color; incoming indications last 0.6s, or 0.8s
+for overwhelm. New hits replace the previous incoming indicator.
+
+YELLOW SPHERES
+melee_weapon.gd:_sample_hit called _impact_flash only after positive damage.
+It created an unshaded yellow SphereMesh (radius 0.12, height 0.24) near the hurtbox
+surface, shrank it over 0.14s and freed it. It was player-facing hit confirmation,
+not debug geometry, a hitbox, a projectile, or part of damage detection.
+Removed this representation and replaced it with a white crosshair hit marker
+for 0.16s. Existing hit_confirmed signal, recoil, damage and impulse remain.
+
+CHANGED FILES / SAFETY
+scripts/combat_feedback.gd (+ generated UID), combat_item_runtime.gd,
+player_combat.gd, melee_weapon.gd, hurtbox_component.gd; this record and index.
+No scenes/resources changed. Hathsin files and content untouched; shared player
+feedback naturally applies wherever Player is used. No moveset, timing, combo,
+enemy, metal, Pewter, or weapon tuning changes. No stamina/posture/parry/dodge or
+new guard-break meter. The pre-existing temporary guard recovery is preserved.
+
+VALIDATION
+Godot 4.7.2 headless editor import: no parser diagnostics; sandbox prevented
+external editor cache/settings writes and host certificate store access.
+Bounded resource validation with writable user directories: all changed scripts,
+Sword, Club, Player, Knife Fighter, Heavy and Projectile loaded successfully;
+script can_instantiate checks passed. Only host certificate warning remained.
+Exactly one minimal startup: headless Player scene, three frames, exit 0,
+no script errors (same host certificate warning). No automated combat or desktop
+interaction. git diff --check passed. Visual readability still needs owner testing.
+
+OWNER MANUAL CHECK (not performed)
+Disable Allomancy Focus; equip Sword or Club; use current secondary binding.
+For the damage numbers above turn Pewter off and start with enough HP.
+A: Let Knife Fighter hit without guarding: 16 loss, red HIT.
+B: Face it; hold secondary until GUARD READY: 2.4 Sword / 4 Club, cyan BLOCKED.
+C: Keep guard ready but face away: 16 loss, pink GUARD BYPASSED.
+D: Face Heavy and guard: 23.33 Sword / 27.07 Club, orange GUARD OVERWHELMED,
+   recoil/knockback, exposed recovery, then raising/ready if secondary stays held.
+E: Repeat Sword/Club attacks: misses have no hit marker; damaging hits flash a
+   white cross; no floating yellow spheres.
+F: Fight normally; check four incoming outcomes remain readable without debug UI.

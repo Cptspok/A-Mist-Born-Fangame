@@ -42,6 +42,7 @@ For future milestones, follow [CONTRIBUTING_DEVLOGS.md](CONTRIBUTING_DEVLOGS.md)
 | 030 | [Ambient Creatures v0.1](030_ambient_creatures.txt) | Reusable sensing-only creatures, ground/flying definitions, spawners and five Mini City prototype groups. | Implemented; conservative checks only, manual gameplay validation pending. |
 | 031 | [Ambient Creature corrections](031_ambient_creature_corrections.txt) | Larger reaction radii and spawner-owned group respawn gated by player distance. | Implemented; parser/static checks passed, owner gameplay testing pending. |
 | 032 | [Player Weapon Combat Foundation](032_player_weapon_combat.txt) | Authored Sword/Club movesets, timed attacks, frontal guard, material data and Mini City pickups. | Implemented; parser/resource checks passed, owner gameplay testing pending. |
+| 033 | [Combat clarity verification](033_combat_clarity_verification.txt) | Traces blocking, rejects invalid guard hits, distinguishes impact outcomes and replaces yellow spheres with hit markers. | Small follow-up to 032; parser/resource/startup checks passed, owner gameplay testing pending. |
 
 ## Ordering evidence and uncertainty
 

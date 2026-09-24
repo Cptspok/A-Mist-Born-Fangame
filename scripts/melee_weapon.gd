@@ -121,10 +121,14 @@ func defend_damage(amount: float, origin: Vector3, pressure: float) -> float:
 	toward.y = 0.0
 	var forward := -aim.global_basis.z
 	forward.y = 0.0
-	if toward.is_zero_approx() or forward.normalized().dot(toward.normalized()) < cos(deg_to_rad(_data.block_angle * 0.5)): return amount
+	if toward.is_zero_approx() or forward.normalized().dot(toward.normalized()) < cos(deg_to_rad(_data.block_angle * 0.5)):
+		defense_result = &"bypassed"
+		return amount
+	defense_result = &"blocked"
 	_feedback = 0.14
 	var strength := maxf(0.01, _data.block_strength)
 	if pressure > strength:
+		defense_result = &"overwhelmed"
 		_set_phase(Phase.GUARD_BROKEN)
 		_index = -1
 		combat.commitment_remaining = maxf(combat.commitment_remaining, _data.guard_break_recovery)
@@ -157,7 +161,7 @@ func _sample_hit(progress: float) -> void:
 		if source.apply_damage_to(hurtbox) <= 0.0: continue
 		_feedback = 0.13
 		hit_confirmed.emit(hurtbox)
-		_impact_flash(hurtbox.global_position + (aim.global_position - hurtbox.global_position).normalized() * (hurtbox.capsule_radius + 0.12))
+		combat.present_hit()
 		var impulse := _attack.impact + (_stats.get_value(StatIds.Stat.MELEE_IMPULSE) if _stats != null else 0.0)
 		PhysicalForceResponse.apply_impulse(hurtbox.get_parent() as Node3D, -aim.global_basis.z * impulse)
 
@@ -173,21 +177,12 @@ func _pose() -> void:
 	presentation.rotation = _rest_rotation + offset
 	presentation.position = _rest_position + Vector3(0, 0, _feedback * 0.9)
 
-func _impact_flash(at: Vector3) -> void:
-	var flash := MeshInstance3D.new()
-	var mesh := SphereMesh.new()
-	mesh.radius = 0.12
-	mesh.height = 0.24
-	var material := StandardMaterial3D.new()
-	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	material.albedo_color = Color(1.0, 0.8, 0.35)
-	mesh.material = material
-	flash.mesh = mesh
-	get_tree().current_scene.add_child(flash)
-	flash.global_position = at
-	var tween := flash.create_tween()
-	tween.tween_property(flash, "scale", Vector3.ONE * 0.05, 0.14)
-	tween.tween_callback(flash.queue_free)
+func guard_status() -> String:
+	match phase:
+		Phase.RAISING: return "RAISING GUARD"
+		Phase.BLOCKING: return "GUARD READY"
+		Phase.GUARD_BROKEN: return "GUARD RECOVERING"
+	return "GUARD QUEUED" if _block_held else ""
 
 func cancel_action() -> void:
 	# Shared commitment survives context/slot changes; cancellation cannot speed attacks.

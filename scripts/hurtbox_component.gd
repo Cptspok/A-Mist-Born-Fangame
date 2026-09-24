@@ -39,6 +39,8 @@ func receive_damage(amount: float, instigator: Node3D = null, source: DamageSour
 
 	if _health_component == null:
 		return 0.0
+	# Invalid/dead hits must not react against the guard before Health rejects them.
+	if not is_finite(amount) or amount <= 0.0 or _health_component.is_dead(): return 0.0
 
 	if amount > 0.0 and not _health_component.is_dead() and is_instance_valid(instigator):
 		attacked_by.emit(instigator)
@@ -46,6 +48,8 @@ func receive_damage(amount: float, instigator: Node3D = null, source: DamageSour
 	if source != null and defense != null and defense.has_method("defend_damage"):
 		# Melee sources sit on the attacker; projectiles supply their contact position.
 		amount = defense.defend_damage(amount, source.global_position, source.block_pressure)
+	elif defense != null and defense.has_method("present_incoming"):
+		defense.present_incoming(&"hit")
 	var applied_damage := _health_component.apply_damage(amount)
 	if applied_damage > 0.0:
 		hit_received.emit(

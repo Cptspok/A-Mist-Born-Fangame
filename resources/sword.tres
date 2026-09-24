@@ -6,18 +6,17 @@
 [ext_resource type="PackedScene" path="res://scenes/sword_visual.tscn" id="4_visual"]
 [ext_resource type="Texture2D" uid="uid://dw5xn4hujn0w2" path="res://resources/sword.svg" id="5_icon"]
 [ext_resource type="Script" uid="uid://bo0gtdxtvj5ft" path="res://scripts/equipment_profile.gd" id="6_profile"]
-[ext_resource type="Script" uid="uid://ce5qg0420yhx8" path="res://scripts/stat_modifier.gd" id="stat_modifier_script"]
-
-[ext_resource type="Resource" path="res://resources/weapons/sword_moveset.tres" id="moveset"]
 [ext_resource type="Resource" path="res://resources/weapons/sword_material.tres" id="material"]
+[ext_resource type="Resource" uid="uid://b6sh3xfuiknfk" path="res://resources/weapons/sword_moveset.tres" id="moveset"]
+[ext_resource type="Script" uid="uid://ce5qg0420yhx8" path="res://scripts/stat_modifier.gd" id="stat_modifier_script"]
 
 [sub_resource type="Resource" id="SwordCombat"]
 script = ExtResource("2_weapon")
+moveset = ExtResource("moveset")
+can_block = true
 runtime_scene = ExtResource("3_runtime")
 primary_action_label = "Attack"
 secondary_action_label = "Block (hold)"
-moveset = ExtResource("moveset")
-can_block = true
 
 [sub_resource type="Resource" id="SwordEquipment"]
 script = ExtResource("6_profile")

@@ -7,6 +7,7 @@ var active_slot: int = -1
 var _runtimes: Dictionary = {}
 ## Persists across runtime replacement and context cancellation.
 var commitment_remaining := 0.0
+var _impact_view: Control
 
 func _physics_process(delta: float) -> void:
 	if not GameplayLocks.is_locked(): commitment_remaining = maxf(0.0, commitment_remaining - delta)
@@ -16,6 +17,11 @@ func _physics_process(delta: float) -> void:
 @onready var health: HealthComponent = $"../HealthComponent"
 
 func _ready() -> void:
+	var layer := CanvasLayer.new()
+	layer.layer = 6
+	add_child(layer)
+	_impact_view = preload("res://scripts/combat_feedback.gd").new()
+	layer.add_child(_impact_view)
 	equipment.equipment_changed.connect(_sync_equipment)
 	GameplayLocks.lock_changed.connect(_on_lock_changed)
 	health.died.connect(_cancel_actions)
@@ -93,4 +99,20 @@ func movement_velocity() -> Vector3:
 	return _runtimes[active_slot].movement_velocity() if _runtimes.has(active_slot) else Vector3.ZERO
 
 func defend_damage(amount: float, origin: Vector3, pressure: float) -> float:
-	return _runtimes[active_slot].defend_damage(amount, origin, pressure) if _runtimes.has(active_slot) else amount
+	if not _runtimes.has(active_slot):
+		present_incoming(&"hit")
+		return amount
+	var runtime: CombatItemRuntime = _runtimes[active_slot]
+	runtime.defense_result = &"hit"
+	var result := runtime.defend_damage(amount, origin, pressure)
+	present_incoming(runtime.defense_result)
+	return result
+
+func present_incoming(result: StringName) -> void:
+	_impact_view.show_incoming(result)
+
+func present_hit() -> void:
+	_impact_view.show_hit()
+
+func guard_status() -> String:
+	return _runtimes[active_slot].guard_status() if _runtimes.has(active_slot) else ""

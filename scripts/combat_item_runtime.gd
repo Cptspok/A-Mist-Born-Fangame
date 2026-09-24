@@ -6,6 +6,11 @@ var wielder: Node3D
 var aim: Camera3D
 var active: bool = false
 var item_definition: ItemDefinition
+## Presentation only; reset for each incoming hit by PlayerCombat.
+var defense_result: StringName = &"hit"
+
+func guard_status() -> String:
+	return ""
 
 func movement_multiplier() -> float:
 	return 1.0

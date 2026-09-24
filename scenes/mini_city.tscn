@@ -5,30 +5,30 @@
 [ext_resource type="Resource" uid="uid://dpidm6e2tfmvc" path="res://resources/quiver.tres" id="7_jleqt"]
 [ext_resource type="Resource" uid="uid://by6iitlu4ve0r" path="res://resources/bow.tres" id="8_8eyx4"]
 [ext_resource type="PackedScene" path="res://scenes/parametric_ladder.tscn" id="12_w67qg"]
+[ext_resource type="Resource" path="res://resources/ambient_bird.tres" id="ambient_bird"]
+[ext_resource type="Resource" path="res://resources/ambient_rat.tres" id="ambient_rat"]
+[ext_resource type="PackedScene" path="res://scenes/ambient_creature_spawner.tscn" id="ambient_spawner"]
 [ext_resource type="PackedScene" uid="uid://2wp53oqsdqpb" path="res://scenes/greybox_block.tscn" id="block"]
 [ext_resource type="PackedScene" path="res://scenes/encounter_freight_cart.tscn" id="cart"]
+[ext_resource type="Resource" path="res://resources/club.tres" id="club"]
 [ext_resource type="PackedScene" path="res://scenes/court_target.tscn" id="court_target"]
 [ext_resource type="Script" uid="uid://dv3sig1sv8u2u" path="res://scripts/dialogue_data.gd" id="dialogue"]
 [ext_resource type="Material" path="res://resources/greybox_materials/floor.tres" id="gb_floor"]
 [ext_resource type="Material" uid="uid://dxkg0nn5jc1f8" path="res://resources/greybox_materials/structure.tres" id="gb_structure"]
 [ext_resource type="Material" uid="uid://5smtwio0d5e1" path="res://resources/greybox_materials/traversal.tres" id="gb_traversal"]
+[ext_resource type="PackedScene" path="res://scenes/heavy_enemy.tscn" id="heavy"]
 [ext_resource type="Resource" path="res://resources/intelligence/identity_rewards.tres" id="identity_rewards"]
 [ext_resource type="Resource" path="res://resources/intelligence/location_rewards.tres" id="location_rewards"]
 [ext_resource type="PackedScene" path="res://scenes/world_loose_steel.tscn" id="loose"]
 [ext_resource type="PackedScene" path="res://scenes/knife_fighter.tscn" id="melee"]
-[ext_resource type="PackedScene" path="res://scenes/heavy_enemy.tscn" id="heavy"]
-[ext_resource type="PackedScene" path="res://scenes/crossbow_skirmisher.tscn" id="skirmisher"]
 [ext_resource type="NavigationMesh" path="res://resources/mini_city_navigation.tres" id="nav"]
 [ext_resource type="PackedScene" path="res://scenes/example_npc.tscn" id="npc"]
 [ext_resource type="PackedScene" path="res://scenes/world_metal_rail.tscn" id="rail"]
 [ext_resource type="PackedScene" path="res://scenes/long_range_archer.tscn" id="ranged"]
 [ext_resource type="PackedScene" path="res://scenes/world_metal_signpost.tscn" id="sign"]
+[ext_resource type="PackedScene" path="res://scenes/crossbow_skirmisher.tscn" id="skirmisher"]
 [ext_resource type="Resource" path="res://resources/intelligence/tactical_rewards.tres" id="tactical_rewards"]
 
-[ext_resource type="PackedScene" path="res://scenes/ambient_creature_spawner.tscn" id="ambient_spawner"]
-[ext_resource type="Resource" path="res://resources/ambient_rat.tres" id="ambient_rat"]
-[ext_resource type="Resource" path="res://resources/ambient_bird.tres" id="ambient_bird"]
-[ext_resource type="Resource" path="res://resources/club.tres" id="club"]
 [sub_resource type="Resource" id="dialogue0"]
 script = ExtResource("dialogue")
 lines = ["Quiet here. Trouble starts beyond the north lane."]
@@ -161,6 +161,10 @@ tint = Color(0.4, 0.26, 0.14, 1)
 [node name="SwordWorldItem" parent="Market/StallCounter1" unique_id=1228884100 instance=ExtResource("5_hw62b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.4499997, 1.5)
 item_definition = ExtResource("6_fuosr")
+
+[node name="ClubWorldItem" parent="Market/StallCounter1" unique_id=815522808 instance=ExtResource("5_hw62b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 1.45, 1.5)
+item_definition = ExtResource("club")
 
 [node name="StallPost1_0" parent="Market" unique_id=1443357648 groups=["navigation_static"] instance=ExtResource("block")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.2, 1.6, -8)
@@ -318,8 +322,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 16.479164, -35)
 encounter_id = &"city_wall"
 rewards = ExtResource("tactical_rewards")
 
-[node name="WallKnife" parent="Encounters" instance=ExtResource("melee")]
-position = Vector3(34, 16.479164, -30)
+[node name="WallKnife" parent="Encounters" unique_id=792090288 instance=ExtResource("melee")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 16.479164, -30)
 encounter_id = &"city_wall"
 
 [node name="DarvenVoss" parent="Encounters" unique_id=1161553952 instance=ExtResource("court_target")]
@@ -378,53 +382,29 @@ transform = Transform3D(1, 0, 0, 0, -1.0747931, 0.7829593, 0, -0.5780508, -1.455
 dimensions = Vector3(5, 0.4, 19.77367)
 tint = Color(0.48, 0.51, 0.54, 1)
 
-[node name="AmbientCreatures" type="Node3D" parent="."]
+[node name="AmbientCreatures" type="Node3D" parent="." unique_id=251116726]
 
-[node name="MarketClutterRats" parent="AmbientCreatures" instance=ExtResource("ambient_spawner")]
-respawn_enabled = true
-respawn_delay = 20.0
-respawn_min_player_distance = 12.0
-position = Vector3(12.8, 0.03, 9)
+[node name="MarketClutterRats" parent="AmbientCreatures" unique_id=1775638749 instance=ExtResource("ambient_spawner")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.8, 0.03, 9)
 definition = ExtResource("ambient_rat")
-count = 3
 spawn_radius = 0.65
 
-[node name="WestAlleyRats" parent="AmbientCreatures" instance=ExtResource("ambient_spawner")]
-respawn_enabled = true
-respawn_delay = 20.0
-respawn_min_player_distance = 12.0
-position = Vector3(-7.4, 0.03, -23)
+[node name="WestAlleyRats" parent="AmbientCreatures" unique_id=151583625 instance=ExtResource("ambient_spawner")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.4, 0.03, -23)
 definition = ExtResource("ambient_rat")
-count = 3
 spawn_radius = 0.65
 
-[node name="LoadingLaneRats" parent="AmbientCreatures" instance=ExtResource("ambient_spawner")]
-respawn_enabled = true
-respawn_delay = 20.0
-respawn_min_player_distance = 12.0
-position = Vector3(7.6, 0.03, -30)
+[node name="LoadingLaneRats" parent="AmbientCreatures" unique_id=789940283 instance=ExtResource("ambient_spawner")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.6, 0.03, -30)
 definition = ExtResource("ambient_rat")
-count = 3
 spawn_radius = 0.6
 
-[node name="WestRoofBirds" parent="AmbientCreatures" instance=ExtResource("ambient_spawner")]
-respawn_enabled = true
-respawn_delay = 20.0
-respawn_min_player_distance = 12.0
-position = Vector3(-10, 11.958, -55)
+[node name="WestRoofBirds" parent="AmbientCreatures" unique_id=1685931879 instance=ExtResource("ambient_spawner")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 11.958, -55)
 definition = ExtResource("ambient_bird")
 count = 2
-spawn_radius = 1.0
 
-[node name="EastRoofBirds" parent="AmbientCreatures" instance=ExtResource("ambient_spawner")]
-respawn_enabled = true
-respawn_delay = 20.0
-respawn_min_player_distance = 12.0
-position = Vector3(13, 15.528, -56)
+[node name="EastRoofBirds" parent="AmbientCreatures" unique_id=247487366 instance=ExtResource("ambient_spawner")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 15.528, -56)
 definition = ExtResource("ambient_bird")
 count = 2
-spawn_radius = 1.0
-
-[node name="ClubWorldItem" parent="Market/StallCounter1" instance=ExtResource("5_hw62b")]
-position = Vector3(0.3, 1.45, 1.5)
-item_definition = ExtResource("club")
