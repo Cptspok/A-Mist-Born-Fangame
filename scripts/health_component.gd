@@ -3,6 +3,8 @@ extends Node
 
 signal health_changed(current_health: float, max_health: float)
 signal died
+## Accepted injury, before deferral; also emitted for direct obligations.
+signal damage_received(amount: float)
 
 @export_range(0.1, 1000000.0, 0.1, "or_greater") var max_health: float = 100.0
 @export var start_at_max_health: bool = true
@@ -38,6 +40,7 @@ func unregister_damage_processor(processor: Callable) -> void:
 func apply_damage(amount: float, process_incoming := true) -> float:
 	if not is_finite(amount) or amount <= 0.0 or _is_dead:
 		return 0.0
+	damage_received.emit(amount)
 	if process_incoming:
 		for processor in _damage_processors.duplicate():
 			if processor.is_valid(): amount = maxf(0.0, float(processor.call(amount)))
@@ -56,7 +59,7 @@ func apply_damage(amount: float, process_incoming := true) -> float:
 
 
 func heal(amount: float) -> float:
-	if amount <= 0.0 or _is_dead:
+	if not is_finite(amount) or amount <= 0.0 or _is_dead:
 		return 0.0
 
 	var previous_health := _current_health

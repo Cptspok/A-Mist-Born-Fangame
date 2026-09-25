@@ -24,6 +24,7 @@
 [ext_resource type="Resource" path="res://resources/pewter_metal.tres" id="pewter_metal"]
 [ext_resource type="Resource" path="res://resources/steel_metal.tres" id="steel_metal"]
 [ext_resource type="Script" uid="uid://nyye22ydgig2" path="res://scripts/metal_wheel.gd" id="wheel"]
+[ext_resource type="Script" path="res://scripts/player_recovery.gd" id="recovery"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
 radius = 0.4
@@ -143,3 +144,6 @@ script = ExtResource("wheel")
 
 [node name="PewterBurn" type="Node" parent="." unique_id=1989672500]
 script = ExtResource("pewter_burn")
+
+[node name="PlayerRecovery" type="Node" parent="."]
+script = ExtResource("recovery")

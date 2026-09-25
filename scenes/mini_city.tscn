@@ -28,6 +28,8 @@
 [ext_resource type="PackedScene" path="res://scenes/world_metal_signpost.tscn" id="sign"]
 [ext_resource type="PackedScene" path="res://scenes/crossbow_skirmisher.tscn" id="skirmisher"]
 [ext_resource type="Resource" path="res://resources/intelligence/tactical_rewards.tres" id="tactical_rewards"]
+[ext_resource type="PackedScene" path="res://scenes/rest_point.tscn" id="recovery_rest"]
+[ext_resource type="Resource" path="res://resources/healing/medical_supplies.tres" id="recovery_medicine"]
 
 [sub_resource type="Resource" id="dialogue0"]
 script = ExtResource("dialogue")
@@ -38,6 +40,36 @@ script = ExtResource("dialogue")
 lines = ["The wall ramp loops back to this market."]
 
 [node name="MiniCity" type="Node3D" unique_id=1708898151]
+
+[node name="Recovery" type="Node3D" parent="."]
+
+[node name="MarketShelter" parent="Recovery" instance=ExtResource("recovery_rest")]
+position = Vector3(-8, 0, -10.2)
+rest_name = "Market shelter"
+
+[node name="EastWallRefuge" parent="Recovery" instance=ExtResource("recovery_rest")]
+position = Vector3(28.5, 0, -20)
+rest_name = "East wall refuge"
+
+[node name="MarketMedicineA" parent="Recovery" instance=ExtResource("5_hw62b")]
+position = Vector3(-8.8, 1.65, -8)
+item_definition = ExtResource("recovery_medicine")
+
+[node name="MarketMedicineB" parent="Recovery" instance=ExtResource("5_hw62b")]
+position = Vector3(-7.5, 1.65, -8)
+item_definition = ExtResource("recovery_medicine")
+
+[node name="MarketMedicineC" parent="Recovery" instance=ExtResource("5_hw62b")]
+position = Vector3(-6.8, 1.65, -8)
+item_definition = ExtResource("recovery_medicine")
+
+[node name="RefugeMedicineA" parent="Recovery" instance=ExtResource("5_hw62b")]
+position = Vector3(27.2, 0.45, -20)
+item_definition = ExtResource("recovery_medicine")
+
+[node name="RefugeMedicineB" parent="Recovery" instance=ExtResource("5_hw62b")]
+position = Vector3(27.2, 0.45, -18.8)
+item_definition = ExtResource("recovery_medicine")
 
 [node name="Architecture" type="Node3D" parent="." unique_id=2077969454]
 

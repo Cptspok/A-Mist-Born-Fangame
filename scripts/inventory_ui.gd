@@ -200,7 +200,7 @@ func _menu_action(id: int) -> void:
 	elif id == 101: equipment.equip_from_context(selected_stack)
 	elif id == 102:
 		if grid.inventory.try_use(selected_stack):
-			status.text = "Used %s. Close inventory to resume absorption." % selected_stack.definition.display_name
+			status.text = "Using %s. Close inventory to continue." % selected_stack.definition.display_name
 			_show_tooltip(selected_stack if selected_stack in grid.inventory.stacks else null, Vector2.ZERO)
 		else:
 			status.text = "Cannot use this item here."

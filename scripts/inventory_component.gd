@@ -65,8 +65,13 @@ func try_use(stack: ItemStack) -> bool:
 	if stack == null or stack not in stacks or stack.quantity <= 0 or stack.definition == null:
 		return false
 	var consumable := stack.definition.consumable
-	if consumable == null or not consumable.apply(get_parent()):
+	if consumable == null:
 		return false
+	return consumable.begin_use(get_parent(), self, stack)
+
+## Completion boundary for immediate and timed consumables alike.
+func consume_one(stack: ItemStack) -> bool:
+	if stack == null or stack not in stacks or stack.quantity <= 0: return false
 	stack.quantity -= 1
 	if stack.quantity == 0:
 		stacks.erase(stack)

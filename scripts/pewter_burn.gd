@@ -53,3 +53,12 @@ func _physics_process(delta: float) -> void:
 func _exit_tree() -> void:
 	if is_instance_valid(health): health.unregister_damage_processor(_defer_damage)
 	if is_instance_valid(stats): stats.remove_modifiers_from_source(self)
+
+## Treat injury without changing the burn state or any combat modifiers.
+func recover_debt(amount: float) -> float:
+	if not is_finite(amount) or amount <= 0.0 or health.is_dead(): return 0.0
+	var treated := minf(amount, debt)
+	debt -= treated
+	if treated > 0.0: debt_changed.emit(debt)
+	if debt <= 0.0: set_physics_process(false)
+	return treated

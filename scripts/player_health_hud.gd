@@ -5,6 +5,8 @@ extends Control
 var _health: HealthComponent
 var _pewter: Node
 var _debt := 0.0
+var _recovery: Node
+var _recovery_text: Label
 
 @onready var health_bar: ProgressBar = $HealthBar
 @onready var health_text: Label = $HealthText
@@ -25,6 +27,16 @@ func _ready() -> void:
 	if not health.is_node_ready():
 		await health.ready
 	_health = health
+	_recovery = health.get_parent().get_node_or_null("PlayerRecovery")
+	_recovery_text = Label.new()
+	_recovery_text.position = Vector2(0, -48)
+	_recovery_text.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_recovery_text.add_theme_color_override("font_shadow_color", Color.BLACK)
+	_recovery_text.add_theme_constant_override("shadow_offset_x", 1)
+	_recovery_text.add_theme_constant_override("shadow_offset_y", 1)
+	add_child(_recovery_text)
+	if _recovery != null:
+		_recovery.condition_changed.connect(func(_condition): _update_health(_health.current_health, _health.max_health))
 	_pewter = health.get_parent().get_node_or_null("PewterBurn")
 	if _pewter != null:
 		_debt = _pewter.debt
@@ -41,6 +53,11 @@ func _update_health(current_health: float, max_health: float) -> void:
 	health_bar.max_value = max_health
 	health_bar.value = current_health
 	health_text.text = "%s / %s" % [String.num(current_health, 1), String.num(max_health, 1)]
+	var condition: StringName = _recovery.condition if _recovery != null else &"healthy"
+	var color := Color(1, 0.25, 0.2) if condition == &"critical" else (Color(0.9, 0.65, 0.2) if condition == &"wounded" else Color(0.15, 0.7, 0.3))
+	(health_bar.get_theme_stylebox("fill") as StyleBoxFlat).bg_color = color
+	health_text.modulate = color if condition != &"healthy" else Color.WHITE
+	if condition != &"healthy": health_text.text += "  " + String(condition).to_upper()
 	$DebtText.visible = _debt > 0.0
 	$DebtText.text = "Debt %.1f%s" % [_debt, " - LETHAL" if _debt >= current_health and _debt > 0.0 else ""]
 	$DebtText.modulate = Color(1, 0.25, 0.25) if _debt >= current_health else Color(0.8, 0.8, 0.8)
@@ -49,6 +66,10 @@ func _update_health(current_health: float, max_health: float) -> void:
 func _update_debt(amount: float) -> void:
 	_debt = amount
 	_update_health(_health.current_health, _health.max_health)
+
+func _process(_delta: float) -> void:
+	if _recovery == null or _recovery_text == null: return
+	_recovery_text.text = "Healing... %.1f s" % _recovery.healing_remaining if _recovery.is_healing() else _recovery.feedback
 
 func _draw_debt() -> void:
 	if _debt <= 0.0 or _health == null: return
