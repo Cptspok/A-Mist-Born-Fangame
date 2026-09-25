@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="IntelligenceMapDefinition" format=3]
+
+[ext_resource type="Script" path="res://systems/intelligence/intelligence_region_definition.gd" id="1_ssmsm"]
+[ext_resource type="Script" path="res://systems/intelligence/intelligence_map_definition.gd" id="2_kgf0f"]
+
+[sub_resource type="Resource" id="Resource_o274y"]
+script = ExtResource("1_ssmsm")
+unique_id = &"back_streets"
+display_name = "Cabin & back streets"
+bounds = Rect2(0.08, 0.65, 0.82, 0.29)
+initially_known = true
+
+[sub_resource type="Resource" id="Resource_f28iy"]
+script = ExtResource("1_ssmsm")
+unique_id = &"market"
+display_name = "Market & gate road"
+bounds = Rect2(0.04, 0.36, 0.92, 0.24)
+initially_known = true
+
+[sub_resource type="Resource" id="Resource_qv3lb"]
+script = ExtResource("1_ssmsm")
+unique_id = &"baron_estate"
+display_name = "Baron's northern estate"
+bounds = Rect2(0.22, 0.06, 0.58, 0.24)
+initially_known = true
+
+[resource]
+script = ExtResource("2_kgf0f")
+district_id = &"ashmarket"
+display_name = "Ashmarket District"
+regions = Array[ExtResource("1_ssmsm")]([SubResource("Resource_o274y"), SubResource("Resource_f28iy"), SubResource("Resource_qv3lb")])

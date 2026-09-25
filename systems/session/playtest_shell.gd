@@ -42,7 +42,7 @@ func _input(event: InputEvent) -> void:
 func _action(action: String) -> void:
 	match action:
 		"quit": get_tree().quit()
-		"hub", "lab", "advanced":
+		"hub", "lab", "advanced", "urban":
 			destination = action
 			_launch(true)
 		"restart": _launch(false)
@@ -85,7 +85,8 @@ func _launch(intro: bool, preserve_checkpoint := false) -> void:
 	if not preserve_checkpoint: RespawnSession.reset()
 	_clear_world()
 	get_tree().paused = true
-	world = WORLD.instantiate()
+	var level: PackedScene = load("res://world/levels/urban_district/urban_district.tscn") if destination == "urban" else WORLD
+	world = level.instantiate()
 	world.process_mode = Node.PROCESS_MODE_PAUSABLE
 	add_child(world)
 	player = world.get_node("Player")

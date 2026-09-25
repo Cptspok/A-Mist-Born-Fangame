@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CourtIntelFieldDefinition" format=3]
+
+[ext_resource type="Script" path="res://systems/intelligence/court_intel_field_definition.gd" id="1_wqdxu"]
+
+[resource]
+script = ExtResource("1_wqdxu")
+unique_id = &"tactics"
+display_label = "Tactical notes"
+revealed_text = "Voss fights at close range and stays near his hall. The rear opening leads onto the terrace; the eastern service stair offers another escape. The market galleries provide elevated approaches, but the manor guard has a clear view of the front stair."
+display_order = 2

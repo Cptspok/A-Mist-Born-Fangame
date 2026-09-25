@@ -45,7 +45,7 @@ func show_page(page: String, back: String) -> void:
 		"main":
 			_title("MISTBORN PROTOTYPE")
 			_label("Playtest v0.0.2")
-			_buttons([["Play", "hub"], ["Settings", "settings"], ["Controls", "controls"], ["Quit", "quit"]])
+			_buttons([["Play", "hub"], ["Urban District", "urban"], ["Settings", "settings"], ["Controls", "controls"], ["Quit", "quit"]])
 		"destinations":
 			_title("PLAYTEST")
 			_label("Movement Lab: forgiving practice.\nAdvanced Traversal: precision and momentum.")

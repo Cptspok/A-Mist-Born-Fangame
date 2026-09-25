@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="IntelligenceClueDefinition" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/2d/icons/intelligence/voss.svg" id="1_eeiyl"]
+[ext_resource type="Script" path="res://systems/intelligence/court_intel_field_definition.gd" id="2_tlk6i"]
+[ext_resource type="Resource" path="res://data/intelligence/urban_district/profile_field.tres" id="3_y8ylq"]
+[ext_resource type="Script" path="res://systems/intelligence/intelligence_clue_definition.gd" id="4_6h5uv"]
+[ext_resource type="Resource" path="res://data/intelligence/urban_district/baron_voss.tres" id="5_m4nse"]
+
+[resource]
+script = ExtResource("4_6h5uv")
+unique_id = &"ashmarket_profile"
+display_name = "Collector's account"
+target = ExtResource("5_m4nse")
+reveals_identity = true
+reveals_portrait = true
+revealed_fields = Array[ExtResource("2_tlk6i")]([ExtResource("3_y8ylq")])
+clue_text = "Darven Voss rules Ashmarket from the northern manor. His collectors squeeze the southern households and levy every market cart."
+source_description = "Back-street collector"
+icon = ExtResource("1_eeiyl")

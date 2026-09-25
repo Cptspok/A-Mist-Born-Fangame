@@ -1,12 +1,13 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
-[ext_resource type="Script" path="res://items/base/item_definition.gd" id="item"]
-[ext_resource type="Script" path="res://items/consumables/healing_consumable_definition.gd" id="healing"]
-[ext_resource type="Texture2D" path="res://assets/2d/icons/prototype/red_item.svg" id="icon"]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://tf7ghjrgn15o"]
+
+[ext_resource type="Script" uid="uid://ce5qg0420yhx8" path="res://components/stats/stat_modifier.gd" id="4_qifnt"]
+[ext_resource type="Script" uid="uid://d27jqhm2bh7rw" path="res://items/consumables/healing_consumable_definition.gd" id="healing"]
+[ext_resource type="Texture2D" uid="uid://babf3spf2on17" path="res://assets/2d/icons/prototype/red_item.svg" id="icon"]
+[ext_resource type="Script" uid="uid://ufeuy8so4umi" path="res://items/base/item_definition.gd" id="item"]
+
 [sub_resource type="Resource" id="dose"]
 script = ExtResource("healing")
-heal_amount = 30.0
-use_duration = 3.0
-interrupt_on_damage = true
+
 [resource]
 script = ExtResource("item")
 item_id = "medical_supplies"

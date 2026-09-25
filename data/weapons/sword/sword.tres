@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://ufeuy8so4umi" path="res://items/base/item_definition.gd" id="1_item"]
 [ext_resource type="Script" uid="uid://dsupbavikf7dh" path="res://weapons/melee/base/melee_weapon_definition.gd" id="2_weapon"]
 [ext_resource type="PackedScene" path="res://weapons/melee/base/melee_weapon.tscn" id="3_runtime"]
-[ext_resource type="PackedScene" path="res://weapons/melee/sword/sword_visual.tscn" id="4_visual"]
+[ext_resource type="PackedScene" uid="uid://i3f8ml3u8j5m" path="res://weapons/melee/sword/sword_visual.tscn" id="4_visual"]
 [ext_resource type="Texture2D" uid="uid://dw5xn4hujn0w2" path="res://assets/2d/icons/weapons/sword.svg" id="5_icon"]
 [ext_resource type="Script" uid="uid://bo0gtdxtvj5ft" path="res://components/equipment/equipment_profile.gd" id="6_profile"]
 [ext_resource type="Resource" path="res://data/weapons/sword/sword_material.tres" id="material"]

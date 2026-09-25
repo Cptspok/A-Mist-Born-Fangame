@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="CourtTargetDefinition" format=3]
+
+[ext_resource type="Script" path="res://systems/intelligence/court_intel_field_definition.gd" id="1_oonbd"]
+[ext_resource type="Resource" path="res://data/intelligence/urban_district/profile_field.tres" id="2_b2i4u"]
+[ext_resource type="Resource" path="res://data/intelligence/urban_district/location_field.tres" id="3_ortiy"]
+[ext_resource type="Resource" path="res://data/intelligence/urban_district/tactics_field.tres" id="4_0g4rx"]
+[ext_resource type="Texture2D" path="res://assets/2d/icons/intelligence/voss.svg" id="5_o8xy1"]
+[ext_resource type="Script" path="res://systems/intelligence/court_target_definition.gd" id="6_ehpja"]
+
+[resource]
+script = ExtResource("6_ehpja")
+unique_id = &"ashmarket_voss"
+display_name = "Baron Darven Voss"
+portrait = ExtResource("5_o8xy1")
+dossier_fields = Array[ExtResource("1_oonbd")]([ExtResource("2_b2i4u"), ExtResource("3_ortiy"), ExtResource("4_0g4rx")])
+district_id = &"ashmarket"
+region_id = &"baron_estate"
+map_reveal_field_id = &"location"
+map_position = Vector2(0.5, 0.35)
+associated_clue_ids = Array[StringName]([&"ashmarket_profile", &"ashmarket_location", &"ashmarket_tactics"])

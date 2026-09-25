@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CourtIntelFieldDefinition" format=3]
+
+[ext_resource type="Script" path="res://systems/intelligence/court_intel_field_definition.gd" id="1_y3ucx"]
+
+[resource]
+script = ExtResource("1_y3ucx")
+unique_id = &"location"
+display_label = "Residence"
+revealed_text = "The Baron receives his officers in the ground-floor hall of the raised northern manor. The broad front stair and an eastern service stair both reach its terrace."
+display_order = 1

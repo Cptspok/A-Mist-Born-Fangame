@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CourtIntelFieldDefinition" format=3]
+
+[ext_resource type="Script" path="res://systems/intelligence/court_intel_field_definition.gd" id="1_irxt2"]
+
+[resource]
+script = ExtResource("1_irxt2")
+unique_id = &"profile"
+display_label = "Identity & authority"
+revealed_text = "Darven Voss rules Ashmarket from the northern manor. His collectors squeeze the southern households and levy every market cart."

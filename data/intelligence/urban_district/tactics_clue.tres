@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="IntelligenceClueDefinition" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/2d/icons/intelligence/voss.svg" id="1_mwxm3"]
+[ext_resource type="Script" path="res://systems/intelligence/court_intel_field_definition.gd" id="2_npgmj"]
+[ext_resource type="Resource" path="res://data/intelligence/urban_district/tactics_field.tres" id="3_p2f8h"]
+[ext_resource type="Script" path="res://systems/intelligence/intelligence_clue_definition.gd" id="4_5n5pm"]
+[ext_resource type="Resource" path="res://data/intelligence/urban_district/baron_voss.tres" id="5_1venk"]
+
+[resource]
+script = ExtResource("4_5n5pm")
+unique_id = &"ashmarket_tactics"
+display_name = "Watchman's private notes"
+target = ExtResource("5_1venk")
+revealed_fields = Array[ExtResource("2_npgmj")]([ExtResource("3_p2f8h")])
+clue_text = "Voss fights at close range and stays near his hall. The rear opening leads onto the terrace; the eastern service stair offers another escape. The market galleries provide elevated approaches, but the manor guard has a clear view of the front stair."
+source_description = "East market service gallery"
+icon = ExtResource("1_mwxm3")

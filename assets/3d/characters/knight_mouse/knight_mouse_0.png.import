@@ -3,9 +3,10 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cjat8eq1ajrt0"
-path="res://.godot/imported/knight_mouse_0.png-324e3a3163ab93d690bb98d9ef4ff6a4.ctex"
+path.s3tc="res://.godot/imported/knight_mouse_0.png-324e3a3163ab93d690bb98d9ef4ff6a4.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={
 "md5": "c9a82cc76a96cc12650e1a6000183aa2"
@@ -14,11 +15,11 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/3d/characters/knight_mouse/knight_mouse_0.png"
-dest_files=["res://.godot/imported/knight_mouse_0.png-324e3a3163ab93d690bb98d9ef4ff6a4.ctex"]
+dest_files=["res://.godot/imported/knight_mouse_0.png-324e3a3163ab93d690bb98d9ef4ff6a4.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -40,4 +41,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0
