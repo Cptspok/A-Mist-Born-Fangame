@@ -1,7 +1,0 @@
-[gd_resource type="Resource" script_class="ItemMaterialDefinition" format=3]
-[ext_resource type="Script" path="res://scripts/item_material_definition.gd" id="material"]
-[resource]
-script = ExtResource("material")
-category = &"steel"
-metallic_content = 1.0
-mass_kg = 1.4

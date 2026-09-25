@@ -6,16 +6,16 @@ alignment awkward. This pass adds one deliberate captured control state after
 an established free Pull. It does not replace the chest-origin force law.
 
 Files changed
-- scripts/loose_metal_capture.gd (new): force motor, marker tuning, eligibility,
+- abilities/allomancy/iron/loose_metal_capture.gd (new): force motor, marker tuning, eligibility,
   constrained aim position, obstruction/break checks and state release.
-- scripts/allomancy_controller.gd: single maintained Pull/capture/released Push
+- abilities/allomancy/shared/allomancy_controller.gd: single maintained Pull/capture/released Push
   lifecycle, existing ability cancellation integration and Iron usage charging.
-- scripts/allomancy_targeting.gd: separately validated maintained target path.
-- scripts/metal_tether_component.gd: capture_enabled opt-in, false by default;
+- abilities/allomancy/shared/allomancy_targeting.gd: separately validated maintained target path.
+- abilities/allomancy/metal_tether/metal_tether_component.gd: capture_enabled opt-in, false by default;
   deleted collision-volume guard in availability checks.
-- scripts/allomancy_debug.gd: captured-state text and hold-motor indication.
-- scenes/player.tscn: CapturePoint Marker3D/script under AllomanticOrigin.
-- scenes/allomancy_light.tscn and scenes/world_loose_steel.tscn: enable capture
+- dev/debug/allomancy_debug.gd: captured-state text and hold-motor indication.
+- characters/player/player.tscn: CapturePoint Marker3D/script under AllomanticOrigin.
+- dev/fixtures/allomancy/allomancy_light.tscn and world/props/loose_steel/world_loose_steel.tscn: enable capture
   on their existing loose-object tethers; no transforms or physics values changed.
 - docs/devlogs/README.md and this chronological record.
 

@@ -15,7 +15,7 @@ Actual code/resources and a fresh main-scene startup were inspected before editi
 | Same-height total airtime | 1.010 s | 0.900 s | 2v/g |
 | Air control | 4 m/s² | 4 m/s² | Player exported script default |
 | Force-response mass | 1 | 1 | Player exported script default |
-| Steel base force | 30 | 48 | resources/allomancy_tuning.tres |
+| Steel base force | 30 | 48 | data/abilities/allomancy/allomancy_tuning.tres |
 | Iron base force | 30 | 48 | Same resource |
 | Steel terminal response | 24 m/s | 24 m/s | Same resource |
 | Iron terminal response | 24 m/s | 24 m/s | Same resource |
@@ -74,7 +74,7 @@ The actual script export is positive 1.75, the interaction sphere resource is ra
 
 ## Files, validation and retest
 
-Changed only `scenes/player.tscn` (Player StatComponent speed and jump override), `project.godot` (gravity), `resources/allomancy_tuning.tres` (base forces), and this report. No architecture change. Scene import/parser, resource loading, ordinary headless startup, effective-value readback and limited contact snapshots were used. Both layouts and movement/force/reset scripts were hash-checked as unchanged. No automated gameplay suite or detailed traversal test was performed.
+Changed only `characters/player/player.tscn` (Player StatComponent speed and jump override), `project.godot` (gravity), `data/abilities/allomancy/allomancy_tuning.tres` (base forces), and this report. No architecture change. Scene import/parser, resource loading, ordinary headless startup, effective-value readback and limited contact snapshots were used. Both layouts and movement/force/reset scripts were hash-checked as unchanged. No automated gameplay suite or detailed traversal test was performed.
 
 1. Restart to reload project gravity. In Movement Lab, run straight, release, then repeat with Shift. Check roughly quarter-second strong slowing and sub-meter stopping.
 2. At station 01, jump vertically first; compare apex and descent. Then jump the 2 m gap normally and the 4 m gap with sprint, moving takeoff closer than the old high-speed references. Compare released versus held airborne input.

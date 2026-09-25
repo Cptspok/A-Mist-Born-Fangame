@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AmbientCreatureDefinition" load_steps=3 format=3]
+[ext_resource type="Script" path="res://characters/ambient/base/ambient_creature_definition.gd" id="1"]
+[ext_resource type="PackedScene" path="res://characters/ambient/bird/ambient_bird_visual.tscn" id="2"]
+[resource]
+script = ExtResource("1")
+unique_id = &"prototype_bird"
+visual_scene = ExtResource("2")
+movement_profile = 1
+trigger_radius = 7.0
+flee_speed = 5.5
+flee_distance = 10.0
+fade_start_distance = 3.0
+fade_duration = 1.0
+upward_bias = 0.7

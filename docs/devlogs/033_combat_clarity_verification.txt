@@ -63,7 +63,7 @@ Removed this representation and replaced it with a white crosshair hit marker
 for 0.16s. Existing hit_confirmed signal, recoil, damage and impulse remain.
 
 CHANGED FILES / SAFETY
-scripts/combat_feedback.gd (+ generated UID), combat_item_runtime.gd,
+ui/hud/combat/combat_feedback.gd (+ generated UID), combat_item_runtime.gd,
 player_combat.gd, melee_weapon.gd, hurtbox_component.gd; this record and index.
 No scenes/resources changed. Hathsin files and content untouched; shared player
 feedback naturally applies wherever Player is used. No moveset, timing, combo,

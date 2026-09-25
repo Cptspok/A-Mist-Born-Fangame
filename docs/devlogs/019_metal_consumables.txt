@@ -5,19 +5,19 @@ Implemented in the existing project. No gameplay automation or editor/computer c
 ## Files
 
 Added:
-- `scripts/consumable_definition.gd`: reusable stateless consumable use contract.
-- `scripts/metal_consumable_definition.gd`: quality, metal IDs, absorption duration.
-- `scripts/workshop_item_supply.gd` and `scenes/workshop_item_supply.tscn`: repeatable inventory supply using existing interaction and placeholder conventions.
-- `resources/metal_consumables/{raw_steel,basic_steel_vial,pure_steel_vial,basic_iron_vial,basic_pewter_vial,basic_mixed_vial}.tres`: six item definitions with embedded consumable recipes.
-- `tools/validate_metal_consumable_resources.gd`: resource loading audit only; never instantiates gameplay scenes.
+- `items/consumables/consumable_definition.gd`: reusable stateless consumable use contract.
+- `items/consumables/metal_consumable_definition.gd`: quality, metal IDs, absorption duration.
+- `dev/fixtures/inventory/workshop_item_supply.gd` and `dev/fixtures/inventory/workshop_item_supply.tscn`: repeatable inventory supply using existing interaction and placeholder conventions.
+- `data/items/consumables/metals/{raw_steel,basic_steel_vial,pure_steel_vial,basic_iron_vial,basic_pewter_vial,basic_mixed_vial}.tres`: six item definitions with embedded consumable recipes.
+- `dev/tools/validate_metal_consumable_resources.gd`: resource loading audit only; never instantiates gameplay scenes.
 
 Modified:
-- `scripts/item_definition.gd`: optional consumable definition.
-- `scripts/inventory_component.gd`: owned-stack use transaction, decrements exactly one on success, removes only empty stacks.
-- `scripts/inventory_ui.gd`: right-click Use, feedback and tooltip quantity.
-- `scripts/inventory_grid.gd`: stack quantity display.
-- `scripts/allomancy_component.gd`: independent pending absorption doses feeding existing reserves/signals.
-- `scenes/systems_workshop.tscn`: six repeatable stations.
+- `items/base/item_definition.gd`: optional consumable definition.
+- `components/inventory/inventory_component.gd`: owned-stack use transaction, decrements exactly one on success, removes only empty stacks.
+- `ui/inventory/inventory_ui.gd`: right-click Use, feedback and tooltip quantity.
+- `ui/inventory/inventory_grid.gd`: stack quantity display.
+- `abilities/allomancy/shared/allomancy_component.gd`: independent pending absorption doses feeding existing reserves/signals.
+- `dev/test_scenes/systems_workshop/systems_workshop.tscn`: six repeatable stations.
 
 ## Architecture and Inspector tuning
 

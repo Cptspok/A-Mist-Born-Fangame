@@ -18,7 +18,7 @@ No Steel/Iron physics implementation, tuning, target selection, tether response,
 
 Corrected consumption rule: held intent alone costs nothing. The existing apply() result is authoritative: only nonzero accepted player/object force consumes reserve. Losing a tether or reaching zero applied force stops burning without cancelling held intent; reacquisition resumes usage without a new press. Releasing input stops it. A depleted or access-revoked held action must be released and pressed again after refill/access restoration; it does not repeatedly retry or emit failure every frame.
 
-Steel and Iron each start full at 1000 units and consume 1 unit/second. Configure resources/steel_metal.tres and resources/iron_metal.tres. Player/AllomancyComponent.start_at_full can instead use each definition's default_reserve. This is generous test data, not balancing.
+Steel and Iron each start full at 1000 units and consume 1 unit/second. Configure data/abilities/allomancy/steel/steel_metal.tres and data/abilities/allomancy/iron/iron_metal.tres. Player/AllomancyComponent.start_at_full can instead use each definition's default_reserve. This is generous test data, not balancing.
 
 Systems Workshop contains a small green refill station at local (5, 0.5, 5), world (5, 0.5, 50). Existing interaction refills both reserves; signal-driven Label3D text shows current/max values. It does not add ingestion, pickups or economy. refill_all() is also available to debugging/tools.
 
@@ -65,7 +65,7 @@ Created scripts (with Godot UID companions): ability_definition.gd, ability_comp
 
 Created resources: steel_metal.tres, iron_metal.tres, steel_push_ability.tres, iron_pull_ability.tres. Created scenes: checkpoint.tscn, metal_refill_station.tscn. Created this report.
 
-Modified: project.godot (autoload), scenes/player.tscn (components), scenes/traversal_course.tscn (checkpoint instances only), scenes/systems_workshop.tscn (refill station only), scripts/allomancy_controller.gd (adapter), scripts/player_death.gd (destination resolution), scripts/playtest_shell.gd (session lifetime), scripts/traversal_course.gd (fall destination/reset).
+Modified: project.godot (autoload), characters/player/player.tscn (components), dev/test_scenes/traversal_course/traversal_course.tscn (checkpoint instances only), dev/test_scenes/systems_workshop/systems_workshop.tscn (refill station only), abilities/allomancy/shared/allomancy_controller.gd (adapter), characters/player/player_death.gd (destination resolution), systems/session/playtest_shell.gd (session lifetime), dev/test_scenes/traversal_course/traversal_course.gd (fall destination/reset).
 
 ## Recommended manual order
 
@@ -83,11 +83,11 @@ Deferred intentionally: additional metals/spells, UI/hotbars/cooldowns, ingestio
 
 Previously, the activation start hook called begin_burn(), so the automatic resource loop charged held input independently of targeting. The controller now reports actual accepted force from AllomancyInteraction.apply() to consume_usage(). No targeting rules, force laws, reserve values/rates or generic AbilityComponent code changed. Usage is charged for the current effect step, clamped at zero; depletion cancels intent, preventing another force step until refill and a fresh press. Automatic continuous burning remains available for future toggle policies.
 
-New scenes/allomancy_reserve_hud.tscn and scripts/allomancy_reserve_hud.gd observe AllomancyComponent.reserve_changed and initialize from its current values. Two labeled bars with numeric values appear above the lower-right weapon display. Presentation owns no gameplay state. The Workshop refill remains unchanged and updates both HUD and its local text via the same signals.
+New ui/hud/allomancy/allomancy_reserve_hud.tscn and ui/hud/allomancy/allomancy_reserve_hud.gd observe AllomancyComponent.reserve_changed and initialize from its current values. Two labeled bars with numeric values appear above the lower-right weapon display. Presentation owns no gameplay state. The Workshop refill remains unchanged and updates both HUD and its local text via the same signals.
 
 Checkpoint count changed from 4 to 8. Seven obstacles are identified by successive safe platforms: runway gap, first roof lift, long arc crossing, redirect to loose-metal deck, vertical ascent, chained rise to safe step, final crossing/ascent. Start remains the initial checkpoint; each completion platform now has one checkpoint. The loose-deck marker sits clear of the initial test bodies. No platform/tether geometry or respawn-system code changed.
 
-Files changed in this correction: scripts/allomancy_controller.gd, scripts/allomancy_component.gd, scenes/main.tscn, scenes/traversal_course.tscn, this report. New: scripts/allomancy_reserve_hud.gd and scenes/allomancy_reserve_hud.tscn.
+Files changed in this correction: abilities/allomancy/shared/allomancy_controller.gd, abilities/allomancy/shared/allomancy_component.gd, world/levels/playtest_world/main.tscn, dev/test_scenes/traversal_course/traversal_course.tscn, this report. New: ui/hud/allomancy/allomancy_reserve_hud.gd and ui/hud/allomancy/allomancy_reserve_hud.tscn.
 
 Validation for this correction only: static inspection and one short standalone Main startup. No harness, gameplay scenarios or automated traversal/depletion tests. Startup completed with only the existing Windows certificate-store error and no script/resource errors.
 

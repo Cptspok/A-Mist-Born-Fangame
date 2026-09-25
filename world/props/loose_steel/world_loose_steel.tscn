@@ -1,0 +1,45 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://abilities/allomancy/metal_tether/metal_tether_component.gd" id="tether"]
+[ext_resource type="Script" path="res://world/props/loose_steel/loose_metal_body.gd" id="body_control"]
+
+[sub_resource type="StandardMaterial3D" id="r1"]
+albedo_color = Color(0.66, 0.73, 0.80, 1)
+metallic = 0.8
+roughness = 0.25
+
+[sub_resource type="BoxMesh" id="r2"]
+size = Vector3(0.85, 0.14, 0.22)
+material = SubResource("r1")
+
+[sub_resource type="BoxShape3D" id="r3"]
+size = Vector3(0.85, 0.14, 0.22)
+
+[sub_resource type="BoxShape3D" id="r4"]
+size = Vector3(0.89, 0.20, 0.28)
+
+[node name="LooseSteelBar" type="RigidBody3D"]
+script = ExtResource("body_control")
+mass = 1.0
+linear_damp = 0.15
+continuous_cd = true
+
+[node name="SteelBar" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0, 0)
+mesh = SubResource("r2")
+
+[node name="SteelBarCollision" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0, 0)
+shape = SubResource("r3")
+
+[node name="SteelBarTether" type="Area3D" parent="SteelBar"]
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+script = ExtResource("tether")
+allomancy_class = 0
+capture_enabled = true
+physical_owner_path = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SteelBar/SteelBarTether"]
+shape = SubResource("r4")

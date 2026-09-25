@@ -6,7 +6,7 @@ The new forgiving practice space is an instance in the existing main scene. The 
 
 Choose **Playground** in the playtest shell. The Player spawns at the lab entrance near world **(45, 0.95, 49)** facing **+Z**. The **8 m wide, 34 m long** walkway connects the advanced course at world z=12 to the lab at z=46, x=45. The lab root is at world **(45, 0, 80)**; its floor spans x=11..79 and z=46..114. The previous gameplay yard remains intact.
 
-In `scenes/main.tscn`, the sibling nodes are the existing Environment, TraversalCourse, and new MovementLab. The lab scene groups its nodes by Foundation and stations 01–04. No second Player or duplicate Allomancy implementation is present.
+In `world/levels/playtest_world/main.tscn`, the sibling nodes are the existing Environment, TraversalCourse, and new MovementLab. The lab scene groups its nodes by Foundation and stations 01–04. No second Player or duplicate Allomancy implementation is present.
 
 ## Stations and dimensions
 
@@ -25,7 +25,7 @@ The lab intentionally uses more floor area than the compact precision course to 
 
 ## Tethers and assist scenarios
 
-Twelve ANCHORED practice fixtures reuse the existing MetalTether script through `scenes/lab_anchor.tscn`. Each has a **1.25 m radius** spherical volume and an independently editable sibling purple marker, with no marker collision. Sphere resources are local to each instance. Existing class selection, range, force, mass and terminal-response behavior are reused unchanged.
+Twelve ANCHORED practice fixtures reuse the existing MetalTether script through `dev/fixtures/allomancy/lab_anchor.tscn`. Each has a **1.25 m radius** spherical volume and an independently editable sibling purple marker, with no marker collision. Sphere resources are local to each instance. Existing class selection, range, force, mass and terminal-response behavior are reused unchanged.
 
 | Fixture | Local position | Practice |
 | --- | --- | --- |
@@ -65,7 +65,7 @@ Existing fall recovery beyond the map still returns the Player to advanced Start
 
 ## Files, validation and limits
 
-Added `scenes/movement_lab.tscn`, `scenes/lab_anchor.tscn`, and this report. Modified `scenes/main.tscn` only to reference and instance the lab. No runtime scripts or new physics mechanics were added.
+Added `dev/test_scenes/movement_lab/movement_lab.tscn`, `dev/fixtures/allomancy/lab_anchor.tscn`, and this report. Modified `world/levels/playtest_world/main.tscn` only to reference and instance the lab. No runtime scripts or new physics mechanics were added.
 
 Godot 4.7.2 editor import/parser, scene/resource loading and normal headless startup passed. Byte hashes confirmed the advanced traversal scene, its reset script, prototype yard, Player movement script, project settings, Allomancy tuning resource and force-law/adapter scripts stayed unchanged during this milestone. No automated gameplay tests or manual route-completion claims are made.
 

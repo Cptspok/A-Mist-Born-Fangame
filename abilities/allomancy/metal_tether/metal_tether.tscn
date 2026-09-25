@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3]
+[ext_resource type="Script" path="res://abilities/allomancy/metal_tether/metal_tether_component.gd" id="1"]
+[sub_resource type="SphereShape3D" id="shape"]
+resource_local_to_scene = true
+radius = 0.8
+[node name="MetalTether" type="Area3D"]
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+script = ExtResource("1")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("shape")

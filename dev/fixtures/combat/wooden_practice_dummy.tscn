@@ -1,0 +1,65 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://abilities/allomancy/metal_tether/metal_tether_component.gd" id="tether"]
+
+[sub_resource type="StandardMaterial3D" id="r1"]
+albedo_color = Color(0.44, 0.26, 0.12, 1)
+metallic = 0.0
+roughness = 0.95
+
+[sub_resource type="BoxMesh" id="r2"]
+size = Vector3(0.18, 1.4, 0.18)
+material = SubResource("r1")
+
+[sub_resource type="BoxShape3D" id="r3"]
+size = Vector3(0.18, 1.4, 0.18)
+
+[sub_resource type="BoxMesh" id="r4"]
+size = Vector3(1.2, 0.17, 0.18)
+material = SubResource("r1")
+
+[sub_resource type="BoxShape3D" id="r5"]
+size = Vector3(1.2, 0.17, 0.18)
+
+[sub_resource type="BoxMesh" id="r6"]
+size = Vector3(0.47, 0.65, 0.28)
+material = SubResource("r1")
+
+[sub_resource type="BoxShape3D" id="r7"]
+size = Vector3(0.47, 0.65, 0.28)
+
+[sub_resource type="SphereMesh" id="r8"]
+radius = 0.21
+height = 0.42
+material = SubResource("r1")
+
+[node name="WoodenPracticeDummy" type="StaticBody3D"]
+
+
+[node name="Stake" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.7, 0)
+mesh = SubResource("r2")
+
+[node name="StakeCollision" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.7, 0)
+shape = SubResource("r3")
+
+[node name="Crosspiece" type="MeshInstance3D" parent="."]
+position = Vector3(0, 1.22, 0)
+mesh = SubResource("r4")
+
+[node name="CrosspieceCollision" type="CollisionShape3D" parent="."]
+position = Vector3(0, 1.22, 0)
+shape = SubResource("r5")
+
+[node name="Torso" type="MeshInstance3D" parent="."]
+position = Vector3(0, 1.18, 0)
+mesh = SubResource("r6")
+
+[node name="TorsoCollision" type="CollisionShape3D" parent="."]
+position = Vector3(0, 1.18, 0)
+shape = SubResource("r7")
+
+[node name="Head" type="MeshInstance3D" parent="."]
+position = Vector3(0, 1.73, 0)
+mesh = SubResource("r8")

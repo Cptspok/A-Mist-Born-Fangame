@@ -31,7 +31,7 @@ F/C no longer activate Steel/Iron. V/B preserve access through the existing sema
 
 ## Files and validation
 
-Changed project.godot, scripts/player.gd, scripts/playtest_controls.gd; added this document. Other ongoing project changes were preserved.
+Changed project.godot, characters/player/player.gd, systems/session/playtest_controls.gd; added this document. Other ongoing project changes were preserved.
 
 Inspected input consumers, current Player stats, movement target selection and equipment routing. One short standalone Main headless startup completed without script/resource errors, with the existing Windows certificate-store error. No harnesses, duplicate scenes, gameplay simulations or desktop control.
 

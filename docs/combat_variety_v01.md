@@ -1,6 +1,6 @@
 # Combat Variety v0.1
 
-Reusable archetypes: scenes/knife_fighter.tscn, heavy_enemy.tscn,
+Reusable archetypes: characters/enemies/knife_fighter/knife_fighter.tscn, heavy_enemy.tscn,
 crossbow_skirmisher.tscn, long_range_archer.tscn. Scene overrides are configuration;
 shared attack and behaviour scripts own runtime state. Original example_enemy and
 ranged_enemy defaults remain available for existing scenes, including Hathsin.

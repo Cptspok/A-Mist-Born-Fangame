@@ -32,9 +32,9 @@ The existing reserve HUD now shows ON/OFF per metal and an Equipment/FOCUSED ind
 
 ## Files
 
-New: scripts/contextual_input.gd, scripts/metal_wheel.gd, this report.
+New: characters/player/contextual_input.gd, ui/hud/allomancy/metal_wheel.gd, this report.
 
-Modified: project.godot; resources/steel_metal.tres and iron_metal.tres; scenes/player.tscn and allomancy_reserve_hud.tscn; scripts/metal_definition.gd, allomancy_component.gd, allomancy_controller.gd, player_combat.gd, player.gd, playtest_shell.gd, playtest_controls.gd, allomancy_reserve_hud.gd; 016_control_cleanup.txt historical-note link.
+Modified: project.godot; data/abilities/allomancy/steel/steel_metal.tres and iron_metal.tres; characters/player/player.tscn and allomancy_reserve_hud.tscn; abilities/allomancy/shared/metal_definition.gd, allomancy_component.gd, allomancy_controller.gd, player_combat.gd, player.gd, playtest_shell.gd, playtest_controls.gd, allomancy_reserve_hud.gd; 016_control_cleanup.txt historical-note link.
 
 ## Validation and limits
 
@@ -60,6 +60,6 @@ Settings > Focus behavior offers Toggle (default) and Hold from both the main an
 
 ContextualInput applies the saved preference on ready and observes settings changes. Only an actual mode change cancels the current context, clears Focus and suppresses already-held clicks; unrelated settings changes do not reset Focus. Existing inventory/dialogue/pause/death cancellation remains unchanged. Metal/equipment systems still receive only contextual action requests and do not inspect the preference. Controls text reflects the saved mode.
 
-Follow-up files: scripts/playtest_settings.gd, scripts/playtest_menu_view.gd, scripts/contextual_input.gd, scripts/playtest_controls.gd, this report. Validation: static code/diff inspection only; no startup or automated gameplay testing.
+Follow-up files: autoload/playtest_settings.gd, ui/menus/playtest_menu_view.gd, characters/player/contextual_input.gd, systems/session/playtest_controls.gd, this report. Validation: static code/diff inspection only; no startup or automated gameplay testing.
 
 Manual checks: fresh/default Toggle (C on, C off); change to Hold (press on, release off); restart application and confirm Hold persists; switch back to Toggle; enter inventory/dialogue while focused and holding a mouse action, then return and verify Focus remains safely reset with no equipment attack until a fresh click. Confirm burns remain enabled and unrelated settings still work.

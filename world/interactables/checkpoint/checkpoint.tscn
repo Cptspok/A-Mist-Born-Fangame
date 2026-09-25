@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://bwy6262v80e00"]
+
+[ext_resource type="Script" uid="uid://bh1i4gf3lbj5j" path="res://world/interactables/checkpoint/checkpoint.gd" id="script"]
+
+[sub_resource type="BoxShape3D" id="area"]
+size = Vector3(4, 2, 3)
+
+[sub_resource type="StandardMaterial3D" id="mat"]
+albedo_color = Color(0.3517702, 0.33182228, 0.15512154, 1)
+
+[sub_resource type="BoxMesh" id="mesh"]
+size = Vector3(3, 0.03, 2)
+
+[node name="Checkpoint" type="Area3D" unique_id=729274274]
+collision_layer = 0
+script = ExtResource("script")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=709659403]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("area")
+
+[node name="Marker" type="MeshInstance3D" parent="." unique_id=653429872]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0)
+material_override = SubResource("mat")
+mesh = SubResource("mesh")
+
+[node name="Respawn" type="Marker3D" parent="." unique_id=527355972]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 0)
+
+[node name="Label" type="Label3D" parent="." unique_id=2053827013]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+pixel_size = 0.008
+billboard = 1
+text = "Checkpoint"

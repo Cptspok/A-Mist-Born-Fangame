@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://characters/enemies/base/enemy.gd" id="1_enemy"]
+[ext_resource type="Script" path="res://components/health/health_component.gd" id="2_health"]
+[ext_resource type="PackedScene" path="res://components/damage/hurtbox_component.tscn" id="3_hurtbox"]
+[ext_resource type="Script" path="res://characters/enemies/base/enemy_death_fade.gd" id="4_death"]
+
+[ext_resource type="Script" path="res://components/combat/combat_reaction_component.gd" id="reaction"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_enemy"]
+radius = 0.4
+height = 1.8
+
+[node name="Enemy" type="CharacterBody3D" groups=["ambient_disturbance"]]
+script = ExtResource("1_enemy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_enemy")
+
+[node name="VisualRoot" type="Node3D" parent="."]
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("2_health")
+
+[node name="HurtboxComponent" parent="." instance=ExtResource("3_hurtbox")]
+
+[node name="DeathFade" type="Node" parent="."]
+script = ExtResource("4_death")
+
+[node name="NavigationOrigin" type="Node3D" parent="."]
+position = Vector3(0, -0.4, 0)
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="NavigationOrigin"]
+path_desired_distance = 0.2
+target_desired_distance = 0.15
+radius = 0.4
+height = 1.8
+avoidance_enabled = false
+
+[node name="CombatReaction" type="Node" parent="."]
+script = ExtResource("reaction")

@@ -1,0 +1,201 @@
+[gd_scene format=3 uid="uid://d1vyu4w6usieg"]
+
+[ext_resource type="FontFile" uid="uid://djscnlxbkvp2f" path="res://assets/fonts/butler/butler_free_med.otf" id="2_8gpr8"]
+[ext_resource type="PackedScene" uid="uid://2wp53oqsdqpb" path="res://world/building_blocks/greybox_block.tscn" id="block"]
+
+[node name="CentralHub" type="Node3D" unique_id=953825467]
+
+[node name="Plaza" parent="." unique_id=1414099595 groups=["navigation_static"] instance=ExtResource("block")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+dimensions = Vector3(26, 1, 26)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+[node name="TrialLink" parent="." unique_id=644386063 groups=["navigation_static"] instance=ExtResource("block")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -18.366566)
+dimensions = Vector3(8, 1, 12)
+tint = Color(0.37, 0.43, 0.45, 1)
+
+[node name="LabLink" parent="." unique_id=344365515 groups=["navigation_static"] instance=ExtResource("block")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, -0.5, 0)
+dimensions = Vector3(12, 1, 8)
+tint = Color(0.37, 0.43, 0.45, 1)
+
+[node name="CityLink" parent="." unique_id=147838731 groups=["navigation_static"] instance=ExtResource("block")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.473175, -0.5, 0)
+dimensions = Vector3(12, 1, 8)
+tint = Color(0.37, 0.43, 0.45, 1)
+
+[node name="WorkshopLink" parent="." unique_id=248804765 groups=["navigation_static"] instance=ExtResource("block")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 18.546804)
+dimensions = Vector3(8, 1, 12)
+tint = Color(0.37, 0.43, 0.45, 1)
+
+[node name="Trial-1Post" parent="." unique_id=976754633 groups=["navigation_static"] instance=ExtResource("block")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 2, -12)
+dimensions = Vector3(1, 4, 1)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+[node name="Trial1Post" parent="." unique_id=1645515130 groups=["navigation_static"] instance=ExtResource("block")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 2, -12)
+dimensions = Vector3(1, 4, 1)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+[node name="TrialLintel" parent="." unique_id=1963543529 groups=["navigation_static"] instance=ExtResource("block")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.4, -12)
+dimensions = Vector3(10, 0.8, 1)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+[node name="TrialSign" type="Label3D" parent="." unique_id=1799839705]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, -12)
+pixel_size = 0.012
+text = "Allomancy Trial"
+font = ExtResource("2_8gpr8")
+font_size = 48
+
+[node name="Lab-1Post" parent="." unique_id=306366847 groups=["navigation_static"] instance=ExtResource("block")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 2, -4.5)
+dimensions = Vector3(1, 4, 1)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+[node name="Lab1Post" parent="." unique_id=1905111058 groups=["navigation_static"] instance=ExtResource("block")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 2, 4.5)
+dimensions = Vector3(1, 4, 1)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+[node name="LabLintel" parent="." unique_id=445662884 groups=["navigation_static"] instance=ExtResource("block")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 4.4, 0)
+dimensions = Vector3(1, 0.8, 10)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+[node name="LabSign" type="Label3D" parent="." unique_id=891536062]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -11.309021, 4.5, 0)
+pixel_size = 0.012
+text = "Movement Lab"
+font = ExtResource("2_8gpr8")
+font_size = 48
+
+[node name="LabSign2" type="Label3D" parent="." unique_id=99059833]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -12.578125, 4.5, 0)
+pixel_size = 0.012
+text = "Central Hub"
+font = ExtResource("2_8gpr8")
+font_size = 48
+
+[node name="City-1Post" parent="." unique_id=614251846 groups=["navigation_static"] instance=ExtResource("block")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2, -4.5)
+dimensions = Vector3(1, 4, 1)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+[node name="City1Post" parent="." unique_id=1811925562 groups=["navigation_static"] instance=ExtResource("block")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2, 4.5)
+dimensions = Vector3(1, 4, 1)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+[node name="CityLintel" parent="." unique_id=1204539611 groups=["navigation_static"] instance=ExtResource("block")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 4.4, 0)
+dimensions = Vector3(1, 0.8, 10)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+[node name="CitySign" type="Label3D" parent="." unique_id=410300196]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 11.426453, 4.5, 0)
+pixel_size = 0.012
+text = "Mini City"
+font = ExtResource("2_8gpr8")
+font_size = 48
+
+[node name="CitySign2" type="Label3D" parent="." unique_id=202894506]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 12.526962, 4.5, 0)
+pixel_size = 0.012
+text = "Central Hub"
+font = ExtResource("2_8gpr8")
+font_size = 48
+
+[node name="Workshop-1Post" parent="." unique_id=845575374 groups=["navigation_static"] instance=ExtResource("block")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 2, 12)
+dimensions = Vector3(1, 4, 1)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+[node name="Workshop1Post" parent="." unique_id=1608781069 groups=["navigation_static"] instance=ExtResource("block")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 2, 12)
+dimensions = Vector3(1, 4, 1)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+[node name="WorkshopLintel" parent="." unique_id=1468673997 groups=["navigation_static"] instance=ExtResource("block")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.4, 12)
+dimensions = Vector3(10, 0.8, 1)
+tint = Color(0.48, 0.51, 0.54, 1)
+
+[node name="WorkshopSign" type="Label3D" parent="." unique_id=1489893734]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 4.5, 11.304443)
+pixel_size = 0.012
+text = "Systems Workshop"
+font = ExtResource("2_8gpr8")
+font_size = 48
+
+[node name="WorkshopSign2" type="Label3D" parent="." unique_id=4625316]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 4.5, -12.559387)
+pixel_size = 0.012
+text = "Central Hub"
+font = ExtResource("2_8gpr8")
+font_size = 48
+
+[node name="WorkshopSign4" type="Label3D" parent="." unique_id=1097001729]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, -11.365356)
+pixel_size = 0.012
+text = "Allomancy Trial"
+font = ExtResource("2_8gpr8")
+font_size = 48
+
+[node name="WorkshopSign3" type="Label3D" parent="." unique_id=2055275161]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, 12.516357)
+pixel_size = 0.012
+text = "Central Hub"
+font = ExtResource("2_8gpr8")
+font_size = 48
+
+[node name="InformationBoard" parent="." unique_id=124434236 groups=["navigation_static"] instance=ExtResource("block")]
+transform = Transform3D(0.7265806, 0, -0.6870812, 0, 1, 0, 0.6870812, 0, 0.7265806, -7.6910686, 2, 7.8724904)
+dimensions = Vector3(7, 3, 0.35)
+tint = Color(0.16, 0.2, 0.24, 1)
+
+[node name="InformationBoard2" parent="." unique_id=1484395777 groups=["navigation_static"] instance=ExtResource("block")]
+transform = Transform3D(0.7265806, 0, -0.6870812, 0, 1, 0, 0.6870812, 0, 0.7265806, 8.031679, 2, -7.774269)
+dimensions = Vector3(7, 3, 0.35)
+tint = Color(0.16, 0.2, 0.24, 1)
+
+[node name="Directory" type="Label3D" parent="." unique_id=950037832]
+transform = Transform3D(0.6573531, 0, -0.68708116, 0, 0.94445586, 0, 0.6216172, 0, 0.7265806, 7.8877945, 2, -7.607544)
+pixel_size = 0.012
+text = "Welcome Playtester!
+You can test your skills in the Allomancer trial and discover fighting in the mini-city. You'll find items and consumables in the workshop
+"
+font = ExtResource("2_8gpr8")
+font_size = 30
+autowrap_mode = 3
+
+[node name="Directory3" type="Label3D" parent="." unique_id=1881321652]
+transform = Transform3D(-0.65735316, 0, 0.6870811, 0, 0.94445586, 0, -0.62161714, 0, -0.7265807, -7.483865, 2, 7.667943)
+pixel_size = 0.012
+text = "Bienvenue Playtesteur!
+Testez vos compétences allomantiques au trial et découvrez le combat dans la mini-ville. Vous trouverez les items et consomables au workshop
+"
+font = ExtResource("2_8gpr8")
+font_size = 30
+autowrap_mode = 3
+
+[node name="InformationBoard3" parent="." unique_id=697624910 groups=["navigation_static"] instance=ExtResource("block")]
+transform = Transform3D(0.75978404, 0, 0.6501756, 0, 1, 0, -0.6501756, 0, 0.75978404, 8.190598, 2, 8.619506)
+dimensions = Vector3(7, 3, 0.35)
+tint = Color(0.16, 0.2, 0.24, 1)
+
+[node name="Directory4" type="Label3D" parent="." unique_id=8590044]
+transform = Transform3D(-0.6930568, 0, -0.6427876, 0, 0.94445586, 0, 0.58154374, 0, -0.7660444, 8.215036, 2, 8.329375)
+pixel_size = 0.012
+text = "Mistborn v0.0.2 playtest 
+Testing Allomantic powers in fighting.
+Please use the consumable vials to replenish your metal reserves."
+font_size = 30
+autowrap_mode = 3
+
+[node name="Spawn" type="Marker3D" parent="." unique_id=1887809330]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 3)

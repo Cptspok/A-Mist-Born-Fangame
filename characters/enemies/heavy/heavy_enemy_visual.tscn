@@ -1,0 +1,7 @@
+[gd_scene format=3]
+[ext_resource type="PackedScene" path="res://characters/enemies/base/visuals/example_enemy_visual.tscn" id="base"]
+[node name="HeavyEnemyVisual" instance=ExtResource("base")]
+[node name="Torso" parent="." index="0"]
+scale = Vector3(1.35, 1, 1.3)
+[node name="Sword" parent="." index="11"]
+scale = Vector3(2.2, 2.4, 1.6)

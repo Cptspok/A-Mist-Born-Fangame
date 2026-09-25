@@ -26,7 +26,7 @@ Inspection / uncertainty
   test props retain the same physical force endpoint when free.
 
 Implementation
-- scripts/loose_metal_capture.gd: retains single capture state and eligibility,
+- abilities/allomancy/iron/loose_metal_capture.gd: retains single capture state and eligibility,
   replaces spring with a deliberately controlled kinematic-frozen RigidBody.
   Incoming motion is arrested on entry, not banked for a later throw. A 0.15 s
   smooth positional transition moves the actual center into its hold position.
@@ -36,8 +36,8 @@ Implementation
   margin. No noclip or collision-mask exceptions. Translation stops at contact;
   obstruction lasting 0.35 s releases capture. Orientation remains fixed while
   captured. This is intentionally simple, not an orbit/pathfinding solver.
-- scripts/player.gd only adds movement_completed(delta) after move_and_slide.
-  scripts/allomancy_controller.gd uses that event for captured positional
+- characters/player/player.gd only adds movement_completed(delta) after move_and_slide.
+  abilities/allomancy/shared/allomancy_controller.gd uses that event for captured positional
   following, removing the previous pre-movement reference-frame lag. Free
   forces remain in their original pre-move integration phase.
 - On exit, only the captured body's kinematic-follow linear/angular velocity
@@ -48,17 +48,17 @@ Implementation
 - Tree exit of either body or controller restores the body. Existing ability
   release, invalidity, burn/depletion, Focus/wheel cancellation, locks/death/reset
   and scene changes retain their cleanup paths. No permanent frozen body state.
-- scripts/metal_tether_component.gd adds get_force_position(): for opted-in
+- abilities/allomancy/metal_tether/metal_tether_component.gd adds get_force_position(): for opted-in
   LIGHT RigidBodies use custom COM or PhysicsDirectBodyState3D.center_of_mass_local
   transformed to world space. Other tethers keep their existing authored point.
   Capture aligns this center by accounting for its offset inside the body.
-- scripts/allomancy_interaction.gd uses that physical point; force magnitudes,
+- abilities/allomancy/shared/allomancy_interaction.gd uses that physical point; force magnitudes,
   coupling, terminal response, gravity and physical adapters are unchanged.
   Steel first releases the authored state and clears follow artifacts, then
   evaluates the actual body-origin-to-metal-center axis and applies normal force.
   There is no camera projectile vector or upward correction. Normal gravity
   can immediately start a downward arc, particularly with sustained-force Steel.
-- scripts/allomancy_debug.gd labels controlled hold and displays COM horizontal
+- dev/debug/allomancy_debug.gd labels controlled hold and displays COM horizontal
   distance / height relative to torso, to distinguish state entry from settling.
 
 Designer tuning: Player/AllomanticOrigin/CapturePoint
@@ -72,7 +72,7 @@ Designer tuning: Player/AllomanticOrigin/CapturePoint
 - Pitch remains constrained to -35..55 degrees and affects the held control
   offset only. Break distance is 4.5 m. Mass <=2, radius <=0.65 and explicit
   LIGHT opt-in remain; MEDIUM/HEAVY/ANCHORED remain ineligible.
-- scenes/player.tscn changes only the CapturePoint offset. AllomanticOrigin
+- characters/player/player.tscn changes only the CapturePoint offset. AllomanticOrigin
   stays (0,0.35,0), independent from the manipulated control position.
 
 Validation / scope

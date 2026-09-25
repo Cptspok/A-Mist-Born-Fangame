@@ -1,0 +1,4 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://world/interactables/parametric_ladder/parametric_ladder.gd" id="script"]
+[node name="ParametricLadder" type="Node3D"]
+script = ExtResource("script")

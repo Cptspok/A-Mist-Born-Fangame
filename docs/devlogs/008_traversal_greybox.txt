@@ -1,14 +1,14 @@
 # Vertical Allomancy greybox
 
-Implemented in `C:/Users/CptSp/Documents/Codex/A Mist Born fangame`, integrated into the existing `scenes/main.tscn`. Run the normal main scene (F6 below means the in-game reset key, not the editor shortcut). Opening-blocker follow-up: gravity/jump and the Allomancy spatial parent were corrected; see 009_traversal_blocker_fix.txt for diagnosis and the current retest sequence. Inventory, stats, combat, dialogue and enemy code remain unchanged.
+Implemented in `C:/Users/CptSp/Documents/Codex/A Mist Born fangame`, integrated into the existing `world/levels/playtest_world/main.tscn`. Run the normal main scene (F6 below means the in-game reset key, not the editor shortcut). Opening-blocker follow-up: gravity/jump and the Allomancy spatial parent were corrected; see 009_traversal_blocker_fix.txt for diagnosis and the current retest sequence. Inventory, stats, combat, dialogue and enemy code remain unchanged.
 
 ## Files and authoring
 
-- Modified `scenes/main.tscn`: instance the course at (45, 0, 0); move the existing Player spawn to (45, 0.95, 9). All original gameplay fixtures remain.
-- Modified `scenes/prototype_environment.tscn`: 4 m opening in the east wall at z=8 connects the yard to the access bridge. Existing navigation remains limited to the old yard; no traversal navigation was baked.
-- Added `scenes/traversal_course.tscn`: named platforms, standalone MetalTether instances, separate visible purple anchor markers, three loose objects, Start marker, catch floor.
-- Added `scenes/greybox_block.tscn` and `scripts/greybox_block.gd`: small editor tool; `dimensions` updates box mesh and collision together, `tint` changes the greybox color. Shared normal-world physics material is reused.
-- Added `scripts/traversal_course.gd`: failure-height recovery and F6 scene restart.
+- Modified `world/levels/playtest_world/main.tscn`: instance the course at (45, 0, 0); move the existing Player spawn to (45, 0.95, 9). All original gameplay fixtures remain.
+- Modified `dev/test_scenes/prototype_environment/prototype_environment.tscn`: 4 m opening in the east wall at z=8 connects the yard to the access bridge. Existing navigation remains limited to the old yard; no traversal navigation was baked.
+- Added `dev/test_scenes/traversal_course/traversal_course.tscn`: named platforms, standalone MetalTether instances, separate visible purple anchor markers, three loose objects, Start marker, catch floor.
+- Added `world/building_blocks/greybox_block.tscn` and `world/building_blocks/greybox_block.gd`: small editor tool; `dimensions` updates box mesh and collision together, `tint` changes the greybox color. Shared normal-world physics material is reused.
+- Added `dev/test_scenes/traversal_course/traversal_course.gd`: failure-height recovery and F6 scene restart.
 - Added this document. Godot generates script `.uid` sidecars.
 
 Open the course scene to edit its modular blocks and anchors. Block positions are slab centers; surface height is position.y + dimensions.y / 2. Move or resize a block using its position and exported dimensions, not mesh-only scaling. Anchor Area3D instances are independent from their named Marker siblings; move the marker too if you want its visible cue to follow an edited volume. Their existing sphere collision resource is local to each scene instance. No final art or targeting UI was added.
@@ -72,7 +72,7 @@ Three existing loose-body scene instances: LIGHT at (26,8.4,-6), MEDIUM at (30,8
 | Gravity | Project Settings / Physics / 3D / Default Gravity (advanced settings) | explicit 19.6 m/s² |
 | Ground acceleration/deceleration | Player / ground_traction | 12/s shared convergence law |
 | Air control | Player / air_control_acceleration | 4 m/s² |
-| Steel / Iron acceleration | resources/allomancy_tuning.tres | 30 / 30 m/s² |
+| Steel / Iron acceleration | data/abilities/allomancy/allomancy_tuning.tres | 30 / 30 m/s² |
 | Range / half angle | same resource | 30 m / 45 degrees |
 | LIGHT player/object response | same resource | 0.03 / 2 |
 | MEDIUM response | same resource | 0.35 / 1 |

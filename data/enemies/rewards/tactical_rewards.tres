@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EnemyRewardDefinition" format=3]
+[ext_resource type="Script" path="res://characters/enemies/base/enemy_reward_definition.gd" id="script"]
+[ext_resource type="Script" path="res://items/base/item_definition.gd" id="item_type"]
+[ext_resource type="Script" path="res://systems/intelligence/intelligence_clue_definition.gd" id="clue_type"]
+[ext_resource type="Resource" path="res://data/items/consumables/metals/basic_pewter_vial.tres" id="vial"]
+[ext_resource type="Resource" path="res://data/intelligence/clues/voss_tactical.tres" id="clue"]
+[resource]
+script = ExtResource("script")
+items = Array[ExtResource("item_type")]([ExtResource("vial")])
+intelligence_clues = Array[ExtResource("clue_type")]([ExtResource("clue")])

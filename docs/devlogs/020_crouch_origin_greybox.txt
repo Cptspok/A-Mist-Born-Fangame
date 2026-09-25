@@ -3,7 +3,7 @@
 Implemented 2026-09-17 after 019, against the developer's current working files.
 
 Changes
-- scripts/player.gd: held crouch replaces walking. Inspector defaults are
+- characters/player/player.gd: held crouch replaces walking. Inspector defaults are
   crouched_movement_speed=2.5 m/s, crouched_height=1.1 m, and
   crouch_transition_speed=5 m/s (1.8-to-1.1 transition takes 0.14 seconds).
   Each player duplicates its capsule. Height changes keep the bottom fixed;
@@ -14,17 +14,17 @@ Changes
   collision mask, and excludes itself. A 0.005 m margin is conservative near
   walls/ceilings. Blocked expansion holds the current height and retries each
   physics tick. No velocity cap or force/traction retuning was introduced.
-- project.godot and scripts/playtest_controls.gd rename Walk to Crouch, retaining
+- project.godot and systems/session/playtest_controls.gd rename Walk to Crouch, retaining
   the physical Left Ctrl binding. Historical Walk records remain historical.
 - resources/{steel,iron,pewter}_metal.tres: maximum_reserve and default_reserve
   are 200 each. Consumption remains Steel=1, Iron=1, Pewter=2. Consumables still
   compute missing reserve against the configured maximum; no recipe changes.
-- scenes/player.tscn: AllomanticOrigin Marker3D at local (0,0.35,0), approximately
+- characters/player/player.tscn: AllomanticOrigin Marker3D at local (0,0.35,0), approximately
   1.25 m above standing feet. The original root is capsule-centered, not at feet.
-  scripts/allomancy_interaction.gd previously used that root via the generic
+  abilities/allomancy/shared/allomancy_interaction.gd previously used that root via the generic
   force adapter; now it uses PlayerController.get_allomantic_origin().
   The marker drops by half the lost capsule height during crouch. Adjust its
-  standing position in the player scene. scripts/allomancy_debug.gd displays
+  standing position in the player scene. dev/debug/allomancy_debug.gd displays
   the same marker-to-tether-center axis. Targeting remains unchanged.
   Camera pitch never steers free forces. Force laws, response classes, adapters,
   soft terminal response and impulses are unchanged. No capture state added.
@@ -36,14 +36,14 @@ Presentation and preservation
 - Added three shared resources/greybox_materials materials: floor uses
   Dark/texture_02.png, structure uses Light/texture_01.png, traversal uses
   Orange/texture_03.png. World triplanar mapping repeats at four metres.
-- scripts/greybox_block.gd adds an opt-in surface_material property. Its setter
+- world/building_blocks/greybox_block.gd adds an opt-in surface_material property. Its setter
   only changes presentation; dimensions and collision generation are unchanged.
   Untargeted blocks retain existing tint and authored mesh material overrides.
-- scenes/mini_city.tscn: only 15 Architecture blocks, including district ground,
+- world/levels/mini_city/mini_city.tscn: only 15 Architecture blocks, including district ground,
   building masses, decks, bridges, wall walk/cover and parapets.
-- scenes/movement_lab.tscn: 36 existing structural blocks (floor, decks, landings,
+- dev/test_scenes/movement_lab/movement_lab.tscn: 36 existing structural blocks (floor, decks, landings,
   steps, roof, launch platform and bay walls).
-- scenes/traversal_course.tscn: 11 existing blocks (runway, landings, roofs,
+- dev/test_scenes/traversal_course/traversal_course.tscn: 11 existing blocks (runway, landings, roofs,
   ascent/destination platforms, catch floor and loose-deck structural stops).
 - Merchant stalls, carts, loose metal, pickups, NPCs, enemies, weapons, fixed
   metal props, decoration and other scenes were left unchanged. No Levels files

@@ -58,15 +58,15 @@ Detailed drag/gameplay verification remains manual. Bow is equipment-only (no ac
 ## File manifest
 
 Added:
-- scripts/equipment_slots.gd, equipment_profile.gd, equipment_component.gd, equipment_slot_ui.gd (plus Godot UID files)
-- resources/greatsword.tres, bow.tres, quiver.tres; corresponding SVG icons/import metadata
-- scenes/greatsword_visual.tscn, bow_visual.tscn, quiver_visual.tscn
+- components/equipment/equipment_slots.gd, equipment_profile.gd, equipment_component.gd, equipment_slot_ui.gd (plus Godot UID files)
+- data/weapons/greatsword/greatsword.tres, bow.tres, quiver.tres; corresponding SVG icons/import metadata
+- weapons/melee/greatsword/greatsword_visual.tscn, bow_visual.tscn, quiver_visual.tscn
 - 001_equipment.txt
 
 Modified:
-- scripts/item_definition.gd, inventory_grid.gd, inventory_ui.gd, player_combat.gd, equipment_feedback.gd
-- resources/sword.tres
-- scenes/player.tscn, main.tscn
+- items/base/item_definition.gd, inventory_grid.gd, inventory_ui.gd, player_combat.gd, equipment_feedback.gd
+- data/weapons/sword/sword.tres
+- characters/player/player.tscn, main.tscn
 
 Existing user-provided assets/P_*.glb files were left untouched.
 
@@ -74,7 +74,7 @@ Existing user-provided assets/P_*.glb files were left untouched.
 
 Root cause: the native drag refactor removed outside-panel release handling. InventoryDropper also only knew how to remove inventory-owned stacks.
 
-Changed files for this fix: scripts/inventory_ui.gd, inventory_grid.gd, equipment_slot_ui.gd, equipment_component.gd, inventory_dropper.gd, world_item.gd, and this report.
+Changed files for this fix: ui/inventory/inventory_ui.gd, inventory_grid.gd, equipment_slot_ui.gd, equipment_component.gd, inventory_dropper.gd, world_item.gd, and this report.
 
 Drag payloads explicitly carry source_slot (-1 for inventory; equipment slot ID otherwise). On a left-button release outside the whole panel, the UI cancels the native drag, then requests inventory Throw or EquipmentComponent.drop_to_world. Invalid targets inside the panel still reject normally; Esc/Close cancels without dropping. No equipped-item context menu was added. Existing inventory context Throw reaches the same shared InventoryDropper.try_drop pathway.
 

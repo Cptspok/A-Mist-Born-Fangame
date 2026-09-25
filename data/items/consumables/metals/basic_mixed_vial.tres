@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://bbyd3ncu38jvc"]
+
+[ext_resource type="Script" uid="uid://ce5qg0420yhx8" path="res://components/stats/stat_modifier.gd" id="4_fs61w"]
+[ext_resource type="Script" uid="uid://d2eoi6ffncrka" path="res://items/consumables/metal_consumable_definition.gd" id="consumable"]
+[ext_resource type="Texture2D" uid="uid://dgfa3iuy8057w" path="res://assets/2d/icons/prototype/blue_item.svg" id="icon"]
+[ext_resource type="Script" uid="uid://ufeuy8so4umi" path="res://items/base/item_definition.gd" id="item"]
+
+[sub_resource type="Resource" id="dose"]
+script = ExtResource("consumable")
+metals = Array[StringName]([&"steel", &"iron", &"pewter"])
+
+[resource]
+script = ExtResource("item")
+item_id = "basic_mixed_vial"
+display_name = "Basic Steel + Iron + Pewter Vial"
+description = "Restores the reserve missing at use over 15 seconds. Burning during absorption uses reserve normally. Excess restoration is wasted."
+characteristics = "1 x 1 | Metal consumable | 15 s absorption"
+item_type = "Consumable"
+inventory_sprite = ExtResource("icon")
+consumable = SubResource("dose")

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" uid="uid://ufeuy8so4umi" path="res://items/base/item_definition.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://babf3spf2on17" path="res://assets/2d/icons/prototype/red_item.svg" id="2"]
+[resource]
+script=ExtResource("1")
+item_id="red_orb"
+display_name="Red Orb"
+description="A small red test item."
+characteristics="1 x 1 • Misc"
+item_type="Misc"
+inventory_sprite=ExtResource("2")
+grid_width=1
+grid_height=1

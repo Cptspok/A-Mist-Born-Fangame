@@ -22,9 +22,9 @@ Diagnosis from code (not a reproduced runtime trace)
   forward initial velocity. The old implementation erased velocity at release.
 
 Replacement
-- scripts/loose_metal_capture.gd retains one established eligible capture but
+- abilities/allomancy/iron/loose_metal_capture.gd retains one established eligible capture but
   replaces frozen positional following with an implicit critically damped motor.
-- New scripts/loose_metal_body.gd owns _integrate_forces on the two existing
+- New world/props/loose_steel/loose_metal_body.gd owns _integrate_forces on the two existing
   prototype loose-body scenes. It delegates only when captured. No root/body
   transforms are assigned, no reparenting or freeze/custom_integrator changes.
   Gravity, collisions, CCD, mass and ordinary physics remain active throughout.
@@ -106,10 +106,10 @@ Collision / limitations
   geometry. The parallel-axis goal applies to stable hold, not arbitrary lag.
 
 Files / preservation
-- Replaced scripts/loose_metal_capture.gd; added scripts/loose_metal_body.gd.
-- Updated scripts/allomancy_controller.gd, scripts/allomancy_interaction.gd,
-  scripts/allomancy_debug.gd; scenes/player.tscn adds only the control marker;
-  scenes/allomancy_light.tscn and scenes/world_loose_steel.tscn attach the driver.
+- Replaced abilities/allomancy/iron/loose_metal_capture.gd; added world/props/loose_steel/loose_metal_body.gd.
+- Updated abilities/allomancy/shared/allomancy_controller.gd, abilities/allomancy/shared/allomancy_interaction.gd,
+  dev/debug/allomancy_debug.gd; characters/player/player.tscn adds only the control marker;
+  dev/fixtures/allomancy/allomancy_light.tscn and world/props/loose_steel/world_loose_steel.tscn attach the driver.
 - Added this record and updated the devlog index. Earlier records are unchanged.
 - LIGHT opt-in, mass/size limits and actor exclusions remain; MEDIUM/HEAVY/
   ANCHORED remain excluded. Acquisition and maintained LOS/range rules persist.

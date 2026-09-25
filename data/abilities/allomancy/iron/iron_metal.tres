@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="MetalDefinition" format=3]
+[ext_resource type="Script" path="res://abilities/allomancy/shared/metal_definition.gd" id="script"]
+[resource]
+script = ExtResource("script")
+metal_id = &"iron"
+display_name = "Iron"
+maximum_reserve = 200.0
+default_reserve = 200.0
+consumption_rate = 1.0
+consumption_policy = 1

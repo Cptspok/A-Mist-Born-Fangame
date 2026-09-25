@@ -1,0 +1,43 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://rahjudu41da0"]
+
+[ext_resource type="Script" uid="uid://ufeuy8so4umi" path="res://items/base/item_definition.gd" id="1_item"]
+[ext_resource type="Script" uid="uid://dsupbavikf7dh" path="res://weapons/melee/base/melee_weapon_definition.gd" id="2_weapon"]
+[ext_resource type="PackedScene" path="res://weapons/melee/base/melee_weapon.tscn" id="3_runtime"]
+[ext_resource type="PackedScene" path="res://weapons/melee/greatsword/greatsword_visual.tscn" id="4_visual"]
+[ext_resource type="Texture2D" uid="uid://4r84bxos1120" path="res://assets/2d/icons/weapons/greatsword.svg" id="5_icon"]
+[ext_resource type="Script" uid="uid://bo0gtdxtvj5ft" path="res://components/equipment/equipment_profile.gd" id="6_profile"]
+[ext_resource type="Script" uid="uid://ce5qg0420yhx8" path="res://components/stats/stat_modifier.gd" id="stat_modifier_script"]
+
+[sub_resource type="Resource" id="SwordCombat"]
+script = ExtResource("2_weapon")
+damage = 45.0
+attack_cooldown = 1.0
+runtime_scene = ExtResource("3_runtime")
+primary_action_label = "Attack"
+
+[sub_resource type="Resource" id="SwordEquipment"]
+script = ExtResource("6_profile")
+allowed_slots = Array[int]([0])
+traits = Array[int]([0, 1])
+family = &"greatsword"
+restricts_slot = 1
+
+[sub_resource type="Resource" id="stat_contribution"]
+script = ExtResource("stat_modifier_script")
+stat = 3
+value = 10
+
+[resource]
+script = ExtResource("1_item")
+item_id = "prototype_greatsword"
+display_name = "Greatsword"
+description = "Equip from inventory. Primary action swings; secondary action is reserved."
+characteristics = "2 x 3 | Melee weapon | +10 Physical Damage"
+item_type = "Weapon"
+inventory_sprite = ExtResource("5_icon")
+grid_width = 2
+grid_height = 3
+world_visual = ExtResource("4_visual")
+combat_definition = SubResource("SwordCombat")
+equipment_profile = SubResource("SwordEquipment")
+stat_modifiers = Array[ExtResource("stat_modifier_script")]([SubResource("stat_contribution")])

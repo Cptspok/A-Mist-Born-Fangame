@@ -85,7 +85,7 @@ at (0.3, 1.45, 1.5), approximately city (8.3, 2.05, -6.5).
 Interact normally to pick up; drag through ordinary inventory/equipment flow.
 Both fit permitted hand slots, but existing dual-wield rules still prohibit wearing
 both together. Replace the equipped weapon through inventory for comparison.
-Tune resources/weapons/sword_moveset.tres and club_moveset.tres for timings, damage
+Tune data/weapons/sword/sword_moveset.tres and club_moveset.tres for timings, damage
 multipliers, coverage, sweeps, impact, pressure, movement, poses, buffers and resets.
 Tune the item's combat subresource for base damage and block properties; item
 material/world_visual and existing EquipmentProfile remain their authoritative data.

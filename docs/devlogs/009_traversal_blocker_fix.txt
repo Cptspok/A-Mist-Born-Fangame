@@ -54,4 +54,4 @@ Godot 4.7.2 editor import/parser, resource loading, a brief startup inspection o
 
 Higher gravity changes the duration of all ballistic arcs, including loose props. Allomantic momentum is preserved, but upward forces now have less excess acceleration against gravity. The 20 m assisted gap and later stations still require manual timing and balance assessment. No landing guarantee, drag, speed clamp, new movement feature or final tutorial UI was added.
 
-Files changed for this repair: `project.godot`, `scripts/player.gd`, `scripts/allomancy_controller.gd`, `scenes/player.tscn`, `scenes/traversal_course.tscn`, `008_traversal_greybox.txt`, and this report.
+Files changed for this repair: `project.godot`, `characters/player/player.gd`, `abilities/allomancy/shared/allomancy_controller.gd`, `characters/player/player.tscn`, `dev/test_scenes/traversal_course/traversal_course.tscn`, `008_traversal_greybox.txt`, and this report.

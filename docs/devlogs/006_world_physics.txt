@@ -12,8 +12,8 @@ Reference: [Godot PhysicsMaterial documentation](https://docs.godotengine.org/en
 
 | Resource | Friction | Bounce | Rough / Absorbent |
 |---|---:|---:|---|
-| resources/physics/normal_world_surface.tres | 0.8 | 0 | false / false |
-| resources/physics/normal_movable_prop.tres | 0.65 | 0 | false / false |
+| data/physics/normal_world_surface.tres | 0.8 | 0 | false / false |
+| data/physics/normal_movable_prop.tres | 0.65 | 0 | false / false |
 
 Assign these through the physics body's physics_material_override, not the MeshInstance material.
 
@@ -59,16 +59,16 @@ No separate scene or duplicate physics framework is required for G.
 ## Files and checks
 
 Added:
-- resources/physics/normal_world_surface.tres
-- resources/physics/normal_movable_prop.tres
+- data/physics/normal_world_surface.tres
+- data/physics/normal_movable_prop.tres
 - 006_world_physics.txt
 
 Modified:
-- scenes/prototype_environment.tscn
-- scenes/allomancy_light.tscn
-- scenes/allomancy_medium.tscn
-- scenes/allomancy_heavy.tscn
-- scenes/allomancy_cart.tscn
+- dev/test_scenes/prototype_environment/prototype_environment.tscn
+- dev/fixtures/allomancy/allomancy_light.tscn
+- dev/fixtures/allomancy/allomancy_medium.tscn
+- dev/fixtures/allomancy/allomancy_heavy.tscn
+- dev/fixtures/allomancy/allomancy_cart.tscn
 - 004_allomancy_and_combat.txt (updated fixture description)
 
 Allomancy scripts and Player movement were not edited for this task. Existing prior traction changes were preserved.

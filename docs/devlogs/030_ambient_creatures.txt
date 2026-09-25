@@ -2,17 +2,17 @@ Ambient Creatures v0.1
 Implemented 2026-09-21; manual gameplay validation pending.
 
 Architecture and authoring
-- scripts/ambient_creature_definition.gd: AmbientCreatureDefinition Resource exposes
+- characters/ambient/base/ambient_creature_definition.gd: AmbientCreatureDefinition Resource exposes
   unique_id, visual_scene, GROUND/FLYING profile, trigger_radius, flee_speed,
   flee_distance, fade_start_distance, fade_duration, minimum_object_speed,
   fractional speed/size variation and upward_bias.
-- scenes/ambient_creature.tscn + scripts/ambient_creature.gd: Node3D, VisualRoot,
+- characters/ambient/base/ambient_creature.tscn + characters/ambient/base/ambient_creature.gd: Node3D, VisualRoot,
   sensing-only Area3D/CollisionShape3D and a conditional 0.1-second object timer.
   No physical body, navigation, combat, damage, loot or save state.
 - Visual scenes face -Z with feet at y=0. Supply mesh/GeometryInstance3D visuals;
   per-instance transparency uses the existing project's Forward Plus fade approach.
   Shared materials are never modified. Basic mesh rat and bird examples included.
-- scenes/ambient_creature_spawner.tscn + scripts/ambient_creature_spawner.gd:
+- world/ambience/ambient_creature_spawner.tscn + world/ambience/ambient_creature_spawner.gd:
   definition, count, disk spawn_radius, random_rotation, spawn_on_ready, respawn,
   respawn_delay. Call spawn() for deferred activation. Whole-group respawn starts
   after the last creature disappears. Mini City uses one-shot groups.

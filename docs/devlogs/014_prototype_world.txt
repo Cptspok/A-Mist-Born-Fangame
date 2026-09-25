@@ -29,7 +29,7 @@ Coordinates use north = -Z and east = +X. Play opens at the hub at (0, 0.95, 3).
 
 The saved city navmesh contains 268 polygons. It inherits the existing testing-zone bake settings, including navigation_static sources, agent height 1.8 and radius 0.45. No global parameters, enemy agents or NavigationOrigin offsets changed. Geometry edits require a fresh offline bake:
 
-`godot --headless --path . --script res://tools/bake_mini_city.gd`
+`godot --headless --path . --script res://dev/tools/bake_mini_city.gd`
 
 Headless validation loaded the real playtest shell and launched the hub, instantiated all five zones/eight enemies/workshop resources, resolved retry references, checked four connector floor rays, and checked paths for alley pursuit, loading ramp, roof access, roof-to-roof bridge, roof-to-wall bridge and wall descent. A follow-up corrected a parapet detour. A separate short Main startup passed. No new script/resource/gameplay errors or missing metadata errors appeared. Import/class scanning completed, but sandbox access prevented editor-cache/settings writes; Godot also reported the existing Windows certificate-store error. Offline baking emitted the existing voxel-rounding and mesh-read warnings.
 
@@ -37,9 +37,9 @@ Temporary checks were removed; the bake utility is an authoring tool, not a perm
 
 ## Files
 
-Created: scenes/central_hub.tscn, scenes/mini_city.tscn, scenes/systems_workshop.tscn, scenes/world_metal_rail.tscn, resources/mini_city_navigation.tres, tools/bake_mini_city.gd (and its Godot UID), this document.
+Created: world/levels/central_hub/central_hub.tscn, world/levels/mini_city/mini_city.tscn, dev/test_scenes/systems_workshop/systems_workshop.tscn, world/props/metalwork/world_metal_rail.tscn, world/levels/mini_city/navigation/mini_city_navigation.tres, dev/tools/bake_mini_city.gd (and its Godot UID), this document.
 
-Modified: scenes/main.tscn, scenes/movement_lab.tscn (label only), scripts/playtest_shell.gd, scripts/playtest_menu_view.gd, scripts/player_death.gd (hub fallback only).
+Modified: world/levels/playtest_world/main.tscn, dev/test_scenes/movement_lab/movement_lab.tscn (label only), systems/session/playtest_shell.gd, ui/menus/playtest_menu_view.gd, characters/player/player_death.gd (hub fallback only).
 
 ## Greybox limits
 

@@ -4,7 +4,7 @@
 
 Pewter is an unlocked third MetalDefinition in Player/AllomancyComponent. The existing data-driven wheel automatically shows its reserve and independent ON/OFF toggle alongside Steel/Iron; one locked placeholder remains. Pewter starts OFF. It uses CONTINUOUS consumption, so Focus/equipment/wheel context does not gate the effect.
 
-resources/pewter_metal.tres: maximum/default reserve 1000, consumption 2 units per game second. The existing refill_all() station refills all three metals and now displays all registered reserves. Refill restores reserves only; it does not heal or erase debt.
+data/abilities/allomancy/pewter/pewter_metal.tres: maximum/default reserve 1000, consumption 2 units per game second. The existing refill_all() station refills all three metals and now displays all registered reserves. Refill restores reserves only; it does not heal or erase debt.
 
 Player/PewterBurn exposes:
 
@@ -46,9 +46,9 @@ The existing reserve HUD adds a Pewter ON/OFF bar and numeric reserve, repositio
 
 ## Files
 
-New: scripts/pewter_burn.gd; resources/pewter_metal.tres; this report.
+New: abilities/allomancy/pewter/pewter_burn.gd; data/abilities/allomancy/pewter/pewter_metal.tres; this report.
 
-Modified: scripts/stat_ids.gd, health_component.gd, physical_force_response.gd, allomancy_interaction.gd (self-generated flag only), player.gd (jump multiplier only), melee_weapon.gd, player_health_hud.gd, allomancy_reserve_hud.gd, metal_refill_station.gd; scenes/player.tscn, player_health_hud.tscn, allomancy_reserve_hud.tscn, metal_refill_station.tscn (prompt only).
+Modified: components/stats/stat_ids.gd, health_component.gd, physical_force_response.gd, allomancy_interaction.gd (self-generated flag only), player.gd (jump multiplier only), melee_weapon.gd, player_health_hud.gd, allomancy_reserve_hud.gd, metal_refill_station.gd; characters/player/player.tscn, player_health_hud.tscn, allomancy_reserve_hud.tscn, metal_refill_station.tscn (prompt only).
 
 ## Validation and manual checklist
 

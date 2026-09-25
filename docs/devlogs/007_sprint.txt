@@ -2,7 +2,7 @@
 
 ## Implementation and tuning
 
-Modified scripts/player.gd and project.godot. Added this report.
+Modified characters/player/player.gd and project.godot. Added this report.
 
 Semantic action: sprint. Default binding: Left Shift only (physical Shift key with left location).
 PlayerController reads Input.is_action_pressed(&"sprint"), not a physical key.

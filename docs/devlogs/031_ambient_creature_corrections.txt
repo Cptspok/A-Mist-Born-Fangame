@@ -4,7 +4,7 @@ range was too small and one-shot groups left the city empty.
 
 Changes
 - AmbientCreatureDefinition.trigger_radius default: 3.0 -> 4.5 m.
-- resources/ambient_rat.tres explicitly sets 4.5 m; ambient_bird.tres: 4 -> 7 m.
+- data/ambient/ambient_rat.tres explicitly sets 4.5 m; ambient_bird.tres: 4 -> 7 m.
   Tune each Resource's trigger_radius in Inspector; profile does not override it.
 - AmbientCreatureSpawner now exposes respawn_enabled=true (replaces respawn),
   respawn_delay=20 s, respawn_min_player_distance=12 m. Other fields retained.

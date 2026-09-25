@@ -54,7 +54,7 @@ Also repeat B over small floor transitions, and compare grounded force release w
 ## Files and validation
 
 Modified:
-- scripts/player.gd (only gameplay code changed).
+- characters/player/player.gd (only gameplay code changed).
 - 004_allomancy_and_combat.txt (updated movement section).
 
 Added:

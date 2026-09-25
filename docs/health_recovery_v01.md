@@ -50,7 +50,7 @@ the existing health HUD changes its bar color and adds WOUNDED or CRITICAL text.
 There are no low-health stat penalties or fullscreen effects.
 
 Tune heal_amount, use_duration, and interrupt_on_damage on the consumable
-subresource in resources/healing/medical_supplies.tres. Keep critical_threshold
+subresource in data/items/consumables/healing/medical_supplies.tres. Keep critical_threshold
 at or below wounded_threshold. Item description text is authored separately;
 update it if changing medicine values.
 
@@ -60,7 +60,7 @@ The health HUD shows remaining time and a brief completion/interruption message.
 
 ## Rest and authored test content
 
-scenes/rest_point.tscn contains a bedroll, label, and the existing
+world/interactables/rest_point/rest_point.tscn contains a bedroll, label, and the existing
 InteractionComponent. Rest is immediate through the usual interaction input:
 cancel medicine, clear Debt, restore full HP, and briefly report the result.
 There is no general debuff system to clear. Rest does not refill inventory or
@@ -93,7 +93,7 @@ changes. No UI/style overhaul; only health/recovery text and state color feedbac
 Deferred: world progression on rest, Gold/Electrum, armor, injury simulation,
 coyote time, and Ironpull ledge recovery.
 
-Validation is static inspection plus tools/validate_recovery_resources.gd, a
+Validation is static inspection plus dev/tools/validate_recovery_resources.gd, a
 resource-only load/parse check with no actor instantiation. No automated combat,
 healing scenarios, desktop control, or gameplay runs. The engine reports an
 environment root-certificate-store warning unrelated to these local resources.

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="DialogueData" format=3 uid="uid://dx4l12d5vqswr"]
+
+[ext_resource type="Script" uid="uid://dv3sig1sv8u2u" path="res://systems/dialogue/dialogue_data.gd" id="1_dialogue"]
+
+[resource]
+script = ExtResource("1_dialogue")
+lines = ["Caca boudin", "ouiiiiiii heuu", "On peut plus te faire confiance", "LA PROPHECIE
+"]

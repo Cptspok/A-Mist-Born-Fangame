@@ -5,18 +5,18 @@ Actual project: C:/Users/CptSp/Documents/Codex/A Mist Born fangame.
 ## Editor workflow
 
 1. Place/reuse any visual building, beam or prop normally. Imported GLB assets need no metadata or mesh changes.
-2. Instance scenes/metal_tether.tscn under that object or anywhere appropriate in the level. A tether is an Area3D with a CollisionShape3D child, on dedicated physics layer 5 (Metal Tether).
+2. Instance abilities/allomancy/metal_tether/metal_tether.tscn under that object or anywhere appropriate in the level. A tether is an Area3D with a CollisionShape3D child, on dedicated physics layer 5 (Metal Tether).
 3. Enable Editable Children on the instance, select CollisionShape3D, and configure a BoxShape3D or SphereShape3D. Make the Shape Resource unique when changing only one editor instance. Change Shape dimensions rather than scaling a rigid physics body. Move/rotate the tether or shape independently of the visual mesh.
 4. Set enabled and allomancy_class on the tether root. Its same region is usable by both powers.
 5. Optionally set physical_owner_path to the associated PhysicsBody3D (rigid body, character carrier, or static fixture). It may be elsewhere in the hierarchy; it is not inferred from mesh names. Empty means no movable-object reaction. Character carriers implement the shared PhysicalForceResponse force/impulse contract; static/ANCHORED fixtures remain immovable.
-6. Ordinary rigid owners need no additional response script. For a cart, add a Node with scripts/allomancy_physical_response.gd, set its body_path (defaults to parent), mode DIRECTIONAL, preferred_local_axis and lateral_response. One response component per owner.
+6. Ordinary rigid owners need no additional response script. For a cart, add a Node with abilities/allomancy/shared/allomancy_physical_response.gd, set its body_path (defaults to parent), mode DIRECTIONAL, preferred_local_axis and lateral_response. One response component per owner.
 7. Run, aim at the tether, and hold Steel/Iron. Toggle development volumes with T.
 
 Geometry and response are independent. Two instances of the same visual model may have different tether children, or none. Tether shape Resources are local-to-scene at runtime; use Make Unique for independently authored editor dimensions. Reusable test body scenes provide examples of owner paths and directional setup.
 
 ## Central tuning
 
-Allomancy on Player references resources/allomancy_tuning.tres.
+Allomancy on Player references data/abilities/allomancy/allomancy_tuning.tres.
 
 | Class | Player multiplier | Object multiplier |
 |---|---:|---:|
@@ -124,25 +124,25 @@ Also check: out-of-range targets and targets behind a world wall cannot be selec
 ## Files
 
 Added:
-- scripts/metal_tether_component.gd
-- scripts/allomancy_tuning.gd
-- scripts/allomancy_targeting.gd
-- scripts/allomancy_physical_response.gd
-- scripts/steel_push.gd
-- scripts/iron_pull.gd
-- scripts/allomancy_controller.gd
-- scripts/allomancy_debug.gd
+- abilities/allomancy/metal_tether/metal_tether_component.gd
+- abilities/allomancy/shared/allomancy_tuning.gd
+- abilities/allomancy/shared/allomancy_targeting.gd
+- abilities/allomancy/shared/allomancy_physical_response.gd
+- abilities/allomancy/steel/steel_push.gd
+- abilities/allomancy/iron/iron_pull.gd
+- abilities/allomancy/shared/allomancy_controller.gd
+- dev/debug/allomancy_debug.gd
 - Generated Godot UID sidecars for those scripts.
-- resources/allomancy_tuning.tres
-- scenes/metal_tether.tscn
-- scenes/allomancy_anchor.tscn
-- scenes/allomancy_light.tscn, allomancy_medium.tscn, allomancy_heavy.tscn, allomancy_cart.tscn
+- data/abilities/allomancy/allomancy_tuning.tres
+- abilities/allomancy/metal_tether/metal_tether.tscn
+- dev/fixtures/allomancy/allomancy_anchor.tscn
+- dev/fixtures/allomancy/allomancy_light.tscn, allomancy_medium.tscn, allomancy_heavy.tscn, allomancy_cart.tscn
 - 004_allomancy_and_combat.txt
 
 Modified for this milestone:
-- scripts/player.gd
-- scenes/player.tscn
-- scenes/main.tscn
+- characters/player/player.gd
+- characters/player/player.tscn
+- world/levels/playtest_world/main.tscn
 - project.godot
 
 Earlier stats/equipment changes already present in the working tree were preserved. No imported art, enemy scripts, stat catalogue, inventory transaction logic, or navigation mesh was modified.
@@ -259,7 +259,7 @@ fixture moved to (-5.5,0.7,-3.5). The non-metal dummy remains available on the e
 Playground and Allomancy Trial geometry, fixtures and tuning are unchanged.
 
 Navigation: new static bodies and the reused sign/dummy participate in navigation_static.
-The existing NavigationRegion3D now references resources/testing_zone_navigation.tres,
+The existing NavigationRegion3D now references dev/data/navigation/testing_zone_navigation.tres,
 baked from the complete Testing Zone source geometry. Its transform and the enemy
 NavigationOrigin workaround are unchanged. A connectivity check exposed a real ramp
 blocker: the old bake agent_max_climb=.2 rounded to zero against cell_height=.25.
@@ -446,8 +446,8 @@ Ranged feedback now has an exaggerated bow raise, drawing-hand pull/body lean, a
 last 30% of the aim window, sharp release, and recovery. Existing reaction/body recoil
 continues. There are no added art assets, VFX, abilities or changes to physical Allomancy.
 
-Files changed: scenes/main.tscn (two encounter IDs only), example_enemy.tscn and
-ranged_enemy.tscn (tuning), scripts/enemy.gd (ID), enemy_sensing.gd, both behavior scripts,
+Files changed: world/levels/playtest_world/main.tscn (two encounter IDs only), example_enemy.tscn and
+ranged_enemy.tscn (tuning), characters/enemies/base/enemy.gd (ID), enemy_sensing.gd, both behavior scripts,
 enemy_ranged_attack.gd (local projectile tuning, shot signal, pose),
 committed_enemy_attack.gd (one alert notification at commitment), enemy_melee_attack.gd,
 melee_weapon.gd, projectile.gd, damage_source_component.gd and hurtbox_component.gd

@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://da2qrvnimasb2"]
+
+[ext_resource type="Script" uid="uid://ce5qg0420yhx8" path="res://components/stats/stat_modifier.gd" id="4_sc3om"]
+[ext_resource type="Texture2D" uid="uid://bjeagu7k2jg7" path="res://assets/2d/icons/items/belt.svg" id="icon"]
+[ext_resource type="Script" uid="uid://ufeuy8so4umi" path="res://items/base/item_definition.gd" id="item"]
+[ext_resource type="Script" uid="uid://bo0gtdxtvj5ft" path="res://components/equipment/equipment_profile.gd" id="profile_script"]
+[ext_resource type="PackedScene" path="res://items/equipment/belt/belt_visual.tscn" id="visual"]
+
+[sub_resource type="Resource" id="profile"]
+script = ExtResource("profile_script")
+allowed_categories = Array[int]([4])
+
+[resource]
+script = ExtResource("item")
+item_id = "prototype_belt"
+display_name = "Belt"
+description = "Prototype equipment. No stats or worn character appearance."
+characteristics = "2 x 1 | Belt"
+item_type = "Armor"
+inventory_sprite = ExtResource("icon")
+grid_width = 2
+world_visual = ExtResource("visual")
+equipment_profile = SubResource("profile")

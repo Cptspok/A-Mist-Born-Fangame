@@ -1,6 +1,6 @@
 # Playtest Shell v0.1
 
-Launch the configured project normally. The startup scene is now `scenes/playtest_shell.tscn`; the existing `scenes/main.tscn` environment is instantiated beneath the shell only after Play. There is still one Player and one shared environment per session. Both lab and advanced layouts, locomotion and force tuning are unchanged.
+Launch the configured project normally. The startup scene is now `systems/session/playtest_shell.tscn`; the existing `world/levels/playtest_world/main.tscn` environment is instantiated beneath the shell only after Play. There is still one Player and one shared environment per session. Both lab and advanced layouts, locomotion and force tuning are unchanged.
 
 ## Menu and session flow
 
@@ -42,9 +42,9 @@ Developer T/debug remains a separate observer showing volumes, classes and force
 
 ## Files
 
-Added: `scenes/playtest_shell.tscn`, `scripts/playtest_shell.gd` (session/menu state), `scripts/playtest_menu_view.gd` (replaceable prototype presentation), `scripts/playtest_controls.gd` (action groups), `scripts/playtest_settings.gd` (settings persistence/application), `scripts/playtest_target_feedback.gd` (target presentation), `default_bus_layout.tres`, generated script UID sidecars and this report.
+Added: `systems/session/playtest_shell.tscn`, `systems/session/playtest_shell.gd` (session/menu state), `ui/menus/playtest_menu_view.gd` (replaceable prototype presentation), `systems/session/playtest_controls.gd` (action groups), `autoload/playtest_settings.gd` (settings persistence/application), `ui/hud/targeting/playtest_target_feedback.gd` (target presentation), `default_bus_layout.tres`, generated script UID sidecars and this report.
 
-Modified: `project.godot` (startup, settings autoload, pause/reset actions), `scripts/inventory_ui.gd` (paused-shell input guard), `scripts/traversal_course.gd` (semantic reset action), `scripts/allomancy_debug.gd` (hide developer label when debug is off). No environment scene or physics code was changed.
+Modified: `project.godot` (startup, settings autoload, pause/reset actions), `ui/inventory/inventory_ui.gd` (paused-shell input guard), `dev/test_scenes/traversal_course/traversal_course.gd` (semantic reset action), `dev/debug/allomancy_debug.gd` (hide developer label when debug is off). No environment scene or physics code was changed.
 
 ## Validation and exact manual test
 

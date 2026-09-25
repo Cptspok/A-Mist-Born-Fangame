@@ -76,12 +76,12 @@ Also equip Chest, Gloves and Belt in their corresponding positions; test an inva
 ## Files in this expansion
 
 Modified:
-- scripts/equipment_slots.gd
-- scripts/equipment_profile.gd
-- scripts/equipment_component.gd
-- scripts/equipment_slot_ui.gd
-- scripts/inventory_ui.gd
-- scenes/main.tscn
+- components/equipment/equipment_slots.gd
+- components/equipment/equipment_profile.gd
+- components/equipment/equipment_component.gd
+- ui/inventory/equipment_slot_ui.gd
+- ui/inventory/inventory_ui.gd
+- world/levels/playtest_world/main.tscn
 
 Added:
 - resources/{helmet,chest_armor,gloves,belt,boots,trinket_a,trinket_b}.tres

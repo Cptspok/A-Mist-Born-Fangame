@@ -1,0 +1,3341 @@
+{
+  "baseline_commit": "d56fe805201d888ad1158a7a02d72bd4cd5e01af",
+  "files": [
+    {
+      "group": 1,
+      "old": "scripts/health_component.gd",
+      "new": "components/health/health_component.gd",
+      "original_sha256": "6054369A8B766D66CB05A0012DE9B413E4DFE4E2B67A1E84F5C4E5CEC7077264"
+    },
+    {
+      "group": 1,
+      "old": "scripts/hurtbox_component.gd",
+      "new": "components/damage/hurtbox_component.gd",
+      "original_sha256": "42D62EF2FE8046257E0784A28AE57EF5F839618DA6C4847868FF5C62F3FC54B1"
+    },
+    {
+      "group": 1,
+      "old": "scripts/damage_source_component.gd",
+      "new": "components/damage/damage_source_component.gd",
+      "original_sha256": "71BE899B018F4BCDB30E79A03C236C004F701261B7388FACE29D7451B26469E1"
+    },
+    {
+      "group": 1,
+      "old": "scenes/hurtbox_component.tscn",
+      "new": "components/damage/hurtbox_component.tscn",
+      "original_sha256": "1B09588CC60C26D9AD38FC614D13C034C2E6A2CE06284A6D8F4E08343EFB0EC4"
+    },
+    {
+      "group": 1,
+      "old": "scripts/interaction_component.gd",
+      "new": "components/interaction/interaction_component.gd",
+      "original_sha256": "D8EBBDC54117B668A01162819C55058B5F97FCB8AAF3158C0161C68BAF91189C"
+    },
+    {
+      "group": 1,
+      "old": "scripts/inventory_component.gd",
+      "new": "components/inventory/inventory_component.gd",
+      "original_sha256": "BE62FA80D49FFCBE56A56DE0B0D1DD3AA9D9E5345463614534833B179CE34171"
+    },
+    {
+      "group": 1,
+      "old": "scripts/inventory_dropper.gd",
+      "new": "components/inventory/inventory_dropper.gd",
+      "original_sha256": "394BEA78743C2A65D076D6205E68251E563A0C73B2ACE46B8D0DDF918C0A4CE9"
+    },
+    {
+      "group": 1,
+      "old": "scripts/equipment_component.gd",
+      "new": "components/equipment/equipment_component.gd",
+      "original_sha256": "086F226B27230F7738862F8ED2C3F6AF6355BC604647CFB75D9FAC47DEAC22DF"
+    },
+    {
+      "group": 1,
+      "old": "scripts/equipment_profile.gd",
+      "new": "components/equipment/equipment_profile.gd",
+      "original_sha256": "0C7274B2C50887270A0C858B4093E5EA630ECA5E81BC21196B6B19559B42E237"
+    },
+    {
+      "group": 1,
+      "old": "scripts/equipment_slots.gd",
+      "new": "components/equipment/equipment_slots.gd",
+      "original_sha256": "82E0ED26D8ACBA298F3E4E342E4EA85E39B5C1D37CFD8C9C10D972847E71F873"
+    },
+    {
+      "group": 1,
+      "old": "scripts/equipment_stats_bridge.gd",
+      "new": "components/equipment/equipment_stats_bridge.gd",
+      "original_sha256": "FEFA080E7C79DA589F22370479A242524D14216A8FB23187D08E99F6E6FB14B8"
+    },
+    {
+      "group": 1,
+      "old": "scripts/stat_component.gd",
+      "new": "components/stats/stat_component.gd",
+      "original_sha256": "5411312D6838554733A03DA9811D00131E99C21FC3913CEDF7617F336C43C499"
+    },
+    {
+      "group": 1,
+      "old": "scripts/stat_ids.gd",
+      "new": "components/stats/stat_ids.gd",
+      "original_sha256": "68F85AA6F9AA35A440FCA26D7C0E493A6CE7281109CF659D4A03F70480DBD5A4"
+    },
+    {
+      "group": 1,
+      "old": "scripts/stat_modifier.gd",
+      "new": "components/stats/stat_modifier.gd",
+      "original_sha256": "274071781B80A0279D2258B947952886ACD5787C121AF5BAB43655B6CD2CC5EF"
+    },
+    {
+      "group": 1,
+      "old": "scripts/combat_reaction_component.gd",
+      "new": "components/combat/combat_reaction_component.gd",
+      "original_sha256": "4CCFAF5CB5EC80F98108EC9A503E89B82D4A6667C008A8DA603F762A4B0C1A93"
+    },
+    {
+      "group": 2,
+      "old": "scripts/item_definition.gd",
+      "new": "items/base/item_definition.gd",
+      "original_sha256": "64055367E94A06335BE14458C7C089C793FF9EFFAF25A92DA1E5EA9676F82CB9"
+    },
+    {
+      "group": 2,
+      "old": "scripts/item_material_definition.gd",
+      "new": "items/base/item_material_definition.gd",
+      "original_sha256": "19CF00490AC79045DF38E646958857F02AD7135E6F517ED5B925DD7FBFCBE024"
+    },
+    {
+      "group": 2,
+      "old": "scripts/item_stack.gd",
+      "new": "items/base/item_stack.gd",
+      "original_sha256": "DDBC2EC6E2F1A777C1950CDD8C798DA13FA9D838C46D38B45DB69BC18527AFCE"
+    },
+    {
+      "group": 2,
+      "old": "scripts/consumable_definition.gd",
+      "new": "items/consumables/consumable_definition.gd",
+      "original_sha256": "8C8A95DE75ED64D0FD1B7DD9DCFEF7A052F3F5A7D7AF276BA9B43EDCD5705EDE"
+    },
+    {
+      "group": 2,
+      "old": "scripts/healing_consumable_definition.gd",
+      "new": "items/consumables/healing_consumable_definition.gd",
+      "original_sha256": "C1EF3D04201DEE4A34F81C4297FB01B4DFAF68EF04CA1D2462DB1C8F1ED1CA00"
+    },
+    {
+      "group": 2,
+      "old": "scripts/metal_consumable_definition.gd",
+      "new": "items/consumables/metal_consumable_definition.gd",
+      "original_sha256": "E76DC5BC585EA7624A793B4098783F9DD843378C8A1C63739141C84EDA24AAA9"
+    },
+    {
+      "group": 2,
+      "old": "scenes/belt_visual.tscn",
+      "new": "items/equipment/belt/belt_visual.tscn",
+      "original_sha256": "D7F139E6750616460F16A3B1019FBBFCB0651DB56795AA24A0C35B23177F93C3"
+    },
+    {
+      "group": 2,
+      "old": "scenes/boots_visual.tscn",
+      "new": "items/equipment/boots/boots_visual.tscn",
+      "original_sha256": "22719FF5A520CE35CB2F22223D19B2F1ACF2CBFEDFC76195EE20995FE43BDC7F"
+    },
+    {
+      "group": 2,
+      "old": "scenes/chest_armor_visual.tscn",
+      "new": "items/equipment/chest_armor/chest_armor_visual.tscn",
+      "original_sha256": "9179F4A14CF72A9D03D49A8804394B744D60A84776B36EAD82CF21EDBF6457FD"
+    },
+    {
+      "group": 2,
+      "old": "scenes/gloves_visual.tscn",
+      "new": "items/equipment/gloves/gloves_visual.tscn",
+      "original_sha256": "7E3C406154EB23D522BFC85BBD7D14547B07F89C3F03C33C18664ADE8C707D17"
+    },
+    {
+      "group": 2,
+      "old": "scenes/helmet_visual.tscn",
+      "new": "items/equipment/helmet/helmet_visual.tscn",
+      "original_sha256": "4FBB5F018240205D1EC55C1CD86E12255364E9D30A3BB0B601710682EF253ECF"
+    },
+    {
+      "group": 2,
+      "old": "scenes/quiver_visual.tscn",
+      "new": "items/equipment/quiver/quiver_visual.tscn",
+      "original_sha256": "6001F0EB28BE6CD68FCD90E675E201B5966E15E075D4152DA0FD39CC50020EEA"
+    },
+    {
+      "group": 2,
+      "old": "scenes/trinket_a_visual.tscn",
+      "new": "items/equipment/trinket_a/trinket_a_visual.tscn",
+      "original_sha256": "AF01907913E062FE56B6064A5BB8C53D02491D95B0DAAE914D536942B9CC6A61"
+    },
+    {
+      "group": 2,
+      "old": "scenes/trinket_b_visual.tscn",
+      "new": "items/equipment/trinket_b/trinket_b_visual.tscn",
+      "original_sha256": "B4C1F62239BB69A4A3809787323FEE6725B80C8DE8784B53F3B3AF787A5B606A"
+    },
+    {
+      "group": 2,
+      "old": "scripts/combat_item_definition.gd",
+      "new": "weapons/base/combat_item_definition.gd",
+      "original_sha256": "88B46C1840786CD19C803BBEC12D4C6A94378484291A53DB0AD04FBDBB12E098"
+    },
+    {
+      "group": 2,
+      "old": "scripts/combat_item_runtime.gd",
+      "new": "weapons/base/combat_item_runtime.gd",
+      "original_sha256": "221E8F36BE10A5B558E203355B33FA067B9F3AF153C481CB9FA4A4B872DC41F4"
+    },
+    {
+      "group": 2,
+      "old": "scripts/weapon_attack_definition.gd",
+      "new": "weapons/base/weapon_attack_definition.gd",
+      "original_sha256": "CE03168329B1C24BE57A71BFD5251ED0F7F935101275276A076AD229E14AD5A9"
+    },
+    {
+      "group": 2,
+      "old": "scripts/weapon_moveset.gd",
+      "new": "weapons/base/weapon_moveset.gd",
+      "original_sha256": "C906CB97D367ED0665C59D786621FDC9BCD771F0BA9C1A9AF61F472D373F77F0"
+    },
+    {
+      "group": 2,
+      "old": "scripts/weapon_swing_presentation.gd",
+      "new": "weapons/base/weapon_swing_presentation.gd",
+      "original_sha256": "1B76F68C829721F9B0C6D83E03D1070551BB898BFC524AF9BBCC7AF39F19D782"
+    },
+    {
+      "group": 2,
+      "old": "scripts/melee_weapon.gd",
+      "new": "weapons/melee/base/melee_weapon.gd",
+      "original_sha256": "B7AE0B0491CA735FCE96EE2F9573B9A3D4B4AB8BEA2840DD526BA261A89A0653"
+    },
+    {
+      "group": 2,
+      "old": "scripts/melee_weapon_definition.gd",
+      "new": "weapons/melee/base/melee_weapon_definition.gd",
+      "original_sha256": "D6E4F4C9C11684D4D7B369BAB2091D34DB54CC17508DB7C010F81A096CE2975A"
+    },
+    {
+      "group": 2,
+      "old": "scenes/melee_weapon.tscn",
+      "new": "weapons/melee/base/melee_weapon.tscn",
+      "original_sha256": "C9B056CDB4C34164637B05267B843F3FEF2AA6F67F875ED2102586D08FE4D23F"
+    },
+    {
+      "group": 2,
+      "old": "scenes/sword_visual.tscn",
+      "new": "weapons/melee/sword/sword_visual.tscn",
+      "original_sha256": "AB91257ABB87C3E6B7185F4C5EC280542786896BEDC2DC8DE659347315708E91"
+    },
+    {
+      "group": 2,
+      "old": "scenes/club_visual.tscn",
+      "new": "weapons/melee/club/club_visual.tscn",
+      "original_sha256": "42FDC0C2FA0EC19D8E6030F815FABBDC68E1F7B6A9A7629B83282B84088FB260"
+    },
+    {
+      "group": 2,
+      "old": "scenes/greatsword_visual.tscn",
+      "new": "weapons/melee/greatsword/greatsword_visual.tscn",
+      "original_sha256": "31B3F633BBF7B73DEECFFD2312B73D042A0B102DBED100655F252DE94A8B1FE2"
+    },
+    {
+      "group": 2,
+      "old": "scenes/bow_visual.tscn",
+      "new": "weapons/ranged/bow/bow_visual.tscn",
+      "original_sha256": "504F132F38798FF01D770EC0C729CE2E32C572CA73C18D10650AB047ED7E3399"
+    },
+    {
+      "group": 2,
+      "old": "scenes/projectile.tscn",
+      "new": "weapons/ranged/projectiles/projectile.tscn",
+      "original_sha256": "14D24BE849280833A46413D1491336558D4385FAE902D09F39C8A145E2C04D09"
+    },
+    {
+      "group": 2,
+      "old": "scripts/projectile.gd",
+      "new": "weapons/ranged/projectiles/projectile.gd",
+      "original_sha256": "96E345CB16C269A393527A4B7A439812F32C3D91E05AB753E896807D1D8818AC"
+    },
+    {
+      "group": 2,
+      "old": "scripts/ability_component.gd",
+      "new": "abilities/base/ability_component.gd",
+      "original_sha256": "B6B5B964C759D28F96F5A42C8665EB59A9C1251E98408AD5D899AF5A0A71A086"
+    },
+    {
+      "group": 2,
+      "old": "scripts/ability_definition.gd",
+      "new": "abilities/base/ability_definition.gd",
+      "original_sha256": "88121F3B810CE6E414118A833CB51341442EB13F8F9AF25FCA21F8286758E7EE"
+    },
+    {
+      "group": 2,
+      "old": "scripts/allomancy_component.gd",
+      "new": "abilities/allomancy/shared/allomancy_component.gd",
+      "original_sha256": "281D59A24A598146B9F45D5E184879C1DEADD18ECCD1845D78C53FA67227D8FE"
+    },
+    {
+      "group": 2,
+      "old": "scripts/allomancy_controller.gd",
+      "new": "abilities/allomancy/shared/allomancy_controller.gd",
+      "original_sha256": "A2DD8F63771C876B40526535487F33EB2CFA24D67CBC7E8AFB20BE898C51A24D"
+    },
+    {
+      "group": 2,
+      "old": "scripts/allomancy_interaction.gd",
+      "new": "abilities/allomancy/shared/allomancy_interaction.gd",
+      "original_sha256": "9158FFE6C0E24D5C5EF5D4A773F410BE3ABEF6FEF96C0B2DB3C5C402C775B0D8"
+    },
+    {
+      "group": 2,
+      "old": "scripts/allomancy_targeting.gd",
+      "new": "abilities/allomancy/shared/allomancy_targeting.gd",
+      "original_sha256": "F6332E27B1C84A7C31AFA8947F60B04C5C48A86F0991FAAF128174BCE591A0AA"
+    },
+    {
+      "group": 2,
+      "old": "scripts/allomancy_tuning.gd",
+      "new": "abilities/allomancy/shared/allomancy_tuning.gd",
+      "original_sha256": "1E17924649EC16663464B257920B9B1560D07CDD5AD27F3C0DC9E95E799A7AAC"
+    },
+    {
+      "group": 2,
+      "old": "scripts/allomancy_physical_response.gd",
+      "new": "abilities/allomancy/shared/allomancy_physical_response.gd",
+      "original_sha256": "507D80D98F38706B0E83466D4E13A1DA3E6E644F5E231ABBD8698DCAA6F761A6"
+    },
+    {
+      "group": 2,
+      "old": "scripts/metal_definition.gd",
+      "new": "abilities/allomancy/shared/metal_definition.gd",
+      "original_sha256": "743694BD80CBDDDDD4D0BA4A8337AF5AFD60EB99B735815427AAB27240EC76DF"
+    },
+    {
+      "group": 2,
+      "old": "scripts/iron_pull.gd",
+      "new": "abilities/allomancy/iron/iron_pull.gd",
+      "original_sha256": "7A1AE789CC34DA61C432CC9D9EFEC3293024AF6257A79D34656BE811DB3E318F"
+    },
+    {
+      "group": 2,
+      "old": "scripts/loose_metal_capture.gd",
+      "new": "abilities/allomancy/iron/loose_metal_capture.gd",
+      "original_sha256": "03AF49EA0708AD8D30AE056B086A56BF76A0329E3D2AC332D4C1CA5C8220EF1F"
+    },
+    {
+      "group": 2,
+      "old": "scripts/steel_push.gd",
+      "new": "abilities/allomancy/steel/steel_push.gd",
+      "original_sha256": "1EAAF0560F5975550413DA23E2FD759C1B90B13D9D40C6259F2CC66ED2ABC8AD"
+    },
+    {
+      "group": 2,
+      "old": "scripts/pewter_burn.gd",
+      "new": "abilities/allomancy/pewter/pewter_burn.gd",
+      "original_sha256": "ABA0C1243B2692C62C3E5EEB43EC99D9C18C838A2D61753E2C9BF5FBB8F4C0C5"
+    },
+    {
+      "group": 2,
+      "old": "scripts/metal_tether_component.gd",
+      "new": "abilities/allomancy/metal_tether/metal_tether_component.gd",
+      "original_sha256": "3C88B448270ACDDE57A109FBF535E7612D038C2878650FBD664DBB6D1A3C0C33"
+    },
+    {
+      "group": 2,
+      "old": "scenes/metal_tether.tscn",
+      "new": "abilities/allomancy/metal_tether/metal_tether.tscn",
+      "original_sha256": "F582CDC5DA83644139DDEAD6DAB76C1D923FA3B8D90BBCBCCEFAD5402C1CF62B"
+    },
+    {
+      "group": 2,
+      "old": "scripts/physical_force_response.gd",
+      "new": "systems/physics/physical_force_response.gd",
+      "original_sha256": "8E28C078AC54F54A1C3D003D2AFFA6092249ED79FC51B37D9AE9CC6462C36595"
+    },
+    {
+      "group": 3,
+      "old": "scenes/player.tscn",
+      "new": "characters/player/player.tscn",
+      "original_sha256": "E203E075652828415542A518B6928B9D352F843FF3729E884FB23CE8F25EB26A"
+    },
+    {
+      "group": 3,
+      "old": "scripts/player.gd",
+      "new": "characters/player/player.gd",
+      "original_sha256": "ECE25F76A5EEC1535DFAE3BA68EFF254BFABE908F047798D3B853D3771338878"
+    },
+    {
+      "group": 3,
+      "old": "scripts/player_combat.gd",
+      "new": "characters/player/player_combat.gd",
+      "original_sha256": "C7688816E6A28F9A7A44730E42A4C6D6B8B2226504798E921F5773E9265CA79E"
+    },
+    {
+      "group": 3,
+      "old": "scripts/player_death.gd",
+      "new": "characters/player/player_death.gd",
+      "original_sha256": "17251180A31F12EEE16C6372290143E9AB71242528339B3A20C9A96A355833DB"
+    },
+    {
+      "group": 3,
+      "old": "scripts/player_recovery.gd",
+      "new": "characters/player/player_recovery.gd",
+      "original_sha256": "E7DAF8F91832D51D71028C76F1D73995B63A5DF6DC3269493D349286A03121E4"
+    },
+    {
+      "group": 3,
+      "old": "scripts/contextual_input.gd",
+      "new": "characters/player/contextual_input.gd",
+      "original_sha256": "EC5238E3BDC30558C36EB503DF3932B3719B4F90CA96D6300B9FF87F6A0DEAE5"
+    },
+    {
+      "group": 3,
+      "old": "scenes/enemy.tscn",
+      "new": "characters/enemies/base/enemy.tscn",
+      "original_sha256": "FF6ACBC030B11639403132F53EDE681FA4C6F73F0E8942EDC7B9F1414157D2BF"
+    },
+    {
+      "group": 3,
+      "old": "scenes/example_enemy.tscn",
+      "new": "characters/enemies/base/example_enemy.tscn",
+      "original_sha256": "477E820AE67DE83447F7582AC19E4A5AE61AFB097848E2351D009AE10A2856CA"
+    },
+    {
+      "group": 3,
+      "old": "scenes/ranged_enemy.tscn",
+      "new": "characters/enemies/base/ranged_enemy.tscn",
+      "original_sha256": "5213EA9EA3DF79AE7E5C701B9FE5E351E9BD8E1898DF7D8866BF97772902A998"
+    },
+    {
+      "group": 3,
+      "old": "scenes/example_enemy_visual.tscn",
+      "new": "characters/enemies/base/visuals/example_enemy_visual.tscn",
+      "original_sha256": "EF59A834BD42DFDC2D7BE015AA0A0E0F43F6491DACB08C01A8B7E1A17DA32D5D"
+    },
+    {
+      "group": 3,
+      "old": "scenes/ranged_enemy_visual.tscn",
+      "new": "characters/enemies/base/visuals/ranged_enemy_visual.tscn",
+      "original_sha256": "9ADEC2231012BF480BEE6622232D59F822476E49F40FF28716001C4F695AA5EF"
+    },
+    {
+      "group": 3,
+      "old": "scripts/enemy.gd",
+      "new": "characters/enemies/base/enemy.gd",
+      "original_sha256": "59F6ACACBD11931B32CFB9F8D1ED1A08AF6DEC621DC9D53550A864EA84052A58"
+    },
+    {
+      "group": 3,
+      "old": "scripts/enemy_sensing.gd",
+      "new": "characters/enemies/base/enemy_sensing.gd",
+      "original_sha256": "0F1A3D968077747CEA16AE6A89E0B3715277E5A786D300BE3EB59AC2701917AB"
+    },
+    {
+      "group": 3,
+      "old": "scripts/enemy_movement.gd",
+      "new": "characters/enemies/base/enemy_movement.gd",
+      "original_sha256": "5EAAC2366EBEE3FD7C2136F770FCF0F9225353C4D366259B3FFEEE08EF1B96B5"
+    },
+    {
+      "group": 3,
+      "old": "scripts/enemy_melee_attack.gd",
+      "new": "characters/enemies/base/enemy_melee_attack.gd",
+      "original_sha256": "F6F4026DB35E0BC55701E23FB8AAB07F9C4919D85C632CE25D6A5066CB9AD7A7"
+    },
+    {
+      "group": 3,
+      "old": "scripts/enemy_melee_behaviour.gd",
+      "new": "characters/enemies/base/enemy_melee_behaviour.gd",
+      "original_sha256": "966C1A0F8CA15420D58430CA0800E05DCE5041D55652AA929E36B04502A19E4C"
+    },
+    {
+      "group": 3,
+      "old": "scripts/enemy_ranged_attack.gd",
+      "new": "characters/enemies/base/enemy_ranged_attack.gd",
+      "original_sha256": "4272FB840787B6B370EEAB418D00CF890743EFA03C5D8BDAA533CE3544DB2B02"
+    },
+    {
+      "group": 3,
+      "old": "scripts/enemy_ranged_behaviour.gd",
+      "new": "characters/enemies/base/enemy_ranged_behaviour.gd",
+      "original_sha256": "B70D7C07276350E0D96B32331F8EDCE1C7B0F28A721594DBFC937BCD37CCB352"
+    },
+    {
+      "group": 3,
+      "old": "scripts/committed_enemy_attack.gd",
+      "new": "characters/enemies/base/committed_enemy_attack.gd",
+      "original_sha256": "30608092A36C3F4A1305288CBBF6F3B55C5C0526A20EF478F1490C095AFDD1D9"
+    },
+    {
+      "group": 3,
+      "old": "scripts/enemy_death_fade.gd",
+      "new": "characters/enemies/base/enemy_death_fade.gd",
+      "original_sha256": "9FB2CA7370F17DA9C19DA82730BD1ADE119E731111ECAEABBFD73E9FAA8B39B9"
+    },
+    {
+      "group": 3,
+      "old": "scripts/enemy_rewards.gd",
+      "new": "characters/enemies/base/enemy_rewards.gd",
+      "original_sha256": "274BB62184147030771F5206D371C9171A9475C8F8C2FBB92B3B35F4DEBB1194"
+    },
+    {
+      "group": 3,
+      "old": "scripts/enemy_reward_definition.gd",
+      "new": "characters/enemies/base/enemy_reward_definition.gd",
+      "original_sha256": "95C83D28416CA0EFFA0CBC700E7A3BDD4F7A222F35F9D1A33B7EF19C15363265"
+    },
+    {
+      "group": 3,
+      "old": "scenes/knife_fighter.tscn",
+      "new": "characters/enemies/knife_fighter/knife_fighter.tscn",
+      "original_sha256": "FD21988C4FBC7C60B0E8268E1CD42AA7505FC7EBADD08A335B862E1A72A637B4"
+    },
+    {
+      "group": 3,
+      "old": "scenes/knife_fighter_visual.tscn",
+      "new": "characters/enemies/knife_fighter/knife_fighter_visual.tscn",
+      "original_sha256": "5AFB6D5AB5F401AA2F03E23369FBD2C4F8D86631F9941A6DFA5294A23DE90045"
+    },
+    {
+      "group": 3,
+      "old": "scenes/heavy_enemy.tscn",
+      "new": "characters/enemies/heavy/heavy_enemy.tscn",
+      "original_sha256": "48E2C10C346E437E4F4CD4128BF8A8A42E40C3D97690C14DA7D331A873ABC8BA"
+    },
+    {
+      "group": 3,
+      "old": "scenes/heavy_enemy_visual.tscn",
+      "new": "characters/enemies/heavy/heavy_enemy_visual.tscn",
+      "original_sha256": "9D99BCA5E85D1ACD684069265004F3F0405A5C0C66E4C1EBD15DF338B48BF275"
+    },
+    {
+      "group": 3,
+      "old": "scenes/crossbow_skirmisher.tscn",
+      "new": "characters/enemies/crossbow_skirmisher/crossbow_skirmisher.tscn",
+      "original_sha256": "6B0EC301145474A5683938CB6AE2D43BB215F0796051F0375B7CAB08A027585A"
+    },
+    {
+      "group": 3,
+      "old": "scenes/crossbow_skirmisher_visual.tscn",
+      "new": "characters/enemies/crossbow_skirmisher/crossbow_skirmisher_visual.tscn",
+      "original_sha256": "F341564709E26277DD1C71D48BCBD15B0BF4FDA03FFED02FFEAE340FB09E81E5"
+    },
+    {
+      "group": 3,
+      "old": "scenes/court_target.tscn",
+      "new": "characters/enemies/court_target/court_target.tscn",
+      "original_sha256": "499C058B42E721994E2A1C4E8745BE5752E0F2E10E96DEBB60145425E414A010"
+    },
+    {
+      "group": 3,
+      "old": "scenes/court_target_visual.tscn",
+      "new": "characters/enemies/court_target/court_target_visual.tscn",
+      "original_sha256": "B18CEEE16A7A9A37676C56858C427C5F1C07D7FB7400CE6A59087E7E0AA4089E"
+    },
+    {
+      "group": 3,
+      "old": "scenes/long_range_archer.tscn",
+      "new": "characters/enemies/archer/long_range_archer.tscn",
+      "original_sha256": "4434CC685EAF82932EEA4306B575B4C7D677D8B43F5886DACCFE87CB23C4B9BF"
+    },
+    {
+      "group": 3,
+      "old": "scenes/npc.tscn",
+      "new": "characters/npcs/base/npc.tscn",
+      "original_sha256": "F950893398F3F8CE5F077717D49AAA32536E31A67FA857638BBEECD77836EEA6"
+    },
+    {
+      "group": 3,
+      "old": "scripts/npc.gd",
+      "new": "characters/npcs/base/npc.gd",
+      "original_sha256": "E103ADB0E1F691BDCE97EFC9A1199879C92AE0A67F7A65FF719477F75E508EC4"
+    },
+    {
+      "group": 3,
+      "old": "scenes/example_npc.tscn",
+      "new": "characters/npcs/example_npc/example_npc.tscn",
+      "original_sha256": "8B066D29789FFBC005B11159E39CCF0BAA1B82BB87DC9FEF635141C73AB42B79"
+    },
+    {
+      "group": 3,
+      "old": "scenes/example_npc_visual.tscn",
+      "new": "characters/npcs/example_npc/example_npc_visual.tscn",
+      "original_sha256": "D4779355B11232366D778F3B5D613132530B4FAD98325817B64F2AA11BEB11F2"
+    },
+    {
+      "group": 3,
+      "old": "scenes/ambient_creature.tscn",
+      "new": "characters/ambient/base/ambient_creature.tscn",
+      "original_sha256": "C2D9C6379A1391C9349C02372027DA5393E077D9185193654CF4B5CAE7FEFA73"
+    },
+    {
+      "group": 3,
+      "old": "scripts/ambient_creature.gd",
+      "new": "characters/ambient/base/ambient_creature.gd",
+      "original_sha256": "45702D51C316FDA4CCA090FF971427CF08B515CE1C1E482D4CBD993A84DBDF66"
+    },
+    {
+      "group": 3,
+      "old": "scripts/ambient_creature_definition.gd",
+      "new": "characters/ambient/base/ambient_creature_definition.gd",
+      "original_sha256": "8B193A31C83F28AD6BF5086A002FB9CC8194A3EDAE6D90F02FE32BDBE742273B"
+    },
+    {
+      "group": 3,
+      "old": "scenes/ambient_bird_visual.tscn",
+      "new": "characters/ambient/bird/ambient_bird_visual.tscn",
+      "original_sha256": "E56AE4DF3994462B577F289CBF65430FCECBA146821D87013A8A25BC278BE7CC"
+    },
+    {
+      "group": 3,
+      "old": "scenes/ambient_rat_visual.tscn",
+      "new": "characters/ambient/rat/ambient_rat_visual.tscn",
+      "original_sha256": "12D15FC9661FAA2CA67635ACD230B2A95F8CA625B41894D9979AD15F1AA91EE0"
+    },
+    {
+      "group": 4,
+      "old": "resources/sword.tres",
+      "new": "data/weapons/sword/sword.tres",
+      "original_sha256": "F3AC0C4B04DAC5310D08B3C8A49DC2CBBEF5AE19E0D5A5AEF89D1C02691D6029"
+    },
+    {
+      "group": 4,
+      "old": "resources/club.tres",
+      "new": "data/weapons/club/club.tres",
+      "original_sha256": "B779B7387D28B6515B13E33ED258B37B0B7778AD8186EC7D5FB41F33081D3892"
+    },
+    {
+      "group": 4,
+      "old": "resources/greatsword.tres",
+      "new": "data/weapons/greatsword/greatsword.tres",
+      "original_sha256": "330011C31D59155C11AF06A5EC305971205E93D47DFA09EC8FAF9DCD9CBD82CB"
+    },
+    {
+      "group": 4,
+      "old": "resources/bow.tres",
+      "new": "data/weapons/bow/bow.tres",
+      "original_sha256": "4980E3527CC28A79CB8C9F8F2A82159B440600923B090B1E3275DA6C8FDEA717"
+    },
+    {
+      "group": 4,
+      "old": "resources/weapons/sword_moveset.tres",
+      "new": "data/weapons/sword/sword_moveset.tres",
+      "original_sha256": "5FBF52CCB3E01BBF4DF474F81BFAAE3C349B72E8F82C5C4CEBA33FDFF23AE4B4"
+    },
+    {
+      "group": 4,
+      "old": "resources/weapons/sword_material.tres",
+      "new": "data/weapons/sword/sword_material.tres",
+      "original_sha256": "9D513DB56E70AAF5F3C8FA5B161969ADB376229DB1ADFB390178260F2A48BD1D"
+    },
+    {
+      "group": 4,
+      "old": "resources/weapons/club_moveset.tres",
+      "new": "data/weapons/club/club_moveset.tres",
+      "original_sha256": "B136ED80F56572949E407087C6A452C24F7BB9341A8DA653472AAEE8301BEB76"
+    },
+    {
+      "group": 4,
+      "old": "resources/weapons/club_material.tres",
+      "new": "data/weapons/club/club_material.tres",
+      "original_sha256": "ED351D66B1ACC1DC3683785350509B30C193C42EF97E4B4D9DFAD8DBA984FBA6"
+    },
+    {
+      "group": 4,
+      "old": "resources/belt.tres",
+      "new": "data/items/equipment/belt/belt.tres",
+      "original_sha256": "E5AE48EB2DB1C0DE70A9ADBB20E6C5133626707FF0AB61B27859F3F4476CF570"
+    },
+    {
+      "group": 4,
+      "old": "resources/boots.tres",
+      "new": "data/items/equipment/boots/boots.tres",
+      "original_sha256": "8B6DFE00E24A41143D44970C6E47CBF0BAF335BDDD41445F56E106824FF2A978"
+    },
+    {
+      "group": 4,
+      "old": "resources/chest_armor.tres",
+      "new": "data/items/equipment/chest_armor/chest_armor.tres",
+      "original_sha256": "9CF51B2D144AFC68CBCD1E0980AC632ECB1AEEBD874214E641B23758292A1F4B"
+    },
+    {
+      "group": 4,
+      "old": "resources/gloves.tres",
+      "new": "data/items/equipment/gloves/gloves.tres",
+      "original_sha256": "9C685F4F1B23B855852478B23885E7CC22E6DE7335C25C8F7B45C897D40D36DF"
+    },
+    {
+      "group": 4,
+      "old": "resources/helmet.tres",
+      "new": "data/items/equipment/helmet/helmet.tres",
+      "original_sha256": "B5233D9300F1BFE3C37C8E7D2892D20A66B40629F01BDDFC0A3212CB95D13C81"
+    },
+    {
+      "group": 4,
+      "old": "resources/quiver.tres",
+      "new": "data/items/equipment/quiver/quiver.tres",
+      "original_sha256": "41CD69EB83C01F76B2274EC2280AC1DC50C00B06496F8624CB770F2589C29A1B"
+    },
+    {
+      "group": 4,
+      "old": "resources/trinket_a.tres",
+      "new": "data/items/equipment/trinket_a/trinket_a.tres",
+      "original_sha256": "F95A7373933309354036E03FBD2AB87DB9C4739E29D7EFF2E0201E68DBC109D2"
+    },
+    {
+      "group": 4,
+      "old": "resources/trinket_b.tres",
+      "new": "data/items/equipment/trinket_b/trinket_b.tres",
+      "original_sha256": "CFF01CDAB44597A3F573B425D10BE6044DABCDF454E85A3A30CCD6855542DC3C"
+    },
+    {
+      "group": 4,
+      "old": "resources/blue_item/Wooden_Shield.tres",
+      "new": "data/items/equipment/wooden_shield/wooden_shield.tres",
+      "original_sha256": "C9021B2D95591DEED37A5825043EA0535AF373B1F1F1FF609D61CF37A795672E"
+    },
+    {
+      "group": 4,
+      "old": "resources/healing/medical_supplies.tres",
+      "new": "data/items/consumables/healing/medical_supplies.tres",
+      "original_sha256": "03E724BEAB3AA175EEC080BF3A3593F5B078FBAFA9C18CF516B869C17DF30C59"
+    },
+    {
+      "group": 4,
+      "old": "resources/metal_consumables/raw_steel.tres",
+      "new": "data/items/consumables/metals/raw_steel.tres",
+      "original_sha256": "3F5428977EBA3DF425C6DE694A6F68A9C40D541BBA3A1DFD0C1DCABA2C6A2F1B"
+    },
+    {
+      "group": 4,
+      "old": "resources/metal_consumables/basic_steel_vial.tres",
+      "new": "data/items/consumables/metals/basic_steel_vial.tres",
+      "original_sha256": "779C9AD51F73D495D7CBEC5D69F98A10F993062BEC1BC681BE260F2CF9BE9C53"
+    },
+    {
+      "group": 4,
+      "old": "resources/metal_consumables/pure_steel_vial.tres",
+      "new": "data/items/consumables/metals/pure_steel_vial.tres",
+      "original_sha256": "697B2A87F997DB346CA025338D00C3E9BF7780DE34FF1759015482AAE9B7EC9A"
+    },
+    {
+      "group": 4,
+      "old": "resources/metal_consumables/basic_iron_vial.tres",
+      "new": "data/items/consumables/metals/basic_iron_vial.tres",
+      "original_sha256": "7C8799CFBCAD71A2539BFB196B1CFFB4AA6E0A7A885F036FAA4A2DB757A8487D"
+    },
+    {
+      "group": 4,
+      "old": "resources/metal_consumables/basic_pewter_vial.tres",
+      "new": "data/items/consumables/metals/basic_pewter_vial.tres",
+      "original_sha256": "D295DCC18B246DF70538658844EA6D00EF430A9F6E6CE6BBC5F8EB4FB169C075"
+    },
+    {
+      "group": 4,
+      "old": "resources/metal_consumables/basic_mixed_vial.tres",
+      "new": "data/items/consumables/metals/basic_mixed_vial.tres",
+      "original_sha256": "1FB71B8483AF4067BD636BF40483A0F8C6DB003CBF52D426E28DC49AEEAE39F8"
+    },
+    {
+      "group": 4,
+      "old": "resources/allomancy_tuning.tres",
+      "new": "data/abilities/allomancy/allomancy_tuning.tres",
+      "original_sha256": "31C2B9B64AC57D780B67A334CAF3EA028654D6B6388544BCC505C7D91891C5AC"
+    },
+    {
+      "group": 4,
+      "old": "resources/iron_metal.tres",
+      "new": "data/abilities/allomancy/iron/iron_metal.tres",
+      "original_sha256": "70347F19D6675B468F420339CE48C41E09BD125974605805FB01D5090A6E32E7"
+    },
+    {
+      "group": 4,
+      "old": "resources/iron_pull_ability.tres",
+      "new": "data/abilities/allomancy/iron/iron_pull_ability.tres",
+      "original_sha256": "7B4A34A7208502531BFA1B0782EC384E48C48CB945032C64D79D5C506EE0A981"
+    },
+    {
+      "group": 4,
+      "old": "resources/steel_metal.tres",
+      "new": "data/abilities/allomancy/steel/steel_metal.tres",
+      "original_sha256": "3CF58C17B642B5D7E59F153777AB521AC60F8BE1D141A01E6660A7779F7F1F56"
+    },
+    {
+      "group": 4,
+      "old": "resources/steel_push_ability.tres",
+      "new": "data/abilities/allomancy/steel/steel_push_ability.tres",
+      "original_sha256": "7E6C5A2BFA7B83A731FE7C5B76D0A638DB46279EE35BCECC7747ED01CC75AEDD"
+    },
+    {
+      "group": 4,
+      "old": "resources/pewter_metal.tres",
+      "new": "data/abilities/allomancy/pewter/pewter_metal.tres",
+      "original_sha256": "804A5DF48ABD48DC02B7105DFF233B7FB2168F413B4014B2657FF5247169510B"
+    },
+    {
+      "group": 4,
+      "old": "resources/ambient_bird.tres",
+      "new": "data/ambient/ambient_bird.tres",
+      "original_sha256": "3DFBC778C62A05C0F77B4275B40BA3E522078E7C7A213CEC544B7FEBAB28FBA4"
+    },
+    {
+      "group": 4,
+      "old": "resources/ambient_rat.tres",
+      "new": "data/ambient/ambient_rat.tres",
+      "original_sha256": "949968D26C552E0296967C09FF5E96A36EF4E41A9AB6664A0128A1F5B3CAC0E4"
+    },
+    {
+      "group": 4,
+      "old": "resources/example_npc_dialogue.tres",
+      "new": "data/dialogue/example_npc_dialogue.tres",
+      "original_sha256": "34B26A4CBC96864BB0B9F5AF28BB767F06FAFC23D6A50CDFEB54390329B4ADE1"
+    },
+    {
+      "group": 4,
+      "old": "resources/intelligence/catalog.tres",
+      "new": "data/intelligence/catalog.tres",
+      "original_sha256": "3F8E08B76436B7239CE803251ADA42C0503C0CAD1F802942024D18DEC57D772B"
+    },
+    {
+      "group": 4,
+      "old": "resources/intelligence/mini_city_map.tres",
+      "new": "data/intelligence/maps/mini_city_map.tres",
+      "original_sha256": "9642AB177889BD0B3F77656D7FBEBB5E544E48DE98DD01D3BD40218EECFF26D1"
+    },
+    {
+      "group": 4,
+      "old": "resources/intelligence/darven_voss.tres",
+      "new": "data/intelligence/targets/darven_voss/darven_voss.tres",
+      "original_sha256": "9F2645F6958992AE78AD3EB8ED21D508500A0D4FEC97344C4F1F3282F3AA8B5A"
+    },
+    {
+      "group": 4,
+      "old": "resources/intelligence/voss_field_profile.tres",
+      "new": "data/intelligence/targets/darven_voss/voss_field_profile.tres",
+      "original_sha256": "9500061B5087ED7B04D00F6B37AB5E10ABF84BB8FDBC490515F8E8A33D8B640C"
+    },
+    {
+      "group": 4,
+      "old": "resources/intelligence/voss_field_location.tres",
+      "new": "data/intelligence/targets/darven_voss/voss_field_location.tres",
+      "original_sha256": "A385760B9BA6E197938D16065C37EC7A5E2401F40478CDC3080E40662E938BE3"
+    },
+    {
+      "group": 4,
+      "old": "resources/intelligence/voss_field_tactics.tres",
+      "new": "data/intelligence/targets/darven_voss/voss_field_tactics.tres",
+      "original_sha256": "F56CC1E713A5778E6AD2A48B30C2297DF1E0F1FF33A2382F78371755D55E979A"
+    },
+    {
+      "group": 4,
+      "old": "resources/intelligence/voss_identity.tres",
+      "new": "data/intelligence/clues/voss_identity.tres",
+      "original_sha256": "6D23BF62FE5F2ECEA549865A982B019C8C8F406F025F6A02489E24ECD134E837"
+    },
+    {
+      "group": 4,
+      "old": "resources/intelligence/voss_location.tres",
+      "new": "data/intelligence/clues/voss_location.tres",
+      "original_sha256": "1548016252EF904EDDD4166BA8378423419B11B72EAA8DA58E38D54B48706204"
+    },
+    {
+      "group": 4,
+      "old": "resources/intelligence/voss_tactical.tres",
+      "new": "data/intelligence/clues/voss_tactical.tres",
+      "original_sha256": "51EF04BA101BFA6F9194883AA57776434DDE70A9C31CB7797A1F68CB280A5040"
+    },
+    {
+      "group": 4,
+      "old": "resources/intelligence/identity_rewards.tres",
+      "new": "data/enemies/rewards/identity_rewards.tres",
+      "original_sha256": "6EEFD43FFCCE70781FB6805EBB66F479066E5ECAEC2A4B00C58DE3A87410062D"
+    },
+    {
+      "group": 4,
+      "old": "resources/intelligence/location_rewards.tres",
+      "new": "data/enemies/rewards/location_rewards.tres",
+      "original_sha256": "7403969292D10BE2BC8A55F75AAFBC550C5EA628516E350CACF6F59E01FCC2CC"
+    },
+    {
+      "group": 4,
+      "old": "resources/intelligence/tactical_rewards.tres",
+      "new": "data/enemies/rewards/tactical_rewards.tres",
+      "original_sha256": "8BBB56DEB30073F8198AFF03769BCF91CC61ED7CBBC15578AF6BCC80FC9294AD"
+    },
+    {
+      "group": 4,
+      "old": "resources/physics/normal_world_surface.tres",
+      "new": "data/physics/normal_world_surface.tres",
+      "original_sha256": "DB438CFA1FCD8D70415370BEC3E4121C507EB168E104AB1A457C4ECF800DA4DF"
+    },
+    {
+      "group": 4,
+      "old": "resources/physics/normal_movable_prop.tres",
+      "new": "data/physics/normal_movable_prop.tres",
+      "original_sha256": "FD39B1234E7E90A88284D9EC83923C209B83E924ECB0DE650C1B23DD3D9C3108"
+    },
+    {
+      "group": 5,
+      "old": "assets/knight_mouse.glb",
+      "new": "assets/3d/characters/knight_mouse/knight_mouse.glb",
+      "original_sha256": "2AEC7ECA7AA4527A5FD9CD5122B7E25E0CC1090499F3CC6FD8AA0F87F3128B48"
+    },
+    {
+      "group": 5,
+      "old": "assets/knight_mouse_0.png",
+      "new": "assets/textures/characters/knight_mouse/knight_mouse_0.png",
+      "original_sha256": "15D79F438E0B30E983BF236EED82AB67B7FAB1F2E9A7CED99954DFAA1F5B3AA6"
+    },
+    {
+      "group": 5,
+      "old": "assets/knight_mouse_1.png",
+      "new": "assets/textures/characters/knight_mouse/knight_mouse_1.png",
+      "original_sha256": "6D9139AD4B4A0E487A311369E0561BE2ABA2F99AFBD908F39DD0B2A62F5C8564"
+    },
+    {
+      "group": 5,
+      "old": "assets/knight_mouse_2.png",
+      "new": "assets/textures/characters/knight_mouse/knight_mouse_2.png",
+      "original_sha256": "A699AC780B7B6A24439E16EFCF02BBEB7309EB561F0C0DDD8FEEECD9617C168C"
+    },
+    {
+      "group": 5,
+      "old": "assets/P_Player.glb",
+      "new": "assets/3d/characters/player/p_player.glb",
+      "original_sha256": "433052028A9F2DDFD053B2F90B0284DE9EA07B7450447BC1A5FD95C140FFEDF2"
+    },
+    {
+      "group": 5,
+      "old": "assets/P_Sword.glb",
+      "new": "assets/3d/weapons/sword/p_sword.glb",
+      "original_sha256": "B5F4387BA00103264378A84AD7463C7498460418E02A76BC84065BC5303E1696"
+    },
+    {
+      "group": 5,
+      "old": "assets/P_Shield.glb",
+      "new": "assets/3d/props/shield/p_shield.glb",
+      "original_sha256": "304DF9CF650E3E4BBC9DDE41D69DE2ACC9AF0707B34582604EB3897109A5023C"
+    },
+    {
+      "group": 5,
+      "old": "assets/P_Potion.glb",
+      "new": "assets/3d/props/potion/p_potion.glb",
+      "original_sha256": "C2E425726D24597C6F1227F13FE3EAA5122AE58959FC165B50B2F7E05C1B1B4D"
+    },
+    {
+      "group": 5,
+      "old": "assets/P_Pot.glb",
+      "new": "assets/3d/props/pot/p_pot.glb",
+      "original_sha256": "E6DC26B1A8BFDFFCE45011A2FB05262DFEBCA8272C9A59E1AEF538004987840F"
+    },
+    {
+      "group": 5,
+      "old": "assets/P_House.glb",
+      "new": "assets/3d/environment/house/p_house.glb",
+      "original_sha256": "D0924153EBDCFE6182F55E1FDF2F62637F7B2BE11F7B6B83371C10EF675B8F84"
+    },
+    {
+      "group": 5,
+      "old": "assets/SP_Wooden_Shield.png",
+      "new": "assets/2d/icons/items/wooden_shield/sp_wooden_shield.png",
+      "original_sha256": "31EFEAE1CEC6D282A70D98C82F57C082EA0945E8660E9B8C83FF5C95F56CE95C"
+    },
+    {
+      "group": 5,
+      "old": "resources/sword.svg",
+      "new": "assets/2d/icons/weapons/sword.svg",
+      "original_sha256": "40252F07DFA1D0B79A4F18AD34E1F52C69A2789A5D90F0735377552929898C4B"
+    },
+    {
+      "group": 5,
+      "old": "resources/club.svg",
+      "new": "assets/2d/icons/weapons/club.svg",
+      "original_sha256": "6C1C9178A20AAFC7E3B4CE32FD0D690F7B67EC5295AA92186C7E1B20F039D2D6"
+    },
+    {
+      "group": 5,
+      "old": "resources/greatsword.svg",
+      "new": "assets/2d/icons/weapons/greatsword.svg",
+      "original_sha256": "E455CE2FC97C1FF1DF99AD66C7FDE25F5769EB5EED26EE0E53C72FB6D7521728"
+    },
+    {
+      "group": 5,
+      "old": "resources/bow.svg",
+      "new": "assets/2d/icons/weapons/bow.svg",
+      "original_sha256": "0CE3DF093B62B27AEE51AF241B4E2D25D3CAEF67A4CEEB53E79DF255A4390D9E"
+    },
+    {
+      "group": 5,
+      "old": "resources/belt.svg",
+      "new": "assets/2d/icons/items/belt.svg",
+      "original_sha256": "0E85347193E7244583C115F6F36E16641674AED02C32A050675B6E9732C05AA7"
+    },
+    {
+      "group": 5,
+      "old": "resources/boots.svg",
+      "new": "assets/2d/icons/items/boots.svg",
+      "original_sha256": "C72407E1D9C201CB53986ED5F0297E4333FB20E5ECF76B5A604890D0E6809049"
+    },
+    {
+      "group": 5,
+      "old": "resources/chest_armor.svg",
+      "new": "assets/2d/icons/items/chest_armor.svg",
+      "original_sha256": "47C2C1A2A1AFD5BD847E6D4E5D9EAE84BBFE2F62366D9A9550F9430350424BEF"
+    },
+    {
+      "group": 5,
+      "old": "resources/gloves.svg",
+      "new": "assets/2d/icons/items/gloves.svg",
+      "original_sha256": "3DDFEF24B002F129D987B716266DE7627658485286FB02BF239F390D3CC3B9C1"
+    },
+    {
+      "group": 5,
+      "old": "resources/helmet.svg",
+      "new": "assets/2d/icons/items/helmet.svg",
+      "original_sha256": "874813DB74408AC74C49113FF60B6167A6014C2A40D9D7596307C90523A55554"
+    },
+    {
+      "group": 5,
+      "old": "resources/quiver.svg",
+      "new": "assets/2d/icons/items/quiver.svg",
+      "original_sha256": "55A098E2C63983C6EF1CFA32C04BF3B7CA8A14A81C8F19464A6D2B562EB84E62"
+    },
+    {
+      "group": 5,
+      "old": "resources/trinket_a.svg",
+      "new": "assets/2d/icons/items/trinket_a.svg",
+      "original_sha256": "000542659193DD7572BA44645B3995704250BB6EEFA56ACC75BAFBFEFFD82AC9"
+    },
+    {
+      "group": 5,
+      "old": "resources/trinket_b.svg",
+      "new": "assets/2d/icons/items/trinket_b.svg",
+      "original_sha256": "441BB2EECAE703E3CAFDE9103F4AA37F9C5178677928C83DB93C1560B760598A"
+    },
+    {
+      "group": 5,
+      "old": "resources/red_item/red_item.svg",
+      "new": "assets/2d/icons/prototype/red_item.svg",
+      "original_sha256": "663A81053BBF853BDEF50CFE8F7186E7E1F1658A77A1228D0CD6C42B964C9377"
+    },
+    {
+      "group": 5,
+      "old": "resources/blue_item/blue_item.svg",
+      "new": "assets/2d/icons/prototype/blue_item.svg",
+      "original_sha256": "A497A6098371F4CA115AF13D3A582BC1CBC86273FB19B70161ABCEE360DB26A5"
+    },
+    {
+      "group": 5,
+      "old": "resources/intelligence/voss.svg",
+      "new": "assets/2d/icons/intelligence/voss.svg",
+      "original_sha256": "81101032564DB4051EBDF5BB1FC5ACC5F5C09E44FCA71E2C08814C4957566836"
+    },
+    {
+      "group": 5,
+      "old": "resources/Butler-Free-Med.otf",
+      "new": "assets/fonts/butler/butler_free_med.otf",
+      "original_sha256": "B915E5BACA9B021EE42BD46EF447BF6ECAE4C7DBDF3BA12D4230593C12F1ADB9"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Dark/texture_01.png",
+      "new": "assets/textures/greybox/dark/texture_01.png",
+      "original_sha256": "07E28D7A86396FA4F1D7C43040F8E57E2374F6FA35B02BC48E70F9CCD4041C1A"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Dark/texture_02.png",
+      "new": "assets/textures/greybox/dark/texture_02.png",
+      "original_sha256": "1FEDC9BD7CA804D1543900DFE2A8DDB3C98A5367BAAB5230ACBADC0F337438D6"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Dark/texture_03.png",
+      "new": "assets/textures/greybox/dark/texture_03.png",
+      "original_sha256": "E188004C88831E2446D77F7AEC6B222516A08AC0EF9947CA56CEDFD897D2D44A"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Dark/texture_04.png",
+      "new": "assets/textures/greybox/dark/texture_04.png",
+      "original_sha256": "DBE2F5B4B9527CEC8D95E1221BD1E29C76690A99E09D01B89FC518D893E412E3"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Dark/texture_05.png",
+      "new": "assets/textures/greybox/dark/texture_05.png",
+      "original_sha256": "5F54C65814E1F35AB744C0B84B810C22E886019F0FECC308EFC1514B7B50CAA9"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Dark/texture_06.png",
+      "new": "assets/textures/greybox/dark/texture_06.png",
+      "original_sha256": "A96D3B723FE47F5D1BD0D5F2207C16755D5A4A568A22DF86C6D88F243D413A68"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Dark/texture_07.png",
+      "new": "assets/textures/greybox/dark/texture_07.png",
+      "original_sha256": "5549F24C2758E5C151E386B21AE5BF547D045B796F69551C82E9CCC5974E22CC"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Dark/texture_08.png",
+      "new": "assets/textures/greybox/dark/texture_08.png",
+      "original_sha256": "31853441A32D26821D55B08D821304F0CCE70FDF1B9BD308082132BE89DF6DC0"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Dark/texture_09.png",
+      "new": "assets/textures/greybox/dark/texture_09.png",
+      "original_sha256": "BA6E578414E5713FB70797204DC445D2FFF11B0672BDF6B2001890385526A8C0"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Dark/texture_10.png",
+      "new": "assets/textures/greybox/dark/texture_10.png",
+      "original_sha256": "314398E77D1DFA1586B8AC08181F8CE00D7BD90E24B8E755ECF7F0E9A869E9BB"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Dark/texture_11.png",
+      "new": "assets/textures/greybox/dark/texture_11.png",
+      "original_sha256": "A1BDB8059B5939367CAD693C4AEF3043D744600FB3D155E45884D7F7EC634924"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Dark/texture_12.png",
+      "new": "assets/textures/greybox/dark/texture_12.png",
+      "original_sha256": "1A8F40DF05FF6ADCD152F0753AC5FD2A0A3CDA3176D0732F63683E55E0F3073A"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Dark/texture_13.png",
+      "new": "assets/textures/greybox/dark/texture_13.png",
+      "original_sha256": "2B85643DE9A053F8AEA5B8692FD750A5A949E709C168304A965C436BD4A1D9D7"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Green/texture_01.png",
+      "new": "assets/textures/greybox/green/texture_01.png",
+      "original_sha256": "ECBA61E1D5E9ACD605CEC1724F5C902BF599146E94B09B053B428B63C4EC2951"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Green/texture_02.png",
+      "new": "assets/textures/greybox/green/texture_02.png",
+      "original_sha256": "1309DA8552E484F14D478AC0346212DAD810AC73D23CCDE401D8B25C183B311C"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Green/texture_03.png",
+      "new": "assets/textures/greybox/green/texture_03.png",
+      "original_sha256": "D150BE820736EA50358DE171FF650FF514770FF0093E3BF67BE400F4B97BDE22"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Green/texture_04.png",
+      "new": "assets/textures/greybox/green/texture_04.png",
+      "original_sha256": "E8DA3B07480E9289DF8BADDE045DC57271BB4AFE36537C34AF90C25501B2B3DC"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Green/texture_05.png",
+      "new": "assets/textures/greybox/green/texture_05.png",
+      "original_sha256": "57EE6C0DC46C0DCF5F1DDB1D16558646E1023942EBB7CF19CFC7200B122A57C6"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Green/texture_06.png",
+      "new": "assets/textures/greybox/green/texture_06.png",
+      "original_sha256": "F2683EB0C6858E366079C7E8F146A7DC2BC2757B8F27C10D897A68DB7B0E0817"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Green/texture_07.png",
+      "new": "assets/textures/greybox/green/texture_07.png",
+      "original_sha256": "7E9DCF4D6E4A5DFAE1CA44A2396216193F52AF31273FF22A61F6BA35FCAB8B72"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Green/texture_08.png",
+      "new": "assets/textures/greybox/green/texture_08.png",
+      "original_sha256": "DDF268B8D4F30B61083B062B9104ABD2FF6C3474C7816CB258EF764F5426AA12"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Green/texture_09.png",
+      "new": "assets/textures/greybox/green/texture_09.png",
+      "original_sha256": "7E836F838F702D32233EAABF478BC94F0BB6B5E64F5505F31978E858D353F6E9"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Green/texture_10.png",
+      "new": "assets/textures/greybox/green/texture_10.png",
+      "original_sha256": "49437BD26818D73E55AEF23B26A625A7AA273731C787515F8FCBFFD6275F5CBF"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Green/texture_11.png",
+      "new": "assets/textures/greybox/green/texture_11.png",
+      "original_sha256": "62FDF8D029989AC0436E35C242A498FE10287975BFBB8FF14FEFF63DB8E3D409"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Green/texture_12.png",
+      "new": "assets/textures/greybox/green/texture_12.png",
+      "original_sha256": "92F070361E09507A281BC550DB0147D764D9D51DB4581970F2A827BB84239BC6"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Green/texture_13.png",
+      "new": "assets/textures/greybox/green/texture_13.png",
+      "original_sha256": "1607AC0A68D67B312C7272517B276A0D3D01F65A8B6B45BD0998008F2A8B6939"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Light/texture_01.png",
+      "new": "assets/textures/greybox/light/texture_01.png",
+      "original_sha256": "2E16ED21BEACFE2F47F9D2E8A71CAE2551D5E68701A80FEAD36C2E86CC7063E3"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Light/texture_02.png",
+      "new": "assets/textures/greybox/light/texture_02.png",
+      "original_sha256": "72BB9B3CB2743DE3F0EABA2188C931370085572E627168821310008F46DAFCCD"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Light/texture_03.png",
+      "new": "assets/textures/greybox/light/texture_03.png",
+      "original_sha256": "32C1E75BAD6D7AB59F1FAA65D669CCAFE66D4B157BEC5BFDC992C37C52D72A28"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Light/texture_04.png",
+      "new": "assets/textures/greybox/light/texture_04.png",
+      "original_sha256": "3050E6DCCC0C578B68F8D8DFF02F9440BCBC96A39A7D8550E45F21EE0C855390"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Light/texture_05.png",
+      "new": "assets/textures/greybox/light/texture_05.png",
+      "original_sha256": "B124D28FC248CE53AE10D6FFF85C27C8737EBE74D852E0070DF7CC90B9A2A4ED"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Light/texture_06.png",
+      "new": "assets/textures/greybox/light/texture_06.png",
+      "original_sha256": "0BBF0BF3177290112A415F06BE4D57AF1B32D5BE363C4BA3A107D85810762D52"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Light/texture_07.png",
+      "new": "assets/textures/greybox/light/texture_07.png",
+      "original_sha256": "AFFE82474A9AE58431F3E7F576B91CD9DEC0479D1D89AB161D719A72C2C644AA"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Light/texture_08.png",
+      "new": "assets/textures/greybox/light/texture_08.png",
+      "original_sha256": "2B54E92DAF59829059BEDF18BEAEFC3678A67228EA56A5ED1A390C3D24C89205"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Light/texture_09.png",
+      "new": "assets/textures/greybox/light/texture_09.png",
+      "original_sha256": "F208B03219019669319199F3FCFC098DAD157305E683623184EEA6D0EC56ADAF"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Light/texture_10.png",
+      "new": "assets/textures/greybox/light/texture_10.png",
+      "original_sha256": "CB926C559B59358788E97835A3F69BCE07FCBB9EFB903FEF6895C399BECDDBF5"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Light/texture_11.png",
+      "new": "assets/textures/greybox/light/texture_11.png",
+      "original_sha256": "362D3BBD152DF4ED93A32D03AB63FC71B0504897BCD899088336028F3E11937F"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Light/texture_12.png",
+      "new": "assets/textures/greybox/light/texture_12.png",
+      "original_sha256": "61BD7C9AE03001B84E62E615FC3BB66AFD4DA8968000431135A6F8030987BC29"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Light/texture_13.png",
+      "new": "assets/textures/greybox/light/texture_13.png",
+      "original_sha256": "63A39BD7BF5305454946A80FAAAA0A6DE43F3EEB1AEFCD33A8D1B8D8A62EB8E0"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Orange/texture_01.png",
+      "new": "assets/textures/greybox/orange/texture_01.png",
+      "original_sha256": "6861A9F94E45B96E2571A823AFAD4B6001B6D00F820019128B34CE659A3356CA"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Orange/texture_02.png",
+      "new": "assets/textures/greybox/orange/texture_02.png",
+      "original_sha256": "2FEB000E710018176B7DF63AB6A7A19E38EF9B22B2367267C7758B88A6E044F8"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Orange/texture_03.png",
+      "new": "assets/textures/greybox/orange/texture_03.png",
+      "original_sha256": "7C402C773EBE370EA614F0E57CD1590FA35EADDA3478754842E19CFADB915681"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Orange/texture_04.png",
+      "new": "assets/textures/greybox/orange/texture_04.png",
+      "original_sha256": "62BF5C42CFF321A74FBC1EC1D9EF263F80DFBE6185E2B373E40C755A3921C35D"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Orange/texture_05.png",
+      "new": "assets/textures/greybox/orange/texture_05.png",
+      "original_sha256": "3415A948E1D9265C531620180FD574E2AEFED0BA1EE807DF20B08C2A1CE4C5BD"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Orange/texture_06.png",
+      "new": "assets/textures/greybox/orange/texture_06.png",
+      "original_sha256": "CF741BC644A903ABF42C2689023146AF1D6CEF80A5F81A38507E47CB98D89F2D"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Orange/texture_07.png",
+      "new": "assets/textures/greybox/orange/texture_07.png",
+      "original_sha256": "FF6FD42A8638C5090B1C14E5569CB19F103C248F1EBEE89F5F617996A0272C32"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Orange/texture_08.png",
+      "new": "assets/textures/greybox/orange/texture_08.png",
+      "original_sha256": "2034F7B3CFAE837E3AFA395941D4C45CD925686608F7DD15993FEAE9DC4F0771"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Orange/texture_09.png",
+      "new": "assets/textures/greybox/orange/texture_09.png",
+      "original_sha256": "FC00DBE4481BD536BA8E784A3171E9ABCD97AD42FDDFE931F1D8DF73CB9538B8"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Orange/texture_10.png",
+      "new": "assets/textures/greybox/orange/texture_10.png",
+      "original_sha256": "1EE1A205409A6A5F125035167F440AFAFF78B9B44773F3A22AC45371196311AB"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Orange/texture_11.png",
+      "new": "assets/textures/greybox/orange/texture_11.png",
+      "original_sha256": "EBA363A625B31AC675EFCE8F00B0E4B39E8BC9EDA6ECCB7EE93EE415A4A72B5F"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Orange/texture_12.png",
+      "new": "assets/textures/greybox/orange/texture_12.png",
+      "original_sha256": "E0EA3E3426AA809460B17FB899CF41DC8A85028824D43573F605A858032B38FF"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Orange/texture_13.png",
+      "new": "assets/textures/greybox/orange/texture_13.png",
+      "original_sha256": "D37CD18626854522B344F01AAA2B850EF6008A1B0CB90575A4606BC69A0C7700"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Purple/texture_01.png",
+      "new": "assets/textures/greybox/purple/texture_01.png",
+      "original_sha256": "0E0C2DFFF301D16919EC1C5F977DBAE4743F0C840AA11F1D255C2FEC3291159E"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Purple/texture_02.png",
+      "new": "assets/textures/greybox/purple/texture_02.png",
+      "original_sha256": "DF11F2F5A015670AA6C34B2D0C33BC50E72830460AEF8ECA6762B1AA911ED401"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Purple/texture_03.png",
+      "new": "assets/textures/greybox/purple/texture_03.png",
+      "original_sha256": "AD3FB848F7924D3AB82A4D2B44346030E979F68640DDB18ECB0E526814BEA8C6"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Purple/texture_04.png",
+      "new": "assets/textures/greybox/purple/texture_04.png",
+      "original_sha256": "0A195130E517022AC139EAAEDB633C027A369A8E76199E07E259078FBAB4302B"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Purple/texture_05.png",
+      "new": "assets/textures/greybox/purple/texture_05.png",
+      "original_sha256": "B527B80F719CBE5E1784555310BF33AD00A6B9EF653826AD896AA1EF6A724442"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Purple/texture_06.png",
+      "new": "assets/textures/greybox/purple/texture_06.png",
+      "original_sha256": "0C48B0452FAEC4E91019FD1F9A8B4B1B75A38DA0B1B9232D7E213AFF4569A6B5"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Purple/texture_07.png",
+      "new": "assets/textures/greybox/purple/texture_07.png",
+      "original_sha256": "BB6734C17F33BB3DB39F53F9387DE23A7C397DB29C7F4A17FE222B8B1588685E"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Purple/texture_08.png",
+      "new": "assets/textures/greybox/purple/texture_08.png",
+      "original_sha256": "5E98DFB71A74B1E6C62645BA99A13BAA0B7AD53E2C4007CA04B26011E609F73E"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Purple/texture_09.png",
+      "new": "assets/textures/greybox/purple/texture_09.png",
+      "original_sha256": "71A0FF68F911CC1A747CADCBC8CDB34051B33D3FC010158E0E38A8EA3524ADB8"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Purple/texture_10.png",
+      "new": "assets/textures/greybox/purple/texture_10.png",
+      "original_sha256": "DE66D623AB7510CA84D1A9A3355644B6486C091FD4BC716205023FB6E129405C"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Purple/texture_11.png",
+      "new": "assets/textures/greybox/purple/texture_11.png",
+      "original_sha256": "DA0F8160B220BABA532D54B61FB7AA27C0FBDE202F53E825993309EDF072F492"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Purple/texture_12.png",
+      "new": "assets/textures/greybox/purple/texture_12.png",
+      "original_sha256": "B0BFB5139690EBE3207491EECD4F0C97ACA30BAB7A37273A26C925D05536610D"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Purple/texture_13.png",
+      "new": "assets/textures/greybox/purple/texture_13.png",
+      "original_sha256": "5069A5DB1238708392B998FFD9D98D2BA4190FED7560177E96B7EB0DCFF157FA"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Red/texture_01.png",
+      "new": "assets/textures/greybox/red/texture_01.png",
+      "original_sha256": "376FA10639295E4649880461B8C0487614B93DE83D9BF660E2815ACBFFE2C03D"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Red/texture_02.png",
+      "new": "assets/textures/greybox/red/texture_02.png",
+      "original_sha256": "72CB3DCE19670E31F6E653C2C063B0606294ACA4DD94CFED990CD9012F3F88DD"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Red/texture_03.png",
+      "new": "assets/textures/greybox/red/texture_03.png",
+      "original_sha256": "22C305804FE5C0F05EB97E731094B1DA68D6346E2D35E2DC44ED725691C527B2"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Red/texture_04.png",
+      "new": "assets/textures/greybox/red/texture_04.png",
+      "original_sha256": "4211C3E125703A2F4E5311B49BB5DB293149461EDE9D7550F375732651371E35"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Red/texture_05.png",
+      "new": "assets/textures/greybox/red/texture_05.png",
+      "original_sha256": "3D1623BABFE3B2FFF285AA9529211934FFDE276871CCC4AF9324F81C0C2C70F2"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Red/texture_06.png",
+      "new": "assets/textures/greybox/red/texture_06.png",
+      "original_sha256": "C38B63008E3D6BF205BA81378748593565A9A3646C927233C11EA2613A0B945E"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Red/texture_07.png",
+      "new": "assets/textures/greybox/red/texture_07.png",
+      "original_sha256": "73FAB0758B96811F1AD8807EE5141E846AEAE6C5045B4EE8D6AC28FB43864418"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Red/texture_08.png",
+      "new": "assets/textures/greybox/red/texture_08.png",
+      "original_sha256": "F7DE189579137F9460D24ECE1E95CDFFCD4CE802D116BEA6DDFEF7B40147D24F"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Red/texture_09.png",
+      "new": "assets/textures/greybox/red/texture_09.png",
+      "original_sha256": "EA5CB9D23107280E47E062A60DFF4237DC4BD6501750B25475A8570142ED90AC"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Red/texture_10.png",
+      "new": "assets/textures/greybox/red/texture_10.png",
+      "original_sha256": "5CEB3561EA6E17585C95BA2770243D8252D4C5C5BF74DE1F53EEC88513D55779"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Red/texture_11.png",
+      "new": "assets/textures/greybox/red/texture_11.png",
+      "original_sha256": "91CB37B5C66FF5C81A91751CB6A8E47BBF5A764E81A2384BBAEBFEB92B3F55D2"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Red/texture_12.png",
+      "new": "assets/textures/greybox/red/texture_12.png",
+      "original_sha256": "D05F3CAA05B4370298AC178C370240AF140138AF827F69A6E03EEB1C167495BF"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Red/texture_13.png",
+      "new": "assets/textures/greybox/red/texture_13.png",
+      "original_sha256": "B916792CF2ADC19A4BC4F36B4E5226C1AB026B7C0C9E9DE846FCBD7793A7B235"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Txt9.tres",
+      "new": "assets/materials/greybox/txt9.tres",
+      "original_sha256": "DC92E7548679AC91E4B125A820347D8F8407B89661F63BC29D1DB68F2EC900A0"
+    },
+    {
+      "group": 5,
+      "old": "resources/greybox_materials/floor.tres",
+      "new": "assets/materials/greybox/floor.tres",
+      "original_sha256": "06579CDA4D9D9835E2B502970187CFC0224CCD1E8475C4C67151A498A44A5320"
+    },
+    {
+      "group": 5,
+      "old": "resources/greybox_materials/structure.tres",
+      "new": "assets/materials/greybox/structure.tres",
+      "original_sha256": "8F09B0010DE948DE4D8EB59AFC18EE2A39AFD9999234BBE3B060511E71012EE2"
+    },
+    {
+      "group": 5,
+      "old": "resources/greybox_materials/traversal.tres",
+      "new": "assets/materials/greybox/traversal.tres",
+      "original_sha256": "118326A19DD11C8AF242E6BEB5ECA840DA0018FDE314F6323465C4EEC4A1B198"
+    },
+    {
+      "group": 6,
+      "old": "scenes/player_health_hud.tscn",
+      "new": "ui/hud/health/player_health_hud.tscn",
+      "original_sha256": "93559956DF18A9F55CC16ACFCE6F0AD8B1A70360EE123FECB172C353E923056C"
+    },
+    {
+      "group": 6,
+      "old": "scripts/player_health_hud.gd",
+      "new": "ui/hud/health/player_health_hud.gd",
+      "original_sha256": "6B8C7C1040B771CE6D76E7AA524501D595E8A68437C8B68DC2136E19062DC9B2"
+    },
+    {
+      "group": 6,
+      "old": "scenes/allomancy_reserve_hud.tscn",
+      "new": "ui/hud/allomancy/allomancy_reserve_hud.tscn",
+      "original_sha256": "AE7EF50FA3084E8B010F427A7A699CA40E3B1CE7CD795FFF587FF1378AAB0792"
+    },
+    {
+      "group": 6,
+      "old": "scripts/allomancy_reserve_hud.gd",
+      "new": "ui/hud/allomancy/allomancy_reserve_hud.gd",
+      "original_sha256": "A7C524C971FFF0C9E70EBD794DEDE1AF300612CDE4092CA683BBB4A6CD3515E4"
+    },
+    {
+      "group": 6,
+      "old": "scripts/metal_wheel.gd",
+      "new": "ui/hud/allomancy/metal_wheel.gd",
+      "original_sha256": "7D0D8A590F01A0F8D94664FAD181BC356C4A047EDCCAACC698E801D068D86A8E"
+    },
+    {
+      "group": 6,
+      "old": "scenes/equipment_feedback.tscn",
+      "new": "ui/hud/equipment/equipment_feedback.tscn",
+      "original_sha256": "B3BF5CD4F129BD1AC8E0789BBA59572ADAC030C446BB104078E854827B3D81BA"
+    },
+    {
+      "group": 6,
+      "old": "scripts/equipment_feedback.gd",
+      "new": "ui/hud/equipment/equipment_feedback.gd",
+      "original_sha256": "43EDA8DB15F12A46DB0179203657C2AC658DB73A0EEA9B802F45D88C25AD3242"
+    },
+    {
+      "group": 6,
+      "old": "scripts/combat_feedback.gd",
+      "new": "ui/hud/combat/combat_feedback.gd",
+      "original_sha256": "5D66407E2476184D02AF355C2B9BEE3074E772BE534F6325436CF252CBCEAA99"
+    },
+    {
+      "group": 6,
+      "old": "scripts/playtest_target_feedback.gd",
+      "new": "ui/hud/targeting/playtest_target_feedback.gd",
+      "original_sha256": "0E2C92FDC6D3193BCA901048324BF267468169C186C687E6D48A8887ED03DFB0"
+    },
+    {
+      "group": 6,
+      "old": "scripts/inventory_ui.gd",
+      "new": "ui/inventory/inventory_ui.gd",
+      "original_sha256": "7B6DDFBFAD55EF9A4E26337C8798A7F264E4E44E0A0EA77172F20009492B989A"
+    },
+    {
+      "group": 6,
+      "old": "scripts/inventory_grid.gd",
+      "new": "ui/inventory/inventory_grid.gd",
+      "original_sha256": "2B6D30EFA67E5D231A0C599FE9F5E4182B328189FD9147C8E6369716BF265274"
+    },
+    {
+      "group": 6,
+      "old": "scripts/inventory_cursor.gd",
+      "new": "ui/inventory/inventory_cursor.gd",
+      "original_sha256": "C38EBABED838425B57A05E3287EC5307FA9C840EF31FBB5F83C25BD67E9E1472"
+    },
+    {
+      "group": 6,
+      "old": "scripts/equipment_slot_ui.gd",
+      "new": "ui/inventory/equipment_slot_ui.gd",
+      "original_sha256": "982BF9D33C3E4F0FC62AA5ECA51BADE982DCE4F8FA55E0B1908AD735EA4D4B92"
+    },
+    {
+      "group": 6,
+      "old": "scripts/intelligence_view.gd",
+      "new": "ui/intelligence/intelligence_view.gd",
+      "original_sha256": "896703CC8858D80603CB89DA0CCFD94E83056FE72D2BB9C30366B3FAB7EF6080"
+    },
+    {
+      "group": 6,
+      "old": "scenes/dialogue_panel.tscn",
+      "new": "ui/dialogue/dialogue_panel.tscn",
+      "original_sha256": "6FDA675B5099CDC31DD03E30C990AD7D75C174B2C9A4BD7974B75180E3F32211"
+    },
+    {
+      "group": 6,
+      "old": "scripts/dialogue_panel.gd",
+      "new": "ui/dialogue/dialogue_panel.gd",
+      "original_sha256": "F33C6C9218606D1EA1E0CA4A973A27746DA4908873E8054F965F039C0AA0C3DE"
+    },
+    {
+      "group": 6,
+      "old": "scripts/playtest_menu_view.gd",
+      "new": "ui/menus/playtest_menu_view.gd",
+      "original_sha256": "CD355F0BB68B3BA7EA1897A47806447A5F9F6AFD8B9387B5A9952A0373F47CC6"
+    },
+    {
+      "group": 6,
+      "old": "scripts/controls_settings_view.gd",
+      "new": "ui/menus/controls_settings_view.gd",
+      "original_sha256": "57B3277C72DE6D2AC2BD69D3EF768E1013D66F2B03A7469307AB120B6BE06DFE"
+    },
+    {
+      "group": 6,
+      "old": "scripts/input_hint.gd",
+      "new": "ui/common/input_hint.gd",
+      "original_sha256": "3089FA1B670F2D6F70C17AF15B71C09B045B7B2A40C0F552A53806C03DF88389"
+    },
+    {
+      "group": 6,
+      "old": "scripts/dialogue_data.gd",
+      "new": "systems/dialogue/dialogue_data.gd",
+      "original_sha256": "3F73792EEB4616AC8483D7AB3A91B51633FD3D94C0750DE44B2BFAB60AE13422"
+    },
+    {
+      "group": 6,
+      "old": "scripts/intelligence_catalog.gd",
+      "new": "systems/intelligence/intelligence_catalog.gd",
+      "original_sha256": "82247E72BC67D5F4BCED23F45C62A67D728491231DB6312182262A57C35F2C7C"
+    },
+    {
+      "group": 6,
+      "old": "scripts/intelligence_clue_definition.gd",
+      "new": "systems/intelligence/intelligence_clue_definition.gd",
+      "original_sha256": "FEA612B8F5977139FCF66CD16AC58A7B613D936C77B0556DA697C0411A50FEE4"
+    },
+    {
+      "group": 6,
+      "old": "scripts/intelligence_knowledge.gd",
+      "new": "systems/intelligence/intelligence_knowledge.gd",
+      "original_sha256": "DD297F6760650D2E580F9F2AF130372E704855DF28698ACFF253C5893163CDE4"
+    },
+    {
+      "group": 6,
+      "old": "scripts/intelligence_map_definition.gd",
+      "new": "systems/intelligence/intelligence_map_definition.gd",
+      "original_sha256": "1CAF140255F0AAF2479DA201F434FEAA5C606420EF4F52E0D18F47DC14A3A3EF"
+    },
+    {
+      "group": 6,
+      "old": "scripts/intelligence_region_definition.gd",
+      "new": "systems/intelligence/intelligence_region_definition.gd",
+      "original_sha256": "88E4C5A85B9C77F8CF28256F42933C292E791EDA8C3EB91AE372A5C3EB9EF15A"
+    },
+    {
+      "group": 6,
+      "old": "scripts/court_intel_field_definition.gd",
+      "new": "systems/intelligence/court_intel_field_definition.gd",
+      "original_sha256": "CD9B2B740B9C4464D5518CF9476E751543BEB14E3DD8F5928DD241775B55D2FA"
+    },
+    {
+      "group": 6,
+      "old": "scripts/court_target_definition.gd",
+      "new": "systems/intelligence/court_target_definition.gd",
+      "original_sha256": "E72837B18C27951562F23E33B8697B2807C8FA631AAAC1C369C9E7BE4F0540FC"
+    },
+    {
+      "group": 6,
+      "old": "scripts/dialogue_manager.gd",
+      "new": "autoload/dialogue_manager.gd",
+      "original_sha256": "5577B7D7BAB208ECD9E7D73C5DDA73BD9D9AF521D0DBEFB882D82C2ED8F75E48"
+    },
+    {
+      "group": 6,
+      "old": "scripts/gameplay_locks.gd",
+      "new": "autoload/gameplay_locks.gd",
+      "original_sha256": "06F8E9BD63C4E53C3FBD87F1C8812B731954B7BF01FFCBF04CF669F002383C2C"
+    },
+    {
+      "group": 6,
+      "old": "scripts/keybind_settings.gd",
+      "new": "autoload/keybind_settings.gd",
+      "original_sha256": "EF000B62460424EB0EEEDDE036F1596C59AA85D2EB062419C4DA41FDD63CF8DB"
+    },
+    {
+      "group": 6,
+      "old": "scripts/respawn_session.gd",
+      "new": "autoload/respawn_session.gd",
+      "original_sha256": "B46C5D3E53522ADE7F14DC1007DB7567C738C8A6FF47EED962B9EED1F1AF2177"
+    },
+    {
+      "group": 6,
+      "old": "scripts/playtest_settings.gd",
+      "new": "autoload/playtest_settings.gd",
+      "original_sha256": "A9153A2F5EB3BCAD2E0644DF4103A6A9E605845E727F5AEF15EC628D63EF6CAE"
+    },
+    {
+      "group": 6,
+      "old": "scenes/playtest_shell.tscn",
+      "new": "systems/session/playtest_shell.tscn",
+      "original_sha256": "9F0EEF456EFA697A64C90A2B9500D2EB29A65D04A4D3FB664598736094BA1C2C"
+    },
+    {
+      "group": 6,
+      "old": "scripts/playtest_shell.gd",
+      "new": "systems/session/playtest_shell.gd",
+      "original_sha256": "56F370D17F3F5B95C26AED4104157906858D1529EE2221E025CB407942810629"
+    },
+    {
+      "group": 6,
+      "old": "scripts/playtest_controls.gd",
+      "new": "systems/session/playtest_controls.gd",
+      "original_sha256": "2F20C116CA317B2916E4D2977BA0DD27806F6080618841ACD79101B119AB73B6"
+    },
+    {
+      "group": 7,
+      "old": "scenes/main.tscn",
+      "new": "world/levels/playtest_world/main.tscn",
+      "original_sha256": "98625659BEA27F3F30158A27418F8D54E9DC822E53BA97241FFABD9343F7717C"
+    },
+    {
+      "group": 7,
+      "old": "scenes/central_hub.tscn",
+      "new": "world/levels/central_hub/central_hub.tscn",
+      "original_sha256": "460D16F1BC2824E300F76D0344A2AB1BD9303458FB190FAD1C90C0B16C2ADF37"
+    },
+    {
+      "group": 7,
+      "old": "scenes/mini_city.tscn",
+      "new": "world/levels/mini_city/mini_city.tscn",
+      "original_sha256": "01BD642153A3B9E5A1D32CFA496689E0E1D9E51A0A9FABE2969B74136598D191"
+    },
+    {
+      "group": 7,
+      "old": "resources/mini_city_navigation.tres",
+      "new": "world/levels/mini_city/navigation/mini_city_navigation.tres",
+      "original_sha256": "5C247102A23CBF47EEEA9B5869B86773F5BC76399800FFB84E7EABAF4C41C5F2"
+    },
+    {
+      "group": 7,
+      "old": "scenes/rest_point.tscn",
+      "new": "world/interactables/rest_point/rest_point.tscn",
+      "original_sha256": "1269FC4782CD12480C4C1062CCCCDCDFCB64B2351DF60D0182424F49E0DA651E"
+    },
+    {
+      "group": 7,
+      "old": "scripts/rest_point.gd",
+      "new": "world/interactables/rest_point/rest_point.gd",
+      "original_sha256": "E944AE55C68A43F60285B4A003D4D6E361C9B51DC88D394A1AEA3A705C501A9C"
+    },
+    {
+      "group": 7,
+      "old": "scenes/checkpoint.tscn",
+      "new": "world/interactables/checkpoint/checkpoint.tscn",
+      "original_sha256": "C0C78AA41B831CF2643F93C507B810FD9EC2597CA802476996794883A021CC61"
+    },
+    {
+      "group": 7,
+      "old": "scripts/checkpoint.gd",
+      "new": "world/interactables/checkpoint/checkpoint.gd",
+      "original_sha256": "4E1192BBA013149B84A3D323833438ACC84290521DB791139DED212EA9B57EBF"
+    },
+    {
+      "group": 7,
+      "old": "scenes/parametric_ladder.tscn",
+      "new": "world/interactables/parametric_ladder/parametric_ladder.tscn",
+      "original_sha256": "F9C175E88A3E61E9F25B56D72D1F6A87DB139EE68A675DF44938E32E596EDE16"
+    },
+    {
+      "group": 7,
+      "old": "scripts/parametric_ladder.gd",
+      "new": "world/interactables/parametric_ladder/parametric_ladder.gd",
+      "original_sha256": "85B1D93224E45CA4FEA1D7464879706BCC92A5E07BA3D88E8EC7EB20083AFF55"
+    },
+    {
+      "group": 7,
+      "old": "scenes/world_item.tscn",
+      "new": "world/world_items/world_item.tscn",
+      "original_sha256": "A534EB9D67BBAD300AEE4CF17F3F054A34BFA651674B148A1E495D8741128B2E"
+    },
+    {
+      "group": 7,
+      "old": "scripts/world_item.gd",
+      "new": "world/world_items/world_item.gd",
+      "original_sha256": "7C58415F7EF1A6D01AC20F766736D99CD17B1EDCBD12F02B82D66BC553B3E167"
+    },
+    {
+      "group": 7,
+      "old": "scenes/world_loose_steel.tscn",
+      "new": "world/props/loose_steel/world_loose_steel.tscn",
+      "original_sha256": "D61C4ADBB06ABF81655A93F7B29C1F757C5E3AE818A2CEA86F96BF83120CC667"
+    },
+    {
+      "group": 7,
+      "old": "scripts/loose_metal_body.gd",
+      "new": "world/props/loose_steel/loose_metal_body.gd",
+      "original_sha256": "D126A52F67293A72663132A3353D8CFABFBFD8ABAE78C3BE61D00DB5FA6614D1"
+    },
+    {
+      "group": 7,
+      "old": "scenes/world_metal_rail.tscn",
+      "new": "world/props/metalwork/world_metal_rail.tscn",
+      "original_sha256": "72429C9B0B86F7F55A8F52BFF9EB42EBCE37F5AEF90F8FD1A76725152C5858C2"
+    },
+    {
+      "group": 7,
+      "old": "scenes/world_metal_signpost.tscn",
+      "new": "world/props/metalwork/world_metal_signpost.tscn",
+      "original_sha256": "64C96ECDAEDC56DF8CCED2F0BF4434F3F40186AFF884A7A63C8DF108B16B453E"
+    },
+    {
+      "group": 7,
+      "old": "scenes/encounter_freight_cart.tscn",
+      "new": "world/props/freight_cart/encounter_freight_cart.tscn",
+      "original_sha256": "1098E9EA454C8A73E650EE447164727179A8704C559CC882C11FDB3E5DEE80AB"
+    },
+    {
+      "group": 7,
+      "old": "scenes/greybox_block.tscn",
+      "new": "world/building_blocks/greybox_block.tscn",
+      "original_sha256": "AF0FD7936BF033DC34ACAB4BF475E22347C98B65E633881E7B748DE28E91C27D"
+    },
+    {
+      "group": 7,
+      "old": "scripts/greybox_block.gd",
+      "new": "world/building_blocks/greybox_block.gd",
+      "original_sha256": "5CBF58C273CEAAAF4FED1E63699C5A0F6500C089B773514C6894CF792137F6FF"
+    },
+    {
+      "group": 7,
+      "old": "scenes/ambient_creature_spawner.tscn",
+      "new": "world/ambience/ambient_creature_spawner.tscn",
+      "original_sha256": "3C311312F500E5A205878206F09F9A2E14CCDE051261AD3900A3CCDA0C4A8C3E"
+    },
+    {
+      "group": 7,
+      "old": "scripts/ambient_creature_spawner.gd",
+      "new": "world/ambience/ambient_creature_spawner.gd",
+      "original_sha256": "5B3D35E15B57CDFB37AB6711B995BB48EEB67181000DEFAD2BF9FC373D1E19D1"
+    },
+    {
+      "group": 8,
+      "old": "Levels/hathsin_pit/hathsin_pit.tscn",
+      "new": "world/levels/hathsin_pit/hathsin_pit.tscn",
+      "original_sha256": "BFF7FFB97F703EBA3FF21E87708C8D13E1E777C35F462A951A9AE1E8E7378B83"
+    },
+    {
+      "group": 8,
+      "old": "Levels/hathsin_pit/Depths.tscn",
+      "new": "world/levels/hathsin_pit/depths.tscn",
+      "original_sha256": "C21136F9E29DC6D75BCD23929E89B7EEA3D9F37C4B189B8D606429FFDFBD06F1"
+    },
+    {
+      "group": 8,
+      "old": "Levels/hathsin_pit/Entrance.tscn",
+      "new": "world/levels/hathsin_pit/entrance.tscn",
+      "original_sha256": "3F93AD1426AD56BB4D7FEC826E606875434ABDFE5B99ACD59C7B970959F1CF94"
+    },
+    {
+      "group": 8,
+      "old": "Levels/hathsin_pit/Quarters.tscn",
+      "new": "world/levels/hathsin_pit/quarters.tscn",
+      "original_sha256": "2F467C30773D51C0BE1DC6BF6F0ED05FA369ECF0B7E9F1E84E748F5FD89CBFB7"
+    },
+    {
+      "group": 8,
+      "old": "Levels/hathsin_pit/Shafts.tscn",
+      "new": "world/levels/hathsin_pit/shafts.tscn",
+      "original_sha256": "A94A468812AE34AF58B1CC2F6648852226B9389F0AE2381C625219678F2CE8C4"
+    },
+    {
+      "group": 9,
+      "old": "scenes/movement_lab.tscn",
+      "new": "dev/test_scenes/movement_lab/movement_lab.tscn",
+      "original_sha256": "62B7E7EC3DCAB2484AE1D34451172E07F1AB01B786F9978B56AE361121D0D416"
+    },
+    {
+      "group": 9,
+      "old": "scenes/traversal_course.tscn",
+      "new": "dev/test_scenes/traversal_course/traversal_course.tscn",
+      "original_sha256": "D48654ABC5065EB885DB262129F399F64231A156C1030B8B040A89495CB528B9"
+    },
+    {
+      "group": 9,
+      "old": "scenes/systems_workshop.tscn",
+      "new": "dev/test_scenes/systems_workshop/systems_workshop.tscn",
+      "original_sha256": "21188F069DD9D9B186324F3FBF36622014FD1AEC0287AD4FA58F0F7C75DACA14"
+    },
+    {
+      "group": 9,
+      "old": "scenes/prototype_environment.tscn",
+      "new": "dev/test_scenes/prototype_environment/prototype_environment.tscn",
+      "original_sha256": "7027DC976FFB20716E155A859395FCCFEE9C5364F9930AC8F2056B3E5A5AD353"
+    },
+    {
+      "group": 9,
+      "old": "scenes/semantic_combat_courtyard.tscn",
+      "new": "dev/test_scenes/semantic_combat_courtyard/semantic_combat_courtyard.tscn",
+      "original_sha256": "82B6A87D3225E1DC5F35C816DC98E4CC808431A26F1A15F74097B64F2E3F28F6"
+    },
+    {
+      "group": 9,
+      "old": "scripts/traversal_course.gd",
+      "new": "dev/test_scenes/traversal_course/traversal_course.gd",
+      "original_sha256": "B78439817267310EA73B15FCDFF56A33D13A0E5677E15E7CCD1DE74DAD97517F"
+    },
+    {
+      "group": 9,
+      "old": "scenes/allomancy_anchor.tscn",
+      "new": "dev/fixtures/allomancy/allomancy_anchor.tscn",
+      "original_sha256": "4BF5C39D0DE68A0B201C415C0ACE1655061A186C2DA74E1EE313FE5E292CB45A"
+    },
+    {
+      "group": 9,
+      "old": "scenes/allomancy_cart.tscn",
+      "new": "dev/fixtures/allomancy/allomancy_cart.tscn",
+      "original_sha256": "DF584716529FDE583ED6D76B7E985E91C7F9CB08FA89E2E72BCAA8F080940EB9"
+    },
+    {
+      "group": 9,
+      "old": "scenes/allomancy_heavy.tscn",
+      "new": "dev/fixtures/allomancy/allomancy_heavy.tscn",
+      "original_sha256": "2DD17C8813D65DAABD722C8F8D078F5DC8AA7F6D6222E6096EF8BAD21AC79E5E"
+    },
+    {
+      "group": 9,
+      "old": "scenes/allomancy_light.tscn",
+      "new": "dev/fixtures/allomancy/allomancy_light.tscn",
+      "original_sha256": "9E41D81CD9F946C060F6199303E4C80BD93201FD32E8788BCC44E635EA687267"
+    },
+    {
+      "group": 9,
+      "old": "scenes/allomancy_medium.tscn",
+      "new": "dev/fixtures/allomancy/allomancy_medium.tscn",
+      "original_sha256": "5AED2C02C4A100CAFA35542B673E4C29B1B7402EF0A706F9B01C4E6578279691"
+    },
+    {
+      "group": 9,
+      "old": "scenes/lab_anchor.tscn",
+      "new": "dev/fixtures/allomancy/lab_anchor.tscn",
+      "original_sha256": "3A27752D4A5BE59073C6CED70C202F8A1C1D37F52F15BD746FFAAB4C3E63E0BA"
+    },
+    {
+      "group": 9,
+      "old": "scenes/metal_refill_station.tscn",
+      "new": "dev/fixtures/allomancy/metal_refill_station.tscn",
+      "original_sha256": "70E87363054894541FE4CFC6F6577CBBFFFB09B8138C7ADDCF5E18C9B59D26CE"
+    },
+    {
+      "group": 9,
+      "old": "scripts/metal_refill_station.gd",
+      "new": "dev/fixtures/allomancy/metal_refill_station.gd",
+      "original_sha256": "E09F9E4888AB06729DC0DC07098471F6491448071C1B54C4E8B8C15CBBB5B819"
+    },
+    {
+      "group": 9,
+      "old": "scenes/test_interactable.tscn",
+      "new": "dev/fixtures/interaction/test_interactable.tscn",
+      "original_sha256": "B4AB6973F48F46ACC8D34720C9FAA9929CE785150D52314195484A39E417DE87"
+    },
+    {
+      "group": 9,
+      "old": "scripts/test_interactable.gd",
+      "new": "dev/fixtures/interaction/test_interactable.gd",
+      "original_sha256": "22743C1A7ABF8067775AD7B5167DC8CE021FCF37FB126CF0DFA4137C01C95077"
+    },
+    {
+      "group": 9,
+      "old": "scenes/workshop_item_supply.tscn",
+      "new": "dev/fixtures/inventory/workshop_item_supply.tscn",
+      "original_sha256": "B9E64E860EA1DE403EB8C06E08312AC0B0CA8045BE4A3C31191B050CAE0D3B5C"
+    },
+    {
+      "group": 9,
+      "old": "scripts/workshop_item_supply.gd",
+      "new": "dev/fixtures/inventory/workshop_item_supply.gd",
+      "original_sha256": "0B6D15122C62AF95EE84AEFE7C48F205DE00BEB4556B57FBDA915D035BCE7506"
+    },
+    {
+      "group": 9,
+      "old": "scenes/wooden_practice_dummy.tscn",
+      "new": "dev/fixtures/combat/wooden_practice_dummy.tscn",
+      "original_sha256": "537A8EBB767DC9DF65CEFED89EF04498A2A1EC4C0C5419904D57D2CDEB438724"
+    },
+    {
+      "group": 9,
+      "old": "resources/red_item/red_item.tres",
+      "new": "dev/data/items/red_item.tres",
+      "original_sha256": "CCE9F539C8B61B61E35E24F3858FF1B42E03CE38B14DE3EF49D482A3F590B96E"
+    },
+    {
+      "group": 9,
+      "old": "resources/blue_item/blue_item.tres",
+      "new": "dev/data/items/blue_item.tres",
+      "original_sha256": "89B6F1F95A85CB62837334FF4A841682A4346932F74DADC445679DCE6CC5AABA"
+    },
+    {
+      "group": 9,
+      "old": "resources/testing_zone_navigation.tres",
+      "new": "dev/data/navigation/testing_zone_navigation.tres",
+      "original_sha256": "4A1E067BF1241FFDA6078EA126257B3EAC29D6EECF9F06A949A1D17C7442B776"
+    },
+    {
+      "group": 9,
+      "old": "scripts/allomancy_debug.gd",
+      "new": "dev/debug/allomancy_debug.gd",
+      "original_sha256": "180BB593F1C4B8834A3673212E14B0AD314A3A4545CD5672D395BDF6DDB7F3A6"
+    },
+    {
+      "group": 9,
+      "old": "scripts/stat_debug_display.gd",
+      "new": "dev/debug/stat_debug_display.gd",
+      "original_sha256": "3D97C84018C0DC4C07E8B2D4BA244CEC117A3AC928096C992392E7A8B0A5264E"
+    },
+    {
+      "group": 9,
+      "old": "tools/bake_mini_city.gd",
+      "new": "dev/tools/bake_mini_city.gd",
+      "original_sha256": "C04C104B0CC96C6C2C49016C9D0B81319F9D3CEA5869555D53DDA660D0DEE3FE"
+    },
+    {
+      "group": 9,
+      "old": "tools/validate_metal_consumable_resources.gd",
+      "new": "dev/tools/validate_metal_consumable_resources.gd",
+      "original_sha256": "432820FA0A4136A9D2618DD9C573786B5571074F049A209638AB39F056D8EBA2"
+    },
+    {
+      "group": 9,
+      "old": "tools/validate_recovery_resources.gd",
+      "new": "dev/tools/validate_recovery_resources.gd",
+      "original_sha256": "5C47BD0BDDE607CFE4995173D61B750480BEFA480142ADAE7BEEDE261D2EE82F"
+    },
+    {
+      "group": 1,
+      "old": "scripts/health_component.gd.uid",
+      "new": "components/health/health_component.gd.uid",
+      "original_sha256": "0504D43D6A7CBC9C345E8734DA6281DE1F2E291FDA433B31F6EEBC383A402C4F"
+    },
+    {
+      "group": 1,
+      "old": "scripts/hurtbox_component.gd.uid",
+      "new": "components/damage/hurtbox_component.gd.uid",
+      "original_sha256": "2CBE5E914EE30967D17515F4BAF0DC83C11BA030EC2F8DD5C6BEFE0D7FA58E86"
+    },
+    {
+      "group": 1,
+      "old": "scripts/damage_source_component.gd.uid",
+      "new": "components/damage/damage_source_component.gd.uid",
+      "original_sha256": "A4A2430D8D35C1B9CC200E0CC3689B0CB90E645BD46EAAAD3900428827AF668D"
+    },
+    {
+      "group": 1,
+      "old": "scripts/interaction_component.gd.uid",
+      "new": "components/interaction/interaction_component.gd.uid",
+      "original_sha256": "E1BD62F50C74898DD2C5548BF2356EC359D699C765FA16B8B7AAE72B4C954ABA"
+    },
+    {
+      "group": 1,
+      "old": "scripts/inventory_component.gd.uid",
+      "new": "components/inventory/inventory_component.gd.uid",
+      "original_sha256": "F3C7E1874E8CAF56DED87C8152C13F70401F58F3FFD84DE609959922E94D4BA2"
+    },
+    {
+      "group": 1,
+      "old": "scripts/inventory_dropper.gd.uid",
+      "new": "components/inventory/inventory_dropper.gd.uid",
+      "original_sha256": "0F298C3977D0BB0A4C54C538D00CFA86C6FB45EECF7A2F0CB30142D93E120085"
+    },
+    {
+      "group": 1,
+      "old": "scripts/equipment_component.gd.uid",
+      "new": "components/equipment/equipment_component.gd.uid",
+      "original_sha256": "10EFD5FD70C8093CBDBE78A7430CE653A8051D5EEA319C48ADD92C31567FC52A"
+    },
+    {
+      "group": 1,
+      "old": "scripts/equipment_profile.gd.uid",
+      "new": "components/equipment/equipment_profile.gd.uid",
+      "original_sha256": "DCD4035B405908906BBF122F1B59FF8DDD1418B845FE812BFB68C7B7CB2F96A0"
+    },
+    {
+      "group": 1,
+      "old": "scripts/equipment_slots.gd.uid",
+      "new": "components/equipment/equipment_slots.gd.uid",
+      "original_sha256": "8A40C0FC5EC1D34A566762688E321C1461A58A139BD2026D8A1226D52A3257C5"
+    },
+    {
+      "group": 1,
+      "old": "scripts/equipment_stats_bridge.gd.uid",
+      "new": "components/equipment/equipment_stats_bridge.gd.uid",
+      "original_sha256": "FE475DD89FF1680F4B9874CDFAB8963B719CAC0359B98B4E574F4B8FDBBF487C"
+    },
+    {
+      "group": 1,
+      "old": "scripts/stat_component.gd.uid",
+      "new": "components/stats/stat_component.gd.uid",
+      "original_sha256": "61F6F2C465FB2A27C36501112EAABD66FBB2BA2E1E88C0625CEFC9A1AFBFAD43"
+    },
+    {
+      "group": 1,
+      "old": "scripts/stat_ids.gd.uid",
+      "new": "components/stats/stat_ids.gd.uid",
+      "original_sha256": "960DCF78949FB33470876E0A133AF1763C06E88240D4BAC39145B7B7D05F6786"
+    },
+    {
+      "group": 1,
+      "old": "scripts/stat_modifier.gd.uid",
+      "new": "components/stats/stat_modifier.gd.uid",
+      "original_sha256": "64075F5C93C7371D6C37EE0DCB8B16756B16AFA4B43E45653414D66067EEA201"
+    },
+    {
+      "group": 1,
+      "old": "scripts/combat_reaction_component.gd.uid",
+      "new": "components/combat/combat_reaction_component.gd.uid",
+      "original_sha256": "FFA37A15EF941A5DE49F005108D2E33129211FB278E4F9459C8423CCD7C3608E"
+    },
+    {
+      "group": 2,
+      "old": "scripts/item_definition.gd.uid",
+      "new": "items/base/item_definition.gd.uid",
+      "original_sha256": "2653C873A89B2797FC0B214D46118179084314A8A09E02D9E71F80965183DFF4"
+    },
+    {
+      "group": 2,
+      "old": "scripts/item_material_definition.gd.uid",
+      "new": "items/base/item_material_definition.gd.uid",
+      "original_sha256": "14A91859D51056480D1C003C92DC7160D6952E1F359ED524C78343B1EA0932C2"
+    },
+    {
+      "group": 2,
+      "old": "scripts/item_stack.gd.uid",
+      "new": "items/base/item_stack.gd.uid",
+      "original_sha256": "65C3575DCF9A92FD2E65A52976A86AC70815A76727FFB7D74481A4528F10F7F4"
+    },
+    {
+      "group": 2,
+      "old": "scripts/consumable_definition.gd.uid",
+      "new": "items/consumables/consumable_definition.gd.uid",
+      "original_sha256": "FE5DC465EF582BA028F8CD0C1CBE83871DB0CF3EE1F3F2F1BA142771F1D907D1"
+    },
+    {
+      "group": 2,
+      "old": "scripts/healing_consumable_definition.gd.uid",
+      "new": "items/consumables/healing_consumable_definition.gd.uid",
+      "original_sha256": "4E2561C74FBACAADF1ABFD828DAFED1EACAD319F5AC3D888343B2D9CF348946D"
+    },
+    {
+      "group": 2,
+      "old": "scripts/metal_consumable_definition.gd.uid",
+      "new": "items/consumables/metal_consumable_definition.gd.uid",
+      "original_sha256": "BF486B3A32532F2BEEE736612933583F52A0A8E20D861C1525BD53583BF6AC96"
+    },
+    {
+      "group": 2,
+      "old": "scripts/combat_item_definition.gd.uid",
+      "new": "weapons/base/combat_item_definition.gd.uid",
+      "original_sha256": "D5FEA9697E1A10590E60B11C82DA71124BE1353C77862B389819D789B98891F5"
+    },
+    {
+      "group": 2,
+      "old": "scripts/combat_item_runtime.gd.uid",
+      "new": "weapons/base/combat_item_runtime.gd.uid",
+      "original_sha256": "7883A166CFEEDE9A6288C8DA48FFA996C52D493B32540B49ADFBC442CE3CB608"
+    },
+    {
+      "group": 2,
+      "old": "scripts/weapon_attack_definition.gd.uid",
+      "new": "weapons/base/weapon_attack_definition.gd.uid",
+      "original_sha256": "0C1622EFD7B571E66B4CE3CDB30294224CA7124644EDAF7451108B4FAD2F040E"
+    },
+    {
+      "group": 2,
+      "old": "scripts/weapon_moveset.gd.uid",
+      "new": "weapons/base/weapon_moveset.gd.uid",
+      "original_sha256": "56A331C218B5B1DF4E564FB11153DEC22DD8E32A8C580FB188678EBA78DD23D2"
+    },
+    {
+      "group": 2,
+      "old": "scripts/weapon_swing_presentation.gd.uid",
+      "new": "weapons/base/weapon_swing_presentation.gd.uid",
+      "original_sha256": "E928391229C0E5B57CD3924D77328416706564DAE47873D7B7FC054A9009C4D5"
+    },
+    {
+      "group": 2,
+      "old": "scripts/melee_weapon.gd.uid",
+      "new": "weapons/melee/base/melee_weapon.gd.uid",
+      "original_sha256": "327CE94203793249E63BAF8038740C5DFA17A3BE6221DBBA2CE799C7287B6ECA"
+    },
+    {
+      "group": 2,
+      "old": "scripts/melee_weapon_definition.gd.uid",
+      "new": "weapons/melee/base/melee_weapon_definition.gd.uid",
+      "original_sha256": "F9AC181190D8A07C42D810C0DA7D9C7A8FD235B1984BF1051607569214CD9FEE"
+    },
+    {
+      "group": 2,
+      "old": "scripts/projectile.gd.uid",
+      "new": "weapons/ranged/projectiles/projectile.gd.uid",
+      "original_sha256": "F82E50BCBF3AE185D5D11C21C5F9980F2A7F4FA3BD92FA68EF35988493C9D519"
+    },
+    {
+      "group": 2,
+      "old": "scripts/ability_component.gd.uid",
+      "new": "abilities/base/ability_component.gd.uid",
+      "original_sha256": "631837CB5D7C5C80D9198CFB882EDD4253E4D11952262D0AF220D6E11B5C47B7"
+    },
+    {
+      "group": 2,
+      "old": "scripts/ability_definition.gd.uid",
+      "new": "abilities/base/ability_definition.gd.uid",
+      "original_sha256": "C2A4219DA1A1223725B1FA8276D98F962AA1ED0603E7BAE392673192F57790AE"
+    },
+    {
+      "group": 2,
+      "old": "scripts/allomancy_component.gd.uid",
+      "new": "abilities/allomancy/shared/allomancy_component.gd.uid",
+      "original_sha256": "A928F63CD982F556021695CE6D4B0C28FFB381EFE486FCF51415B57AB405F0E0"
+    },
+    {
+      "group": 2,
+      "old": "scripts/allomancy_controller.gd.uid",
+      "new": "abilities/allomancy/shared/allomancy_controller.gd.uid",
+      "original_sha256": "B4217FDB7ED296FF4FA5A948E7DF3D6F6411141361489F4D16F129DBB7CE39E6"
+    },
+    {
+      "group": 2,
+      "old": "scripts/allomancy_interaction.gd.uid",
+      "new": "abilities/allomancy/shared/allomancy_interaction.gd.uid",
+      "original_sha256": "722641FA8D826D50ACB65E2CCE91A9719B46F1689D1A2543AD2AF2B500C66D97"
+    },
+    {
+      "group": 2,
+      "old": "scripts/allomancy_targeting.gd.uid",
+      "new": "abilities/allomancy/shared/allomancy_targeting.gd.uid",
+      "original_sha256": "86C01FB31A38208DAA0D7E5D4833636889777A7B692DBFCBAAD484A7ADC317DF"
+    },
+    {
+      "group": 2,
+      "old": "scripts/allomancy_tuning.gd.uid",
+      "new": "abilities/allomancy/shared/allomancy_tuning.gd.uid",
+      "original_sha256": "885618661D3E4FEF417E11F1EE287F5B010D96A1EC55A7EEE9409FFB748A0519"
+    },
+    {
+      "group": 2,
+      "old": "scripts/allomancy_physical_response.gd.uid",
+      "new": "abilities/allomancy/shared/allomancy_physical_response.gd.uid",
+      "original_sha256": "CC5BE77026B018CC38EF1F68F22CA130193FDE4CE27B966BC95BA32AC10175F1"
+    },
+    {
+      "group": 2,
+      "old": "scripts/metal_definition.gd.uid",
+      "new": "abilities/allomancy/shared/metal_definition.gd.uid",
+      "original_sha256": "F65413AB414970B316FC0B00821CF90B6020AD95C2E8A48642644199CF033502"
+    },
+    {
+      "group": 2,
+      "old": "scripts/iron_pull.gd.uid",
+      "new": "abilities/allomancy/iron/iron_pull.gd.uid",
+      "original_sha256": "EC684F264545D18BDB177B5300BCC63E69AD172B9C15FFF79EBF21ECF6056AA8"
+    },
+    {
+      "group": 2,
+      "old": "scripts/loose_metal_capture.gd.uid",
+      "new": "abilities/allomancy/iron/loose_metal_capture.gd.uid",
+      "original_sha256": "DEB7AA75993B678A734AB6C3613B56010646002CB7B237E8241924D8A1C1455F"
+    },
+    {
+      "group": 2,
+      "old": "scripts/steel_push.gd.uid",
+      "new": "abilities/allomancy/steel/steel_push.gd.uid",
+      "original_sha256": "FD5A1862CDD6AD7D8A67DBD8E351B09C43211B6C16754CD3206FF5748BC2080F"
+    },
+    {
+      "group": 2,
+      "old": "scripts/pewter_burn.gd.uid",
+      "new": "abilities/allomancy/pewter/pewter_burn.gd.uid",
+      "original_sha256": "1BFB4BD29C4E41257E71A5FADACD1060E073A0B66FADA6E091AE2AB9DE0A1604"
+    },
+    {
+      "group": 2,
+      "old": "scripts/metal_tether_component.gd.uid",
+      "new": "abilities/allomancy/metal_tether/metal_tether_component.gd.uid",
+      "original_sha256": "44521FD3C8AC598E291E2DB5D092AB57CCC1D77FD0EC9B2543FA83F3966F7A4F"
+    },
+    {
+      "group": 2,
+      "old": "scripts/physical_force_response.gd.uid",
+      "new": "systems/physics/physical_force_response.gd.uid",
+      "original_sha256": "C7C100C7505E4B34ADF7E6FF41B8704DB8AEED28EDC924026F4BD2C2A0DF2BA9"
+    },
+    {
+      "group": 3,
+      "old": "scripts/player.gd.uid",
+      "new": "characters/player/player.gd.uid",
+      "original_sha256": "A75E166ADC265E53972E3D7545990A08D16F2E7E9B4823C1599B6767282494F5"
+    },
+    {
+      "group": 3,
+      "old": "scripts/player_combat.gd.uid",
+      "new": "characters/player/player_combat.gd.uid",
+      "original_sha256": "E461B17327FD08C0E5B9B508985AD023C0DA2ADCE804FBB78ACE3327464CC0AC"
+    },
+    {
+      "group": 3,
+      "old": "scripts/player_death.gd.uid",
+      "new": "characters/player/player_death.gd.uid",
+      "original_sha256": "86729468CA3B85227CF410C643FB862B0AAD11ECF6D1504B4898B682E1F375FC"
+    },
+    {
+      "group": 3,
+      "old": "scripts/player_recovery.gd.uid",
+      "new": "characters/player/player_recovery.gd.uid",
+      "original_sha256": "7E44EA76D066B0E87790A71BBBA05E0EFF0491F746E891E85ABB4C7D8DE1E59F"
+    },
+    {
+      "group": 3,
+      "old": "scripts/contextual_input.gd.uid",
+      "new": "characters/player/contextual_input.gd.uid",
+      "original_sha256": "F5A2D54D2E4C30850CA5DDF5550D1EAE08EF113EB98C77602D0144A8B6704F46"
+    },
+    {
+      "group": 3,
+      "old": "scripts/enemy.gd.uid",
+      "new": "characters/enemies/base/enemy.gd.uid",
+      "original_sha256": "79901E1EBE26E0AE4367641AE5EC27B77CAFD5CAA0EDCAE78434AFA73837103F"
+    },
+    {
+      "group": 3,
+      "old": "scripts/enemy_sensing.gd.uid",
+      "new": "characters/enemies/base/enemy_sensing.gd.uid",
+      "original_sha256": "204EC81A36B5F5B347C33A413C952AC09785C585F049423291333F4B8FCC99DF"
+    },
+    {
+      "group": 3,
+      "old": "scripts/enemy_movement.gd.uid",
+      "new": "characters/enemies/base/enemy_movement.gd.uid",
+      "original_sha256": "E554CB9D203D69844CDAEE90AC02BCC0D7453A03E83539DBBF79FD89A9D58008"
+    },
+    {
+      "group": 3,
+      "old": "scripts/enemy_melee_attack.gd.uid",
+      "new": "characters/enemies/base/enemy_melee_attack.gd.uid",
+      "original_sha256": "280E9DA43E1CADB764D18FB219840C2CD954427677BC768004C40A1E7450DAE7"
+    },
+    {
+      "group": 3,
+      "old": "scripts/enemy_melee_behaviour.gd.uid",
+      "new": "characters/enemies/base/enemy_melee_behaviour.gd.uid",
+      "original_sha256": "F714338F387D14D51E766207E101709A9FBE38F813BFA1124EE8808E34FC8D2B"
+    },
+    {
+      "group": 3,
+      "old": "scripts/enemy_ranged_attack.gd.uid",
+      "new": "characters/enemies/base/enemy_ranged_attack.gd.uid",
+      "original_sha256": "6D011B08EBD2441994B3960473E7778CB521A6DADEC951746A2BC4D00B8551A1"
+    },
+    {
+      "group": 3,
+      "old": "scripts/enemy_ranged_behaviour.gd.uid",
+      "new": "characters/enemies/base/enemy_ranged_behaviour.gd.uid",
+      "original_sha256": "DEB0068BECC247746D5A20D5CACFCCE14C1246A5888A538FE4B4D206EB3553DB"
+    },
+    {
+      "group": 3,
+      "old": "scripts/committed_enemy_attack.gd.uid",
+      "new": "characters/enemies/base/committed_enemy_attack.gd.uid",
+      "original_sha256": "A4E70F81D2A60ED435E80A4B80A5094C14BE56A19CCEB821AAE75E6085A74F30"
+    },
+    {
+      "group": 3,
+      "old": "scripts/enemy_death_fade.gd.uid",
+      "new": "characters/enemies/base/enemy_death_fade.gd.uid",
+      "original_sha256": "0DA6EDD13CD1560B31A8D2B3A5DEDACDB38064CA3471DCBCB8A083851475D64F"
+    },
+    {
+      "group": 3,
+      "old": "scripts/enemy_rewards.gd.uid",
+      "new": "characters/enemies/base/enemy_rewards.gd.uid",
+      "original_sha256": "6B6A74E20CA657C327B8C5A4E37B122E757C27B7F72A9F5C2335897DE187FBD9"
+    },
+    {
+      "group": 3,
+      "old": "scripts/enemy_reward_definition.gd.uid",
+      "new": "characters/enemies/base/enemy_reward_definition.gd.uid",
+      "original_sha256": "614DD6481544D18A556E550DE13BA6F184D058B3E65D69734BF20BFA8C8BC271"
+    },
+    {
+      "group": 3,
+      "old": "scripts/npc.gd.uid",
+      "new": "characters/npcs/base/npc.gd.uid",
+      "original_sha256": "880DBD8707DA59299204693C4646924CA665CAA665DDDEB9F686629D600F54D7"
+    },
+    {
+      "group": 3,
+      "old": "scripts/ambient_creature.gd.uid",
+      "new": "characters/ambient/base/ambient_creature.gd.uid",
+      "original_sha256": "37492693384F3ACCFCCF576E9741F8FE14ABD1D163F37C5FE04B2AB77B472DFC"
+    },
+    {
+      "group": 3,
+      "old": "scripts/ambient_creature_definition.gd.uid",
+      "new": "characters/ambient/base/ambient_creature_definition.gd.uid",
+      "original_sha256": "9842527A88C6437822866DA12C2F6E9A30082E42804268AD9EF0A09C979F39CB"
+    },
+    {
+      "group": 5,
+      "old": "assets/knight_mouse.glb.import",
+      "new": "assets/3d/characters/knight_mouse/knight_mouse.glb.import",
+      "original_sha256": "C655BE3F814FC36AA673A9C2E6036CF91E6DE7A36C1DCB98C48CD9D5B944F042"
+    },
+    {
+      "group": 5,
+      "old": "assets/knight_mouse_0.png.import",
+      "new": "assets/textures/characters/knight_mouse/knight_mouse_0.png.import",
+      "original_sha256": "74348D45BF64CC0AFBD0DFCC66EF828CD69C0B98DBD851A32ABEAB3DFC06A871"
+    },
+    {
+      "group": 5,
+      "old": "assets/knight_mouse_1.png.import",
+      "new": "assets/textures/characters/knight_mouse/knight_mouse_1.png.import",
+      "original_sha256": "0DA249F68B56CF2D6117AA3B605C3F018B206A9A2A49B40AB6AED6646D4751C0"
+    },
+    {
+      "group": 5,
+      "old": "assets/knight_mouse_2.png.import",
+      "new": "assets/textures/characters/knight_mouse/knight_mouse_2.png.import",
+      "original_sha256": "93795032B898FCB3E57298612EAEA9F6E3CAD910FE2E03F272D7E33E76BAC8C2"
+    },
+    {
+      "group": 5,
+      "old": "assets/P_Player.glb.import",
+      "new": "assets/3d/characters/player/p_player.glb.import",
+      "original_sha256": "E2E2C774DD0CC5F9DA39F462AC9BD7413FA347F4AF1275EF7464FE3EADF863F1"
+    },
+    {
+      "group": 5,
+      "old": "assets/P_Sword.glb.import",
+      "new": "assets/3d/weapons/sword/p_sword.glb.import",
+      "original_sha256": "1065FC4AF45BEADF943F79C90737E494343F7B1B60B1828A554E5E6BE1C7E93A"
+    },
+    {
+      "group": 5,
+      "old": "assets/P_Shield.glb.import",
+      "new": "assets/3d/props/shield/p_shield.glb.import",
+      "original_sha256": "084696A5AB607B70355D234D6E76117BF0C2534E1840A175576BD79736657F5B"
+    },
+    {
+      "group": 5,
+      "old": "assets/P_Potion.glb.import",
+      "new": "assets/3d/props/potion/p_potion.glb.import",
+      "original_sha256": "E1449192B2C029C256FBC367E1A296221B6D10DEE4C5C8A024FB26B50D48224E"
+    },
+    {
+      "group": 5,
+      "old": "assets/P_Pot.glb.import",
+      "new": "assets/3d/props/pot/p_pot.glb.import",
+      "original_sha256": "25256B3E3908C069BB0EA4650F054E1A3EF67255443EEAA633DFF5768C4C9DC1"
+    },
+    {
+      "group": 5,
+      "old": "assets/P_House.glb.import",
+      "new": "assets/3d/environment/house/p_house.glb.import",
+      "original_sha256": "99CD00EE40BD603BCF27E9F6187786D51B80F6B11FCDF957521C2809A0437EA8"
+    },
+    {
+      "group": 5,
+      "old": "assets/SP_Wooden_Shield.png.import",
+      "new": "assets/2d/icons/items/wooden_shield/sp_wooden_shield.png.import",
+      "original_sha256": "4272FE864FF73BE6587DAB543AEA81B0F22089664317A37918A3CB34DE210DB3"
+    },
+    {
+      "group": 5,
+      "old": "resources/sword.svg.import",
+      "new": "assets/2d/icons/weapons/sword.svg.import",
+      "original_sha256": "E5D195CA5A526A88403C68F1118415803AFE05114B6E8ED516A006FE677A38EE"
+    },
+    {
+      "group": 5,
+      "old": "resources/club.svg.import",
+      "new": "assets/2d/icons/weapons/club.svg.import",
+      "original_sha256": "61FF769F57D05170420835D9CFE51FE2E25CEFB4C207A56FFDBD24062D4798E1"
+    },
+    {
+      "group": 5,
+      "old": "resources/greatsword.svg.import",
+      "new": "assets/2d/icons/weapons/greatsword.svg.import",
+      "original_sha256": "D089CE254369DA1D1F6D23E314E84DC140C2C85C029C042F71D2462D9C480188"
+    },
+    {
+      "group": 5,
+      "old": "resources/bow.svg.import",
+      "new": "assets/2d/icons/weapons/bow.svg.import",
+      "original_sha256": "1BE20F037C96D81DCB463D840719145BFD1FA145390C57349FE694EA9511C5D1"
+    },
+    {
+      "group": 5,
+      "old": "resources/belt.svg.import",
+      "new": "assets/2d/icons/items/belt.svg.import",
+      "original_sha256": "F18ED4BE498DE3E9E5B98CC3564D70F87BC50B59DBDDF0BAB69A5266362C7167"
+    },
+    {
+      "group": 5,
+      "old": "resources/boots.svg.import",
+      "new": "assets/2d/icons/items/boots.svg.import",
+      "original_sha256": "8E6B74B1F7412FA092966A94FF4796021EF0970E31446A21B33745427DFD224C"
+    },
+    {
+      "group": 5,
+      "old": "resources/chest_armor.svg.import",
+      "new": "assets/2d/icons/items/chest_armor.svg.import",
+      "original_sha256": "4A4F660D9306F32234DB0340001D7D745E6A751F0EA0AFFBB7FCBA9B98609636"
+    },
+    {
+      "group": 5,
+      "old": "resources/gloves.svg.import",
+      "new": "assets/2d/icons/items/gloves.svg.import",
+      "original_sha256": "BD53BBF31FC4AD3B6A4C45B1A9DF6DC753F6E53D6A85C2F67971EB5841EF02CE"
+    },
+    {
+      "group": 5,
+      "old": "resources/helmet.svg.import",
+      "new": "assets/2d/icons/items/helmet.svg.import",
+      "original_sha256": "A0E1A5CD6681EA0E7412B92F626B898B9CEBC543C566B3881DBF8BE63E4B8AB2"
+    },
+    {
+      "group": 5,
+      "old": "resources/quiver.svg.import",
+      "new": "assets/2d/icons/items/quiver.svg.import",
+      "original_sha256": "642C85D2771099B4AE0382569974AFD26A4331A30CAFDF6A211DAF4932995280"
+    },
+    {
+      "group": 5,
+      "old": "resources/trinket_a.svg.import",
+      "new": "assets/2d/icons/items/trinket_a.svg.import",
+      "original_sha256": "1374D1D0D7B08A995EFEE05ADB708AF50F93AC5713A84088CE5757B5EF0C2B8D"
+    },
+    {
+      "group": 5,
+      "old": "resources/trinket_b.svg.import",
+      "new": "assets/2d/icons/items/trinket_b.svg.import",
+      "original_sha256": "8E20632B72BF7665DBA006F5133E25046942806E843546E11ABB34C5F778A13D"
+    },
+    {
+      "group": 5,
+      "old": "resources/red_item/red_item.svg.import",
+      "new": "assets/2d/icons/prototype/red_item.svg.import",
+      "original_sha256": "E8864F20CD69BA8A9D190D41F9459D308ABE8438AD529C944A6D6D3796A42B1B"
+    },
+    {
+      "group": 5,
+      "old": "resources/blue_item/blue_item.svg.import",
+      "new": "assets/2d/icons/prototype/blue_item.svg.import",
+      "original_sha256": "085653800A0A2E4412DAF78047DC7435453ACCB54752461663DCB32B8F9A52AB"
+    },
+    {
+      "group": 5,
+      "old": "resources/intelligence/voss.svg.import",
+      "new": "assets/2d/icons/intelligence/voss.svg.import",
+      "original_sha256": "AB8F952FEE64C0331207484753B17736B14931D6BD567B4AEBE1EBE6C7091C63"
+    },
+    {
+      "group": 5,
+      "old": "resources/Butler-Free-Med.otf.import",
+      "new": "assets/fonts/butler/butler_free_med.otf.import",
+      "original_sha256": "F45EB490D86E2B488C0208F0D40360708DDD209358180E55ADE581B3AB81AC35"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Dark/texture_01.png.import",
+      "new": "assets/textures/greybox/dark/texture_01.png.import",
+      "original_sha256": "CAFF6CE98FC56EB2F0CAEB26F97F01C8AAC715E181F6DC4EBCA87347C3E5B0C4"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Dark/texture_02.png.import",
+      "new": "assets/textures/greybox/dark/texture_02.png.import",
+      "original_sha256": "3EEE2C610AF9BA4FCBC960A6794B65F42D893644ECBC16031A86B99942CA607D"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Dark/texture_03.png.import",
+      "new": "assets/textures/greybox/dark/texture_03.png.import",
+      "original_sha256": "C2F49404E9450367AD00271BD2DA50C3EF3FEDBD21F9B62870CFB554C84857EA"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Dark/texture_04.png.import",
+      "new": "assets/textures/greybox/dark/texture_04.png.import",
+      "original_sha256": "B94598E7103E00402645EC717C9F96892F7B70624B7D9D473E54462380938A55"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Dark/texture_05.png.import",
+      "new": "assets/textures/greybox/dark/texture_05.png.import",
+      "original_sha256": "30788B847C2A73F283F11F838EBDD3223AA1059A1E76B906126DB3CEE3B4EE86"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Dark/texture_06.png.import",
+      "new": "assets/textures/greybox/dark/texture_06.png.import",
+      "original_sha256": "A5B1D8F2755592C2F1AE0AEDE06D8C881ABE880E86EB0293DDC3E3456F0349D3"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Dark/texture_07.png.import",
+      "new": "assets/textures/greybox/dark/texture_07.png.import",
+      "original_sha256": "694B5B8DDBE6A4F1B8B0E76D9215F7D433961713952C0C470A6B6E7FE563112D"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Dark/texture_08.png.import",
+      "new": "assets/textures/greybox/dark/texture_08.png.import",
+      "original_sha256": "76E6624547E8897B785882036161F6476D687899727F65B2FC651F6C63A03E84"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Dark/texture_09.png.import",
+      "new": "assets/textures/greybox/dark/texture_09.png.import",
+      "original_sha256": "4E3C0EBC903ACF34FCC81DAA7A2CE2CFAEE0AE65FD23E32335E2E7C05EC92DC9"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Dark/texture_10.png.import",
+      "new": "assets/textures/greybox/dark/texture_10.png.import",
+      "original_sha256": "D32413DEAE1CCE3D03E5CF6B4E5EF46260E52A50A0162CB0D2D12E24167E9C2E"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Dark/texture_11.png.import",
+      "new": "assets/textures/greybox/dark/texture_11.png.import",
+      "original_sha256": "E9BB6151DE8977DEF3F481857386E69BA9AE17380B2D8CC940A82D592F2D5684"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Dark/texture_12.png.import",
+      "new": "assets/textures/greybox/dark/texture_12.png.import",
+      "original_sha256": "21010FF6658CBC509F23F194386B6F2E4A3B781C6ACCB9805DCB88170C42C62C"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Dark/texture_13.png.import",
+      "new": "assets/textures/greybox/dark/texture_13.png.import",
+      "original_sha256": "C6080D29591A378DB933BC468FC4C52AC7103797E9371851DD966FE98CCDD354"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Green/texture_01.png.import",
+      "new": "assets/textures/greybox/green/texture_01.png.import",
+      "original_sha256": "138AF3DC1717A900DFE66FCD1CE74E561A98AD09DAB71096C75D5002FF0FFE0A"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Green/texture_02.png.import",
+      "new": "assets/textures/greybox/green/texture_02.png.import",
+      "original_sha256": "3D6D113E76395D3602CEA29555ADE53851ADA730B970757B1D87A5E151BA0F19"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Green/texture_03.png.import",
+      "new": "assets/textures/greybox/green/texture_03.png.import",
+      "original_sha256": "3DB94E46F9F932314F5CA409A876C4F1093E01A78B8C9827ED5E0A4A43362864"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Green/texture_04.png.import",
+      "new": "assets/textures/greybox/green/texture_04.png.import",
+      "original_sha256": "B7F28ED573D2AC486162E3B1D37540ED02D0F191AAF76CB83F361A2964414AF7"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Green/texture_05.png.import",
+      "new": "assets/textures/greybox/green/texture_05.png.import",
+      "original_sha256": "865EA6B8CE51019FF40BA05AD817B679C10D1098C905B7FB05832D9EA42B1468"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Green/texture_06.png.import",
+      "new": "assets/textures/greybox/green/texture_06.png.import",
+      "original_sha256": "107C901B9902592A6AEE0311BE01956A7298FBA009FCBF160A8168C95AB48D4B"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Green/texture_07.png.import",
+      "new": "assets/textures/greybox/green/texture_07.png.import",
+      "original_sha256": "1633B06D671996B869E2BAFCB12C04A97E6E709E77A64DD44FB855557671D49E"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Green/texture_08.png.import",
+      "new": "assets/textures/greybox/green/texture_08.png.import",
+      "original_sha256": "1BB0D9CE3F65576BDE9D1D9486FF5621E126B495E0D8A1352D3C34CBCA267798"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Green/texture_09.png.import",
+      "new": "assets/textures/greybox/green/texture_09.png.import",
+      "original_sha256": "6C53A3EDC6D7EE002494995BEE413CA0B69ABFC95BFA138072A0C4D5583C8F98"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Green/texture_10.png.import",
+      "new": "assets/textures/greybox/green/texture_10.png.import",
+      "original_sha256": "B2734C80D341D92290AB2A344D1BC07111D995233AA9087C3FF0EDB07AAB9A4E"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Green/texture_11.png.import",
+      "new": "assets/textures/greybox/green/texture_11.png.import",
+      "original_sha256": "E045D32BD93CFA272EA91169CC937C5D0E7703B04641D8DA1E3E5C55C112EF33"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Green/texture_12.png.import",
+      "new": "assets/textures/greybox/green/texture_12.png.import",
+      "original_sha256": "0CEC4508FD476B80F3998D0FACBF4EAB84A03E7EE8A6CE8378819045A8F5D508"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Green/texture_13.png.import",
+      "new": "assets/textures/greybox/green/texture_13.png.import",
+      "original_sha256": "74E19644C1CD8361148C06E7B4443F508547E68DE3315E9B682F0E5081662BB8"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Light/texture_01.png.import",
+      "new": "assets/textures/greybox/light/texture_01.png.import",
+      "original_sha256": "173023F41A927589CB55149C40323F9519F28915DFDDCCAE732BA456AF07049F"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Light/texture_02.png.import",
+      "new": "assets/textures/greybox/light/texture_02.png.import",
+      "original_sha256": "62F5573409BADB52C8EDCC9D54F090180E4E69E56DEAFD5381BB84B6D59A35D0"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Light/texture_03.png.import",
+      "new": "assets/textures/greybox/light/texture_03.png.import",
+      "original_sha256": "88B4BC0A2A17AB9505E1AE8BD7FEFA7B6C856A48D6476407439DF0780FB15F43"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Light/texture_04.png.import",
+      "new": "assets/textures/greybox/light/texture_04.png.import",
+      "original_sha256": "ADBDFBF9DDBF36C0BAC5580A8B95E7BAE2899FCF3006096DE7C4FC376E1D5EB1"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Light/texture_05.png.import",
+      "new": "assets/textures/greybox/light/texture_05.png.import",
+      "original_sha256": "C33CC734C1801C61500DAF2E9DF921C44BBC1D1E5E67BEFE889F5942D90D9EFE"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Light/texture_06.png.import",
+      "new": "assets/textures/greybox/light/texture_06.png.import",
+      "original_sha256": "1E5328B9EBFFD52659653B5FA98A3C24B6EC5AA1D37A67E30C65B808F3F83724"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Light/texture_07.png.import",
+      "new": "assets/textures/greybox/light/texture_07.png.import",
+      "original_sha256": "A85A91AF19C9FD9F5F649BA3AEB2774F14E83943DF89FF1B5E8C1669DCE88689"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Light/texture_08.png.import",
+      "new": "assets/textures/greybox/light/texture_08.png.import",
+      "original_sha256": "127CCF1BA3D09C739D29A81A5668B878D3452D63BDEFDF4808556F42C591D012"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Light/texture_09.png.import",
+      "new": "assets/textures/greybox/light/texture_09.png.import",
+      "original_sha256": "3909390F6B7B2FEE297A071E9CEE2F72B8533D13A5FAD612289970B160365356"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Light/texture_10.png.import",
+      "new": "assets/textures/greybox/light/texture_10.png.import",
+      "original_sha256": "8FC69900C832E92A2EABEB2A4749F68F93F205369A6F0BAA4C959BA5F9501C9A"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Light/texture_11.png.import",
+      "new": "assets/textures/greybox/light/texture_11.png.import",
+      "original_sha256": "C9EE47B9EFB036737010C903FBCF8B70D40867E491326FDBBD593DC7D580BD3A"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Light/texture_12.png.import",
+      "new": "assets/textures/greybox/light/texture_12.png.import",
+      "original_sha256": "B42F5A09E65E39787E28FC8F12672CAFFC706600A947EF19AA3CCECB3AEFB4B0"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Light/texture_13.png.import",
+      "new": "assets/textures/greybox/light/texture_13.png.import",
+      "original_sha256": "8BEECBFD9C459FEC68A5F1751E8B4333165556EA9F42BDBD8A31780F3121AAA7"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Orange/texture_01.png.import",
+      "new": "assets/textures/greybox/orange/texture_01.png.import",
+      "original_sha256": "43FB8F1964FCEF82B3348564901F64707E87A3BBA2ECF4A0D6AB5D118A5B35BE"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Orange/texture_02.png.import",
+      "new": "assets/textures/greybox/orange/texture_02.png.import",
+      "original_sha256": "1B2FADC46F99F7B66B5B2388B1272167297047AED122A0A265DA234C21F8C8C1"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Orange/texture_03.png.import",
+      "new": "assets/textures/greybox/orange/texture_03.png.import",
+      "original_sha256": "B15561250E0DDA8567360C49BD4D90A785C94039942A23F11BCA137C61A576BC"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Orange/texture_04.png.import",
+      "new": "assets/textures/greybox/orange/texture_04.png.import",
+      "original_sha256": "9BF78B72A7524012542AF656658073C85858BEDB605312F5912DCD54CA9FD965"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Orange/texture_05.png.import",
+      "new": "assets/textures/greybox/orange/texture_05.png.import",
+      "original_sha256": "3397A4C7B2B81F561B6084F076146363F247CC5B029FE9DA4369B792E9F5952B"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Orange/texture_06.png.import",
+      "new": "assets/textures/greybox/orange/texture_06.png.import",
+      "original_sha256": "25D941B24727526B90CE247DC8D9F6B05821677053A3728ABBD20AB2642C72CB"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Orange/texture_07.png.import",
+      "new": "assets/textures/greybox/orange/texture_07.png.import",
+      "original_sha256": "970AC3EEE32AF4AC0F6CB064E56B13AB4E44A268F7150446B8A545CCADCF91E7"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Orange/texture_08.png.import",
+      "new": "assets/textures/greybox/orange/texture_08.png.import",
+      "original_sha256": "AEEE6CA56E86FD2ED1E9C406FE8468D5294F2093377F602E789C2FF7E59556CC"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Orange/texture_09.png.import",
+      "new": "assets/textures/greybox/orange/texture_09.png.import",
+      "original_sha256": "25B334A2FB90FBDE62EDE7818CE8512486558B55BB31B6D9920EF7F9751886C7"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Orange/texture_10.png.import",
+      "new": "assets/textures/greybox/orange/texture_10.png.import",
+      "original_sha256": "2D1FBF979C09CC26A24C9C1C6905E3C9D9A8149AD07F24B884093928AD24D4B4"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Orange/texture_11.png.import",
+      "new": "assets/textures/greybox/orange/texture_11.png.import",
+      "original_sha256": "2CA401CBC891A20D98B9E09683C4020F14E6BE577230F3E1A6DA79342779FE7A"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Orange/texture_12.png.import",
+      "new": "assets/textures/greybox/orange/texture_12.png.import",
+      "original_sha256": "105339641B6604861EA870D533987A498D7D1A03A33CBB26C1F41B890F9E3B91"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Orange/texture_13.png.import",
+      "new": "assets/textures/greybox/orange/texture_13.png.import",
+      "original_sha256": "D9643A999C6CAD7EBFB6FA9DCB23E5E6252CD79A94F926864C8F69BBF2CC5CA9"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Purple/texture_01.png.import",
+      "new": "assets/textures/greybox/purple/texture_01.png.import",
+      "original_sha256": "B378174350BC03D5A7227ED33B3FA8DDDD37F0DCB923F6F943F4101A8389ED41"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Purple/texture_02.png.import",
+      "new": "assets/textures/greybox/purple/texture_02.png.import",
+      "original_sha256": "24F20CE8C006AABB3A51E45F0D4F0D99D8878BD960D69AA52DD0EF407F75415B"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Purple/texture_03.png.import",
+      "new": "assets/textures/greybox/purple/texture_03.png.import",
+      "original_sha256": "7772E477ED63AAB6489FD5535D0D5889C5FC3E6C9B43D5FBE7CB2C369290E5DF"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Purple/texture_04.png.import",
+      "new": "assets/textures/greybox/purple/texture_04.png.import",
+      "original_sha256": "646416C39666E4A0DDE479813CE2D03830903746698DDC768E027A31431AB9C9"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Purple/texture_05.png.import",
+      "new": "assets/textures/greybox/purple/texture_05.png.import",
+      "original_sha256": "F8FFA9A5F268795318CC99A4C130E434C23BBC896A8901FE2F881CC12E7EE655"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Purple/texture_06.png.import",
+      "new": "assets/textures/greybox/purple/texture_06.png.import",
+      "original_sha256": "92DBFBE094A9CA9695077A2E143D283ABC89BFAD01E4972AB7B6522E6706B22C"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Purple/texture_07.png.import",
+      "new": "assets/textures/greybox/purple/texture_07.png.import",
+      "original_sha256": "4FCCC4074C11C499CF2F91A4D6E6B709476091F5A148BA4395C3D32B98905142"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Purple/texture_08.png.import",
+      "new": "assets/textures/greybox/purple/texture_08.png.import",
+      "original_sha256": "8A4BEEEC64D6003F2CA9BC6AA7530FBCBE00157562E6D1C7BE5BC53F7BC570CE"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Purple/texture_09.png.import",
+      "new": "assets/textures/greybox/purple/texture_09.png.import",
+      "original_sha256": "1A6A63D184F877E198BD35B22CE272B00B7262B958E74E52F31AE93993C1CA3B"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Purple/texture_10.png.import",
+      "new": "assets/textures/greybox/purple/texture_10.png.import",
+      "original_sha256": "7D15A713E4771DE15223079AE3EAE6185C113FBEF68168B227BB6D36DC2A9DD5"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Purple/texture_11.png.import",
+      "new": "assets/textures/greybox/purple/texture_11.png.import",
+      "original_sha256": "ABA4AE9B1F6D54299B13CED64AD9BE85299EC6555AC67AD5275C64EBBD63B877"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Purple/texture_12.png.import",
+      "new": "assets/textures/greybox/purple/texture_12.png.import",
+      "original_sha256": "02B681990D8058BF76896243BBFAAF7A544AE3A8F57104025A1E2F36EBCC5B48"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Purple/texture_13.png.import",
+      "new": "assets/textures/greybox/purple/texture_13.png.import",
+      "original_sha256": "94D5CF8CAFE6189F6CC0EE6070C05FC84CCA6600B94A54723D072A412B7CDB91"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Red/texture_01.png.import",
+      "new": "assets/textures/greybox/red/texture_01.png.import",
+      "original_sha256": "17C008DFF0BC87674105DE5D4FD5508AA896128E0F599788AAEC5E266CA95256"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Red/texture_02.png.import",
+      "new": "assets/textures/greybox/red/texture_02.png.import",
+      "original_sha256": "C284997E641819FABB5EE3C51FF1560B345B159AF8FA5A03E02BD32C4D05B3D8"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Red/texture_03.png.import",
+      "new": "assets/textures/greybox/red/texture_03.png.import",
+      "original_sha256": "2E32F7CE8A0622D78F73A2DF14F8FF2AD3E6DDA40A31DF3B8C53CF03DA2AAC76"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Red/texture_04.png.import",
+      "new": "assets/textures/greybox/red/texture_04.png.import",
+      "original_sha256": "8E03F3054160BE65AFC4191B1B9F4ACD35789810449BC10C5E22C134E047C322"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Red/texture_05.png.import",
+      "new": "assets/textures/greybox/red/texture_05.png.import",
+      "original_sha256": "5202A46DCDA595FBC959B2A7D5BD6C12BBB013A0D3F8907991C6D83508D6F3E1"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Red/texture_06.png.import",
+      "new": "assets/textures/greybox/red/texture_06.png.import",
+      "original_sha256": "7F00647DCE23BECB504105AC50A96CB61D1B3A303D7715256F40066F477DE8BD"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Red/texture_07.png.import",
+      "new": "assets/textures/greybox/red/texture_07.png.import",
+      "original_sha256": "B0D906385E42A7C4ACFDA443870DC4C5AB8E1839ED29B08E9A06FE5DA950EC3E"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Red/texture_08.png.import",
+      "new": "assets/textures/greybox/red/texture_08.png.import",
+      "original_sha256": "2663E8CB3DB5BF69028BFB66BD1AE8BDBEBBE17DD39719D57F3F347ADC6D6B93"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Red/texture_09.png.import",
+      "new": "assets/textures/greybox/red/texture_09.png.import",
+      "original_sha256": "2F1817954D89FCD3A6CEC14E77B9D53281DD7B805833695D846FB56A1AEE4302"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Red/texture_10.png.import",
+      "new": "assets/textures/greybox/red/texture_10.png.import",
+      "original_sha256": "8B1434BC1531C44E7B5AB2B17EC3DDDD178EBB8D7ABCE234F9BC5B8AE2454B4E"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Red/texture_11.png.import",
+      "new": "assets/textures/greybox/red/texture_11.png.import",
+      "original_sha256": "BE148EFB9BE7CAFAB477B2A120BDD3A0A684FCB2E47E9E306359E8A3F72E9A83"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Red/texture_12.png.import",
+      "new": "assets/textures/greybox/red/texture_12.png.import",
+      "original_sha256": "2591BC5369EE9034F729FBA16A61B008F575CAF1282244DB14985AE36E19EBDB"
+    },
+    {
+      "group": 5,
+      "old": "resources/GreyboxTextures/Red/texture_13.png.import",
+      "new": "assets/textures/greybox/red/texture_13.png.import",
+      "original_sha256": "83472DFF2E4810030A6278D7EC556EB7B1BBA30AC6AD08F9195425F91441EA5E"
+    },
+    {
+      "group": 6,
+      "old": "scripts/player_health_hud.gd.uid",
+      "new": "ui/hud/health/player_health_hud.gd.uid",
+      "original_sha256": "A3E1D19268F7D86233F45D52F49C11C4BB1D24347EDEE003698A5E96B9AECE85"
+    },
+    {
+      "group": 6,
+      "old": "scripts/allomancy_reserve_hud.gd.uid",
+      "new": "ui/hud/allomancy/allomancy_reserve_hud.gd.uid",
+      "original_sha256": "39E6A13363A91BF9C9A9853D13CFF1C66CC94279758A14B33812172AEBD50283"
+    },
+    {
+      "group": 6,
+      "old": "scripts/metal_wheel.gd.uid",
+      "new": "ui/hud/allomancy/metal_wheel.gd.uid",
+      "original_sha256": "34CF61F609974A9B0099FA02857714EC860B91D525920B9469FC42C57EF398F6"
+    },
+    {
+      "group": 6,
+      "old": "scripts/equipment_feedback.gd.uid",
+      "new": "ui/hud/equipment/equipment_feedback.gd.uid",
+      "original_sha256": "0383B1C7AA2082CEFCE9E2758FEDFD8CA40A37591E76E7D0346EB8D73D9A457D"
+    },
+    {
+      "group": 6,
+      "old": "scripts/combat_feedback.gd.uid",
+      "new": "ui/hud/combat/combat_feedback.gd.uid",
+      "original_sha256": "211E8F483479286035F8F45AB3BD1A2C676D60B2E63DD1BBE441E5F3EE8B0CB8"
+    },
+    {
+      "group": 6,
+      "old": "scripts/playtest_target_feedback.gd.uid",
+      "new": "ui/hud/targeting/playtest_target_feedback.gd.uid",
+      "original_sha256": "18420642C822226EA21B75DA3410B400D473CB531E4DB65D7333F43440F89300"
+    },
+    {
+      "group": 6,
+      "old": "scripts/inventory_ui.gd.uid",
+      "new": "ui/inventory/inventory_ui.gd.uid",
+      "original_sha256": "54458C168D090C588B8B283086CD118790D2554E6925856CAEA0CE2B5750A7C3"
+    },
+    {
+      "group": 6,
+      "old": "scripts/inventory_grid.gd.uid",
+      "new": "ui/inventory/inventory_grid.gd.uid",
+      "original_sha256": "CA7591C8A07E680AA3D712A24E47A2CC9A022E37BFF93D3852661611B479A2FD"
+    },
+    {
+      "group": 6,
+      "old": "scripts/inventory_cursor.gd.uid",
+      "new": "ui/inventory/inventory_cursor.gd.uid",
+      "original_sha256": "17520D889C6DCEF57FBD528EEBF08E37805A514A3BDDB769F3C5C873F27CBCFE"
+    },
+    {
+      "group": 6,
+      "old": "scripts/equipment_slot_ui.gd.uid",
+      "new": "ui/inventory/equipment_slot_ui.gd.uid",
+      "original_sha256": "7B7E89F27AC2DC1B4E89B3F4B7B0ED2A62882DE3272C44D6044785DFC4D9BBDA"
+    },
+    {
+      "group": 6,
+      "old": "scripts/intelligence_view.gd.uid",
+      "new": "ui/intelligence/intelligence_view.gd.uid",
+      "original_sha256": "7D5B33ABBB59328C18748D95D1D0738EFF98B77C8F5B69A839267513A49B9E5D"
+    },
+    {
+      "group": 6,
+      "old": "scripts/dialogue_panel.gd.uid",
+      "new": "ui/dialogue/dialogue_panel.gd.uid",
+      "original_sha256": "9C69702CCA33292F70DEDBE39A6900A26EF4E05EB6212391FDA16F03AC47D49E"
+    },
+    {
+      "group": 6,
+      "old": "scripts/playtest_menu_view.gd.uid",
+      "new": "ui/menus/playtest_menu_view.gd.uid",
+      "original_sha256": "A4842CD521E155593F1B01E0301EFC6F8788AE4027246055BAF9C5701F2322D3"
+    },
+    {
+      "group": 6,
+      "old": "scripts/controls_settings_view.gd.uid",
+      "new": "ui/menus/controls_settings_view.gd.uid",
+      "original_sha256": "4FAA482B962A933C9DE28AFD59B1D66B25C3CCC32716BF23544A264AAEE9047B"
+    },
+    {
+      "group": 6,
+      "old": "scripts/input_hint.gd.uid",
+      "new": "ui/common/input_hint.gd.uid",
+      "original_sha256": "593CF908C5E11F2A300DDBB293995754061DB18E5514A243B0968FD15AA68DCF"
+    },
+    {
+      "group": 6,
+      "old": "scripts/dialogue_data.gd.uid",
+      "new": "systems/dialogue/dialogue_data.gd.uid",
+      "original_sha256": "4DA06AE1B79C18BAA07AFCAC7CF9D8B84DF957145E35345E23FF730DD6F9CF91"
+    },
+    {
+      "group": 6,
+      "old": "scripts/intelligence_catalog.gd.uid",
+      "new": "systems/intelligence/intelligence_catalog.gd.uid",
+      "original_sha256": "EDFFF246963465B60CD9283D32B86ADA63CC194965232303A38F4E7A8B0B92B5"
+    },
+    {
+      "group": 6,
+      "old": "scripts/intelligence_clue_definition.gd.uid",
+      "new": "systems/intelligence/intelligence_clue_definition.gd.uid",
+      "original_sha256": "FBA9184BC76156072D9C266C7CD1EFE5B66E37C7D666C57D0CA5D9CA553CCD4B"
+    },
+    {
+      "group": 6,
+      "old": "scripts/intelligence_knowledge.gd.uid",
+      "new": "systems/intelligence/intelligence_knowledge.gd.uid",
+      "original_sha256": "AF1FF0D5A289A2C318BEE71DE55F987425059ADC312CE68116747CCD20BF3148"
+    },
+    {
+      "group": 6,
+      "old": "scripts/intelligence_map_definition.gd.uid",
+      "new": "systems/intelligence/intelligence_map_definition.gd.uid",
+      "original_sha256": "2CF6B55E7F87D08313CB18F5F092F1A26A89922A0EF7080586EFED35E5203C16"
+    },
+    {
+      "group": 6,
+      "old": "scripts/intelligence_region_definition.gd.uid",
+      "new": "systems/intelligence/intelligence_region_definition.gd.uid",
+      "original_sha256": "96F930C9F1BCEA8702199CF51F42F0DA10C6019050E446BA0D0832B26EDA6290"
+    },
+    {
+      "group": 6,
+      "old": "scripts/court_intel_field_definition.gd.uid",
+      "new": "systems/intelligence/court_intel_field_definition.gd.uid",
+      "original_sha256": "73F2246CA5D2EAD9FC06CC2433B947FBDC7FA591EFFC136F17AF3878BC7BAAD9"
+    },
+    {
+      "group": 6,
+      "old": "scripts/court_target_definition.gd.uid",
+      "new": "systems/intelligence/court_target_definition.gd.uid",
+      "original_sha256": "BCA4027FAEC9B62D5C329497AD9F07B701DE3A5CFC197EC4DF72B9FF5559E7E0"
+    },
+    {
+      "group": 6,
+      "old": "scripts/dialogue_manager.gd.uid",
+      "new": "autoload/dialogue_manager.gd.uid",
+      "original_sha256": "FD2DE6646BC6DCAEFDD7D349E6CA9EFC3DFC5E6D1B002AEFBD90509A9AA2B02E"
+    },
+    {
+      "group": 6,
+      "old": "scripts/gameplay_locks.gd.uid",
+      "new": "autoload/gameplay_locks.gd.uid",
+      "original_sha256": "BFCF4C2A925BA9038E06AF3DC18BE1D84EAD10B57627561F048899B0EFBAB8C5"
+    },
+    {
+      "group": 6,
+      "old": "scripts/keybind_settings.gd.uid",
+      "new": "autoload/keybind_settings.gd.uid",
+      "original_sha256": "A2FC9D5881EC9C9620492601EE2E564666177DC13575701D884CD4DC159B4595"
+    },
+    {
+      "group": 6,
+      "old": "scripts/respawn_session.gd.uid",
+      "new": "autoload/respawn_session.gd.uid",
+      "original_sha256": "ED8032B5071B30748745808193E950FE002464A1AFE4AFD8DFA3B6FD7596E889"
+    },
+    {
+      "group": 6,
+      "old": "scripts/playtest_settings.gd.uid",
+      "new": "autoload/playtest_settings.gd.uid",
+      "original_sha256": "2EFFD0B76FDCC61BB68F4D30C55AF864BFB1009E0A5ACC47F8CFFBBE3E138FA9"
+    },
+    {
+      "group": 6,
+      "old": "scripts/playtest_shell.gd.uid",
+      "new": "systems/session/playtest_shell.gd.uid",
+      "original_sha256": "05F0DFA0776080B3A21B9C0023EA2BFB1FE3BE95397782F7BAC3FB45B7F48831"
+    },
+    {
+      "group": 6,
+      "old": "scripts/playtest_controls.gd.uid",
+      "new": "systems/session/playtest_controls.gd.uid",
+      "original_sha256": "0F9ECABAE640018366E177FD0F167D7F54E30D1839F7A5B9C9348E0652171D77"
+    },
+    {
+      "group": 7,
+      "old": "scripts/rest_point.gd.uid",
+      "new": "world/interactables/rest_point/rest_point.gd.uid",
+      "original_sha256": "3620D1FB47E7E41FE8FB4520D483349117B2B86D8B9EB14D06B1813757014E90"
+    },
+    {
+      "group": 7,
+      "old": "scripts/checkpoint.gd.uid",
+      "new": "world/interactables/checkpoint/checkpoint.gd.uid",
+      "original_sha256": "613CBAF8E4D2F89A9A2A8984F7CE753F81C392A63E7941CB51057DB2B928C594"
+    },
+    {
+      "group": 7,
+      "old": "scripts/parametric_ladder.gd.uid",
+      "new": "world/interactables/parametric_ladder/parametric_ladder.gd.uid",
+      "original_sha256": "6F024172C6F16E695390BF23DC1B12DC2F6B3F29AC4E843219FCBF370108E54D"
+    },
+    {
+      "group": 7,
+      "old": "scripts/world_item.gd.uid",
+      "new": "world/world_items/world_item.gd.uid",
+      "original_sha256": "EDB815C4B690EE05F3EDEB5C47ECB36DBB8D13FEE5ADF4286143C24C6EEDACAE"
+    },
+    {
+      "group": 7,
+      "old": "scripts/loose_metal_body.gd.uid",
+      "new": "world/props/loose_steel/loose_metal_body.gd.uid",
+      "original_sha256": "7CC2F2F70E8FE233012222AAECC8AFBA95ADA7095087B71A208448E0A10FB3E1"
+    },
+    {
+      "group": 7,
+      "old": "scripts/greybox_block.gd.uid",
+      "new": "world/building_blocks/greybox_block.gd.uid",
+      "original_sha256": "BB2FF5476B99E36A78AE96215CE53C75FFCB8D58A8A1B333B211107655A0B113"
+    },
+    {
+      "group": 7,
+      "old": "scripts/ambient_creature_spawner.gd.uid",
+      "new": "world/ambience/ambient_creature_spawner.gd.uid",
+      "original_sha256": "34FFEE4110852FEEFC30D1E7D6992AE11BC7B301AA9ED7FB8F9DF9D07E751966"
+    },
+    {
+      "group": 9,
+      "old": "scripts/traversal_course.gd.uid",
+      "new": "dev/test_scenes/traversal_course/traversal_course.gd.uid",
+      "original_sha256": "B09E0BE7A106F9A25CDCE8C1A5AC328487E282C6CDEFAE7ED45F749A90E597DD"
+    },
+    {
+      "group": 9,
+      "old": "scripts/metal_refill_station.gd.uid",
+      "new": "dev/fixtures/allomancy/metal_refill_station.gd.uid",
+      "original_sha256": "FBD4FF8A580EE415E776E45B9A914BB41B1CF5339525486ECD08218F1C1A1277"
+    },
+    {
+      "group": 9,
+      "old": "scripts/test_interactable.gd.uid",
+      "new": "dev/fixtures/interaction/test_interactable.gd.uid",
+      "original_sha256": "9AA5A330FA36D426887FBCB7860AAAFB93DF385D06290146CF9B6D65C4D9F84C"
+    },
+    {
+      "group": 9,
+      "old": "scripts/workshop_item_supply.gd.uid",
+      "new": "dev/fixtures/inventory/workshop_item_supply.gd.uid",
+      "original_sha256": "9D0AD2C90BFD8D9A1CCB029BD5314FDCDB2243DCD6D6A6C897372388C83E855B"
+    },
+    {
+      "group": 9,
+      "old": "scripts/allomancy_debug.gd.uid",
+      "new": "dev/debug/allomancy_debug.gd.uid",
+      "original_sha256": "89121BAA3952D33C61D85BF8300C314755BAABAE5B7E661B06EB894F6E750CD0"
+    },
+    {
+      "group": 9,
+      "old": "scripts/stat_debug_display.gd.uid",
+      "new": "dev/debug/stat_debug_display.gd.uid",
+      "original_sha256": "77048020249FE83ADA2142F58C96E5B54F2AA187FA3DF7EA0BBF62487FCB1C8D"
+    },
+    {
+      "group": 9,
+      "old": "tools/bake_mini_city.gd.uid",
+      "new": "dev/tools/bake_mini_city.gd.uid",
+      "original_sha256": "263E0D007195176BCEF4AA1AF026136393FF3DEEDAD2EB6AA00B3598E454857C"
+    },
+    {
+      "group": 9,
+      "old": "tools/validate_metal_consumable_resources.gd.uid",
+      "new": "dev/tools/validate_metal_consumable_resources.gd.uid",
+      "original_sha256": "5CB1F91F11F46112A07BD29DDCF511A994C81C83FD01F414A3B006908C097A69"
+    },
+    {
+      "group": 9,
+      "old": "tools/validate_recovery_resources.gd.uid",
+      "new": "dev/tools/validate_recovery_resources.gd.uid",
+      "original_sha256": "188C32CE266BDE61234DF5EB6D486FB44C594A7682E9E7145812817B0ABF4FEE"
+    }
+  ]
+}

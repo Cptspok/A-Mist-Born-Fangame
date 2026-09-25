@@ -17,7 +17,7 @@ A repeated target defeat after checkpoint respawn is possible, consistent with e
 world replacement; dossier defeat status explicitly means 'Defeated this session'.
 
 2. MINI CITY CONTENT
-scenes/court_target.tscn inherits the existing melee enemy: 160 health, 8m detection and
+characters/enemies/court_target/court_target.tscn inherits the existing melee enemy: 160 health, 8m detection and
 8m leash; no boss AI. Overseer Darven Voss stands at Mini City local (26, 0.9, -42),
 in the east service yard. He uses the existing primitive enemy visual with purple
 clothing and silver shield, plus a nameplate. Name is read from the target Resource.
@@ -63,7 +63,7 @@ regions show ?. No Mini City IDs/names are embedded in presentation code.
 5. AUTHORING WITHOUT GAMEPLAY CODE
 - Create a CourtTargetDefinition Resource with a globally unique ID. Fill identity,
   portrait/dossier and district/region/location fields. Add it to
-  resources/intelligence/catalog.tres Targets. Assign it to an existing enemy's
+  data/intelligence/catalog.tres Targets. Assign it to an existing enemy's
   Court Target field. Use a distinct Encounter Id for a solo encounter. The new Court
   scene is also a reusable base, with editable visual, health, sensing and leash values.
 - Create IntelligenceClueDefinition, give it a unique ID, assign the target Resource,
@@ -80,7 +80,7 @@ regions show ?. No Mini City IDs/names are embedded in presentation code.
   category UI would need its own presentation, not a knowledge rewrite.
 
 6. PARAMETRIC LADDER
-scenes/parametric_ladder.tscn / scripts/parametric_ladder.gd (@tool).
+world/interactables/parametric_ladder/parametric_ladder.tscn / world/interactables/parametric_ladder/parametric_ladder.gd (@tool).
 Inspector: Height (1..40), Width, Rung Spacing, Rung Thickness, Climb Speed,
 Front Offset and Top Exit Distance. Height/geometry changes regenerate two solid rails,
 evenly distributed rungs and a tall interaction volume. Generated children are transient,

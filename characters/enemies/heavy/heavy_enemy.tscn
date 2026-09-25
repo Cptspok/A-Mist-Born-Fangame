@@ -1,0 +1,38 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://characters/enemies/base/example_enemy.tscn" id="base"]
+[ext_resource type="PackedScene" path="res://characters/enemies/heavy/heavy_enemy_visual.tscn" id="visual"]
+
+[node name="HeavyEnemy" instance=ExtResource("base")]
+display_name = "Heavy"
+visual_scene = ExtResource("visual")
+
+[node name="HealthComponent" parent="." index="2"]
+max_health = 180.0
+
+[node name="Sensing" parent="." index="7"]
+detection_range = 20.0
+
+[node name="Movement" parent="." index="8"]
+chase_speed = 3.2
+reposition_speed = 1.8
+
+[node name="MeleeAttack" parent="." index="9"]
+attack_range = 2.9
+windup_duration = 1.10
+strike_duration = 0.32
+recovery_duration = 1.25
+attack_cooldown = 2.9
+use_hit_volume = true
+hit_volume_size = Vector3(4.8, 0.8, 2.8)
+hit_volume_offset = Vector3(0, 0, -1.5)
+horizontal_sweep = true
+
+[node name="DamageSourceComponent" parent="MeleeAttack" index="0"]
+damage_amount = 42.0
+block_pressure = 45.0
+
+[node name="MeleeBehaviour" parent="." index="10"]
+maximum_leash_distance = 24.0
+preferred_engagement_distance = 2.3
+reposition_duration = 0.25

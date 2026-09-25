@@ -1,0 +1,37 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://characters/enemies/base/example_enemy.tscn" id="base"]
+[ext_resource type="PackedScene" path="res://characters/enemies/knife_fighter/knife_fighter_visual.tscn" id="visual"]
+
+[node name="KnifeFighter" instance=ExtResource("base")]
+display_name = "Knife Fighter"
+visual_scene = ExtResource("visual")
+
+[node name="HealthComponent" parent="." index="2"]
+max_health = 65.0
+
+[node name="Sensing" parent="." index="7"]
+detection_range = 20.0
+
+[node name="Movement" parent="." index="8"]
+chase_speed = 8.5
+reposition_speed = 6.0
+
+[node name="MeleeAttack" parent="." index="9"]
+attack_range = 1.65
+windup_duration = 0.24
+strike_duration = 0.12
+recovery_duration = 0.30
+attack_cooldown = 0.75
+use_hit_volume = true
+hit_volume_size = Vector3(0.55, 0.7, 1.45)
+hit_volume_offset = Vector3(0, 0, -0.95)
+
+[node name="DamageSourceComponent" parent="MeleeAttack" index="0"]
+damage_amount = 16.0
+
+[node name="MeleeBehaviour" parent="." index="10"]
+alert_duration = 0.15
+preferred_engagement_distance = 0.95
+maximum_leash_distance = 24.0
+persistent_close_pressure = true

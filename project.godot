@@ -11,18 +11,18 @@ config_version=5
 [application]
 
 config/name="A Mist Born Fangame"
-run/main_scene="res://scenes/playtest_shell.tscn"
+run/main_scene="res://systems/session/playtest_shell.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-RespawnSession="*res://scripts/respawn_session.gd"
-PlaytestSettings="*res://scripts/playtest_settings.gd"
-KeybindSettings="*res://scripts/keybind_settings.gd"
-GameplayLocks="*res://scripts/gameplay_locks.gd"
-DialogueManager="*res://scripts/dialogue_manager.gd"
-InventoryUI="*res://scripts/inventory_ui.gd"
+RespawnSession="*res://autoload/respawn_session.gd"
+PlaytestSettings="*res://autoload/playtest_settings.gd"
+KeybindSettings="*res://autoload/keybind_settings.gd"
+GameplayLocks="*res://autoload/gameplay_locks.gd"
+DialogueManager="*res://autoload/dialogue_manager.gd"
+InventoryUI="*res://ui/inventory/inventory_ui.gd"
 
 [display]
 

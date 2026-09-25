@@ -1,0 +1,176 @@
+[gd_scene format=3 uid="uid://scnep11gxfkr"]
+
+[ext_resource type="Material" path="res://assets/materials/greybox/floor.tres" id="gb_floor"]
+[ext_resource type="Material" path="res://assets/materials/greybox/structure.tres" id="gb_structure"]
+[ext_resource type="Material" path="res://assets/materials/greybox/traversal.tres" id="gb_traversal"]
+[ext_resource type="PackedScene" path="res://world/building_blocks/greybox_block.tscn" id="block"]
+[ext_resource type="PackedScene" path="res://world/interactables/checkpoint/checkpoint.tscn" id="checkpoint"]
+[ext_resource type="PackedScene" path="res://dev/fixtures/allomancy/allomancy_heavy.tscn" id="heavy"]
+[ext_resource type="PackedScene" path="res://dev/fixtures/allomancy/allomancy_light.tscn" id="light"]
+[ext_resource type="PackedScene" uid="uid://c6rfyo8c81oko" path="res://dev/fixtures/allomancy/allomancy_medium.tscn" id="medium"]
+[ext_resource type="Script" uid="uid://d3f3bckkg83mq" path="res://dev/test_scenes/traversal_course/traversal_course.gd" id="script"]
+[ext_resource type="PackedScene" path="res://abilities/allomancy/metal_tether/metal_tether.tscn" id="tether"]
+
+[sub_resource type="StandardMaterial3D" id="anchor_mat"]
+albedo_color = Color(0.7, 0.4, 0.85, 1)
+
+[sub_resource type="BoxMesh" id="anchor_mesh"]
+material = SubResource("anchor_mat")
+size = Vector3(1.2, 0.25, 0.25)
+
+[node name="TraversalCourse" type="Node3D" unique_id=498594515]
+script = ExtResource("script")
+
+[node name="Start" type="Marker3D" parent="." unique_id=1537318040]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 9)
+
+[node name="01_Runway" parent="." unique_id=856042211 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 5)
+dimensions = Vector3(8, 1, 14)
+
+[node name="02_JumpLanding" parent="." unique_id=1495775328 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -7)
+
+[node name="03_FirstRoof" parent="." unique_id=1943091331 instance=ExtResource("block")]
+surface_material = ExtResource("gb_structure")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, -17)
+dimensions = Vector3(8, 1, 8)
+
+[node name="04_ArcLanding" parent="." unique_id=1690638936 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.192326, 7.252961, -17)
+dimensions = Vector3(10, 1, 8)
+
+[node name="05_LooseMetalDeck" parent="." unique_id=1738565369 instance=ExtResource("block")]
+surface_material = ExtResource("gb_structure")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.192326, 7.3296776, -4)
+dimensions = Vector3(10, 1, 10)
+
+[node name="06_Ascent" parent="." unique_id=1449297623 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.192326, 15.329678, 10)
+dimensions = Vector3(8, 1, 8)
+
+[node name="07_SafeStep" parent="." unique_id=704159295 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.192326, 19.329678, 19)
+dimensions = Vector3(7, 1, 7)
+
+[node name="08_Destination" parent="." unique_id=1989693041 instance=ExtResource("block")]
+surface_material = ExtResource("gb_traversal")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 24.329678, 10)
+dimensions = Vector3(10, 1, 10)
+
+[node name="CatchFloor" parent="." unique_id=1996469813 instance=ExtResource("block")]
+surface_material = ExtResource("gb_floor")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -7.5, 2)
+dimensions = Vector3(66, 1, 68)
+tint = Color(0.22, 0.25, 0.29, 1)
+
+[node name="LooseDeckBackstop" parent="." unique_id=316196616 instance=ExtResource("block")]
+surface_material = ExtResource("gb_structure")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.192326, 8.129678, 1)
+dimensions = Vector3(10, 0.6, 0.4)
+
+[node name="LooseDeckSideStop" parent="." unique_id=114482410 instance=ExtResource("block")]
+surface_material = ExtResource("gb_structure")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.192326, 8.829678, -4)
+dimensions = Vector3(0.4, 2, 10)
+
+[node name="A1_Lift" parent="." unique_id=2033299635 instance=ExtResource("tether")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11, -14)
+
+[node name="A1_LiftMarker" type="MeshInstance3D" parent="." unique_id=753275790]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11, -14)
+mesh = SubResource("anchor_mesh")
+
+[node name="A2_PushHeel" parent="." unique_id=78820013 instance=ExtResource("tether")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0903196, 7, -18.965961)
+
+[node name="A2_PushHeelMarker" type="MeshInstance3D" parent="." unique_id=289600565]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.038167, 7, -18.967)
+mesh = SubResource("anchor_mesh")
+
+[node name="A3_ArcCatch" parent="." unique_id=1027342397 instance=ExtResource("tether")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.192326, 13.752961, -20)
+
+[node name="A3_ArcCatchMarker" type="MeshInstance3D" parent="." unique_id=1345757631]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.192326, 13.752961, -20)
+mesh = SubResource("anchor_mesh")
+
+[node name="A4_Redirect" parent="." unique_id=218345637 instance=ExtResource("tether")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.192326, 13.829678, -5)
+
+[node name="A4_RedirectMarker" type="MeshInstance3D" parent="." unique_id=737409302]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.192326, 13.829678, -5)
+mesh = SubResource("anchor_mesh")
+
+[node name="A5_Ascent" parent="." unique_id=125764626 instance=ExtResource("tether")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.192326, 21.829678, 7)
+
+[node name="A5_AscentMarker" type="MeshInstance3D" parent="." unique_id=1730122139]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.192326, 21.829678, 7)
+mesh = SubResource("anchor_mesh")
+
+[node name="A6_ChainHeel" parent="." unique_id=547717995 instance=ExtResource("tether")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.192326, 14.829678, 8)
+
+[node name="A6_ChainHeelMarker" type="MeshInstance3D" parent="." unique_id=2141646]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.192326, 14.829678, 8)
+mesh = SubResource("anchor_mesh")
+
+[node name="A7_Safe" parent="." unique_id=575945935 instance=ExtResource("tether")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.192326, 25.829678, 19)
+
+[node name="A7_SafeMarker" type="MeshInstance3D" parent="." unique_id=1821921763]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.192326, 25.829678, 19)
+mesh = SubResource("anchor_mesh")
+
+[node name="A8_Finish" parent="." unique_id=1597700306 instance=ExtResource("tether")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1923256, 30.829678, 10)
+
+[node name="A8_FinishMarker" type="MeshInstance3D" parent="." unique_id=998743050]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1923256, 30.829678, 10)
+mesh = SubResource("anchor_mesh")
+
+[node name="LightReference" parent="." unique_id=1134287244 instance=ExtResource("light")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.192326, 8.229677, -6)
+
+[node name="MediumReference" parent="." unique_id=1227171864 instance=ExtResource("medium")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.192326, 8.429678, -5)
+
+[node name="MediumReference2" parent="." unique_id=7091094 instance=ExtResource("medium")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1344748, 0.37817383, -0.96485996)
+
+[node name="HeavyReference" parent="." unique_id=999198831 instance=ExtResource("heavy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.192326, 16.529678, 11)
+
+[node name="CheckpointStart" parent="." unique_id=178064557 instance=ExtResource("checkpoint")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9)
+checkpoint_id = &"trial_start"
+
+[node name="CheckpointArcLanding" parent="." unique_id=1648664704 instance=ExtResource("checkpoint")]
+transform = Transform3D(-1, 0, -3.2584137e-07, 0, 1, 0, 3.2584137e-07, 0, -1, 28.192326, 7.752961, -17)
+checkpoint_id = &"trial_arclanding"
+
+[node name="CheckpointAscent" parent="." unique_id=2066737286 instance=ExtResource("checkpoint")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.192326, 15.829678, 10)
+checkpoint_id = &"trial_ascent"
+
+[node name="CheckpointSafeStep" parent="." unique_id=458928035 instance=ExtResource("checkpoint")]
+transform = Transform3D(3.1391647e-07, 0, 1, 0, 1, 0, -1, 0, 3.1391647e-07, 17.192326, 19.829678, 19)
+checkpoint_id = &"trial_safestep"
+
+[node name="CheckpointFirstRoof" parent="." unique_id=1001031272 instance=ExtResource("checkpoint")]
+transform = Transform3D(3.1391647e-07, 0, -1, 0, 1, 0, 1, 0, 3.1391647e-07, 0, 6, -17)
+checkpoint_id = &"trial_firstroof"
+
+[node name="CheckpointLooseMetalDeck" parent="." unique_id=1164117053 instance=ExtResource("checkpoint")]
+transform = Transform3D(-1, 0, -3.2584137e-07, 0, 1, 0, 3.2584137e-07, 0, -1, 28.192326, 7.8296776, -2)
+checkpoint_id = &"trial_loosemetaldeck"
+
+[node name="CheckpointDestination" parent="." unique_id=2031242412 instance=ExtResource("checkpoint")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1923256, 24.829678, 10)
+checkpoint_id = &"trial_destination"

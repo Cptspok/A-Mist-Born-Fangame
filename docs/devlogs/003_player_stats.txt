@@ -102,13 +102,13 @@ Additional numerical data check, if desired: temporarily give Trinket A two PHYS
 ## Files
 
 Added:
-- scripts/stat_ids.gd, stat_modifier.gd, stat_component.gd, equipment_stats_bridge.gd, stat_debug_display.gd (and generated Godot UID files)
+- components/stats/stat_ids.gd, stat_modifier.gd, stat_component.gd, equipment_stats_bridge.gd, stat_debug_display.gd (and generated Godot UID files)
 - 003_player_stats.txt
 
 Modified:
-- scripts/item_definition.gd, health_component.gd, player.gd, melee_weapon.gd, inventory_ui.gd
-- scenes/player.tscn
-- resources/helmet.tres, chest_armor.tres, gloves.tres, boots.tres, trinket_a.tres, trinket_b.tres, sword.tres, greatsword.tres
+- items/base/item_definition.gd, health_component.gd, player.gd, melee_weapon.gd, inventory_ui.gd
+- characters/player/player.tscn
+- data/items/equipment/helmet/helmet.tres, chest_armor.tres, gloves.tres, boots.tres, trinket_a.tres, trinket_b.tres, sword.tres, greatsword.tres
 
 EquipmentComponent, inventory ownership/transfers, world dropping, damage-source/hurtbox, enemy scripts, navigation, dialogue and input bindings were not modified.
 
